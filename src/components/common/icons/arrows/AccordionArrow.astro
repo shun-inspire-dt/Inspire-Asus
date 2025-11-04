@@ -1,0 +1,70 @@
+---
+// 導入所有 SVG 元件
+import RegularFs14Down from './svg-astro/accordion-arrow-regular-fs14-down.astro';
+import BoldFs14Down from './svg-astro/accordion-arrow-bold-fs14-down.astro';
+import RegularFs16Down from './svg-astro/accordion-arrow-regular-fs16-down.astro';
+import BoldFs16Down from './svg-astro/accordion-arrow-bold-fs16-down.astro';
+import RegularFs18Down from './svg-astro/accordion-arrow-regular-fs18-down.astro';
+import BoldFs18Down from './svg-astro/accordion-arrow-bold-fs18-down.astro';
+import RegularFs20Down from './svg-astro/accordion-arrow-regular-fs20-down.astro';
+import BoldFs20Down from './svg-astro/accordion-arrow-bold-fs20-down.astro';
+import RegularFs24Down from './svg-astro/accordion-arrow-regular-fs24-down.astro';
+import BoldFs24Down from './svg-astro/accordion-arrow-bold-fs24-down.astro';
+/** Style */
+import './AccordionArrow.scss';
+
+export interface Props {
+  weight?: 'regular' | 'bold';
+  size?: 'fs14' | 'fs16' | 'fs18' | 'fs20' | 'fs24';
+  direction?: 'up' | 'down';
+  class?: any;
+  [key: string]: any;
+}
+
+const {
+  weight = 'regular',
+  size = 'fs14',
+  direction = 'down',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'accordion-arrow',
+  `accordion-arrow--${weight}`,
+  `accordion-arrow--${size}`,
+  `accordion-arrow--${direction}`,
+  className
+].filter(Boolean).join(' ');
+
+// 根據 props 選擇對應的 SVG 元件
+const getSvgComponent = () => {
+  const key = `${weight}-${size}`;
+  const componentMap = {
+    'regular-fs14': RegularFs14Down,
+    'bold-fs14': BoldFs14Down,
+    'regular-fs16': RegularFs16Down,
+    'bold-fs16': BoldFs16Down,
+    'regular-fs18': RegularFs18Down,
+    'bold-fs18': BoldFs18Down,
+    'regular-fs20': RegularFs20Down,
+    'bold-fs20': BoldFs20Down,
+    'regular-fs24': RegularFs24Down,
+    'bold-fs24': BoldFs24Down,
+  };
+  return componentMap[key as keyof typeof componentMap] || RegularFs14Down;
+};
+
+const SvgComponent = getSvgComponent();
+---
+
+<span
+  class={classes}
+  data-accordion-arrow
+  data-weight={weight}
+  data-size={size}
+  data-direction={direction}
+  {...rest}
+>
+  <SvgComponent />
+</span>

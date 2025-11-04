@@ -1,0 +1,48 @@
+.flow-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
+
+  svg {
+    width: auto;
+    height: auto;
+    display: block;
+  }
+
+  // 尺寸變體 - 寬度為高度的一半
+  &--fs14 {
+    width: calc(var(--fs-14, 14px) / 2);
+    height: var(--fs-14, 14px);
+  }
+
+  &--fs16 {
+    width: calc(var(--fs-16, 16px) / 2);
+    height: var(--fs-16, 16px);
+  }
+
+  &--fs18 {
+    width: calc(var(--fs-18, 18px) / 2);
+    height: var(--fs-18, 18px);
+  }
+
+  &--fs20 {
+    width: calc(var(--fs-20, 20px) / 2);
+    height: var(--fs-20, 20px);
+  }
+
+  &--fs24 {
+    width: calc(var(--fs-24, 24px) / 2);
+    height: var(--fs-24, 24px);
+  }
+
+  // 展開狀態
+  &[data-direction="right"] {
+    transform: rotate(180deg);
+  }
+
+  // 無障礙設定
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

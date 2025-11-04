@@ -1,0 +1,36 @@
+---
+// AccordionArrow 使用範例
+import AccordionArrowComponent from './AccordionArrow.astro';
+---
+
+<div class="accordion-arrow-examples p-8">
+  <h2 class="text-2xl font-bold mb-6">AccordionArrow 元件範例</h2>
+  
+  <!-- 所有變體展示 -->
+  <div class="grid grid-cols-4 gap-6">
+    {['fs14', 'fs16', 'fs18', 'fs20', 'fs24'].map(size => 
+      ['regular', 'bold'].map(weight =>
+        ['down', 'up'].map(direction => (
+          <div class="flex flex-col items-center gap-3 p-4 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow">
+            <AccordionArrowComponent 
+              size={size as any} 
+              weight={weight as any} 
+              direction={direction as any} 
+            />
+            <div class="text-center space-y-1">
+              <div class="text-xs font-medium text-gray-700">{weight}</div>
+              <div class="text-xs text-gray-500">{size}</div>
+              <div class="text-xs text-gray-500">{direction}</div>
+            </div>
+          </div>
+        ))
+      )
+    )}
+  </div>
+</div>
+
+<style>
+  .accordion-arrow-examples {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+</style>

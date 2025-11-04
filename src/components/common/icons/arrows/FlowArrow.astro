@@ -1,0 +1,70 @@
+---
+// 導入所有 SVG 元件
+import RegularFs14Left from './svg-astro/flow-arrow-regular-fs14-left.astro';
+import BoldFs14Left from './svg-astro/flow-arrow-bold-fs14-left.astro';
+import RegularFs16Left from './svg-astro/flow-arrow-regular-fs16-left.astro';
+import BoldFs16Left from './svg-astro/flow-arrow-bold-fs16-left.astro';
+import RegularFs18Left from './svg-astro/flow-arrow-regular-fs18-left.astro';
+import BoldFs18Left from './svg-astro/flow-arrow-bold-fs18-left.astro';
+import RegularFs20Left from './svg-astro/flow-arrow-regular-fs20-left.astro';
+import BoldFs20Left from './svg-astro/flow-arrow-bold-fs20-left.astro';
+import RegularFs24Left from './svg-astro/flow-arrow-regular-fs24-left.astro';
+import BoldFs24Left from './svg-astro/flow-arrow-bold-fs24-left.astro';
+/** Style */
+import './FlowArrow.scss';
+
+export interface Props {
+  weight?: 'regular' | 'bold';
+  size?: 'fs14' | 'fs16' | 'fs18' | 'fs20' | 'fs24';
+  direction?: 'left' | 'right';
+  class?: any;
+  [key: string]: any;
+}
+
+const {
+  weight = 'regular',
+  size = 'fs14',
+  direction = 'right',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'flow-arrow',
+  `flow-arrow--${weight}`,
+  `flow-arrow--${size}`,
+  `flow-arrow--${direction}`,
+  className
+].filter(Boolean).join(' ');
+
+// 根據 props 選擇對應的 SVG 元件
+const getSvgComponent = () => {
+  const key = `${weight}-${size}`;
+  const componentMap = {
+    'regular-fs14': RegularFs14Left,
+    'bold-fs14': BoldFs14Left,
+    'regular-fs16': RegularFs16Left,
+    'bold-fs16': BoldFs16Left,
+    'regular-fs18': RegularFs18Left,
+    'bold-fs18': BoldFs18Left,
+    'regular-fs20': RegularFs20Left,
+    'bold-fs20': BoldFs20Left,
+    'regular-fs24': RegularFs24Left,
+    'bold-fs24': BoldFs24Left,
+  };
+  return componentMap[key as keyof typeof componentMap] || RegularFs14Left;
+};
+
+const SvgComponent = getSvgComponent();
+---
+
+<span
+  class={classes}
+  data-flow-arrow
+  data-weight={weight}
+  data-size={size}
+  data-direction={direction}
+  {...rest}
+>
+  <SvgComponent />
+</span>

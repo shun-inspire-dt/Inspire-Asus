@@ -1,0 +1,195 @@
+---
+// 導入所有 SVG 元件 - Regular
+import Regular12pxDown from './svg-astro/after-arrow-12px-down-regular.astro';
+import Regular12pxUp from './svg-astro/after-arrow-12px-up-regular.astro';
+import Regular13pxDown from './svg-astro/after-arrow-13px-down-regular.astro';
+import Regular13pxUp from './svg-astro/after-arrow-13px-up-regular.astro';
+import Regular14pxDown from './svg-astro/after-arrow-14px-down-regular.astro';
+import Regular14pxUp from './svg-astro/after-arrow-14px-up-regular.astro';
+import Regular16pxDown from './svg-astro/after-arrow-16px-down-regular.astro';
+import Regular16pxUp from './svg-astro/after-arrow-16px-up-regular.astro';
+import Regular18pxDown from './svg-astro/after-arrow-18px-down-regular.astro';
+import Regular18pxUp from './svg-astro/after-arrow-18px-up-regular.astro';
+import Regular20pxDown from './svg-astro/after-arrow-20px-down-regular.astro';
+import Regular20pxUp from './svg-astro/after-arrow-20px-up-regular.astro';
+import Regular24pxDown from './svg-astro/after-arrow-24px-down-regular.astro';
+import Regular24pxUp from './svg-astro/after-arrow-24px-up-regular.astro';
+
+// 導入所有 SVG 元件 - Medium
+import Medium12pxDown from './svg-astro/after-arrow-12px-down-medium.astro';
+import Medium12pxUp from './svg-astro/after-arrow-12px-up-medium.astro';
+import Medium13pxDown from './svg-astro/after-arrow-13px-down-medium.astro';
+import Medium13pxUp from './svg-astro/after-arrow-13px-up-medium.astro';
+import Medium14pxDown from './svg-astro/after-arrow-14px-down-medium.astro';
+import Medium14pxUp from './svg-astro/after-arrow-14px-up-medium.astro';
+import Medium16pxDown from './svg-astro/after-arrow-16px-down-medium.astro';
+import Medium16pxUp from './svg-astro/after-arrow-16px-up-medium.astro';
+import Medium18pxDown from './svg-astro/after-arrow-18px-down-medium.astro';
+import Medium18pxUp from './svg-astro/after-arrow-18px-up-medium.astro';
+import Medium20pxDown from './svg-astro/after-arrow-20px-down-medium.astro';
+import Medium20pxUp from './svg-astro/after-arrow-20px-up-medium.astro';
+import Medium24pxDown from './svg-astro/after-arrow-24px-down-medium.astro';
+import Medium24pxUp from './svg-astro/after-arrow-24px-up-medium.astro';
+
+// 導入所有 SVG 元件 - Bold
+import Bold12pxDown from './svg-astro/after-arrow-12px-down-bold.astro';
+import Bold12pxUp from './svg-astro/after-arrow-12px-up-bold.astro';
+import Bold13pxDown from './svg-astro/after-arrow-13px-down-bold.astro';
+import Bold13pxUp from './svg-astro/after-arrow-13px-up-bold.astro';
+import Bold14pxDown from './svg-astro/after-arrow-14px-down-bold.astro';
+import Bold14pxUp from './svg-astro/after-arrow-14px-up-bold.astro';
+import Bold16pxDown from './svg-astro/after-arrow-16px-down-bold.astro';
+import Bold16pxUp from './svg-astro/after-arrow-16px-up-bold.astro';
+import Bold18pxDown from './svg-astro/after-arrow-18px-down-bold.astro';
+import Bold18pxUp from './svg-astro/after-arrow-18px-up-bold.astro';
+import Bold20pxDown from './svg-astro/after-arrow-20px-down-bold.astro';
+import Bold20pxUp from './svg-astro/after-arrow-20px-up-bold.astro';
+import Bold24pxDown from './svg-astro/after-arrow-24px-down-bold.astro';
+import Bold24pxUp from './svg-astro/after-arrow-24px-up-bold.astro';
+/** Style */
+import './AfterArrow.scss';
+
+export interface Props {
+  fontSize?: '12px' | '13px' | '14px' | '16px' | '18px' | '20px' | '24px';
+  direction?: 'up' | 'down';
+  weight?: 'regular' | 'medium' | 'bold';
+  class?: any;
+  [key: string]: any;
+}
+
+const {
+  fontSize = '12px',
+  direction = 'down',
+  weight = 'regular',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+// 根據 props 獲取對應的 fontMetrics
+const getFontMetrics = (fontSize: string, direction: string, weight: string) => {
+  const fontMetricsMap: Record<string, { fontSize: string; lineHeight: string; fontWidth: string }> = {
+    '12px-down-regular': { fontSize: '12px', lineHeight: '16px', fontWidth: '7px' },
+    '12px-down-medium': { fontSize: '12px', lineHeight: '16px', fontWidth: '7px' },
+    '12px-down-bold': { fontSize: '12px', lineHeight: '16px', fontWidth: '8px' },
+    '13px-down-regular': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-down-medium': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-down-bold': { fontSize: '13px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-down-regular': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-down-medium': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-down-bold': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '16px-down-regular': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-down-medium': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-down-bold': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '18px-down-regular': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-down-medium': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-down-bold': { fontSize: '18px', lineHeight: '24px', fontWidth: '12px' },
+    '20px-down-regular': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-down-medium': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-down-bold': { fontSize: '20px', lineHeight: '26px', fontWidth: '13px' },
+    '24px-down-regular': { fontSize: '24px', lineHeight: '32px', fontWidth: '14px' },
+    '24px-down-medium': { fontSize: '24px', lineHeight: '32px', fontWidth: '14px' },
+    '24px-down-bold': { fontSize: '24px', lineHeight: '32px', fontWidth: '15px' },
+    '12px-up-regular': { fontSize: '12px', lineHeight: '16px', fontWidth: '7px' },
+    '12px-up-medium': { fontSize: '12px', lineHeight: '16px', fontWidth: '8px' },
+    '12px-up-bold': { fontSize: '12px', lineHeight: '16px', fontWidth: '8px' },
+    '13px-up-regular': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-up-medium': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-up-bold': { fontSize: '13px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-up-regular': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-up-medium': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-up-bold': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '16px-up-regular': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-up-medium': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-up-bold': { fontSize: '16px', lineHeight: '22px', fontWidth: '11px' },
+    '18px-up-regular': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-up-medium': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-up-bold': { fontSize: '18px', lineHeight: '24px', fontWidth: '12px' },
+    '20px-up-regular': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-up-medium': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-up-bold': { fontSize: '20px', lineHeight: '26px', fontWidth: '13px' },
+    '24px-up-regular': { fontSize: '24px', lineHeight: '32px', fontWidth: '14px' },
+    '24px-up-medium': { fontSize: '24px', lineHeight: '32px', fontWidth: '15px' },
+    '24px-up-bold': { fontSize: '24px', lineHeight: '32px', fontWidth: '16px' }
+  };
+  
+  const key = `${fontSize}-${direction}-${weight}`;
+  return fontMetricsMap[key] || fontMetricsMap['12px-down-regular'];
+};
+
+const fontMetrics = getFontMetrics(fontSize, direction, weight);
+
+const classes = [
+  'after-arrow',
+  `after-arrow--${weight}`,
+  `after-arrow--${fontSize.replace('px', '')}`,
+  `after-arrow--${direction}`,
+  className
+].filter(Boolean).join(' ');
+
+// 根據 props 選擇對應的 SVG 元件
+const getSvgComponent = () => {
+  const key = `${weight}-${fontSize}-${direction}`;
+  const componentMap = {
+    // Regular variants
+    'regular-12px-down': Regular12pxDown,
+    'regular-12px-up': Regular12pxUp,
+    'regular-13px-down': Regular13pxDown,
+    'regular-13px-up': Regular13pxUp,
+    'regular-14px-down': Regular14pxDown,
+    'regular-14px-up': Regular14pxUp,
+    'regular-16px-down': Regular16pxDown,
+    'regular-16px-up': Regular16pxUp,
+    'regular-18px-down': Regular18pxDown,
+    'regular-18px-up': Regular18pxUp,
+    'regular-20px-down': Regular20pxDown,
+    'regular-20px-up': Regular20pxUp,
+    'regular-24px-down': Regular24pxDown,
+    'regular-24px-up': Regular24pxUp,
+    // Medium variants
+    'medium-12px-down': Medium12pxDown,
+    'medium-12px-up': Medium12pxUp,
+    'medium-13px-down': Medium13pxDown,
+    'medium-13px-up': Medium13pxUp,
+    'medium-14px-down': Medium14pxDown,
+    'medium-14px-up': Medium14pxUp,
+    'medium-16px-down': Medium16pxDown,
+    'medium-16px-up': Medium16pxUp,
+    'medium-18px-down': Medium18pxDown,
+    'medium-18px-up': Medium18pxUp,
+    'medium-20px-down': Medium20pxDown,
+    'medium-20px-up': Medium20pxUp,
+    'medium-24px-down': Medium24pxDown,
+    'medium-24px-up': Medium24pxUp,
+    // Bold variants
+    'bold-12px-down': Bold12pxDown,
+    'bold-12px-up': Bold12pxUp,
+    'bold-13px-down': Bold13pxDown,
+    'bold-13px-up': Bold13pxUp,
+    'bold-14px-down': Bold14pxDown,
+    'bold-14px-up': Bold14pxUp,
+    'bold-16px-down': Bold16pxDown,
+    'bold-16px-up': Bold16pxUp,
+    'bold-18px-down': Bold18pxDown,
+    'bold-18px-up': Bold18pxUp,
+    'bold-20px-down': Bold20pxDown,
+    'bold-20px-up': Bold20pxUp,
+    'bold-24px-down': Bold24pxDown,
+    'bold-24px-up': Bold24pxUp,
+  };
+  return componentMap[key as keyof typeof componentMap] || Regular12pxDown;
+};
+
+const SvgComponent = getSvgComponent();
+---
+
+<span
+  class={classes}
+  style={`width: ${fontMetrics.fontWidth}; height: ${fontMetrics.lineHeight}; color: var(--color-gray-900);`}
+  data-after-arrow
+  data-weight={weight}
+  data-size={fontSize}
+  data-direction={direction}
+  {...rest}
+>
+  <SvgComponent />
+</span>

@@ -1,0 +1,250 @@
+---
+export interface Props {
+  fontSize?: '12px' | '13px' | '14px' | '16px' | '18px' | '20px' | '24px';
+  direction?: 'up' | 'down';
+  weight?: 'regular' | 'medium' | 'bold';
+  class?: any;
+  [key: string]: any;
+}
+
+const {
+  fontSize = '12px',
+  direction = 'down',
+  weight = 'regular',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+// 根據 props 獲取對應的 fontMetrics
+const getFontMetrics = (fontSize: string, direction: string, weight: string) => {
+  const fontMetricsMap: Record<string, { fontSize: string; lineHeight: string; fontWidth: string }> = {
+    '12px-down-regular': { fontSize: '12px', lineHeight: '16px', fontWidth: '7px' },
+    '12px-down-medium': { fontSize: '12px', lineHeight: '16px', fontWidth: '7px' },
+    '12px-down-bold': { fontSize: '12px', lineHeight: '16px', fontWidth: '8px' },
+    '13px-down-regular': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-down-medium': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-down-bold': { fontSize: '13px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-down-regular': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-down-medium': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-down-bold': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '16px-down-regular': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-down-medium': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-down-bold': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '18px-down-regular': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-down-medium': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-down-bold': { fontSize: '18px', lineHeight: '24px', fontWidth: '12px' },
+    '20px-down-regular': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-down-medium': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-down-bold': { fontSize: '20px', lineHeight: '26px', fontWidth: '13px' },
+    '24px-down-regular': { fontSize: '24px', lineHeight: '32px', fontWidth: '14px' },
+    '24px-down-medium': { fontSize: '24px', lineHeight: '32px', fontWidth: '14px' },
+    '24px-down-bold': { fontSize: '24px', lineHeight: '32px', fontWidth: '15px' },
+    '12px-up-regular': { fontSize: '12px', lineHeight: '16px', fontWidth: '7px' },
+    '12px-up-medium': { fontSize: '12px', lineHeight: '16px', fontWidth: '8px' },
+    '12px-up-bold': { fontSize: '12px', lineHeight: '16px', fontWidth: '8px' },
+    '13px-up-regular': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-up-medium': { fontSize: '13px', lineHeight: '18px', fontWidth: '8px' },
+    '13px-up-bold': { fontSize: '13px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-up-regular': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-up-medium': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '14px-up-bold': { fontSize: '14px', lineHeight: '18px', fontWidth: '9px' },
+    '16px-up-regular': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-up-medium': { fontSize: '16px', lineHeight: '22px', fontWidth: '10px' },
+    '16px-up-bold': { fontSize: '16px', lineHeight: '22px', fontWidth: '11px' },
+    '18px-up-regular': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-up-medium': { fontSize: '18px', lineHeight: '24px', fontWidth: '11px' },
+    '18px-up-bold': { fontSize: '18px', lineHeight: '24px', fontWidth: '12px' },
+    '20px-up-regular': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-up-medium': { fontSize: '20px', lineHeight: '26px', fontWidth: '12px' },
+    '20px-up-bold': { fontSize: '20px', lineHeight: '26px', fontWidth: '13px' },
+    '24px-up-regular': { fontSize: '24px', lineHeight: '32px', fontWidth: '14px' },
+    '24px-up-medium': { fontSize: '24px', lineHeight: '32px', fontWidth: '15px' },
+    '24px-up-bold': { fontSize: '24px', lineHeight: '32px', fontWidth: '16px' }
+  };
+  
+  const key = `${fontSize}-${direction}-${weight}`;
+  return fontMetricsMap[key] || fontMetricsMap['12px-down-regular'];
+};
+
+// 獲取對應的 Unicode 字符
+const getUnicodeChar = (fontSize: string, direction: string, weight: string) => {
+  // 基於 nodeId 映射到 Unicode 字符
+  const unicodeMap: Record<string, string> = {
+    '12px-down-regular': '\uE000',
+    '12px-down-medium': '\uE001',
+    '12px-down-bold': '\uE002',
+    '13px-down-regular': '\uE003',
+    '13px-down-medium': '\uE004',
+    '13px-down-bold': '\uE005',
+    '14px-down-regular': '\uE006',
+    '14px-down-medium': '\uE007',
+    '14px-down-bold': '\uE008',
+    '16px-down-regular': '\uE009',
+    '16px-down-medium': '\uE00A',
+    '16px-down-bold': '\uE00B',
+    '18px-down-regular': '\uE00C',
+    '18px-down-medium': '\uE00D',
+    '18px-down-bold': '\uE00E',
+    '20px-down-regular': '\uE00F',
+    '20px-down-medium': '\uE010',
+    '20px-down-bold': '\uE011',
+    '24px-down-regular': '\uE012',
+    '24px-down-medium': '\uE013',
+    '24px-down-bold': '\uE014',
+    '12px-up-regular': '\uE015',
+    '12px-up-medium': '\uE016',
+    '12px-up-bold': '\uE017',
+    '13px-up-regular': '\uE018',
+    '13px-up-medium': '\uE019',
+    '13px-up-bold': '\uE01A',
+    '14px-up-regular': '\uE01B',
+    '14px-up-medium': '\uE01C',
+    '14px-up-bold': '\uE01D',
+    '16px-up-regular': '\uE01E',
+    '16px-up-medium': '\uE01F',
+    '16px-up-bold': '\uE020',
+    '18px-up-regular': '\uE021',
+    '18px-up-medium': '\uE022',
+    '18px-up-bold': '\uE023',
+    '20px-up-regular': '\uE024',
+    '20px-up-medium': '\uE025',
+    '20px-up-bold': '\uE026',
+    '24px-up-regular': '\uE027',
+    '24px-up-medium': '\uE028',
+    '24px-up-bold': '\uE029'
+  };
+  
+  const key = `${fontSize}-${direction}-${weight}`;
+  return unicodeMap[key] || unicodeMap['12px-down-regular'];
+};
+
+const fontMetrics = getFontMetrics(fontSize, direction, weight);
+const unicodeChar = getUnicodeChar(fontSize, direction, weight);
+
+const classes = [
+  'after-arrow-font',
+  `after-arrow-font--${weight}`,
+  `after-arrow-font--${fontSize.replace('px', '')}`,
+  `after-arrow-font--${direction}`,
+  className
+].filter(Boolean).join(' ');
+
+// 根據字體大小獲取對應的 CSS 變數
+const getSizeVariable = (fontSize: string): string => {
+  const sizeMap = {
+    '12px': 'var(--fs-12, 12px)',
+    '13px': 'var(--fs-13, 13px)',
+    '14px': 'var(--fs-14, 14px)',
+    '16px': 'var(--fs-16, 16px)',
+    '18px': 'var(--fs-18, 18px)',
+    '20px': 'var(--fs-20, 20px)',
+    '24px': 'var(--fs-24, 24px)'
+  };
+  return sizeMap[fontSize as keyof typeof sizeMap] || sizeMap['12px'];
+};
+
+const sizeVar = getSizeVariable(fontSize);
+---
+
+<span
+  class={classes}
+  style={`width: ${fontMetrics.fontWidth}; height: ${fontMetrics.lineHeight}; font-size: ${sizeVar}; line-height: ${fontMetrics.lineHeight}; color: var(--color-gray-900);`}
+  data-after-arrow-font
+  data-weight={weight}
+  data-size={fontSize}
+  data-direction={direction}
+  {...rest}
+>{unicodeChar}</span>
+
+<style>
+.after-arrow-font {
+  font-family: 'AsusIconFont', sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  display: inline-block;
+  vertical-align: baseline;
+  
+  /* 確保字體圖示正確顯示 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* 防止文字選取 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 字重變體 */
+.after-arrow-font--regular {
+  font-weight: 400;
+}
+
+.after-arrow-font--medium {
+  font-weight: 500;
+}
+
+.after-arrow-font--bold {
+  font-weight: 700;
+}
+
+/* 尺寸變體 */
+.after-arrow-font--12 {
+  font-size: var(--fs-12, 12px);
+}
+
+.after-arrow-font--13 {
+  font-size: var(--fs-13, 13px);
+}
+
+.after-arrow-font--14 {
+  font-size: var(--fs-14, 14px);
+}
+
+.after-arrow-font--16 {
+  font-size: var(--fs-16, 16px);
+}
+
+.after-arrow-font--18 {
+  font-size: var(--fs-18, 18px);
+}
+
+.after-arrow-font--20 {
+  font-size: var(--fs-20, 20px);
+}
+
+.after-arrow-font--24 {
+  font-size: var(--fs-24, 24px);
+}
+
+/* 方向變體（如需要特殊樣式） */
+.after-arrow-font--up {
+  /* 向上箭頭的特殊樣式 */
+}
+
+.after-arrow-font--down {
+  /* 向下箭頭的特殊樣式 */
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .after-arrow-font {
+    /* 移動端調整 */
+  }
+}
+
+/* 高對比模式支援 */
+@media (prefers-contrast: high) {
+  .after-arrow-font {
+    font-weight: bolder;
+  }
+}
+
+/* 減少動畫偏好支援 */
+@media (prefers-reduced-motion: reduce) {
+  .after-arrow-font {
+    transition: none;
+  }
+}
+</style>

@@ -1,0 +1,36 @@
+---
+// AfterArrow 使用範例
+import AfterArrowComponent from './AfterArrow.astro';
+---
+
+<div class="after-arrow-examples p-8">
+  <h2 class="text-2xl font-bold mb-6">AfterArrow 元件範例</h2>
+  
+  <!-- 所有變體展示 -->
+  <div class="grid grid-cols-7 gap-6">
+    {['down', 'up'].map(direction => 
+      ['regular', 'medium', 'bold'].map(weight =>
+        ['12px', '13px', '14px', '16px', '18px', '20px', '24px'].map(fontSize => (
+          <div class="flex flex-col items-center gap-3 p-4 border border-gray-200 rounded-lg bg-white hover:shadow-md transition-shadow">
+            <AfterArrowComponent 
+              fontSize={fontSize as any} 
+              weight={weight as any} 
+              direction={direction as any} 
+            />
+            <div class="text-center space-y-1">
+              <div class="text-xs font-medium text-gray-700">{weight}</div>
+              <div class="text-xs text-gray-500">{fontSize}</div>
+              <div class="text-xs text-gray-500">{direction}</div>
+            </div>
+          </div>
+        ))
+      )
+    )}
+  </div>
+</div>
+
+<style>
+  .after-arrow-examples {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+</style>
