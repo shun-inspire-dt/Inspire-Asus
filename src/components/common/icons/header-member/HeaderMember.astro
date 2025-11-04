@@ -1,0 +1,69 @@
+---
+/** Common Component */
+import './HeaderMember.scss';
+
+export interface Props {
+  logIn?: 'False' | 'True';
+  status?: 'normal' | 'hover';
+  colorMode?: 'light' | 'Dark';
+  class?: any;
+}
+
+const { 
+  logIn = 'False', 
+  status = 'normal', 
+  colorMode = 'light',
+  class: className = ''
+} = Astro.props;
+
+// 根據 props 決定使用哪個 SVG 和樣式
+const isActive = logIn === 'True';
+const getVariantClass = () => {
+  const baseClass = 'header-member';
+  const loginClass = logIn === 'True' ? 'header-member--active' : 'header-member--inactive';
+  const statusClass = status === 'hover' ? 'header-member--hover' : 'header-member--normal';
+  const colorClass = colorMode === 'Dark' ? 'header-member--dark' : 'header-member--light';
+  
+  return `${baseClass} ${loginClass} ${statusClass} ${colorClass}`;
+};
+---
+
+<span class={`${getVariantClass()} ${className}`}>
+  {isActive ? (
+    <!-- Active member icon with green dot -->
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle 
+        cx="6.59998" 
+        cy="3.97461" 
+        r="3.375" 
+        stroke="currentColor" 
+        stroke-width="1.2"
+      />
+      <path 
+        d="M6.59961 6.75C7.92886 6.75 9.16538 7.14527 10.2012 7.82129C9.81087 8.02254 9.45475 8.28095 9.14648 8.58789C8.38782 8.18115 7.52073 7.94922 6.59961 7.94922C3.82027 7.94942 1.53187 10.0502 1.2334 12.75H8.05469C8.17566 13.1813 8.36157 13.5851 8.60352 13.9492H0.599609C0.268418 13.949 0 13.6808 0 13.3496C0.000211066 9.70484 2.95484 6.75021 6.59961 6.75Z" 
+        fill="currentColor"
+      />
+      <circle 
+        cx="11.9827" 
+        cy="11.5996" 
+        r="3" 
+        class="header-member__dot"
+      />
+    </svg>
+  ) : (
+    <!-- Inactive member icon -->
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle 
+        cx="6.59998" 
+        cy="3.97461" 
+        r="3.375" 
+        stroke="currentColor" 
+        stroke-width="1.2"
+      />
+      <path 
+        d="M6.59961 6.75C10.2446 6.75 13.199 9.70471 13.1992 13.3496C13.1992 13.681 12.931 13.9492 12.5996 13.9492H0.599609C0.268418 13.949 0 13.6808 0 13.3496C0.000211066 9.70484 2.95484 6.75021 6.59961 6.75ZM6.59961 7.94922C3.82027 7.94942 1.53187 10.0502 1.2334 12.75H11.9658C11.6673 10.0501 9.3791 7.94922 6.59961 7.94922Z" 
+        fill="currentColor"
+      />
+    </svg>
+  )}
+</span>

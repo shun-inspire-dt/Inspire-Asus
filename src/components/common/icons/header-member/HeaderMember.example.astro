@@ -1,0 +1,164 @@
+---
+import HeaderMemberIcon from './HeaderMember.astro';
+---
+
+<div class="header-member-examples">
+  <h2 class="text-2xl font-bold mb-6">Header Member Icon Examples</h2>
+  
+  <!-- Light Mode Examples -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Light Mode</h3>
+    <div class="grid grid-cols-4 gap-6 p-6 bg-white rounded-lg border">
+      
+      <!-- Logged Out States -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded">
+          <HeaderMemberIcon logIn="False" status="normal" colorMode="light" />
+        </div>
+        <p class="text-sm text-gray-600">Logged Out<br/>Normal</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded">
+          <HeaderMemberIcon logIn="False" status="hover" colorMode="light" />
+        </div>
+        <p class="text-sm text-gray-600">Logged Out<br/>Hover</p>
+      </div>
+      
+      <!-- Logged In States -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded">
+          <HeaderMemberIcon logIn="True" status="normal" colorMode="light" />
+        </div>
+        <p class="text-sm text-gray-600">Logged In<br/>Normal</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded">
+          <HeaderMemberIcon logIn="True" status="hover" colorMode="light" />
+        </div>
+        <p class="text-sm text-gray-600">Logged In<br/>Hover</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark Mode Examples -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Dark Mode</h3>
+    <div class="grid grid-cols-4 gap-6 p-6 bg-gray-900 rounded-lg border">
+      
+      <!-- Logged Out States -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-800 rounded">
+          <HeaderMemberIcon logIn="False" status="normal" colorMode="Dark" />
+        </div>
+        <p class="text-sm text-gray-300">Logged Out<br/>Normal</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-800 rounded">
+          <HeaderMemberIcon logIn="False" status="hover" colorMode="Dark" />
+        </div>
+        <p class="text-sm text-gray-300">Logged Out<br/>Hover</p>
+      </div>
+      
+      <!-- Logged In States -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-800 rounded">
+          <HeaderMemberIcon logIn="True" status="normal" colorMode="Dark" />
+        </div>
+        <p class="text-sm text-gray-300">Logged In<br/>Normal</p>
+      </div>
+      
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-800 rounded">
+          <HeaderMemberIcon logIn="True" status="hover" colorMode="Dark" />
+        </div>
+        <p class="text-sm text-gray-300">Logged In<br/>Hover</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Examples -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Interactive Examples</h3>
+    <div class="p-6 bg-gray-50 rounded-lg border">
+      <div class="flex items-center gap-4 mb-4">
+        <span class="text-sm font-medium">Header with member icon:</span>
+        <div class="flex items-center gap-2 p-2 bg-white rounded shadow-sm">
+          <span class="text-sm">Welcome back!</span>
+          <HeaderMemberIcon logIn="True" status="normal" colorMode="light" class="ml-2" />
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <span class="text-sm font-medium">Navigation item:</span>
+        <button class="flex items-center gap-2 p-2 bg-white rounded shadow-sm hover:bg-gray-100 transition-colors">
+          <HeaderMemberIcon logIn="False" status="normal" colorMode="light" />
+          <span class="text-sm">Sign In</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage Code Examples -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Usage Examples</h3>
+    <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
+      <div class="mb-2">// Basic usage</div>
+      <div class="text-white">&lt;HeaderMember /&gt;</div>
+      <br/>
+      <div class="mb-2">// Logged in user</div>
+      <div class="text-white">&lt;HeaderMember logIn="True" /&gt;</div>
+      <br/>
+      <div class="mb-2">// Dark mode with hover state</div>
+      <div class="text-white">&lt;HeaderMember logIn="True" status="hover" colorMode="Dark" /&gt;</div>
+      <br/>
+      <div class="mb-2">// With custom class</div>
+      <div class="text-white">&lt;HeaderMember class="custom-class" /&gt;</div>
+    </div>
+  </div>
+
+  <!-- Props Documentation -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Props</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="border border-gray-300 px-4 py-2 text-left">Prop</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Type</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Default</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2 font-mono">logIn</td>
+            <td class="border border-gray-300 px-4 py-2">'False' | 'True'</td>
+            <td class="border border-gray-300 px-4 py-2">'False'</td>
+            <td class="border border-gray-300 px-4 py-2">Whether the user is logged in</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2 font-mono">status</td>
+            <td class="border border-gray-300 px-4 py-2">'normal' | 'hover'</td>
+            <td class="border border-gray-300 px-4 py-2">'normal'</td>
+            <td class="border border-gray-300 px-4 py-2">The interaction state of the icon</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2 font-mono">colorMode</td>
+            <td class="border border-gray-300 px-4 py-2">'light' | 'Dark'</td>
+            <td class="border border-gray-300 px-4 py-2">'light'</td>
+            <td class="border border-gray-300 px-4 py-2">The color theme mode</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2 font-mono">class</td>
+            <td class="border border-gray-300 px-4 py-2">string</td>
+            <td class="border border-gray-300 px-4 py-2">''</td>
+            <td class="border border-gray-300 px-4 py-2">Additional CSS classes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
