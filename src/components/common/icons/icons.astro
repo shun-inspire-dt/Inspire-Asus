@@ -1,0 +1,61 @@
+---
+/** Icons Components */
+/** Style */
+import './icons.scss';
+
+export const icons = {
+};
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    icon: keyof typeof icons;
+    width?: number;
+    height?: number;
+    fill?: string;
+    strokeWidth?: number;
+    strokeColor?: string;
+    custom?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    icon,
+    width,
+    height,
+    fill,
+    strokeWidth = 0,
+    strokeColor,
+    custom
+} = Astro.props as Props;
+const MyIcon = icons[icon];
+---
+
+<Fragment>
+    {
+        MyIcon && (
+            <div
+                id={IDName}
+                class:list={[className, 'fa-Icons', icon, { customStyle: custom }]}
+                style={{
+                    ...style,
+                    ...(!isNaN(width as number) ? { '--width': `${width as number / 16}rem` } : {}),
+                    ...(!isNaN(height as number) ? { '--height': `${height as number / 16}rem` } : {}),
+                    ...(fill ? { '--fill': fill.charAt(0) === '#' ? fill : `var(--color-${fill})` } : {}),
+                    ...(!isNaN(strokeWidth) ? { '--strokeWidth': `${strokeWidth / 16}rem` } : {}),
+                    ...(strokeColor
+                        ? { '--stroke': strokeColor.charAt(0) === '#' ? strokeColor : `var(--color-${strokeColor})` }
+                        : {})
+                }}
+                {...attribute}
+            >
+                {/** <MyIcon /> */}
+            </div>
+        )
+    }
+</Fragment>
