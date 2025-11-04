@@ -1,0 +1,55 @@
+.social-icon {
+    --social-icon-size-lg: 32px;
+    --social-icon-size-md: 24px;
+    --social-icon-size-sm: 20px;
+    display: inline-block;
+    vertical-align: middle;
+
+    /* 確保 SVG 填滿容器 */
+    svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
+/* 尺寸變體 */
+.social-icon--lg {
+    width: var(--social-icon-size-lg);
+    height: var(--social-icon-size-lg);
+}
+
+.social-icon--md {
+    width: var(--social-icon-size-md);
+    height: var(--social-icon-size-md);
+}
+
+.social-icon--sm {
+    width: var(--social-icon-size-sm);
+    height: var(--social-icon-size-sm);
+}
+
+/* 高對比模式支援 */
+@media (prefers-contrast: high) {
+    .social-icon svg {
+        filter: contrast(1.2);
+    }
+}
+
+/* 減少動畫偏好支援 */
+@media (prefers-reduced-motion: reduce) {
+    .social-icon {
+        transition: none;
+    }
+
+    .social-icon:hover {
+        transform: none;
+    }
+}
+
+/* 無障礙焦點樣式 */
+.social-icon:focus-visible {
+    outline: 2px solid var(--color-primary, #0066cc);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
