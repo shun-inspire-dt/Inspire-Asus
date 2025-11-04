@@ -1,0 +1,67 @@
+// Search Icon Styles
+// 搜尋圖示樣式
+
+.search-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5px;
+    width: var(--icon-size, var(--fs-18));
+    height: var(--icon-size, var(--fs-18));
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    .search-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+
+        path {
+            transition: all 0.2s ease-in-out;
+        }
+    }
+
+    // Mode 樣式
+    &.mode-light {
+        // State 樣式
+        &.state-normal {
+            --icon-color: var(--color-gray-900);
+        }
+    
+        &.state-placeholder {
+            --icon-color: var(--color-gray-700);
+        }
+    
+        &.state-disable {
+            --icon-color: var(--color-gray-300);
+        }
+    }
+    
+    &.mode-dark {
+        // State 樣式
+        &.state-normal {
+            --icon-color: var(--color-white);
+        }
+    
+        &.state-placeholder {
+            --icon-color: var(--color-gray-300);
+        }
+    
+        &.state-disable {
+            --icon-color: var(--color-gray-300);
+        }
+    }
+
+    &.state-disable {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+
+    // Hover 效果（只在非 disable 狀態下）
+    // &:not(.state-disable):hover {
+    //     .search-svg path {
+    //         opacity: 0.8;
+    //     }
+    // }
+}

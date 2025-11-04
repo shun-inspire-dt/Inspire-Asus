@@ -1,0 +1,57 @@
+---
+/** Search Icon Component */
+/** Style */
+import './search.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    mode?: "light" | "dark";
+    state?: "normal" | "placeholder" | "disable";
+    size?: number;
+    color?: string;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    mode = "light",
+    state = "normal",
+    size = 20,
+    color
+} = Astro.props as Props;
+
+const searchPath = "M10.5363 10.5359L13.6 13.5996M12.0216 6.30986C12.0216 9.46453 9.46489 12.0212 6.31023 12.0212C3.15773 12.0212 0.599976 9.46453 0.599976 6.30986C0.599976 3.15736 3.15664 0.599609 6.31023 0.599609C9.46489 0.599609 12.0216 3.15628 12.0216 6.30986Z";
+---
+
+<span
+    id={IDName}
+    class:list={[className, 'search-icon', `mode-${mode}`, `state-${state}`]}
+    style={{
+        ...style,
+        '--icon-size': `${size}px`,
+        '--icon-color': color ? (color.charAt(0) === '#' ? color : `var(--color-${color})`) : undefined
+    }}
+    {...attribute}
+>
+    <svg 
+        width="15" 
+        height="15" 
+        viewBox="0 0 15 15"
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        class="search-svg"
+    >
+        <path 
+            d={searchPath}
+            fill="none"
+            stroke="var(--icon-color)"
+            stroke-width="1"
+            stroke-linecap="round"
+        />
+    </svg>
+</span>
