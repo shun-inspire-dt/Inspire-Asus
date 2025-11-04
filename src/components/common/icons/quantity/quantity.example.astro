@@ -1,0 +1,228 @@
+---
+import QuantityLabel from './quantity.astro';
+---
+
+<div class="quantity-examples">
+  <h2 class="text-2xl font-bold mb-6">Quantity Label Examples</h2>
+  
+  <!-- Basic Examples -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">基本範例</h3>
+    <div class="flex items-center gap-4 p-6 bg-white rounded-lg border">
+      
+      <!-- Single Digit -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded flex items-center justify-center">
+          <QuantityLabel quantity="1" />
+        </div>
+        <p class="text-sm text-gray-600">單位數</p>
+      </div>
+      
+      <!-- Default -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded flex items-center justify-center">
+          <QuantityLabel />
+        </div>
+        <p class="text-sm text-gray-600">預設 (2)</p>
+      </div>
+      
+      <!-- Double Digit -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded flex items-center justify-center">
+          <QuantityLabel quantity="99" />
+        </div>
+        <p class="text-sm text-gray-600">雙位數</p>
+      </div>
+      
+      <!-- Triple Digit -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded flex items-center justify-center">
+          <QuantityLabel quantity="999" />
+        </div>
+        <p class="text-sm text-gray-600">三位數</p>
+      </div>
+      
+      <!-- Number Type -->
+      <div class="text-center">
+        <div class="mb-2 p-4 bg-gray-50 rounded flex items-center justify-center">
+          <QuantityLabel quantity={5} />
+        </div>
+        <p class="text-sm text-gray-600">數字類型</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage in Context -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">實際使用情境</h3>
+    <div class="space-y-4 p-6 bg-gray-50 rounded-lg border">
+      
+      <!-- Shopping Cart -->
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 bg-gray-400 rounded flex items-center justify-center">
+          🛒
+        </div>
+        <span class="text-sm">購物車</span>
+        <QuantityLabel quantity="3" />
+      </div>
+      
+      <!-- Notifications -->
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 bg-gray-400 rounded flex items-center justify-center">
+          🔔
+        </div>
+        <span class="text-sm">通知</span>
+        <QuantityLabel quantity="12" />
+      </div>
+      
+      <!-- Messages -->
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 bg-gray-400 rounded flex items-center justify-center">
+          💬
+        </div>
+        <span class="text-sm">訊息</span>
+        <QuantityLabel quantity="99+" />
+      </div>
+      
+      <!-- Badge on Button -->
+      <div class="relative inline-block">
+        <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+          查看項目
+        </button>
+        <div class="absolute -top-2 -right-2">
+          <QuantityLabel quantity="7" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Different Sizes Demo -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">不同大小展示</h3>
+    <div class="flex items-center gap-6 p-6 bg-white rounded-lg border">
+      
+      <!-- Small Context -->
+      <div class="text-center">
+        <div class="mb-2 p-2 bg-gray-50 rounded flex items-center justify-center">
+          <div class="text-sm flex items-center gap-2">
+            <span>小圖示</span>
+            <QuantityLabel quantity="1" class="scale-75" />
+          </div>
+        </div>
+        <p class="text-sm text-gray-600">縮小版本</p>
+      </div>
+      
+      <!-- Normal Context -->
+      <div class="text-center">
+        <div class="mb-2 p-2 bg-gray-50 rounded flex items-center justify-center">
+          <div class="flex items-center gap-2">
+            <span>標準圖示</span>
+            <QuantityLabel quantity="5" />
+          </div>
+        </div>
+        <p class="text-sm text-gray-600">標準版本</p>
+      </div>
+      
+      <!-- Large Context -->
+      <div class="text-center">
+        <div class="mb-2 p-2 bg-gray-50 rounded flex items-center justify-center">
+          <div class="text-lg flex items-center gap-2">
+            <span>大圖示</span>
+            <QuantityLabel quantity="9" class="scale-125" />
+          </div>
+        </div>
+        <p class="text-sm text-gray-600">放大版本</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Usage Code Examples -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">使用範例</h3>
+    <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
+      <div class="mb-2">// 基本使用</div>
+      <div class="text-white">&lt;QuantityLabel /&gt;</div>
+      <br/>
+      <div class="mb-2">// 指定數量 (字串)</div>
+      <div class="text-white">&lt;QuantityLabel quantity="5" /&gt;</div>
+      <br/>
+      <div class="mb-2">// 指定數量 (數字)</div>
+      <div class="text-white">&lt;QuantityLabel quantity={10} /&gt;</div>
+      <br/>
+      <div class="mb-2">// 自定義樣式</div>
+      <div class="text-white">&lt;QuantityLabel quantity="99+" class="scale-75" /&gt;</div>
+    </div>
+  </div>
+
+  <!-- Props Documentation -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">Props</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="border border-gray-300 px-4 py-2 text-left">Prop</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Type</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Default</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2 font-mono">quantity</td>
+            <td class="border border-gray-300 px-4 py-2">string | number</td>
+            <td class="border border-gray-300 px-4 py-2">"2"</td>
+            <td class="border border-gray-300 px-4 py-2">要顯示的數量或文字</td>
+          </tr>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2 font-mono">class</td>
+            <td class="border border-gray-300 px-4 py-2">any</td>
+            <td class="border border-gray-300 px-4 py-2">''</td>
+            <td class="border border-gray-300 px-4 py-2">額外的 CSS 類別</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Design Specifications -->
+  <div class="mb-8">
+    <h3 class="text-xl font-semibold mb-4">設計規格</h3>
+    <div class="grid grid-cols-2 gap-4 p-6 bg-gray-50 rounded-lg border">
+      <div>
+        <h4 class="font-medium mb-2">尺寸</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>• 最小寬度: 16px</li>
+          <li>• 最小高度: 16px</li>
+          <li>• 內邊距: 2px 4px</li>
+          <li>• 圓角: 20px</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-medium mb-2">字體</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>• 字體: Roboto</li>
+          <li>• 大小: 12px</li>
+          <li>• 粗細: 400 (Regular)</li>
+          <li>• 行高: 0</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-medium mb-2">顏色</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>• 背景: var(--color-blue-500)</li>
+          <li>• 文字: var(--color-white)</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-medium mb-2">特性</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>• 響應式寬度</li>
+          <li>• 文字置中</li>
+          <li>• 不換行</li>
+          <li>• 支援數字和文字</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

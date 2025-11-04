@@ -1,0 +1,61 @@
+---
+/** Common Component */
+import './HeaderInquery.scss';
+import QuantityLabel from '../quantity/quantity.astro';
+
+export interface Props {
+    haveItems?: 'false' | 'true' | 'header';
+    status?: 'normal' | 'hover' | 'cart';
+    colorMode?: 'light' | 'false' | 'true';
+    state?: 'normal' | 'hover';
+    mode?: 'light' | 'dark';
+    quantity?: string | number;
+    class?: any;
+}
+
+const {
+    haveItems = 'false',
+    status = 'normal',
+    colorMode = 'light',
+    state = 'normal',
+    mode = 'light',
+    quantity = '2',
+    class: className = ''
+} = Astro.props;
+
+// 根據 props 決定樣式類別
+const getVariantClass = () => {
+    const baseClass = 'header-inquery';
+    const itemsClass = `header-inquery--${haveItems.toLowerCase()}`;
+    const statusClass = `header-inquery--${status.toLowerCase()}`;
+    const colorClass = `header-inquery--${colorMode.toLowerCase()}`;
+    const stateClass = `header-inquery--${state}`;
+    const modeClass = `header-inquery--${mode.toLowerCase()}`;
+
+    return `${baseClass} ${itemsClass} ${statusClass} ${colorClass} ${stateClass} ${modeClass}`;
+};
+
+// 判斷是否需要顯示數量標籤
+const hasQuantityLabel = haveItems === 'true' || (haveItems === 'header' && colorMode === 'true');
+---
+
+<span class={`${getVariantClass()} ${className}`}>
+    <!-- Inline SVG -->
+    <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M0.887134 4.04628H4.76471V0.886767M3.75941 8.06747L5.19555 9.50361L8.06784 6.63133M0.599976 4.11815L4.83659 0.599609H10.0788C10.7133 0.599609 11.2277 1.114 11.2277 1.74852V12.9507C11.2277 13.5852 10.7133 14.0996 10.0788 14.0996H1.74889C1.11436 14.0996 0.599976 13.5852 0.599976 12.9507V4.11815Z"
+            stroke="currentColor"
+            stroke-width="1.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+    </svg>
+
+    <!-- 數量標籤 (條件顯示) -->
+    {
+        hasQuantityLabel && (
+            <span class="header-inquery__quantity">
+                <QuantityLabel quantity={quantity} />
+            </span>
+        )
+    }
+</span>

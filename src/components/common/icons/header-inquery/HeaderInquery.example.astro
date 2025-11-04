@@ -1,0 +1,322 @@
+---
+import HeaderInqueryIcon from './HeaderInquery.astro';
+---
+
+<div class="header-inquery-examples">
+    <h2 class="text-2xl font-bold mb-6">Header Inquery Icon Examples</h2>
+
+    <!-- Light Mode Examples -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">Light Mode</h3>
+        <div class="grid grid-cols-4 gap-6 p-6 bg-white rounded-lg border">
+            <!-- No Items States -->
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon haveItems="false" status="normal" colorMode="light" state="normal" mode="light" />
+                </div>
+                <p class="text-sm text-gray-600">無項目<br />正常狀態</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon haveItems="false" status="hover" colorMode="light" state="hover" mode="light" />
+                </div>
+                <p class="text-sm text-gray-600">無項目<br />懸停狀態</p>
+            </div>
+
+            <!-- Has Items States -->
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="normal"
+                        colorMode="light"
+                        state="normal"
+                        mode="light"
+                        quantity="3"
+                    />
+                </div>
+                <p class="text-sm text-gray-600">有項目<br />正常狀態</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="hover"
+                        colorMode="light"
+                        state="hover"
+                        mode="light"
+                        quantity="5"
+                    />
+                </div>
+                <p class="text-sm text-gray-600">有項目<br />懸停狀態</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Examples -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">Dark Mode</h3>
+        <div class="grid grid-cols-4 gap-6 p-6 bg-gray-900 rounded-lg border">
+            <!-- Header Cart States -->
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-800 rounded">
+                    <HeaderInqueryIcon haveItems="header" status="cart" colorMode="false" state="normal" mode="dark" />
+                </div>
+                <p class="text-sm text-gray-300">Header Cart<br />無項目正常</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-800 rounded">
+                    <HeaderInqueryIcon haveItems="header" status="cart" colorMode="false" state="hover" mode="dark" />
+                </div>
+                <p class="text-sm text-gray-300">Header Cart<br />無項目懸停</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-800 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="header"
+                        status="cart"
+                        colorMode="true"
+                        state="normal"
+                        mode="dark"
+                        quantity="7"
+                    />
+                </div>
+                <p class="text-sm text-gray-300">Header Cart<br />有項目正常</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-800 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="header"
+                        status="cart"
+                        colorMode="true"
+                        state="hover"
+                        mode="dark"
+                        quantity="12"
+                    />
+                </div>
+                <p class="text-sm text-gray-300">Header Cart<br />有項目懸停</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Examples -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">實際使用情境</h3>
+        <div class="space-y-4 p-6 bg-gray-50 rounded-lg border">
+            <!-- Shopping Cart -->
+            <div class="flex items-center gap-3">
+                <span class="text-sm font-medium">購物車:</span>
+                <HeaderInqueryIcon haveItems="true" status="normal" colorMode="light" state="normal" mode="light" quantity="3" />
+                <span class="text-sm text-gray-600">有 3 個項目</span>
+            </div>
+
+            <!-- Empty Cart -->
+            <div class="flex items-center gap-3">
+                <span class="text-sm font-medium">空購物車:</span>
+                <HeaderInqueryIcon haveItems="false" status="normal" colorMode="light" state="normal" mode="light" />
+                <span class="text-sm text-gray-600">無項目</span>
+            </div>
+
+            <!-- Header Navigation -->
+            <div class="flex items-center gap-3">
+                <span class="text-sm font-medium">Header 導航:</span>
+                <HeaderInqueryIcon haveItems="header" status="cart" colorMode="true" state="normal" mode="dark" quantity="99+" />
+                <span class="text-sm text-gray-600">深色模式，99+ 項目</span>
+            </div>
+
+            <!-- Interactive Button -->
+            <div class="relative inline-block">
+                <button
+                    class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                >
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="normal"
+                        colorMode="true"
+                        state="normal"
+                        mode="dark"
+                        quantity="5"
+                    />
+                    <span>查看購物車</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Different Quantities -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">不同數量展示</h3>
+        <div class="flex items-center gap-6 p-6 bg-white rounded-lg border">
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="normal"
+                        colorMode="light"
+                        state="normal"
+                        mode="light"
+                        quantity="1"
+                    />
+                </div>
+                <p class="text-sm text-gray-600">1 項目</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="normal"
+                        colorMode="light"
+                        state="normal"
+                        mode="light"
+                        quantity="9"
+                    />
+                </div>
+                <p class="text-sm text-gray-600">9 項目</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="normal"
+                        colorMode="light"
+                        state="normal"
+                        mode="light"
+                        quantity="99"
+                    />
+                </div>
+                <p class="text-sm text-gray-600">99 項目</p>
+            </div>
+
+            <div class="text-center">
+                <div class="mb-2 p-4 bg-gray-50 rounded">
+                    <HeaderInqueryIcon
+                        haveItems="true"
+                        status="normal"
+                        colorMode="light"
+                        state="normal"
+                        mode="light"
+                        quantity="999+"
+                    />
+                </div>
+                <p class="text-sm text-gray-600">999+ 項目</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usage Code Examples -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">使用範例</h3>
+        <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
+            <div class="mb-2">// 基本使用 (無項目)</div>
+            <div class="text-white">&lt;HeaderInqueryIcon /&gt;</div>
+            <br />
+            <div class="mb-2">// 有項目狀態</div>
+            <div class="text-white">&lt;HeaderInqueryIcon haveItems="true" quantity="5" /&gt;</div>
+            <br />
+            <div class="mb-2">// 懸停狀態</div>
+            <div class="text-white">&lt;HeaderInqueryIcon state="hover" status="hover" /&gt;</div>
+            <br />
+            <div class="mb-2">// 深色模式</div>
+            <div class="text-white">
+                &lt;HeaderInqueryIcon haveItems="header" status="cart" colorMode="true" mode="dark" quantity="12" /&gt;
+            </div>
+        </div>
+    </div>
+
+    <!-- Props Documentation -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">Props</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="border border-gray-300 px-4 py-2 text-left">Prop</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Type</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Default</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">haveItems</td>
+                        <td class="border border-gray-300 px-4 py-2">'false' | 'true' | 'header'</td>
+                        <td class="border border-gray-300 px-4 py-2">'false'</td>
+                        <td class="border border-gray-300 px-4 py-2">是否有項目</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">status</td>
+                        <td class="border border-gray-300 px-4 py-2">'normal' | 'hover' | 'cart'</td>
+                        <td class="border border-gray-300 px-4 py-2">'normal'</td>
+                        <td class="border border-gray-300 px-4 py-2">狀態類型</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">colorMode</td>
+                        <td class="border border-gray-300 px-4 py-2">'light' | 'false' | 'true'</td>
+                        <td class="border border-gray-300 px-4 py-2">'light'</td>
+                        <td class="border border-gray-300 px-4 py-2">顏色模式</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">state</td>
+                        <td class="border border-gray-300 px-4 py-2">'normal' | 'hover'</td>
+                        <td class="border border-gray-300 px-4 py-2">'normal'</td>
+                        <td class="border border-gray-300 px-4 py-2">互動狀態</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">mode</td>
+                        <td class="border border-gray-300 px-4 py-2">'light' | 'dark'</td>
+                        <td class="border border-gray-300 px-4 py-2">'light'</td>
+                        <td class="border border-gray-300 px-4 py-2">主題模式</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">quantity</td>
+                        <td class="border border-gray-300 px-4 py-2">string | number</td>
+                        <td class="border border-gray-300 px-4 py-2">'2'</td>
+                        <td class="border border-gray-300 px-4 py-2">數量標籤顯示的數字</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2 font-mono">class</td>
+                        <td class="border border-gray-300 px-4 py-2">any</td>
+                        <td class="border border-gray-300 px-4 py-2">''</td>
+                        <td class="border border-gray-300 px-4 py-2">額外的 CSS 類別</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Color Variables -->
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">顏色變數</h3>
+        <div class="grid grid-cols-2 gap-4 p-6 bg-gray-50 rounded-lg border">
+            <div>
+                <h4 class="font-medium mb-2">淺色模式</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• 正常: <code>var(--color-gray-700, #4d4d4d)</code></li>
+                    <li>• 懸停: <code>var(--color-gray-900, #181818)</code></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-medium mb-2">深色模式</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• 無項目: <code>var(--color-gray-300, #b3b3b3)</code></li>
+                    <li>• 有項目: <code>var(--color-gray-700, #4d4d4d)</code></li>
+                    <li>• 懸停: <code>var(--color-gray-900, #181818)</code></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-medium mb-2">數量標籤</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• 背景: <code>var(--color-blue-500, #006ce1)</code></li>
+                    <li>• 文字: <code>var(--color-white, #ffffff)</code></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
