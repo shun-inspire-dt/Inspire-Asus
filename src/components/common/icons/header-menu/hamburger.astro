@@ -1,0 +1,36 @@
+---
+/** Hamburger Icon Component */
+/** Style */
+import './header-menu.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    size?: number;
+    color?: string;
+    mode?: 'light' | 'dark';
+}
+
+const { IDName, className, style, attribute = {}, size = 24, color, mode = 'light' } = Astro.props as Props;
+---
+
+<span
+    id={IDName}
+    class:list={[className, 'hamburger-icon', `mode-${mode}`]}
+    style={{
+        ...style,
+        '--icon-size': size ? `${size}px` : undefined,
+        '--icon-color': color ? color.charAt(0) === '#' ? color : `var(--color-${color})` : undefined
+    }}
+    {...attribute}
+>
+    <svg width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg" class="hamburger-svg">
+        <path
+            d="M0.599976 6.09961H15.6M0.599976 0.599609H15.6M0.599976 11.5996H15.6"
+            stroke="var(--icon-color)"
+            stroke-width="1"
+            stroke-linecap="round"></path>
+    </svg>
+</span>

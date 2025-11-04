@@ -1,0 +1,36 @@
+---
+/** Cross Icon Component */
+/** Style */
+import './header-menu.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    size?: number;
+    color?: string;
+    mode?: 'light' | 'dark';
+}
+
+const { IDName, className, style, attribute = {}, size = 24, color, mode = 'light' } = Astro.props as Props;
+---
+
+<span
+    id={IDName}
+    class:list={[className, 'cross-icon', `mode-${mode}`]}
+    style={{
+        ...style,
+        '--icon-size': size ? `${size}px` : undefined,
+        '--icon-color': color ? color.charAt(0) === '#' ? color : `var(--color-${color})` : undefined
+    }}
+    {...attribute}
+>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="cross-svg">
+        <path
+            d="M12.6 0.599609L0.599976 12.5996M0.599976 0.599609L12.6 12.5996"
+            stroke="var(--icon-color)"
+            stroke-width="1"
+            stroke-linecap="round"></path>
+    </svg>
+</span>

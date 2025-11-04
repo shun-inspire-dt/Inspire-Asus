@@ -1,0 +1,50 @@
+---
+/** Header Menu Icon Set Component */
+/** Style */
+import './header-menu.scss';
+
+import Sandwich from './sandwich.astro';
+import Hamburger from './hamburger.astro';
+import Cross from './cross.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    type: "sandwich" | "hamburger" | "cross";
+    size?: number;
+    color?: string;
+    mode?: "light" | "dark";
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    type,
+    size = 24,
+    color,
+    mode = "light"
+} = Astro.props as Props;
+
+// Component mapping
+const iconComponents = {
+    sandwich: Sandwich,
+    hamburger: Hamburger,
+    cross: Cross
+};
+
+const IconComponent = iconComponents[type];
+---
+
+<IconComponent
+    IDName={IDName}
+    className={className}
+    style={style}
+    attribute={attribute}
+    size={size}
+    color={color}
+    mode={mode}
+/>

@@ -1,0 +1,36 @@
+---
+/** Sandwich Icon Component */
+/** Style */
+import './header-menu.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    size?: number;
+    color?: string;
+    mode?: 'light' | 'dark';
+}
+
+const { IDName, className, style, attribute = {}, size = 24, color, mode = 'light' } = Astro.props as Props;
+---
+
+<span
+    id={IDName}
+    class:list={[className, 'sandwich-icon', `mode-${mode}`]}
+    style={{
+        ...style,
+        '--icon-size': size ? `${size}px` : undefined,
+        '--icon-color': color ? color.charAt(0) === '#' ? color : `var(--color-${color})` : undefined
+    }}
+    {...attribute}
+>
+    <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg" class="sandwich-svg">
+        <path
+            d="M0.600006 0.599609C6.06735 0.599609 9.13267 0.599609 14.6 0.599609M0.600006 8.59961H14.6"
+            stroke="var(--icon-color)"
+            stroke-width="1.2"
+            stroke-linecap="round"></path>
+    </svg>
+</span>

@@ -1,0 +1,351 @@
+---
+/** Header Menu Icons Example Component */
+import Sandwich from './sandwich.astro';
+import Hamburger from './hamburger.astro';
+import Cross from './cross.astro';
+import HeaderMenuIcon from './header-menu.astro';
+---
+
+<section class="header-menu-examples">
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold mb-6">Header Menu Icons</h2>
+        
+        <!-- 基本圖示展示 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">基本圖示</h3>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="text-center p-4 border rounded-lg">
+                    <h4 class="text-sm font-medium mb-3">Sandwich</h4>
+                    <Sandwich size={18} />
+                </div>
+                <div class="text-center p-4 border rounded-lg">
+                    <h4 class="text-sm font-medium mb-3">Hamburger</h4>
+                    <Hamburger size={18} />
+                </div>
+                <div class="text-center p-4 border rounded-lg">
+                    <h4 class="text-sm font-medium mb-3">Cross</h4>
+                    <Cross size={18} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- Light Mode -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">Light Mode (gray-700)</h3>
+            <div class="flex items-center gap-6 p-4 bg-white border rounded-lg">
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Sandwich</div>
+                    <Sandwich mode="light" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Hamburger</div>
+                    <Hamburger mode="light" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Cross</div>
+                    <Cross mode="light" size={18} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dark Mode -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">Dark Mode (gray-300)</h3>
+            <div class="flex items-center gap-6 p-4 bg-gray-800 border rounded-lg">
+                <div class="text-center">
+                    <div class="mb-2 text-sm text-white">Sandwich</div>
+                    <Sandwich mode="dark" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm text-white">Hamburger</div>
+                    <Hamburger mode="dark" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm text-white">Cross</div>
+                    <Cross mode="dark" size={18} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 不同尺寸 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">不同尺寸</h3>
+            <div class="flex items-center gap-8">
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Small (16px)</div>
+                    <Sandwich size={16} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Medium (24px)</div>
+                    <Hamburger size={24} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Large (32px)</div>
+                    <Cross size={32} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Extra Large (48px)</div>
+                    <Sandwich size={48} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 使用統一組件 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">使用統一組件 (HeaderMenu)</h3>
+            <div class="flex items-center gap-6 p-4 border rounded-lg">
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Type: sandwich</div>
+                    <HeaderMenuIcon type="sandwich" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Type: hamburger</div>
+                    <HeaderMenuIcon type="hamburger" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Type: cross</div>
+                    <HeaderMenuIcon type="cross" size={18} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 互動範例 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">互動範例 (點擊切換)</h3>
+            <div class="flex items-center gap-4 p-4 border rounded-lg">
+                <span>選單狀態：</span>
+                <button 
+                    id="menu-toggle" 
+                    class="p-2 hover:bg-gray-100 rounded transition-colors"
+                    aria-label="切換選單"
+                >
+                    <Sandwich IDName="menu-icon" size={18} />
+                </button>
+                <span id="menu-status" class="text-sm text-gray-600">關閉</span>
+            </div>
+        </div>
+        
+        <!-- 自定義顏色 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">自定義顏色</h3>
+            <div class="flex items-center gap-6 p-4 border rounded-lg">
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Blue</div>
+                    <Sandwich color="blue-500" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Red</div>
+                    <Hamburger color="red-500" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Green</div>
+                    <Cross color="green-500" size={18} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2 text-sm">Custom Hex</div>
+                    <Sandwich color="#9333ea" size={18} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 程式碼範例 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">使用方式</h3>
+            <div class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                <pre><code>{`<!-- 個別使用 -->
+<Sandwich mode="light" size={18} />
+<Hamburger mode="dark" size={18} />
+<Cross color="blue-500" size={18} />
+
+<!-- 使用統一組件 -->
+<HeaderMenuIcon type="sandwich" mode="light" size={18} />
+<HeaderMenuIcon type="hamburger" mode="dark" size={18} />
+<HeaderMenuIcon type="cross" color="red-500" size={18} />
+
+<!-- 在按鈕中使用 -->
+<button class="menu-toggle">
+    <HeaderMenuIcon type="sandwich" size={20} />
+</button>`}</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // 互動範例的 JavaScript
+    let isMenuOpen = false;
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuIcon = document.getElementById('menu-icon');
+    const menuStatus = document.getElementById('menu-status');
+    
+    function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        
+        // 更新狀態文字
+        if (menuStatus) {
+            menuStatus.textContent = isMenuOpen ? '開啟' : '關閉';
+        }
+        
+        // 在實際應用中，這裡會切換圖示
+        // 由於 Astro 的限制，這裡只是示例
+        console.log('Menu toggled:', isMenuOpen ? 'open' : 'closed');
+    }
+    
+    if (menuToggle) {
+        menuToggle.addEventListener('click', toggleMenu);
+    }
+</script>
+
+<style>
+    .header-menu-examples {
+        .container {
+            max-width: 1200px;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .gap-6 {
+            gap: 1.5rem;
+        }
+        
+        .gap-8 {
+            gap: 2rem;
+        }
+        
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .p-2 {
+            padding: 0.5rem;
+        }
+        
+        .p-4 {
+            padding: 1rem;
+        }
+        
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        
+        .text-gray-100 {
+            color: #f3f4f6;
+        }
+        
+        .border {
+            border-width: 1px;
+            border-color: #d1d5db;
+        }
+        
+        .rounded {
+            border-radius: 0.25rem;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .bg-white {
+            background-color: white;
+        }
+        
+        .bg-gray-800 {
+            background-color: #1f2937;
+        }
+        
+        .bg-gray-900 {
+            background-color: #111827;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+        
+        .transition-colors {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        button:hover.hover\\:bg-gray-100 {
+            background-color: #f3f4f6;
+        }
+    }
+</style>

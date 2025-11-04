@@ -1,0 +1,58 @@
+// Header Menu Icons Styles
+// 統一的 header-menu 圖示樣式
+
+// 共用的基礎樣式
+%header-menu-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size, var(--fs-18));
+    height: var(--icon-size, var(--fs-18));
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+
+        path {
+            stroke: var(--icon-color, var(--color-gray-700));
+            transition: stroke 0.2s ease-in-out;
+        }
+    }
+
+    &.mode-light {
+        --icon-color: var(--color-gray-700, #374151);
+    }
+
+    &.mode-dark {
+        --icon-color: var(--color-gray-300, #d1d5db);
+    }
+
+    // 可選的 hover 效果（目前註解掉）
+    // &:hover {
+    //     svg path {
+    //         opacity: 0.8;
+    //     }
+    // }
+}
+
+// Sandwich 圖示樣式
+.sandwich-icon {
+    @extend %header-menu-base;
+    padding: 5px 2px;
+}
+
+// Hamburger 圖示樣式
+.hamburger-icon {
+    @extend %header-menu-base;
+    padding: 3.5px 1.5px;
+}
+
+// Cross 圖示樣式
+.cross-icon {
+    @extend %header-menu-base;
+    padding: 3px;
+}
