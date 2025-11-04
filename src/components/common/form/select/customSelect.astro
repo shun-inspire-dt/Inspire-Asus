@@ -1,0 +1,73 @@
+---
+/** Common Components */
+import Select from '@components/common/form/select/select.astro';
+
+export interface Props {
+    id?: string;
+    data?: { text: string | number; value: string | number }[];
+    className?: string;
+    selectclassName?: any;
+    name?: string;
+    value?: string | number;
+    placeholder?: string;
+    required?: boolean;
+    disabled?: boolean;
+    custom?: boolean;
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    customValidText?: string;
+    customInvalidText?: string;
+    onchange?: string;
+    attribute?: attribute;
+}
+
+const {
+    id,
+    data = [],
+    className,
+    selectClassName = '',
+    required,
+    disabled,
+    custom = true,
+    name,
+    value,
+    placeholder = '請選擇',
+    validClass = 'form',
+    validType,
+    validLabel,
+    customValidText,
+    customInvalidText,
+    onchange,
+    attribute = {}
+} = Astro.props as Props;
+---
+
+<div class:list={[{ 'custom-select': custom }, className]}>
+    <Select
+        id={id}
+        data={data}
+        className={`${selectClassName} ${custom ? 'custom-origin-select' : ''}`}
+        required={required}
+        disabled={disabled}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        validClass={validClass}
+        validType={validType}
+        validLabel={validLabel}
+        customValidText={customValidText}
+        customInvalidText={customInvalidText}
+        onchange={onchange}
+        attribute={attribute}
+    />
+</div>
+
+<script>
+    import { closeAllSelect, setSelect } from '@js/components/common/select/customSelect';
+
+    document.addEventListener('click', () => {
+        closeAllSelect();
+    });
+    setSelect();
+</script>

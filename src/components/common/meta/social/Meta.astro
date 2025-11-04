@@ -1,0 +1,21 @@
+---
+export type ColorScheme = 'normal' | 'light' | 'dark' | 'only light';
+
+export type Props = {
+    title?: string;
+    description?: string;
+    keywords?: string[];
+    themeColor?: string;
+    colorScheme?: ColorScheme;
+};
+
+const { title, description, keywords, themeColor, colorScheme } = Astro.props;
+---
+
+<Fragment>
+    {title && <title>{title}</title>}
+    {description && <meta name="description" content={description} />}
+    {keywords && <meta name="keywords" content={keywords.join(', ')} />}
+    {colorScheme && <meta name="color-scheme" content={colorScheme} />}
+    {themeColor && <meta name="theme-color" content={themeColor} />}
+</Fragment>

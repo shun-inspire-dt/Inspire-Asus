@@ -1,0 +1,14 @@
+---
+import type { Graph, Thing, WithContext } from 'schema-dts';
+import { Schema } from 'astro-seo-schema';
+
+export type Tschemas = Array<Graph | WithContext<Thing>>;
+
+export type Props = {
+    schemas?: Tschemas;
+};
+
+const { schemas = [] } = Astro.props;
+---
+
+{schemas.map((item) => <Schema item={item} />)}

@@ -1,0 +1,106 @@
+---
+/** Style */
+import './offcanvas.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    title?: string;
+    headerClassName?: any;
+    hideHeader?: boolean;
+    titleClassName?: any;
+    hideTitle?: boolean;
+    closeClassName?: any;
+    hideClose?: boolean;
+    bodyClassName?: any;
+    postion?: 'start' | 'end' | 'top' | 'bottom';
+    scrollable?: boolean;
+    backdrop?: 'false' | 'static';
+    sizes?: 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'default';
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+const {
+    IDName,
+    className,
+    title,
+    headerClassName,
+    hideHeader,
+    titleClassName,
+    hideTitle,
+    closeClassName,
+    hideClose,
+    bodyClassName,
+    postion = 'start',
+    scrollable,
+    backdrop = undefined,
+    attribute = {},
+    style,
+    sizes = 'default'
+} = Astro.props as Props;
+---
+
+<div
+    id={IDName ? `${IDName}Offcanvas` : undefined}
+    class:list={[
+        {
+            offcanvas: sizes === 'default',
+            'offcanvas-xxl': sizes === 'xxl',
+            'offcanvas-xl': sizes === 'xl',
+            'offcanvas-lg': sizes === 'lg',
+            'offcanvas-md': sizes === 'md',
+            'offcanvas-sm': sizes === 'sm'
+        },
+        {
+            'offcanvas-start': postion === 'start',
+            'offcanvas-end': postion === 'end',
+            'offcanvas-top': postion === 'top',
+            'offcanvas-bottom': postion === 'bottom'
+        },
+        className
+    ]}
+    tabindex="-1"
+    aria-labelledby={IDName ? `${IDName}OffcanvasLabel` : undefined}
+    {...scrollable ? { 'data-bs-scroll': 'true' } : {}}
+    {...backdrop ? { 'data-bs-backdrop': backdrop } : {}}
+    style={style}
+    {...attribute}
+>
+    {
+        !hideHeader && (
+            <div class:list={['offcanvas-header', headerClassName]}>
+                <slot name="header">
+                    {!hideTitle && (
+                        <Fragment>
+                            <slot name="title-left" />
+                            <slot name="title">
+                                <strong
+                                    id={IDName ? `${IDName}OffcanvasLabel` : undefined}
+                                    class:list={['offcanvas-title', titleClassName]}
+                                >
+                                    {title}
+                                </strong>
+                            </slot>
+                            <slot name="title-right" />
+                        </Fragment>
+                    )}
+                    {!hideClose && (
+                        <button
+                            type="button"
+                            class:list={['offcanvas-close-button', closeClassName]}
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                        />
+                    )}
+                </slot>
+            </div>
+        )
+    }
+    <div class:list={['offcanvas-body', bodyClassName]}>
+        <slot />
+    </div>
+</div>
+
+<script>
+    /** Modules */
+    import { Offcanvas } from '@js/components/common/offcanvas/offcanvas';
+</script>

@@ -1,0 +1,485 @@
+@mixin flexContentItem($size: xs) {
+    * {
+        @apply flex-auto;
+    }
+    img,
+    picture {
+        @apply flex-none w-auto;
+        @if $size == xs {
+            max-width: var(--max-width, 50%);
+        } @else if $size == sm {
+            @screen sm {
+                max-width: var(--max-width, 50%);
+            }
+        } @else if $size == md {
+            @screen md {
+                max-width: var(--max-width, 50%);
+            }
+        } @else if $size == lg {
+            @screen lg {
+                max-width: var(--max-width, 50%);
+            }
+        } @else {
+            @error "Unknown direction #{$size}.";
+        }
+    }
+    picture > img {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+@mixin article {
+    --line-height: 1.4;
+    font-size: var(--fontSize-base);
+    color: var(--color-gray-1);
+    line-height: var(--line-height);
+    @screen lg {
+        font-size: var(--fontSize-subtitle);
+    }
+
+    & > br {
+        content: '';
+        display: block;
+        margin: 0.375rem;
+    }
+
+    ul {
+        --un-space-y-reverse: 0;
+        ---space-y: 0rem;
+        --padding-left: 1.1em;
+        @apply list-disc;
+        margin-top: calc(var(---space-y) * calc(1 - var(--un-space-y-reverse)));
+        margin-bottom: calc(var(---space-y) * var(--un-space-y-reverse));
+        padding-left: var(--padding-left);
+    }
+
+    a {
+        @apply text-gold underline decoration-gold hover:text-gold-dark;
+    }
+
+    [style*="text-align: center"] img, img[style*="text-align: center"] {
+        @apply mx-a;
+    }
+    [style*="text-align: right"] img, img[style*="text-align: right"] {
+        @apply ml-a;
+    }
+
+    /** Default Text */
+    h1,
+    .text-h1 {
+        @apply text-h1;
+    }
+    h2,
+    .text-h2 {
+        @apply text-h2;
+    }
+    h3,
+    .text-h3 {
+        @apply text-h3;
+    }
+    h4,
+    .text-h4 {
+        @apply text-h4;
+    }
+    h5,
+    .text-h5 {
+        @apply text-h5;
+    }
+    h6,
+    .text-h6 {
+        @apply text-h6;
+    }
+    .text-subtitle {
+        @apply text-subtitle;
+    }
+    .text-base {
+        @apply text-base;
+    }
+    .text-p {
+        @apply text-p;
+    }
+    .text-sm {
+        @apply text-sm;
+    }
+    .text-xs {
+        @apply text-xs;
+    }
+
+    /** Small Text */
+    .sm\:text-h1 {
+        @apply sm:text-h1;
+    }
+    .sm\:text-h2 {
+        @apply sm:text-h2;
+    }
+    .sm\:text-h3 {
+        @apply sm:text-h3;
+    }
+    .sm\:text-h4 {
+        @apply sm:text-h4;
+    }
+    .sm\:text-h5 {
+        @apply sm:text-h5;
+    }
+    .sm\:text-h6 {
+        @apply sm:text-h6;
+    }
+    .sm\:text-subtitle {
+        @apply sm:text-subtitle;
+    }
+    .sm\:text-base {
+        @apply sm:text-base;
+    }
+    .sm\:text-p {
+        @apply sm:text-p;
+    }
+    .sm\:text-sm {
+        @apply sm:text-sm;
+    }
+    .sm\:text-xs {
+        @apply sm:text-xs;
+    }
+
+    /** Medium Text */
+    .md\:text-h1 {
+        @apply md:text-h1;
+    }
+    .md\:text-h2 {
+        @apply md:text-h2;
+    }
+    .md\:text-h3 {
+        @apply md:text-h3;
+    }
+    .md\:text-h4 {
+        @apply md:text-h4;
+    }
+    .md\:text-h5 {
+        @apply md:text-h5;
+    }
+    .md\:text-h6 {
+        @apply md:text-h6;
+    }
+    .md\:text-subtitle {
+        @apply md:text-subtitle;
+    }
+    .md\:text-base {
+        @apply md:text-base;
+    }
+    .md\:text-p {
+        @apply md:text-p;
+    }
+    .md\:text-sm {
+        @apply md:text-sm;
+    }
+    .md\:text-xs {
+        @apply md:text-xs;
+    }
+
+    /** Large Text */
+    .lg\:text-h1 {
+        @apply lg:text-h1;
+    }
+    .lg\:text-h2 {
+        @apply lg:text-h2;
+    }
+    .lg\:text-h3 {
+        @apply lg:text-h3;
+    }
+    .lg\:text-h4 {
+        @apply lg:text-h4;
+    }
+    .lg\:text-h5 {
+        @apply lg:text-h5;
+    }
+    .lg\:text-h6 {
+        @apply lg:text-h6;
+    }
+    .lg\:text-subtitle {
+        @apply lg:text-subtitle;
+    }
+    .lg\:text-base {
+        @apply lg:text-base;
+    }
+    .lg\:text-p {
+        @apply lg:text-p;
+    }
+    .lg\:text-sm {
+        @apply lg:text-sm;
+    }
+    .lg\:text-xs {
+        @apply lg:text-xs;
+    }
+
+    /** X Large Text */
+    .\32 xl\:text-h1 {
+        @apply 2xl:text-h1;
+    }
+    .\32 xl\:text-h2 {
+        @apply 2xl:text-h2;
+    }
+    .\32 xl\:text-h3 {
+        @apply 2xl:text-h3;
+    }
+    .\32 xl\:text-h4 {
+        @apply 2xl:text-h4;
+    }
+    .\32 xl\:text-h5 {
+        @apply 2xl:text-h5;
+    }
+    .\32 xl\:text-h6 {
+        @apply 2xl:text-h6;
+    }
+    .\32 xl\:text-subtitle {
+        @apply 2xl:text-subtitle;
+    }
+    .\32 xl\:text-base {
+        @apply 2xl:text-base;
+    }
+    .\32 xl\:text-p {
+        @apply 2xl:text-p;
+    }
+    .\32 xl\:text-sm {
+        @apply 2xl:text-sm;
+    }
+    .\32 xl\:text-xs {
+        @apply 2xl:text-xs;
+    }
+
+    .gap {
+        --gap: 0.75rem;
+        gap: var(--gap);
+    }
+    .flex {
+        @apply flex;
+    }
+    .flex-row {
+        @apply flex-row;
+        @include flexContentItem(xs);
+    }
+    .flex-row-reverse {
+        @apply flex-row-reverse;
+        @include flexContentItem(xs);
+    }
+    .flex-col {
+        @apply flex-col;
+    }
+    .flex-col-reverse {
+        @apply flex-col-reverse;
+    }
+    .sm\:flex {
+        @apply sm:flex;
+    }
+    .sm\:flex-row {
+        @apply sm:flex-row;
+        @include flexContentItem(sm);
+    }
+    .sm\:flex-row-reverse {
+        @apply sm:flex-row-reverse;
+        @include flexContentItem(sm);
+    }
+    .sm\:flex-col {
+        @apply sm:flex-col;
+    }
+    .sm\:flex-col-reverse {
+        @apply sm:flex-col-reverse;
+    }
+    .md\:flex {
+        @apply md:flex;
+    }
+    .md\:flex-row {
+        @apply md:flex-row;
+        @include flexContentItem(md);
+    }
+    .md\:flex-row-reverse {
+        @apply md:flex-row-reverse;
+        @include flexContentItem(md);
+    }
+    .md\:flex-col {
+        @apply md:flex-col;
+    }
+    .md\:flex-col-reverse {
+        @apply md:flex-col-reverse;
+    }
+    .lg\:flex {
+        @apply lg:flex;
+    }
+    .lg\:flex-row {
+        @apply lg:flex-row;
+        @include flexContentItem(lg);
+    }
+    .lg\:flex-row-reverse {
+        @apply lg:flex-row-reverse;
+        @include flexContentItem(lg);
+    }
+    .lg\:flex-col {
+        @apply lg:flex-col;
+    }
+    .lg\:flex-col-reverse {
+        @apply lg:flex-col-reverse;
+    }
+    .block {
+        @apply block;
+    }
+    .sm\:block {
+        @apply sm:block;
+    }
+    .md\:block {
+        @apply md:block;
+    }
+    .lg\:block {
+        @apply lg:block;
+    }
+    .hidden {
+        @apply hidden;
+    }
+    .sm\:hidden {
+        @apply sm:hidden;
+    }
+    .md\:hidden {
+        @apply md:hidden;
+    }
+    .lg\:hidden {
+        @apply lg:hidden;
+    }
+
+    .justify-start {
+        @apply justify-start;
+    }
+    .justify-end {
+        @apply justify-end;
+    }
+    .justify-center {
+        @apply justify-center;
+    }
+    .justify-between {
+        @apply justify-between;
+    }
+    .justify-around {
+        @apply justify-around;
+    }
+
+    .sm\:justify-start {
+        @apply sm:justify-start;
+    }
+    .sm\:justify-end {
+        @apply sm:justify-end;
+    }
+    .sm\:justify-center {
+        @apply sm:justify-center;
+    }
+    .sm\:justify-between {
+        @apply sm:justify-between;
+    }
+    .sm\:justify-around {
+        @apply sm:justify-around;
+    }
+
+    .md\:justify-start {
+        @apply md:justify-start;
+    }
+    .md\:justify-end {
+        @apply md:justify-end;
+    }
+    .md\:justify-center {
+        @apply md:justify-center;
+    }
+    .md\:justify-between {
+        @apply md:justify-between;
+    }
+    .md\:justify-around {
+        @apply md:justify-around;
+    }
+
+    .lg\:justify-start {
+        @apply lg:justify-start;
+    }
+    .lg\:justify-end {
+        @apply lg:justify-end;
+    }
+    .lg\:justify-center {
+        @apply lg:justify-center;
+    }
+    .lg\:justify-between {
+        @apply lg:justify-between;
+    }
+    .lg\:justify-around {
+        @apply lg:justify-around;
+    }
+
+    .items-start {
+        @apply items-start;
+    }
+    .items-end {
+        @apply items-end;
+    }
+    .items-center {
+        @apply items-center;
+    }
+
+    .sm\:items-start {
+        @apply sm:items-start;
+    }
+    .sm\:items-end {
+        @apply sm:items-end;
+    }
+    .sm\:items-center {
+        @apply sm:items-center;
+    }
+
+    .md\:items-start {
+        @apply md:items-start;
+    }
+    .md\:items-end {
+        @apply md:items-end;
+    }
+    .md\:items-center {
+        @apply md:items-center;
+    }
+
+    .lg\:items-start {
+        @apply lg:items-start;
+    }
+    .lg\:items-end {
+        @apply lg:items-end;
+    }
+    .lg\:items-center {
+        @apply lg:items-center;
+    }
+
+    .text-left {
+        @apply text-left;
+    }
+    .text-right {
+        @apply text-right;
+    }
+    .text-center {
+        @apply text-center;
+    }
+    .sm\:text-left {
+        @apply text-left;
+    }
+    .sm\:text-right {
+        @apply text-right;
+    }
+    .sm\:text-center {
+        @apply text-center;
+    }
+    .md\:text-left {
+        @apply text-left;
+    }
+    .md\:text-right {
+        @apply text-right;
+    }
+    .md\:text-center {
+        @apply text-center;
+    }
+    .lg\:text-left {
+        @apply text-left;
+    }
+    .lg\:text-right {
+        @apply text-right;
+    }
+    .lg\:text-center {
+        @apply text-center;
+    }
+}

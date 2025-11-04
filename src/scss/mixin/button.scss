@@ -1,0 +1,27 @@
+@mixin button-variant(
+    $background,
+    $border,
+    $color,
+    $hover-background,
+    $hover-border,
+    $hover-color,
+    $focus-background,
+    $focus-border,
+    $focus-color,
+    $disabled-background,
+    $disabled-border,
+    $disabled-color
+) {
+    --btn-color: #{$color};
+    --btn-bg: #{$background};
+    --btn-border-color: #{$border};
+    --btn-hover-color: #{$hover-color};
+    --btn-hover-bg: #{$hover-background};
+    --btn-hover-border-color: #{$hover-border};
+    --btn-focus-color: #{$focus-color};
+    --btn-focus-bg: #{$focus-background};
+    --btn-focus-border-color: #{$focus-border};
+    --btn-disabled-color: #{$disabled-color};
+    --btn-disabled-bg: #{$disabled-background};
+    --btn-disabled-border-color: #{$disabled-border};
+}

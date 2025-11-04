@@ -1,0 +1,22 @@
+---
+/** Style */
+import './success.scss';
+export interface Props {
+    id?: string;
+    className?: string;
+    text?: string;
+}
+
+const { id, className, text } = Astro.props as Props;
+---
+
+<div id={id}>
+    <div class:list={['valid-text', className]}>
+        <span class="valid-text-icon">
+            <slot name="icon">
+                <i class="fa-check"></i>
+            </slot>
+        </span>
+        <span class="valid-text-text">{text}</span>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.SearchForm {
+    @apply w-full;
+    .SearchInputGroup {
+        .SearchInput {
+            width: 100%;
+            padding-right: 2.5rem;
+        }
+        .SearchInputButton {
+            // --btn-padding-x: ;
+            // --btn-border-radius: ;
+            // --btn-color: ;
+            // --btn-bg: ;
+            // --btn-border-color: ;
+            // --btn-hover-color: ;
+            // --btn-hover-bg: ;
+            // --btn-hover-border-color: ;
+            // --btn-focus-color: ;
+            // --btn-focus-bg: ;
+            // --btn-focus-border-color: ;
+            // --btn-disabled-color: ;
+            // --btn-disabled-bg: ;
+            // --btn-disabled-border-color: ;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 3;
+            border-left-style: none;
+        }
+    }
+}

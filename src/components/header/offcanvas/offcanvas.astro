@@ -1,0 +1,154 @@
+---
+/** data */
+import type { NavsData } from '@js/data/navs';
+import { privacy } from '@js/data/privacy';
+/** Common Components */
+/** Offcanvas */
+import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
+import Search from '@components/common/form/search.astro';
+/** Main Components */
+import TriggerButton from '@components/header/offcanvas/triggerButton.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Link */
+import ALink from '@components/common/button/link.astro';
+/** Icons */
+import Icons from '@components/common/icons/icons.astro';
+/** Style */
+import './offcanvas.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    data?: NavsData;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'headerOffcanvasContainer', className, style, attribute = {}, data = [] } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+    <TriggerButton />
+    <MyOffcanvas IDName="header" postion="end">
+        <Fragment slot="header">
+            <Search searchIDName="HeaderOffcanvaInput" placeholder={'搜尋產品'} inputTitle={'搜尋產品'} />
+            <Button type={'button'} className="offcanvas-close-button" iconWidth={20} iconHeight={20} attribute={{ 'data-bs-dismiss': 'offcanvas', 'aria-label': 'Close' }}></Button>
+        </Fragment>
+        <ul>
+            {
+                data.map((x, i) => (
+                    <li class="headerNavItem">
+                        <ALink
+                            className="headerNavLink"
+                            link={x.children ? '#' : x.link}
+                            title={x.title}
+                            attribute={
+                                x.children
+                                    ? {
+                                          'data-bs-toggle': 'collapse',
+                                          'data-bs-target': `#OffcanvasLink-0${i + 1}`,
+                                          'aria-expanded': 'false',
+                                          'aria-controls': `OffcanvasLink-0${i + 1}`,
+                                          ...x.attribute
+                                      }
+                                    : { ...x.attribute }
+                            }
+                        >
+                            <div class="headerNavLinkTitle">
+                                <p>{x.title}</p>
+                                <span>{x.subTitle}</span>
+                            </div>
+                            {x.children && (
+                                <div class="headerNavLinkIcon">
+                                    {/* <Icons
+                                        icon={'icon-add'}
+                                        custom
+                                        attribute={{
+                                            'data-collapse-icon': 'show'
+                                        }}
+                                    />
+                                    <Icons
+                                        icon={'icon-reduce'}
+                                        custom
+                                        attribute={{
+                                            'data-collapse-icon': 'hide'
+                                        }}
+                                    /> */}
+                                </div>
+                            )}
+                        </ALink>
+                        {x.children && (
+                            <div id={`OffcanvasLink-0${i + 1}`} class="collapse">
+                                <div>
+                                    {x.children?.map((y, j) => (
+                                        <div>
+                                            <ALink
+                                                link={y.children ? '' : y.link}
+                                                className={y.className}
+                                                title={y.title}
+                                                attribute={
+                                                    y.children
+                                                        ? {
+                                                              'data-bs-toggle': 'collapse',
+                                                              'data-bs-target': `#OffcanvasLink-0${i + 1}-0${j + 1}`,
+                                                              'aria-expanded': 'false',
+                                                              'aria-controls': `OffcanvasLink-0${i + 1}-0${j + 1}`,
+                                                              ...y.attribute
+                                                          }
+                                                        : { ...y.attribute }
+                                                }
+                                            >
+                                                {y.title}
+                                                {y.children && (
+                                                    <div class="headerNavLinkIcon">
+                                                        {/* <Icons
+                                                            icon={'icon-arrow-down'}
+                                                            custom
+                                                            fill="red"
+                                                            width={15}
+                                                            height={15}
+                                                            attribute={{
+                                                                'data-collapse-arrow': ''
+                                                            }}
+                                                            style={{ '--collapse-arrow-rotate': '180deg' }}
+                                                        /> */}
+                                                    </div>
+                                                )}
+                                            </ALink>
+                                            {y.children && (
+                                                <div id={`OffcanvasLink-0${i + 1}-0${j + 1}`} class="collapse">
+                                                    <div>
+                                                        {y.children?.map((z) => (
+                                                            <ALink link={z.link} className={z.className} attribute={z.attribute} title={z.title}>
+                                                                {z.title}
+                                                            </ALink>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </li>
+                ))
+            }
+        </ul>
+    </MyOffcanvas>
+</div>
+
+<script>
+    import { useBsCollapse } from '@js/components/common/collapse/useBsCollapse';
+    import { Offcanvas } from 'bootstrap';
+
+    const offcanvas = new Offcanvas(document.getElementById('headerOffcanvas') as HTMLElement);
+    const closeLinks = document.querySelectorAll('#headerOffcanvas [data-dismiss="offcanvas"]') as NodeListOf<HTMLButtonElement>;
+
+    closeLinks.forEach((x) => {
+        x.addEventListener('click', () => {
+            if (offcanvas) offcanvas.hide();
+        });
+    });
+</script>

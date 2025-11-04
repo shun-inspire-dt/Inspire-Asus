@@ -1,0 +1,76 @@
+---
+/** Style */
+import './select.scss';
+export interface Props {
+    id?: string;
+    data?: { text: string | number; value: string | number; attribute?: attribute }[];
+    className?: any;
+    name?: string;
+    value?: string | number;
+    placeholder?: string;
+    title?: string;
+    required?: boolean;
+    disabled?: boolean;
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    customValidText?: string;
+    customInvalidText?: string;
+    onchange?: string;
+    attribute?: attribute;
+}
+
+const {
+    id,
+    data = [],
+    className,
+    required,
+    disabled,
+    name,
+    value,
+    placeholder = '請選擇',
+    title,
+    validClass = 'form',
+    validType,
+    validLabel,
+    customValidText,
+    customInvalidText,
+    onchange,
+    attribute = {}
+} = Astro.props as Props;
+const validAttribute = {
+    'data-valid-class': validClass,
+    'data-valid-type': validType,
+    'data-valid-label': validLabel,
+    'data-custom-valid-text': customValidText,
+    'data-custom-invalid-text': customInvalidText
+};
+---
+
+<select
+    id={id}
+    class:list={['control-input control-select', className]}
+    name={name}
+    value={value}
+    required={required}
+    disabled={disabled}
+    onchange={onchange}
+    aria-label={title}
+    {...attribute}
+    {...validAttribute}
+>
+    <slot name="index">
+        <option class="control-select-placeholder" value="" disabled={!!value} {...!value ? { selected: '' } : {}}
+            >{placeholder}</option
+        >
+    </slot>
+    <slot>
+        {
+            data.map((x) => (
+                <option value={x.value} selected={value === x.value} {...x.attribute}>
+                    {x.text}
+                </option>
+            ))
+        }
+    </slot>
+</select>

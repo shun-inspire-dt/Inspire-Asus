@@ -1,0 +1,34 @@
+---
+/** Data */
+import { ext } from '@js/helpers/env';
+/** Style */
+import './breadcrumb.scss';
+
+export interface Props {
+    data?: breadcrumb;
+    head?: boolean;
+    className?: any;
+    style?: { [key: string]: string };
+    attribute?: attribute;
+}
+
+const { head, data = [], className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div class:list={['breadcrumb', className]} style={style} aria-label="breadcrumb" {...attribute}>
+    {head && <div class="breadcrumb-icon-head" />}
+    {
+        data.map((x, i) => (
+            <Fragment>
+                <a
+                    href={x.extend ? x.link : `${Astro.url.origin}${x.link}${ext}`}
+                    title={x.name}
+                    {...(i === data.length - 1 ? { 'aria-current': 'page' } : {})}
+                >
+                    <span>{x.name}</span>
+                </a>
+                {i !== data.length - 1 && <div class="breadcrumb-icon-arrow" />}
+            </Fragment>
+        ))
+    }
+</div>

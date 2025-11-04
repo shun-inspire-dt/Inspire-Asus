@@ -1,0 +1,179 @@
+@mixin inline {
+    /** inline */
+    // --form-input-group-flex-direction: ;
+    // --form-input-group-label-width: ;
+    // --form-input-group-content-width: ;
+    &.inline-group-content-padding {
+        // --form-input-group-content-padding-top: ;
+    }
+    &.input-group-padding-label {
+        // --form-input-group-label-padding-top: ;
+        // --form-input-group-label-padding-bottom: ;
+    }
+    &.input-group-center-label {
+        &.inline-group-content-padding {
+            // --form-input-group-content-padding-top: ;
+        }
+        .input-group-label {
+            align-items: center;
+        }
+    }
+    &.input-group-center-label {
+        // --form-input-group-align-items: ;
+    }
+}
+@mixin inline-content {
+    /** inline-content */
+    // --form-input-group-content-flex-direction: ;
+    // --form-input-group-content-align-items: ;
+    // --form-input-group-content-gap: ;
+
+    &.input-group-inline-content-wrap {
+        // --form-input-group-content-flex-wrap: ;
+    }
+    &.input-group-inline-no-gutter {
+        // --form-input-group-content-gap: ;
+    }
+    &.input-group-inline-rounded-less {
+        :where(input, select, textarea, .datepicker-container) + .btn {
+            @apply border-l-none;
+        }
+        .btn {
+            // --btn-border-radius: ;
+        }
+    }
+    .btn {
+        // --btn-padding-y: ;
+    }
+    .flex-auto {
+        @apply flex-auto;
+    }
+    .flex-none {
+        @apply flex-none;
+    }
+}
+
+.form-input-group {
+    // --form-input-group-border-width: ;
+    // --form-input-group-border-color: ;
+    // --form-input-group-flex-direction: ;
+    // --form-input-group-align-items: ;
+    // --form-input-group-label-width: ;
+    // --form-input-group-label-flex-direction: ;
+    // --form-input-group-label-align-items: ;
+    // --form-input-group-label-justify-content: ;
+    // --form-input-group-label-gap: ;
+    // --form-input-group-label-color: ;
+    // --form-input-group-label-font-size: ;
+    // --form-input-group-label-font-weight: ;
+    // --form-input-group-label-line-height: ;
+    // --form-input-group-label-letter-spacing: ;
+    // --form-input-group-label-font-family: ;
+    // --form-input-group-label-padding-x: ;
+    // --form-input-group-label-padding-top: ;
+    // --form-input-group-label-padding-bottom: ;
+    // --form-input-group-gap: ;
+    // --form-input-group-content-padding-x: ;
+    // --form-input-group-content-padding-top: ;
+    // --form-input-group-content-padding-bottom: ;
+    // --form-input-group-content-width: ;
+    // --form-input-group-content-flex-direction: ;
+    // --form-input-group-content-flex-wrap: ;
+    // --form-input-group-content-align-items: ;
+    // --form-input-group-content-justify-center: ;
+    // --form-input-group-content-gap: ;
+    // --form-input-group-required-dot-font-size: ;
+    // --form-input-group-required-dot-color: ;
+    // --form-input-group-required-dot-top: ;
+    /** Content Small Text */
+    // --form-input-group-content-small-text-display: ;
+    // --form-input-group-content-small-text-align-items: ;
+    // --form-input-group-content-small-text-justify-content: ;
+    // --form-input-group-content-small-text-gap: ;
+    // --form-input-group-content-small-text-color: ;
+    // --form-input-group-content-small-text-font-size: ;
+    // --form-input-group-content-small-text-font-weight: ;
+    // --form-input-group-content-small-text-line-height: ;
+    // --form-input-group-content-small-text-letter-spacing: ;
+    // --form-input-group-content-small-text-font-family: ;
+
+    @apply relative flex;
+    flex-direction: var(--form-input-group-flex-direction);
+    align-items: var(--form-input-group-align-items);
+    gap: var(--form-input-group-gap);
+
+    &.border-bottom {
+        border-bottom: var(--form-input-group-border-width) solid var(--form-input-group-border-color);
+    }
+    &.always-inline-group {
+        @include inline();
+    }
+    &.inline-group {
+        @screen lg {
+            @include inline();
+        }
+    }
+    &.input-group-required {
+        .input-group-label {
+            &::after {
+                @apply content-["*"] relative z-3 pl-0.125rem leading-none;
+                top: var(--form-input-group-required-dot-top);
+                font-size: var(--form-input-group-required-dot-font-size);
+                color: var(--form-input-group-required-dot-color);
+            }
+        }
+    }
+    .input-group {
+        @apply w-full;
+        &-label {
+            @apply relative whitespace-normal flex-none;
+            width: var(--form-input-group-label-width);
+            display: flex;
+            flex-direction: var(--form-input-group-label-flex-direction);
+            align-items: var(--form-input-group-label-align-items);
+            justify-content: var(--form-input-group-label-justify-content);
+            gap: var(--form-input-group-label-gap);
+            padding: var(--form-input-group-label-padding-top) var(--form-input-group-label-padding-x)
+                var(--form-input-group-label-padding-bottom);
+            color: var(--form-input-group-label-color);
+            font-size: var(--form-input-group-label-font-size);
+            font-weight: var(--form-input-group-label-font-weight);
+            font-family: var(--form-input-group-label-font-family);
+            line-height: var(--form-input-group-label-line-height);
+            letter-spacing: var(--form-input-group-label-letter-spacing);
+        }
+        &-content {
+            @apply w-full flex flex-auto relative;
+            max-width: var(--form-input-group-content-width);
+            padding: var(--form-input-group-content-padding-top) var(--form-input-group-content-padding-x)
+                var(--form-input-group-content-padding-bottom);
+            flex-direction: var(--form-input-group-content-flex-direction);
+            flex-wrap: var(--form-input-group-content-flex-wrap);
+            align-items: var(--form-input-group-content-align-items);
+            justify-content: var(--form-input-group-content-justify-center);
+            gap: var(--form-input-group-content-gap);
+
+            &.input-group-always-inline-content {
+                @include inline-content();
+            }
+            &.input-group-inline-content {
+                @screen md {
+                    @include inline-content();
+                }
+            }
+
+            .small-text {
+                display: var(--form-input-group-content-small-text-display);
+                align-items: var(--form-input-group-content-small-text-align-items);
+                justify-content: var(--form-input-group-content-small-text-justify-content);
+                gap: var(--form-input-group-content-small-text-gap);
+                color: var(--form-input-group-content-small-text-color);
+                font-size: var(--form-input-group-content-small-text-font-size);
+                font-weight: var(--form-input-group-content-small-text-font-weight);
+                font-family: var(--form-input-group-content-small-text-font-family);
+                line-height: var(--form-input-group-content-small-text-line-height);
+                letter-spacing: var(--form-input-group-content-small-text-letter-spacing);
+            }
+        }
+    }
+}

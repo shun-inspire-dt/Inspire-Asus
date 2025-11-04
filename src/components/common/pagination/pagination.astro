@@ -1,0 +1,44 @@
+---
+/** Common Component */
+/** Icons */
+// import Icons from '@components/common/icons/icons.astro';
+/** Style */
+import './pagination.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    active?: number;
+    total?: number;
+}
+
+const { IDName, className, style, attribute = {}, active = 1, total = 12 } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[`pagination`, className]} style={style} {...attribute}>
+    <!-- 上一頁（disabled 範例） -->
+    <a href="#" title="上一頁" class:list={[`pagination-step`, { disabled: active === 1 }]}>
+        <!-- <Icons custom /> -->
+    </a>
+    <!-- 頁碼 -->
+    <a href="#" title="第一頁" class:list={[`pagination-item`, { active: active === 1 }]}>
+        1
+    </a>
+    <a href="#" title="第二頁" class:list={[`pagination-item`, { active: active === 2 }]}>
+        2
+    </a>
+    <a href="#" title="第三頁" class:list={[`pagination-item`, { active: active === 3 }]}>
+        3
+    </a>
+    <!-- 省略 -->
+    <span class="pagination-ellipsis">...</span>
+    <a href="#" title="第十二頁" class:list={[`pagination-item`, { active: active === total }]}>
+        {total}
+    </a>
+    <!-- 下一頁 -->
+    <a href="#" title="下一頁" class:list={[`pagination-step`, { disabled: active === total }]}>
+        <!-- <Icons custom /> -->
+    </a>
+</div>

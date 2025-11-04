@@ -1,0 +1,39 @@
+---
+/** Style */
+import './triggerButton.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'headerOffcanvas', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<button
+    id={`${IDName}TriggerButton`}
+    type="button"
+    class:list={['relative', className]}
+    data-bs-toggle="offcanvas"
+    data-bs-target="#headerOffcanvas"
+    aria-controls="headerOffcanvas"
+    style={style}
+    title="header Offcanvas Trigger Button"
+    {...attribute}
+>
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+</button>
+
+<script>
+    const offcanvas = document.getElementById('headerOffcanvas') as HTMLElement;
+    const button = document.getElementById('headerOffcanvasTriggerButton') as HTMLButtonElement;
+    offcanvas.addEventListener('show.bs.offcanvas', () => {
+        button.classList.add('active');
+    });
+    offcanvas.addEventListener('hide.bs.offcanvas', () => {
+        button.classList.remove('active');
+    });
+</script>

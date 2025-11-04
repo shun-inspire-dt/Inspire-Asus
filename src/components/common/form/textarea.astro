@@ -1,0 +1,73 @@
+---
+/** Style */
+import './textarea.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    name?: string;
+    title?: string;
+    value?: string | number;
+    cols?: number | string;
+    rows?: number | string;
+    maxlength?: number | string;
+    minlength?: number | string;
+    placeholder?: string;
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: 'readonly';
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    customValidText?: string;
+    customInvalidText?: string;
+    attribute?: attribute;
+    noResize?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    name,
+    title,
+    value,
+    cols = 2,
+    rows = 2,
+    maxlength,
+    minlength,
+    placeholder,
+    required,
+    disabled,
+    readonly,
+    validClass = 'form',
+    validType,
+    validLabel,
+    customValidText,
+    customInvalidText,
+    attribute = {},
+    noResize
+} = Astro.props as Props;
+const validAttribute = {
+    'data-valid-class': validClass,
+    'data-valid-type': validType,
+    'data-valid-label': validLabel,
+    'data-custom-valid-text': customValidText,
+    'data-custom-invalid-text': customInvalidText
+};
+---
+
+<textarea
+    id={IDName}
+    class:list={['control-input', { noresize: noResize }, className]}
+    name={name}
+    cols={cols}
+    rows={rows}
+    maxlength={maxlength}
+    minlength={minlength}
+    placeholder={placeholder}
+    required={required}
+    disabled={disabled}
+    readonly={readonly}
+    aria-label={title}
+    {...attribute}
+    {...validAttribute}>{(value as string)?.trim()}</textarea
+>

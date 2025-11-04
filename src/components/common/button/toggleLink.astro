@@ -1,0 +1,58 @@
+---
+/** Type */
+import 'astro/astro-jsx';
+/** Link */
+import ALink from '@components/common/button/link.astro';
+/** Style */
+import './button.scss';
+import './toggleButton.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    link?: string;
+    extend?: boolean;
+    title?: string;
+    target?: astroHTML.JSX.HTMLAttributeAnchorTarget;
+    disabled?: boolean;
+    variant?: variant;
+    button?: boolean;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    block?: boolean;
+    active?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    link,
+    extend,
+    target,
+    title,
+    variant,
+    button,
+    disabled,
+    attribute = {},
+    style,
+    block,
+    active
+} = Astro.props as Props;
+---
+
+<ALink
+    IDName={IDName}
+    className={[className as Class, 'ToggleButton', active ? 'active' : '']}
+    link={link}
+    extend={extend}
+    target={target}
+    title={title}
+    variant={variant}
+    button={button}
+    disabled={disabled}
+    attribute={attribute}
+    style={style}
+    block={block}
+>
+    <slot>{title}</slot>
+</ALink>

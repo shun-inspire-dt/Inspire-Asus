@@ -1,0 +1,172 @@
+/* 導入按鈕相關的 mixin 和變體樣式 */
+@import '../../../scss/mixin/button.scss';
+@import './button-variant.scss';
+
+/* 按鈕基礎樣式類別 */
+.btn {
+    /* CSS 自定義屬性 (CSS Variables) - 可被外部覆蓋的樣式變數 */
+    --btn-min-height: ;           /* 按鈕最小高度 */
+    --btn-padding-x: ;            /* 按鈕水平內邊距 */
+    --btn-padding-y: ;            /* 按鈕垂直內邊距 */
+    --btn-gap: ;                  /* 按鈕內元素間距 (如圖標與文字) */
+    --btn-font-family: ;          /* 按鈕字體家族 */
+    --btn-font-size: ;            /* 按鈕字體大小 */
+    --btn-font-weight: ;          /* 按鈕字體粗細 */
+    --btn-line-height: ;          /* 按鈕行高 */
+    --btn-letter-spacing: ;       /* 按鈕字母間距 */
+    --btn-color: ;                /* 按鈕文字顏色 */
+    --btn-bg: ;                   /* 按鈕背景顏色 */
+    --btn-border-width: ;         /* 按鈕邊框寬度 */
+    --btn-border-color: ;         /* 按鈕邊框顏色 */
+    --btn-border-radius: ;        /* 按鈕圓角 */
+    --btn-box-shadow: ;           /* 按鈕陰影 */
+    --btn-disabled-opacity: ;     /* 禁用狀態透明度 */
+    --btn-focus-box-shadow: ;     /* 聚焦狀態陰影 */
+    /* 按鈕過渡動畫屬性 */
+    --btn-transition-property: ;     /* 過渡屬性 */
+    --btn-transition-duration: ;     /* 過渡持續時間 */
+    --btn-transition-timing-function: ; /* 過渡緩動函數 */
+    /* 圖標過渡動畫屬性 */
+    --icon-transition-property: ;                    /* 圖標過渡屬性 */
+    --icon-transition-duration: ;                    /* 圖標過渡持續時間 */
+    --icon-transition-timing-function: ;             /* 圖標過渡緩動函數 */
+
+    /* 使用 UnoCSS 原子化類別設定基礎佈局 */
+    @apply flex items-center justify-center;
+    /* 使用 CSS 變數設定過渡動畫 */
+    transition-property: var(--btn-transition-property);
+    transition-duration: var(--btn-transition-duration);
+    transition-timing-function: var(--btn-transition-timing-function);
+    
+    /* 基礎樣式屬性 */
+    min-height: var(--btn-min-height);                    /* 設定最小高度 */
+    gap: var(--btn-gap);                                  /* 內部元素間距 */
+    padding: var(--btn-padding-y) var(--btn-padding-x);  /* 內邊距 */
+    position: relative;                                   /* 相對定位，用於子元素絕對定位 */
+    color: var(--btn-color);                             /* 文字顏色 */
+    font-size: var(--btn-font-size);                     /* 字體大小 */
+    font-weight: var(--btn-font-weight);                 /* 字體粗細 */
+    text-align: center;                                  /* 文字居中對齊 */
+    line-height: var(--btn-line-height);                 /* 行高 */
+    letter-spacing: var(--btn-letter-spacing);           /* 字母間距 */
+    text-indent: var(--btn-letter-spacing);              /* 文字縮排，配合字母間距使用 */
+    font-family: var(--btn-font-family);                 /* 字體家族 */
+    background-color: var(--btn-bg);                     /* 背景顏色 */
+    border: var(--btn-border-width) solid var(--btn-border-color); /* 邊框樣式 */
+    box-shadow: var(--btn-box-shadow);                   /* 陰影效果 */
+
+    /* 懸停狀態樣式 - 排除 .no-focus 類別的按鈕 */
+    &:hover:not(.no-focus) {
+        color: var(--btn-hover-color);                    /* 懸停時文字顏色 */
+        background-color: var(--btn-hover-bg);            /* 懸停時背景顏色 */
+        border-color: var(--btn-hover-border-color);      /* 懸停時邊框顏色 */
+        /* 更新圖標顏色以匹配懸停狀態 */
+        .fa-Icons.customStyle {
+            --fill: var(--btn-hover-color);               /* 圖標填充顏色 */
+            --stroke: var(--btn-hover-color);             /* 圖標描邊顏色 */
+        }
+    }
+    
+    /* 聚焦/激活狀態樣式 - 包含多種觸發條件 */
+    &:focus:not(.no-focus),      /* 鍵盤聚焦 */
+    &:active:not(.no-focus),     /* 點擊激活 */
+    &:focus-within:not(.no-focus), /* 內部元素聚焦 */
+    &.active {                   /* 手動添加的激活類別 */
+        color: var(--btn-focus-color);                    /* 聚焦時文字顏色 */
+        background-color: var(--btn-focus-bg);            /* 聚焦時背景顏色 */
+        border-color: var(--btn-focus-border-color);      /* 聚焦時邊框顏色 */
+        box-shadow: var(--btn-focus-box-shadow);          /* 聚焦時陰影效果 */
+        /* 更新圖標顏色以匹配聚焦狀態 */
+        .fa-Icons.customStyle {
+            --fill: var(--btn-focus-color);               /* 圖標填充顏色 */
+            --stroke: var(--btn-focus-color);             /* 圖標描邊顏色 */
+        }
+    }
+    
+    /* 禁用狀態樣式 - 支援 HTML disabled 屬性和 CSS 類別 */
+    &:disabled,
+    &.disabled {
+        color: var(--btn-disabled-color);                 /* 禁用時文字顏色 */
+        background-color: var(--btn-disabled-bg);         /* 禁用時背景顏色 */
+        border-color: var(--btn-disabled-border-color);   /* 禁用時邊框顏色 */
+        opacity: var(--btn-disabled-opacity);             /* 禁用時透明度 */
+        pointer-events: none;                             /* 禁用滑鼠事件 */
+        /* 更新圖標顏色以匹配禁用狀態 */
+        .fa-Icons.customStyle {
+            --fill: var(--btn-disabled-color);            /* 圖標填充顏色 */
+            --stroke: var(--btn-disabled-color);          /* 圖標描邊顏色 */
+        }
+    }
+
+    /* 按鈕修飾類別 */
+    &.btn-block {
+        @apply w-full;                                    /* 全寬按鈕 (UnoCSS) */
+    }
+    
+    &.btn-round {
+        border-radius: var(--btn-border-radius);          /* 圓角按鈕 */
+    }
+    
+    /* 按鈕尺寸變體 */
+    &.btn-xs {
+        --btn-padding-x: ;   /* */
+        --btn-padding-y: ;   /* */
+        --btn-font-size: ;   /* */
+    }
+    &.btn-sm {
+        --btn-padding-x: ;    /* */
+        --btn-padding-y: ;    /* */
+        --btn-font-size: ;    /* */
+    }
+    &.btn-lg {
+        --btn-padding-x: ;   /* */
+        --btn-padding-y: ;   /* */
+        --btn-font-size: ;   /* */
+    }
+    &.btn-xl {
+        --btn-padding-x: ;   /* */
+        --btn-padding-y: ;   /* */
+        --btn-font-size: ;   /* */
+    }
+    
+    /* 按鈕內圖標樣式 */
+    .fa-Icons {
+        /* 圖標尺寸屬性 */
+        --width: var(--btn-font-size);                   /* 圖標寬度跟隨字體大小 */
+        --height: var(--btn-font-size);                  /* 圖標高度跟隨字體大小 */
+        /* 應用過渡動畫 */
+        transition-property: var(--icon-transition-property);
+        transition-duration: var(--icon-transition-duration);
+        transition-timing-function: var(--icon-transition-timing-function);
+        
+        /* 自定義樣式圖標 */
+        &.customStyle {
+            --fill: var(--btn-color);                    /* 圖標填充顏色跟隨按鈕文字顏色 */
+            --stroke: var(--btn-color);                  /* 圖標描邊顏色跟隨按鈕文字顏色 */
+        }
+    }
+}
+
+/* 動態生成按鈕主題變體 */
+/* 遍歷 $theme 映射中的每個主題配色方案 */
+@each $key, $colors in $theme {
+    /* 生成對應的 CSS 類別和屬性選擇器 */
+    .btn-#{$key},                    /* 類別選擇器，如 .btn-blue */
+    [data-variant='#{$key}'] {       /* 屬性選擇器，如 [data-variant='blue'] */
+        /* 使用 button-variant mixin 應用完整的按鈕樣式 */
+        @include button-variant(
+            map-get($colors, 'background'),         /* 預設背景顏色 */
+            map-get($colors, 'border'),             /* 預設邊框顏色 */
+            map-get($colors, 'color'),              /* 預設文字顏色 */
+            map-get($colors, 'hover-background'),   /* 懸停背景顏色 */
+            map-get($colors, 'hover-border'),       /* 懸停邊框顏色 */
+            map-get($colors, 'hover-color'),        /* 懸停文字顏色 */
+            map-get($colors, 'focus-background'),   /* 聚焦背景顏色 */
+            map-get($colors, 'focus-border'),       /* 聚焦邊框顏色 */
+            map-get($colors, 'focus-color'),        /* 聚焦文字顏色 */
+            map-get($colors, 'disabled-background'), /* 禁用背景顏色 */
+            map-get($colors, 'disabled-border'),    /* 禁用邊框顏色 */
+            map-get($colors, 'disabled-color')      /* 禁用文字顏色 */
+        );
+    }
+}

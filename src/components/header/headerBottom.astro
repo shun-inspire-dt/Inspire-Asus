@@ -1,0 +1,16 @@
+---
+/** Common Components */
+/** Style */
+import './headerBottom.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'headerBottom', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+</div>

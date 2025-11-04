@@ -1,0 +1,156 @@
+---
+/** Common Components */
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './triggerButton.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: string;
+    title?: string;
+    text?: string;
+    icon?: 'success' | 'error' | null;
+    timeout?: string | number;
+    hideCloseButton?: boolean;
+    hidePrevented?: boolean;
+    button?: boolean;
+    buttonPrimaryText?: string;
+    buttonPrimaryLink2?: string;
+    buttonPrimaryLink?: string;
+    buttonPrimaryAttribute?: string;
+    buttonPrimaryVariant?: string;
+    buttonPrimaryIcon?: string;
+    buttonPrimarySvg?: string;
+    buttonSecondaryText?: string;
+    buttonSecondaryLink2?: string;
+    buttonSecondaryLink?: string;
+    buttonSecondaryAttribute?: string;
+    buttonSecondaryVariant?: string;
+    buttonSecondaryIcon?: string;
+    buttonSecondarySvg?: string;
+}
+
+const {
+    IDName = 'toastTriggerButton',
+    className,
+    title,
+    text,
+    icon,
+    timeout,
+    hideCloseButton,
+    hidePrevented,
+    button,
+    buttonPrimaryText,
+    buttonPrimaryLink2,
+    buttonPrimaryLink,
+    buttonPrimaryAttribute,
+    buttonPrimaryVariant,
+    buttonPrimaryIcon,
+    buttonPrimarySvg,
+    buttonSecondaryText,
+    buttonSecondaryLink2,
+    buttonSecondaryLink,
+    buttonSecondaryAttribute,
+    buttonSecondaryVariant,
+    buttonSecondaryIcon,
+    buttonSecondarySvg
+} = Astro.props as Props;
+---
+
+<!-- 
+    會員驗證 Alert(Toast) 用驅動按鈕：
+    1. 參數：
+        data-toast: 必需值做 module類型驗證用，可忽略不用改任何值
+        data-toast-trigger: 這裡預設值 click 代表可監聽click呼叫Alert，可忽略不用改任何值
+        data-toast-className: 新增給 Alert 的特別 className
+        data-toast-title: Alert 的標題，單純文字提示最好用 data-toast-text 就好
+        data-toast-text: Alert 的標題下詳細文字，單純文字提示最好用 data-toast-text 就好
+        data-toast-icon: Alert 的標題前的 icon，icon樣式底下有補充
+        data-toast-timeout: Alert 的標題的跳出間隔時間
+        data-toast-hideCloseButton: 隱藏 Alert 的關閉按鈕
+        data-toast-hidePrevented: 關閉 Alert 的 click outside close 功能
+        data-toast-button: Alert 是否顯示底下按鈕們，不顯示就把這個 attribute 拿掉或 undefined
+        data-toast-button-primary-text: Alert 底下第一按鈕文字
+        data-toast-button-primary-link2: 可忽略
+        data-toast-button-primary-link: Alert 底下第一按鈕連結
+        data-toast-button-primary-attribute: Alert 底下第一按鈕的額外添加 HTML Tag 屬性
+        data-toast-button-primary-variant: Alert 底下第一按鈕樣式，樣式底下有補充
+        data-toast-button-primary-icon: Alert 底下第一按鈕icon，icon樣式底下有補充
+        data-toast-button-primary-svg: Alert 底下第一按鈕svg，請帶入 svg encode string
+        data-toast-button-secondary-text: Alert 底下第二按鈕文字
+        data-toast-button-secondary-link2: 可忽略
+        data-toast-button-secondary-link: Alert 底下第二按鈕連結
+        data-toast-button-secondary-attribute: Alert 底下第二按鈕的額外添加 HTML Tag 屬性
+        data-toast-button-secondary-variant: Alert 底下第二按鈕樣式，樣式底下有補充
+        data-toast-button-secondary-icon: Alert 底下第二按鈕icon，icon樣式底下有補充
+        data-toast-button-secondary-svg: Alert 底下第二按鈕svg，請帶入 svg encode string
+        補充：
+        1. 按鈕樣式有「」等等：。
+        ----------------------------------------------------------------
+        2. icon有：。
+        ----------------------------------------------------------------
+    2. 怎麼呼叫：
+        ```
+            // button ID 可自己替換，或用className。
+            const button = document.querySelector('#toastTriggerButton');
+            button?.click();
+        ```
+        想要用JS動態換掉值方法如下：
+        ```
+            // button ID 可自己替換，或用className。
+            const button = document.querySelector('#toastTriggerButton');
+            // 任選一個值更改
+            // 刪除值就是用 removeAttribute，例如：button.removeAttribute('data-toast-icon')
+            button.setAttribute('data-toast', ${值});
+            button.setAttribute('data-toast-trigger', ${值});
+            button.setAttribute('data-toast-className', ${值});
+            button.setAttribute('data-toast-title', ${值});
+            button.setAttribute('data-toast-text', ${值});
+            button.setAttribute('data-toast-icon', ${值});
+            button.setAttribute('data-toast-timeout', ${值});
+            button.setAttribute('data-toast-hideCloseButton', ${值});
+            button.setAttribute('data-toast-hidePrevented', ${值});
+            button.setAttribute('data-toast-button', ${值});
+            button.setAttribute('data-toast-button-primary-text', ${值});
+            button.setAttribute('data-toast-button-primary-link2', ${值});
+            button.setAttribute('data-toast-button-primary-link', ${值});
+            button.setAttribute('data-toast-button-primary-variant', ${值});
+            button.setAttribute('data-toast-button-primary-icon', ${值});
+            button.setAttribute('data-toast-button-secondary-text', ${值});
+            button.setAttribute('data-toast-button-secondary-link2', ${值});
+            button.setAttribute('data-toast-button-secondary-link', ${值});
+            button.setAttribute('data-toast-button-secondary-variant', ${值});
+            button.setAttribute('data-toast-button-secondary-icon', ${值});
+        ```
+-->
+<Button
+    IDName={IDName}
+    className="toastTriggerButton"
+    attribute={{
+        'data-toast': '',
+        'data-toast-trigger': 'click',
+        'data-toast-className': className || undefined,
+        'data-toast-title': title || undefined,
+        'data-toast-text': text || undefined,
+        'data-toast-icon': icon || undefined,
+        'data-toast-timeout': timeout || undefined,
+        'data-toast-hideCloseButton': hideCloseButton || undefined,
+        'data-toast-hidePrevented': hidePrevented || undefined,
+        'data-toast-button': !!button ? button : undefined,
+        'data-toast-button-primary-text': buttonPrimaryText || undefined,
+        'data-toast-button-primary-link2': buttonPrimaryLink2 || undefined,
+        'data-toast-button-primary-link': buttonPrimaryLink || undefined,
+        'data-toast-button-primary-attribute': buttonPrimaryAttribute || undefined,
+        'data-toast-button-primary-variant': buttonPrimaryVariant || undefined,
+        'data-toast-button-primary-icon': buttonPrimaryIcon || undefined,
+        'data-toast-button-primary-svg': buttonPrimarySvg || undefined,
+        'data-toast-button-secondary-text': buttonSecondaryText || undefined,
+        'data-toast-button-secondary-link2': buttonSecondaryLink2 || undefined,
+        'data-toast-button-secondary-link': buttonSecondaryLink || undefined,
+        'data-toast-button-secondary-attribute': buttonSecondaryAttribute || undefined,
+        'data-toast-button-secondary-variant': buttonSecondaryVariant || undefined,
+        'data-toast-button-secondary-icon': buttonSecondaryIcon || undefined,
+        'data-toast-button-secondary-svg': buttonSecondarySvg || undefined
+    }}
+/>

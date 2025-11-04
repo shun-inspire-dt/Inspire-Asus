@@ -1,0 +1,70 @@
+---
+/** Style */
+import './radio.scss';
+export interface Props {
+    id?: string;
+    checked?: boolean;
+    name?: string;
+    value?: string | number;
+    label?: string;
+    title?: string;
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: 'readonly';
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    customValidText?: string;
+    customInvalidText?: string;
+    attribute?: attribute;
+    aria?: aria;
+}
+
+const {
+    id,
+    name,
+    label,
+    value,
+    title,
+    checked,
+    required,
+    disabled,
+    readonly,
+    validClass = 'form',
+    validType,
+    validLabel,
+    customValidText,
+    customInvalidText,
+    attribute = {},
+    aria = {}
+} = Astro.props as Props;
+const validAttribute = {
+    'data-valid-class': validClass,
+    'data-valid-type': validType ? `${validType}|radio` : undefined,
+    'data-valid-label': validLabel,
+    'data-custom-valid-text': customValidText,
+    'data-custom-invalid-text': customInvalidText
+};
+---
+
+<div class="form-check form-radio">
+    <input
+        id={id}
+        class="form-radio-input"
+        type="radio"
+        value={value}
+        name={name}
+        checked={checked}
+        disabled={disabled}
+        readonly={readonly}
+        required={required}
+        autocomplete="off"
+        aria-label={title}
+        {...attribute}
+        {...aria}
+        {...validAttribute}
+    />
+    <label class="form-check-label" for={id}>
+        <slot>{label}</slot>
+    </label>
+</div>

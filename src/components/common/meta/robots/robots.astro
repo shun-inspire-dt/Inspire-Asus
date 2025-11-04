@@ -1,0 +1,9 @@
+---
+export interface Props {
+    content?: 'all' | 'nofollow' | null;
+}
+
+const { content } = Astro.props as Props;
+---
+
+{content && <meta name="robots" content={content} />}

@@ -1,0 +1,137 @@
+.form-spinbutton {
+    $btn: &;
+    // --form-spinbutton-width: ;
+    // --form-spinbutton-padding-y: ;
+    // --form-spinbutton-padding-x: ;
+    // --form-spinbutton-gap: ;
+    // --form-spinbutton-background-color: ;
+    // --form-spinbutton-disabled-background-color: ;
+    // --form-spinbutton-readonly-background-color: ;
+    // --form-spinbutton-border-width: ;
+    // --form-spinbutton-border-color: ;
+    // --form-spinbutton-disabled-border-color: ;
+    // --form-spinbutton-readonly-border-color: ;
+    // --form-spinbutton-border-radius: ;
+    // --form-spinbutton-color: ;
+    // --form-spinbutton-disabled-color: ;
+    // --form-spinbutton-readonly-color: ;
+    // --form-spinbutton-font-size: ;
+    // --form-spinbutton-font-weight: ;
+    // --form-spinbutton-text-align: ;
+    // --form-spinbutton-placeholder-color: ;
+    // --form-spinbutton-line-height: ;
+    // --form-spinbutton-letter-spacing: ;
+    /** Button */
+    // --form-spinbutton-btn-width: ;
+    // --form-spinbutton-btn-align-items: ;
+    // --form-spinbutton-btn-justify-content: ;
+    // --form-spinbutton-btn-icon-size: ;
+    // --form-spinbutton-btn-icon-color: ;
+    // --form-spinbutton-disabled-btn-icon-color: ;
+    // --form-spinbutton-readonly-btn-icon-color: ;
+    // --form-spinbutton-btn-border-width: ;
+    // --form-spinbutton-btn-background-color: ;
+    // --form-spinbutton-disabled-btn-background-color: ;
+    // --form-spinbutton-readonly-btn-background-color: ;
+    // --form-spinbutton-btn-border-color: ;
+    // --form-spinbutton-disabled-btn-border-color: ;
+    // --form-spinbutton-readonly-btn-border-color: ;
+    /** Input */
+    // --form-spinbutton-input-background-color: ;
+    // --form-spinbutton-input-disabled-background-color: ;
+    // --form-spinbutton-input-readonly-background-color: ;
+    // --form-spinbutton-input-border-width: ;
+    // --form-spinbutton-input-border-color: ;
+    // --form-spinbutton-input-disabled-border-color: ;
+    // --form-spinbutton-input-readonly-border-color: ;
+
+    @apply flex items-stretch justify-between rounded;
+    width: var(--form-spinbutton-width);
+    gap: var(--form-spinbutton-gap);
+    background-color: var(--form-spinbutton-background-color);
+    border: var(--form-spinbutton-border-width) solid var(--form-spinbutton-border-color);
+    border-radius: var(--form-spinbutton-border-radius);
+    overflow: hidden;
+    -ms-touch-action: auto;
+    touch-action: manipulation;
+
+    &.form-spinbutton-disabled {
+        background-color: var(--form-spinbutton-disabled-background-color);
+        border: var(--form-spinbutton-border-width) solid var(--form-spinbutton-disabled-border-color);
+    }
+    &.form-spinbutton-readonly {
+        background-color: var(--form-spinbutton-readonly-background-color);
+        border: var(--form-spinbutton-border-width) solid var(--form-spinbutton-readonly-border-color);
+    }
+
+    button {
+        @apply flex flex-none;
+        width: var(--form-spinbutton-btn-width);
+        align-items: var(--form-spinbutton-btn-align-items);
+        justify-content: var(--form-spinbutton-btn-justify-content);
+        background-color: var(--form-spinbutton-btn-background-color);
+        border: var(--form-spinbutton-btn-border-width) solid var(--form-spinbutton-btn-border-color);
+        -ms-touch-action: auto;
+        touch-action: manipulation;
+        
+        &:first-child {
+            border-top-left-radius: var(--form-spinbutton-border-radius);
+            border-bottom-left-radius: var(--form-spinbutton-border-radius);
+        }
+        &:last-child {
+            border-top-right-radius: var(--form-spinbutton-border-radius);
+            border-bottom-right-radius: var(--form-spinbutton-border-radius);
+        }
+        &:disabled {
+            background-color: var(--form-spinbutton-disabled-btn-background-color);
+            border: var(--form-spinbutton-btn-border-width) solid var(--form-spinbutton-disabled-btn-border-color);
+            .fa-Icons {
+                --fill: var(--form-spinbutton-disabled-btn-icon-color);
+            }
+        }
+        &[data-readonly] {
+            background-color: var(--form-spinbutton-readonly-btn-background-color);
+            border: var(--form-spinbutton-btn-border-width) solid var(--form-spinbutton-readonly-btn-border-color);
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+            .fa-Icons {
+                --fill: var(--form-spinbutton-readonly-btn-icon-color);
+            }
+        }
+        .fa-Icons {
+            --width: var(--form-spinbutton-btn-icon-size);
+            --height: var(--form-spinbutton-btn-icon-size);
+            --fill: var(--form-spinbutton-btn-icon-color);
+        }
+    }
+    input.control-input {
+        --input-padding-y: var(--form-spinbutton-padding-y);
+        --input-padding-x: var(--form-spinbutton-padding-x);
+        --input-color: var(--form-spinbutton-color);
+        --input-disabled-color: var(--form-spinbutton-disabled-color);
+        --input-readonly-color: var(--form-spinbutton-readonly-color);
+        --input-font-size: var(--form-spinbutton-font-size);
+        --input-font-weight: var(--form-spinbutton-font-weight);
+        --input-text-align: var(--form-spinbutton-text-align);
+        --input-placeholder-color: var(--form-spinbutton-placeholder-color);
+        --input-line-height: var(--form-spinbutton-line-height);
+        --input-letter-spacing: var(--form-spinbutton-letter-spacing);
+        --input-background-color: var(--form-spinbutton-input-background-color);
+        --input-disabled-background-color: var(--form-spinbutton-input-disabled-background-color);
+        --input-readonly-background-color: var(--form-spinbutton-input-readonly-background-color);
+        --input-border-width: var(--form-spinbutton-input-border-width);
+        --input-border-color: var(--form-spinbutton-input-border-color);
+        --input-disabled-border-color: var(--form-spinbutton-input-disabled-border-color);
+        --input-readonly-border-color: var(--form-spinbutton-input-readonly-border-color);
+        --input-border-radius: 0rem;
+
+        flex-grow: 1;
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+}

@@ -1,0 +1,76 @@
+---
+// social
+import Meta, { ColorScheme } from '@components/common/meta/social/Meta.astro';
+import Facebook, { Props as FacebookProps } from '@components/common/meta/social/Facebook.astro';
+import Twitter, { Props as TwitterProps } from '@components/common/meta/social/Twitter.astro';
+import Google, { Props as GoogleProps } from '@components/common/meta/social/Google.astro';
+// icon
+import Icon, { favicon, appleTouchIcon } from '@components/common/meta/icon/icon.astro';
+// robot
+import Robots, { Props as RobotsProps } from '@components/common/meta/robots/robots.astro';
+// schema
+import Schema, { Tschemas } from '@components/common/meta/schema/schema.astro';
+// analytics
+import Gtag from '@components/common/meta/analytics/gtag.astro';
+// font
+import Font, { Props as FontProps } from '@components/common/meta/font/font.astro';
+
+export type Props = {
+    title?: string;
+    description?: string;
+    keywords?: string[];
+    themeColor?: string;
+    colorScheme?: ColorScheme;
+
+    facebook?: Pick<FacebookProps, 'image' | 'type' | 'url'>;
+    twitter?: Pick<TwitterProps, 'image' | 'card' | 'site'>;
+    google?: Pick<GoogleProps, 'author' | 'copyright' | 'applicationName' | 'verification'>;
+
+    robots?: Pick<RobotsProps, 'content'>;
+    schemas?: Tschemas;
+
+    font?: Pick<FontProps, 'google' | 'custom' | 'icon'>;
+
+    favicon?: favicon;
+    appleTouchIcon?: appleTouchIcon;
+};
+
+const {
+    title,
+    description,
+    keywords,
+    themeColor,
+    colorScheme,
+    facebook,
+    twitter,
+    google,
+    robots,
+    schemas,
+    font,
+    favicon,
+    appleTouchIcon
+} = Astro.props;
+---
+
+<Fragment>
+    <Meta title={title} description={description} keywords={keywords} themeColor={themeColor} colorScheme={colorScheme} />
+
+    <Icon favicon={favicon} appleTouchIcon={appleTouchIcon} />
+
+    <Facebook title={title} description={description} image={facebook?.image} url={facebook?.url} type={facebook?.type} />
+    <Twitter title={title} description={description} image={twitter?.image} site={twitter?.site} card={twitter?.card} />
+    <Google
+        description={description}
+        author={google?.author}
+        copyright={google?.copyright}
+        applicationName={google?.applicationName}
+        verification={google?.verification}
+    />
+
+    <Robots content={robots?.content} />
+    <Schema schemas={schemas} />
+
+    <!-- <Gtag /> -->
+
+    <Font google={font?.google} custom={font?.custom} icon={font?.icon} />
+</Fragment>

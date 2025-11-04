@@ -1,0 +1,90 @@
+@mixin fill() {
+    // --form-input-group-control-flex-direction: ;
+    // --form-input-group-control-align-items: ;
+    // --form-input-group-control-justify-content: ;
+    // --form-input-group-control-flex-wrap: ;
+    // --form-input-group-control-gap: ;
+    // --feedback-font-size: ;
+    // --feedback-margin-top: ;
+    // --feedback-padding-left: ;
+    // --feedback-icon-size: ;
+    // --invalid-feedback-color: ;
+    // --invalid-feedback-background-image: ;
+    // --valid-feedback-background-image: ;
+    // --valid-feedback-color: ;
+    
+    // display: ;
+    // flex-direction: ;
+    // align-items: ;
+    // justify-content: ;
+    // flex-wrap: ;
+    // gap: ;
+    // max-width: ;
+    // width: ;
+    // flex-grow: ;
+
+    &.input-group-control-inline {
+        --form-input-group-control-flex-direction: row;
+        --form-input-group-control-flex-wrap: wrap;
+    }
+    &:not(.input-group-control-inline) > * {
+        width: 100%;
+    }
+}
+.input-group {
+    &-control {
+        @include fill;
+        .invalid-feedback,
+        .valid-feedback {
+            font-size: var(--feedback-font-size);
+            margin-top: var(--feedback-margin-top);
+        }
+        .invalid-feedback {
+            --display: none;
+            position: relative;
+            display: var(--display);
+            color: var(--invalid-feedback-color);
+            padding-left: var(--feedback-padding-left);
+            &::after {
+                @apply content-empty absolute left-0 top-1/2 -translate-y-1/2 z-1 bg-contain bg-no-repeat bg-center;
+                width: var(--feedback-icon-size);
+                background-image: var(--invalid-feedback-background-image);
+            }
+        }
+        .valid-feedback {
+            --display: none;
+            --color: #27ae35;
+            position: relative;
+            display: var(--display);
+            color: var(--valid-feedback-color);
+            padding-left: var(--feedback-padding-left);
+            &::after {
+                @apply content-empty w-1.25rem h-1.25rem absolute left-0 top-1/2 -translate-y-1/2 z-1 bg-contain bg-no-repeat bg-center;
+                width: var(--feedback-icon-size);
+                background-image: var(--valid-feedback-background-image);
+            }
+        }
+
+        &.input-error {
+            .invalid-feedback {
+                --display: block;
+            }
+            .valid-feedback {
+                --display: none;
+            }
+        }
+        &.input-success {
+            .invalid-feedback {
+                --display: none;
+            }
+            .valid-feedback {
+                --display: block;
+            }
+        }
+    }
+}
+.modal {
+    .input-group-control {
+        @include fill;
+    }
+}

@@ -1,0 +1,133 @@
+---
+/** Type */
+import type { HTMLAttributes } from 'astro/types';
+/** Common Component */
+/** InputGroup */
+import InputGroup, { type Props as InputGroupProps } from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input, { type Props as InputProps } from '@components/common/form/input.astro';
+/** Main Components */
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './search.scss';
+
+export interface Props extends InputGroupProps, InputProps {
+    searchIDName?: string;
+    actions?: HTMLAttributes<'form'>['action'];
+    /** Input Group */
+    inputGroupIDName?: string;
+    inputGroupClassName?: any;
+    inputGroupTitle?: string;
+    inputGroupStyle?: { [key: string]: string };
+    inputGroupRequired?: boolean;
+    inputGroupAttribute?: attribute;
+    /** Input */
+    IDName?: string;
+    inputClassName?: any;
+    inputTitle?: string;
+    inputAttribute?: attribute;
+    inputAria?: aria;
+}
+
+const {
+    searchIDName,
+    className,
+    actions,
+    /** Input Group */
+    inputGroupIDName,
+    inputGroupClassName,
+    formGroupClassName,
+    labelClassName,
+    contentClassName,
+    inputGroupTitle,
+    inputGroupAttribute = {},
+    style,
+    inputGroupStyle,
+    labelStyle,
+    contentStyle,
+    border,
+    inline,
+    alwaysInline,
+    inlineContent,
+    inlineContentPadding,
+    inlineContentWrap,
+    alwaysInlineContent = true,
+    inlineLabelCenter = true,
+    inlineLabelPadding = true,
+    inputGroupRequired,
+    /** Input */
+    IDName,
+    inputClassName,
+    type = 'search',
+    name = 'search',
+    value,
+    placeholder,
+    inputmode = 'search',
+    maxLength,
+    minLength,
+    max,
+    min,
+    required,
+    disabled,
+    readonly,
+    autocomplete,
+    inputTitle,
+    inputAttribute = {},
+    inputAria = {}
+} = Astro.props as Props;
+---
+
+<form id={searchIDName} class:list={['SearchForm', className]} action={actions} style={style}>
+    <InputGroup
+        id={inputGroupIDName}
+        className={inputGroupClassName}
+        formGroupClassName={['SearchInputGroup', formGroupClassName]}
+        labelClassName={labelClassName}
+        contentClassName={contentClassName}
+        inputID={IDName}
+        title={inputGroupTitle}
+        attribute={inputGroupAttribute}
+        style={inputGroupStyle}
+        labelStyle={labelStyle}
+        contentStyle={contentStyle}
+        border={border}
+        inline={inline}
+        alwaysInline={alwaysInline}
+        inlineContent={inlineContent}
+        inlineContentPadding={inlineContentPadding}
+        inlineContentWrap={inlineContentWrap}
+        alwaysInlineContent={alwaysInlineContent}
+        inlineLabelCenter={inlineLabelCenter}
+        inlineLabelPadding={inlineLabelPadding}
+        required={inputGroupRequired}
+    >
+        <Input
+            id={IDName}
+            className={['SearchInput', inputClassName]}
+            type={type}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+            inputmode={inputmode}
+            maxLength={maxLength}
+            minLength={minLength}
+            max={max}
+            min={min}
+            required={required}
+            disabled={disabled}
+            readonly={readonly}
+            autocomplete={autocomplete}
+            title={inputTitle}
+            attribute={inputAttribute}
+            aria={inputAria}
+        />
+        <Button
+            type={'submit'}
+            className="SearchInputButton"
+            title="Search Button"
+            iconWidth={20}
+            iconHeight={20}
+        />
+    </InputGroup>
+</form>

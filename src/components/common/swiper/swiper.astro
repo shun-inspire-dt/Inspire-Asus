@@ -1,0 +1,46 @@
+---
+/** Style */
+import './swiper.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    pagination?: 'inside' | 'outside' | null;
+    navigation?: 'inside' | 'outside' | null;
+}
+
+const { IDName, className, style, attribute = {}, pagination, navigation } = Astro.props as Props;
+---
+
+<div
+    id={IDName ? `${IDName}SwiperContainer` : undefined}
+    class:list={['swiper-container', className]}
+    style={style}
+    {...attribute}
+>
+    {
+        navigation && navigation === 'outside' && (
+            <div class="swiper-buttons">
+                <div class="swiper-button-next" />
+                <div class="swiper-button-prev" />
+            </div>
+        )
+    }
+    {pagination && pagination === 'outside' && <div class="swiper-pagination" />}
+    <div id={IDName ? `${IDName}Swiper` : undefined} class="swiper">
+        {pagination && pagination === 'inside' && <div class="swiper-pagination" />}
+        {
+            navigation && navigation === 'inside' && (
+                <div class="swiper-buttons">
+                    <div class="swiper-button-next" />
+                    <div class="swiper-button-prev" />
+                </div>
+            )
+        }
+        <div class="swiper-wrapper">
+            <slot />
+        </div>
+    </div>
+    <slot name="outside" />
+</div>

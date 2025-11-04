@@ -1,0 +1,31 @@
+.bg-default {
+    background-image: var(--bg);
+    &.no-webp {
+        background-image: var(--bg-callback);
+    }
+
+    @screen md {
+        background-image: var(--bg-md, var(--bg));
+        &.no-webp {
+            background-image: var(--bg-callback-md, var(--bg));
+        }
+    }
+    @screen lg {
+        background-image: var(--bg-lg, var(--bg));
+        &.no-webp {
+            background-image: var(--bg-callback-lg, var(--bg));
+        }
+    }
+    @screen xl {
+        background-image: var(--bg-xl, var(--bg));
+        &.no-webp {
+            background-image: var(--bg-callback-xl, var(--bg));
+        }
+    }
+    @screen 2xl {
+        background-image: var(--bg-2xl, var(--bg));
+        &.no-webp {
+            background-image: var(--bg-callback-2xl, var(--bg));
+        }
+    }
+}

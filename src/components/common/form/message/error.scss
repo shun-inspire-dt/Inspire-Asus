@@ -1,0 +1,18 @@
+.invalid-text {
+    // --form-invalid-color: ;
+    // --form-invalid-line-height: ;
+    // --form-invalid-icon-size: ;
+    // --form-invalid-icon-background-image: ;
+    @apply flex items-center;
+    color: var(--form-invalid-color);
+
+    &-icon {
+        @apply flex items-center justify-center bg-center bg-contain bg-no-repeat;
+        width: var(--form-invalid-icon-size);
+        height: var(--form-invalid-icon-size);
+        background-image: var(--form-invalid-icon-background-image);
+    }
+    &-text {
+        line-height: var(--form-invalid-line-height);
+    }
+}

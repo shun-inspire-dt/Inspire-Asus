@@ -1,0 +1,106 @@
+---
+/** Common Components */
+/** Icons */
+import Icons, { icons } from '@components/common/icons/icons.astro';
+/** Button */
+import Button, { type Props as ButtonProps } from '@components/common/button/button.astro';
+/** Style */
+import './tabs.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    buttonClassName?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    variant?: ButtonProps['variant'];
+    button?: ButtonProps['button'];
+    ParentTag?: 'ul' | 'div';
+    ChildTag?: 'li' | 'div';
+    tabsName: string;
+    data: Array<
+        | {
+              title: string;
+              link?: string;
+              icon?: keyof typeof icons;
+              sizes?: {
+                  width: number;
+                  height: number;
+                  custom?: boolean;
+              };
+          }
+        | string
+    >;
+    activeIndex?: number | false;
+}
+
+const {
+    IDName,
+    className,
+    buttonClassName = '',
+    style,
+    variant,
+    button,
+    attribute = {},
+    ParentTag = 'ul',
+    ChildTag = 'li',
+    tabsName,
+    data = [],
+    activeIndex = 0
+} = Astro.props as Props;
+---
+
+<ParentTag id={IDName ? `${IDName}Tabs` : undefined} class:list={[className]} role="tablist" style={style} {...attribute}>
+    {
+        data.map((x, i) => (
+            <ChildTag role="presentation">
+                <Button
+                    type="button"
+                    className={[i === activeIndex ? 'active' : '', buttonClassName as Class]}
+                    title="Tabs Button"
+                    variant={variant}
+                    attribute={{
+                        'data-index': i + 1,
+                        'data-bs-toggle': 'tab',
+                        'data-bs-target': `#${tabsName}0${i + 1}-tab-pane`,
+                        role: 'tab',
+                        'aria-controls': `${tabsName}0${i + 1}-tab-pane`,
+                        'aria-selected': 'true',
+                        'data-link': typeof x === 'object' ? x.link : undefined
+                    }}
+                    button={button}
+                >
+                    {typeof x === 'object' ? (
+                        <Fragment>
+                            {x.hasOwnProperty('icon') && (
+                                <Icons
+                                    icon={x.icon as keyof typeof icons}
+                                    custom={x.sizes?.custom}
+                                    width={x.sizes?.width}
+                                    height={x.sizes?.height}
+                                />
+                            )}
+                            <span>{x.title}</span>
+                        </Fragment>
+                    ) : (
+                        x
+                    )}
+                </Button>
+            </ChildTag>
+        ))
+    }
+</ParentTag>
+
+<script>
+    /** Modules */
+    import { Tab } from 'bootstrap';
+
+    const buttons = document.querySelectorAll('button[data-bs-toggle="tab"][data-link]') as NodeListOf<HTMLButtonElement>;
+    [...buttons].map((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const { link = '' } = btn.dataset;
+            if (link) window.location.href = link;
+        });
+    });
+</script>

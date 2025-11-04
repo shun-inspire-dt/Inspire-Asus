@@ -1,0 +1,14 @@
+.line-clamp {
+    --line: 100;
+    --line-height: 1.5;
+    --display: -webkit-box !important;
+    overflow: hidden;
+    display: var(--display);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--line);
+    line-clamp: var(--line);
+    max-height: calc(1em * var(--line-height) * var(--line));
+    &.line-clamp-height {
+        height: calc(1em * var(--line-height) * var(--line));
+    }
+}

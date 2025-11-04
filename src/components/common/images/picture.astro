@@ -1,0 +1,80 @@
+---
+export interface Props {
+    id?: string;
+    className?: any;
+    width?: number | string | null;
+    height?: number | string | null;
+    img?: string;
+    blankWebpImg?: string;
+    alt?: string;
+    type?: string;
+    loading?: 'lazy' | 'eager' | null | undefined;
+    decoding?: 'async' | 'auto' | 'sync' | null | undefined;
+    blank?: boolean;
+    noWebp?: boolean;
+    breakpoints?: {
+        width: number;
+        img: string;
+        blankWebpImg?: string;
+        noWebp?: boolean;
+        type?: string;
+        blank?: string;
+    }[];
+    style?: { [key: string]: string };
+    attribute?: attribute;
+}
+
+const {
+    id,
+    className = '',
+    width = null,
+    height = null,
+    img = '',
+    blankWebpImg = '',
+    alt = '',
+    type = 'png',
+    loading = 'lazy',
+    decoding = 'async',
+    blank,
+    noWebp = false,
+    breakpoints,
+    style,
+    attribute = {}
+} = Astro.props as Props;
+---
+
+<picture>
+    {
+        breakpoints &&
+            breakpoints?.map((x) => (
+                <Fragment>
+                    {!noWebp && (
+                        <source
+                            srcset={!blank ? `${Astro.url.origin}${x.img}.webp` : `${x.blankWebpImg}`}
+                            media={`(min-width:${x.width}px)`}
+                            type="image/webp"
+                        />
+                    )}
+                    <source
+                        srcset={!blank ? `${Astro.url.origin}${x.img}.${x.type || type}` : `${x.img}`}
+                        media={`(min-width:${x.width}px)`}
+                        type={`image/${x.type || type}`}
+                    />
+                </Fragment>
+            ))
+    }
+    {!noWebp && <source srcset={!blank ? `${Astro.url.origin}${img}.webp` : `${blankWebpImg}`} type="image/webp" />}
+    <img
+        id={id}
+        class:list={[className]}
+        width={width}
+        height={height}
+        src={!blank ? `${Astro.url.origin}${img}.${type}` : `${img}`}
+        alt={alt}
+        title={alt}
+        loading={loading}
+        decoding={decoding}
+        style={style}
+        {...attribute}
+    />
+</picture>

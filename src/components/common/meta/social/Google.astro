@@ -1,0 +1,17 @@
+---
+export interface Props {
+    description?: string;
+    author?: string;
+    copyright?: string;
+    applicationName?: string;
+    verification?: string;
+}
+
+const { description, author = '', copyright = '', applicationName = '', verification = '' } = Astro.props as Props;
+---
+
+{description && <meta name="description" content={description} />}
+{author && <meta name="author" content={author} />}
+{copyright && <meta name="copyright" content={copyright} />}
+{applicationName && <meta name="application-name" content={applicationName} />}
+{verification && <meta name="google-site-verification" content={verification} />}

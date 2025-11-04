@@ -1,0 +1,25 @@
+---
+/** Data */
+import { NavsData } from '@js/data/navs';
+/** Main Components */
+import Navs from './nav.astro';
+import Offcanvas from './offcanvas/offcanvas.astro';
+import Logo from './logo.astro';
+/** Top & Bottom */
+import Right from './headerTop.astro';
+// import Bottom from './headerBottom.astro';
+/** Style */
+import './header.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'header', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<!-- Header -->
+<header id={IDName} class:list={['header', className]} style={style} {...attribute}></header>

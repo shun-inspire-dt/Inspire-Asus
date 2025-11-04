@@ -1,0 +1,34 @@
+a,
+button {
+    &[data-bs-toggle='collapse'] {
+        [data-collapse-arrow] {
+            @apply transition-transform duration-500 ease-out;
+        }
+        [data-collapse-icon] {
+            @apply hidden;
+        }
+
+        &[aria-expanded='false'] {
+            [data-collapse-arrow] {
+                transform: rotate(0); 
+            }
+            [data-collapse-icon='show'] {
+                @apply block;
+            }
+            [data-collapse-icon='hide'] {
+                @apply hidden;
+            }
+        }
+        &[aria-expanded='true'] {
+            [data-collapse-arrow] {
+                transform: rotate(var(--collapse-arrow-rotate, 180deg));
+            }
+            [data-collapse-icon='show'] {
+                @apply hidden;
+            }
+            [data-collapse-icon='hide'] {
+                @apply block;
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+@use "../../../scss/mixin/scrollbar.scss" as scrollbar;
+
+.offcanvas,
+.offcanvas-xxl,
+.offcanvas-xl,
+.offcanvas-lg,
+.offcanvas-md,
+.offcanvas-sm {
+    /** Offcanvas Size */
+    // --bs-offcanvas-width-xxl: ;
+    // --bs-offcanvas-width-xl: ;
+    // --bs-offcanvas-width-lg: ;
+    // --bs-offcanvas-width-md: ;
+    // --bs-offcanvas-width-sm: ;
+    /** 主要 */
+    // --bs-offcanvas-width: ;
+    // --bs-offcanvas-bg: ;
+    // --bs-offcanvas-color: ;
+    // --bs-offcanvas-transition: ;
+    // --bs-offcanvas-border-width: ;
+    // --bs-offcanvas-border-color: ;
+    // --bs-offcanvas-close-size: ;
+    // --offcanvas-close-background-image: ;
+    // --bs-offcanvas-title-line-height: ;
+    /** 次要 */
+    // --bs-offcanvas-zindex: ;
+    // --bs-offcanvas-height: ;
+    // --bs-offcanvas-padding-x: ;
+    // --bs-offcanvas-padding-y: ;
+    // --bs-offcanvas-box-shadow: ;
+    /** Offcanvas Body */
+    // --offcanvas-body-display: ;
+    // --offcanvas-body-flex-direction: ;
+    // --offcanvas-body-align-items: t
+    // --offcanvas-body-justify-content: ;
+    // --offcanvas-body-gap: ;
+
+    height: var(--bs-offcanvas-height);
+    box-shadow: var(--bs-offcanvas-box-shadow);
+}
+.offcanvas-xxl {
+    --bs-offcanvas-width: var(--bs-offcanvas-width-xxl);
+}
+.offcanvas-xl {
+    --bs-offcanvas-width: var(--bs-offcanvas-width-xl);
+}
+.offcanvas-lg {
+    --bs-offcanvas-width: var(--bs-offcanvas-width-lg);
+}
+.offcanvas-md {
+    --bs-offcanvas-width: var(--bs-offcanvas-width-md);
+}
+.offcanvas-sm {
+    --bs-offcanvas-width: var(--bs-offcanvas-width-sm);
+}
+.offcanvas-close-button {
+    @apply bg-cover bg-center bg-no-repeat;
+    width: var(--bs-offcanvas-close-size);
+    height: var(--bs-offcanvas-close-size);
+    background-image: var(--offcanvas-close-background-image);
+}
+.offcanvas-body {
+    display: var(--offcanvas-body-display);
+    flex-direction: var(--offcanvas-body-flex-direction);
+    align-items: var(--offcanvas-body-align-items);
+    justify-content: var(--offcanvas-body-justify-content);
+    gap: var(--offcanvas-body-gap);
+    @include scrollbar.scrollbar();
+}
+
+.offcanvas-backdrop {
+    // --bs-offcanvas-backdrop-color: ;
+    // --bs-offcanvas-backdrop-opacity: ;
+
+    background-color: var(--bs-offcanvas-backdrop-color);
+
+    &.show {
+        opacity: var(--bs-offcanvas-backdrop-opacity);
+    }
+}

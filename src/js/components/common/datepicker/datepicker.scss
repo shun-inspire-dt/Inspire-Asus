@@ -1,0 +1,216 @@
+.air-datepicker {
+    --adp-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol';
+    --adp-font-size: 0.875rem;
+    --adp-width: 13.75rem;
+    --adp-z-index: 1200;
+    --adp-padding: 0rem;
+    --adp-grid-areas: 'nav' 'body' 'timepicker' 'buttons';
+    --adp-transition-duration: 0.3s;
+    --adp-transition-ease: ease-out;
+    --adp-transition-offset: 0.5rem;
+    --adp-background-color: var(--color-gold-1);
+    --adp-background-color-hover: var(--color-gold);
+    --adp-background-color-active: var(--color-gold);
+    --adp-background-color-in-range: rgba(92, 196, 239, 0.1);
+    --adp-background-color-in-range-focused: rgba(92, 196, 239, 0.2);
+    --adp-background-color-selected-other-month-focused: var(--color-gold);
+    --adp-background-color-selected-other-month: var(--color-gold);
+    --adp-color: var(--color-gold);
+    --adp-color-secondary: var(--color-gold-dark);
+    --adp-color-accent: var(--color-gold-3);
+    --adp-color-current-date: var(--adp-color);
+    --adp-color-other-month: var(--color-gold-3);
+    --adp-color-disabled: var(--color-gold);
+    --adp-color-disabled-in-range: var(--color-gold);
+    --adp-color-other-month-hover: var(--adp-color-accent);
+    --adp-border-color: var(--color-gold-2);
+    --adp-border-color-inner: var(--color-gold);
+    --adp-border-radius: 0.25rem;
+    --adp-border-color-inline: var(--color-gold);
+    --adp-nav-height: 1.5rem;
+    --adp-nav-arrow-color: var(--color-gold-4);
+    --adp-nav-action-size: 2rem;
+    --adp-nav-color-secondary: var(--adp-color-secondary);
+    --adp-day-name-color: var(--color-gold-4);
+    --adp-day-name-color-hover: var(--color-gold-6);
+    --adp-day-cell-width: 1fr;
+    --adp-day-cell-height: 1.5625rem;
+    --adp-month-cell-height: 2.625rem;
+    --adp-year-cell-height: 3.5rem;
+    --adp-pointer-size: 0.625rem;
+    --adp-poiner-border-radius: 0.125rem;
+    --adp-pointer-offset: 0.875rem;
+    --adp-cell-border-radius: 0.3125rem;
+    --adp-cell-background-color-hover: var(--adp-background-color-hover);
+    --adp-cell-background-color-selected: var(--color-gold);
+    --adp-cell-background-color-selected-hover: var(--color-gold-dark);
+    --adp-cell-background-color-in-range: rgba(92, 196, 239, 0.1);
+    --adp-cell-background-color-in-range-hover: rgba(92, 196, 239, 0.2);
+    --adp-cell-border-color-in-range: var(--adp-cell-background-color-selected);
+    --adp-btn-height: 2rem;
+    --adp-btn-color: var(--adp-color-accent);
+    --adp-btn-color-hover: var(--adp-color);
+    --adp-btn-border-radius: var(--adp-border-radius);
+    --adp-btn-background-color-hover: var(--adp-background-color-hover);
+    --adp-btn-background-color-active: var(--adp-background-color-active);
+    --adp-time-track-height: 0.0625rem;
+    --adp-time-track-color: #dedede;
+    --adp-time-track-color-hover: #b1b1b1;
+    --adp-time-thumb-size: 0.75rem;
+    --adp-time-padding-inner: 0.625rem;
+    --adp-time-day-period-color: var(--adp-color-secondary);
+    --adp-mobile-font-size: 1rem;
+    --adp-mobile-nav-height: 2.5rem;
+    --adp-mobile-width: 20rem;
+    --adp-mobile-day-cell-height: 2.375rem;
+    --adp-mobile-month-cell-height: 3rem;
+    --adp-mobile-year-cell-height: 4rem;
+
+    /* Custom Css var **/
+    /** datepicker self */
+    --datepicker-padding: 0.3125rem;
+    --datepicker-shadow: 0rem 0rem 0.625rem 0rem rgba(0, 0, 0, 0.25);
+    /** Nav */
+    --datepicker-nav-padding-bottom: 0.25rem;
+    /** Title */
+    --datepicker-title-color: var(--color-gold-dark);
+    --datepicker-hover-title-color: var(--color-white);
+    --datepicker-hover-title-background-color: var(--adp-background-color-hover);
+    --datepicker-title-font-weight: 700;
+    /** arrow icon */
+    --datepicker-arrow-size: var(--adp-nav-action-size);
+    --datepicker-arrow-color: var(--color-white);
+    --datepicker-arrow-padding: 0.25rem;
+    /** cells */
+    --datepicker-cells-gap: 0.1875rem;
+    --datepicker-hover-cells-background-color: var(--adp-cell-background-color-selected-hover);
+    --datepicker-hover-cells-color: var(--adp-color-accent);
+    /** weekday row */
+    --datepicker-day-names-margin-top: 0rem;
+    --datepicker-day-names-margin-bottom: 0.25rem;
+    /** datepicker pointer */
+    --datepicker-pointer-background-color: var(--color-gold-1);
+    /** content */
+    --datepicker-content-padding-top: 0.25rem;
+
+    padding: var(--datepicker-padding);
+    line-height: var(--line-height);
+    box-shadow: var(--datepicker-shadow);
+
+    &-nav {
+        padding-bottom: var(--datepicker-nav-padding-bottom);
+    }
+
+    &-nav--title {
+        color: var(--datepicker-title-color);
+        font-weight: var(--datepicker-title-font-weight);
+        white-space: nowrap;
+    }
+
+    &-nav--action {
+        svg {
+            width: var(--datepicker-arrow-size);
+            height: var(--datepicker-arrow-size);
+        }
+
+        &[data-action="prev"] {
+            padding-left: var(--datepicker-arrow-padding);
+        }
+
+        &[data-action="next"] {
+            padding-right: var(--datepicker-arrow-padding);
+        }
+    }
+
+    &-nav--action,
+    &-nav--title {
+
+        &:hover,
+        &:active {
+            color: var(--datepicker-hover-title-color);
+            background-color: var(--datepicker-hover-title-background-color);
+
+            path {
+                stroke: var(--datepicker-arrow-color);
+            }
+        }
+    }
+
+    &-body--cells {
+        gap: var(--datepicker-cells-gap);
+    }
+
+    &--content {
+        padding-top: var(--datepicker-content-padding-top);
+    }
+
+    &-body--day-names {
+        font-weight: var(--datepicker-title-font-weight);
+        margin-top: var(--datepicker-day-names-margin-top);
+        margin-bottom: var(--datepicker-day-names-margin-bottom);
+    }
+
+    &--pointer {
+        &::after {
+            background-color: var(--datepicker-pointer-background-color);
+            border-color: var(--datepicker-pointer-background-color);
+        }
+    }
+
+    &-cell {
+        line-height: 1;
+        letter-spacing: 0rem;
+
+        // 通用狀態樣式
+        &.-selected-,
+        &.-focus- {
+            color: var(--datepicker-hover-cells-color);
+        }
+
+        // 當前日期
+        &.-current- {
+            font-weight: var(--datepicker-title-font-weight);
+
+            &.-selected-,
+            &.-focus- {
+                color: var(--datepicker-hover-cells-color);
+            }
+        }
+
+        // 其他月份/年代
+        &.-other-month-,
+        &.-other-decade- {
+
+            &.-selected-,
+            &.-focus- {
+                color: var(--datepicker-hover-cells-color);
+                background-color: var(--datepicker-hover-cells-background-color);
+                text-decoration: none;
+            }
+        }
+
+        // 禁用狀態
+        &.-disabled- {
+            color: var(--adp-color-accent);
+            text-decoration: line-through;
+            pointer-events: none;
+            user-select: none;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.air-datepicker-global-container {
+    .air-datepicker-overlay {
+        --adp-overlay-z-index: 1100;
+    }
+}
+
+.air-datepicker.readonly-datepicker {
+    .air-datepicker--content {
+        .air-datepicker-cell.-day- {
+            @apply pointer-events-none;
+        }
+    }
+}

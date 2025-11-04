@@ -1,0 +1,1 @@
+const data = [{"type":"add","path":"../src/scss/pages/index.scss","templateFile":"./templates/scss.hbs","abortOnFail":false,"data":{"IDName":"# {}"}}]

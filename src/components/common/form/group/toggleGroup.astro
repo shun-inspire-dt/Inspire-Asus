@@ -1,0 +1,14 @@
+---
+/** Style */
+import './toggleGroup.scss';
+export interface Props {
+    id?: string;
+    className?: any;
+}
+
+const { id, className } = Astro.props as Props;
+---
+
+<div id={id} class:list={['toggleGroup', className]} data-toggle-container>
+    <slot />
+</div>

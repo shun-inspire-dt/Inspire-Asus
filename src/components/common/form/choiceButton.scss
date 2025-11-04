@@ -1,0 +1,4 @@
+.btn-choice {
+    @apply absolute pointer-events-none disabled:pointer-events-none;
+    clip: rect(0, 0, 0, 0);
+}

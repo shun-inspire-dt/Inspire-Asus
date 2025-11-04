@@ -1,0 +1,131 @@
+#toastModal {
+    /** Modal */
+    /** Modal Body Padding */
+    // --bs-modal-padding: ;
+    // --modal-body-padding-top: ;
+    // --modal-body-padding-x: ;
+    /** Modal Header */
+    // --modal-header-justify: ;
+    /** --------------------------------------------- */
+
+    /** Toast Body */
+    // --toast-body-gap: ;
+    // --toast-body-padding-x: ;
+    // --toast-body-padding-top: ;
+    // --toast-body-padding-bottom: ;
+
+    /** Toast Text */
+    // --toast-font-size: ;
+    // --toast-font-weight: ;
+    // --toast-line-height: ;
+    // --toast-letter-spacing: ;
+    // --toast-font-family: ;
+    // --toast-color: ;
+    // --toast-text-align: ;
+    // --toast-text-padding-x: ;
+    // --toast-text-padding-top: ;
+    // --toast-text-padding-bottom: ;
+
+    /** Toast Footer */
+    // --toast-footer-gap: ;
+    // --toast-footer-padding-x: ;
+    // --toast-footer-padding-top: ;
+    // --toast-footer-padding-bottom: ;
+
+    /** Toast Title Icon */
+    // --toast-icon-size: ;
+    // --toast-icon-gap: ;
+    // --toast-icon-error-background-image: ;
+    // --toast-icon-success-background-image: ;
+
+    /** Toast Link Button */
+    // --toast-button-height: ;
+    // --toast-button-icon-size: ;
+    // --toast-button-icon-color: ;
+    // --toast-button-loader-size: ;
+
+    .toast-text {
+        color: var(--toast-color);
+        font-size: var(--toast-font-size);
+        font-weight: var(--toast-font-weight);
+        line-height: var(--toast-line-height);
+        letter-spacing: var(--toast-letter-spacing);
+        font-family: var(--toast-font-family);
+        text-indent: var(--toast-letter-spacing);
+        text-align: var(--toast-text-align);
+        padding: var(--toast-text-padding-top) var(--toast-text-padding-x) var(--toast-text-padding-bottom);
+    }
+    .toast-icon {
+        @apply flex items-center justify-center;
+        gap: var(--toast-icon-gap);
+
+        & > [class^='icon-'] {
+            @apply bg-contain bg-center bg-no-repeat;
+
+            width: var(--toast-icon-size);
+            height: var(--toast-icon-size);
+        }
+        .icon-close {
+            background-image: var(--toast-icon-error-background-image);
+        }
+        .icon-check {
+            background-image: var(--toast-icon-success-background-image);
+        }
+    }
+    .toast-body {
+        @apply flex flex-col;
+        gap: var(--toast-body-gap);
+        padding: var(--toast-body-padding-top) var(--toast-body-padding-x) var(--toast-body-padding-bottom);
+    }
+    .toast-footer {
+        @apply flex items-center;
+        gap: var(--toast-footer-gap);
+        padding: var(--toast-footer-padding-top) var(--toast-footer-padding-x) var(--toast-footer-padding-bottom);
+    }
+    .toast-button {
+        --btn-padding-x: 1rem;
+        @apply flex-auto;
+        min-height: var(--toast-button-height);
+        .toast-button-loader {
+            width: var(--toast-button-loader-size);
+            height: var(--toast-button-loader-size);
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff, calc(var(--toast-button-loader-size) * -2) 0 #fff;
+            position: relative;
+            animation: flash 0.5s ease-out infinite alternate;
+        }
+
+        @keyframes flash {
+            0% {
+                background-color: #fff2;
+                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff2, calc(var(--toast-button-loader-size) * -2) 0 #fff;
+            }
+            50% {
+                background-color: #fff;
+                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff2, calc(var(--toast-button-loader-size) * -2) 0 #fff2;
+            }
+            100% {
+                background-color: #fff2;
+                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff, calc(var(--toast-button-loader-size) * -2) 0 #fff2;
+            }
+        }
+    }
+    .toast-button-icon {
+        width: var(--toast-button-icon-size);
+        font-size: var(--toast-button-icon-size);
+        color: var(--toast-button-icon-color);
+    }
+    .toast-button-svg svg {
+        width: var(--toast-button-icon-size);
+        height: var(--toast-button-icon-size);
+        path {
+            fill: var(--toast-button-icon-color);
+        }
+    }
+}
+
+#toastModal {
+    &.notification-toast {
+    }
+}

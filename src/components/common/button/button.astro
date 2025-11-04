@@ -1,0 +1,126 @@
+---
+/** Type */
+import type { HTMLAttributes } from 'astro/types';
+/** Helpers */
+import { ext } from '@js/helpers/env';
+/** Common Component */
+/** Icons */
+import Icons, { type Props as IconsProps, icons } from '@components/common/icons/icons.astro';
+/** Style */
+import './button.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    Tag?: 'a' | 'button' | 'div';
+    disabled?: boolean;
+    variant?: variant;
+    type?: 'button' | 'reset' | 'submit' | 'menu';
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+    title?: string;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    block?: boolean;
+    button?: boolean;
+    round?: boolean;
+    role?: HTMLAttributes<'button'>['role'];
+    link?: string;
+    extend?: boolean;
+    target?: HTMLAttributes<'a'>['target'];
+    noFocus?: boolean;
+    icon?: IconsProps['icon'];
+    iconPosition?: 'left' | 'right';
+    iconWidth?: IconsProps['width'];
+    iconHeight?: IconsProps['height'];
+    iconFill?: IconsProps['fill'];
+    iconStrokeWidth?: IconsProps['strokeWidth'];
+    iconStrokeColor?: IconsProps['strokeColor'];
+    IconAttribute?: attribute;
+    IconStyle?: { [key: string]: string };
+    CustomIconColor?: IconsProps['custom'];
+}
+
+const {
+    IDName,
+    type = 'button',
+    Tag = 'button',
+    size,
+    title,
+    className,
+    variant,
+    disabled,
+    block,
+    button = true,
+    round = true,
+    role,
+    link,
+    extend,
+    target,
+    noFocus,
+    attribute = {},
+    style,
+    icon,
+    iconPosition = 'right',
+    iconWidth,
+    iconHeight,
+    iconFill,
+    iconStrokeColor,
+    iconStrokeWidth = 0,
+    CustomIconColor = true,
+    IconAttribute = {},
+    IconStyle,
+} = Astro.props as Props;
+const href = link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}` : link) : '#';
+---
+
+<Tag
+    id={IDName}
+    type={Tag === 'button' ? type : undefined}
+    class:list={[
+        { btn: button, 'btn-sm': size === 'sm', 'btn-lg': size === 'lg', 'btn-block': block, 'btn-round': round,'no-focus': noFocus },
+        className
+    ]}
+    title={title}
+    disabled={disabled}
+    data-variant={variant}
+    {...attribute}
+    style={style}
+    href={Tag === 'a' ? href : undefined}
+    target={Tag === 'a' ? target : undefined}
+    role={Tag !== 'button' ? role : undefined}
+>
+    <slot name="icon-left">
+        {
+            Boolean(icon && iconPosition === 'left') && (
+                <Icons
+                    icon={icon as IconsProps['icon']}
+                    width={iconWidth}
+                    height={iconHeight}
+                    fill={iconFill}
+                    strokeColor={iconStrokeColor}
+                    strokeWidth={iconStrokeWidth}
+                    custom={CustomIconColor}
+                    attribute={IconAttribute}
+                    style={IconStyle}
+                />
+            )
+        }
+    </slot>
+    <slot />
+    <slot name="icon-right">
+        {
+            Boolean(icon && iconPosition === 'right') && (
+                <Icons
+                    icon={icon as IconsProps['icon']}
+                    width={iconWidth}
+                    height={iconHeight}
+                    fill={iconFill}
+                    stroke-color={iconStrokeColor}
+                    stroke-width={iconStrokeWidth}
+                    custom={CustomIconColor}
+                    attribute={IconAttribute}
+                    style={IconStyle}
+                />
+            )
+        }
+    </slot>
+</Tag>

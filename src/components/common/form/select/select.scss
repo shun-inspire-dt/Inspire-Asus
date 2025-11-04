@@ -1,0 +1,145 @@
+@use '../../../../scss/mixin/scrollbar.scss' as scrollbar;
+@import '../input.scss';
+
+.control-select {
+    // --select-background-image: ;
+    // --select-background-position-right: ;
+    // --select-background-size: ;
+    @apply appearance-none;
+
+    padding-right: calc(var(--select-background-position-right) + var(--select-background-size) + 10px);
+    background-position: right var(--select-background-position-right) center;
+    background-size: var(--select-background-size);
+    background-repeat: no-repeat;
+    background-image: var(--select-background-image);
+
+    option.control-select-placeholder {
+        @apply var(--input-placeholder-color);
+    }
+}
+
+/**
+.needs-validate {
+    &.was-invalidated {
+        .control-select:invalid {
+            @apply border-primary;
+        }
+    }
+}
+*/
+
+.custom-select {
+    // --custom-select-padding-x: ;
+    // --custom-select-padding-y: ;
+    // --custom-select-color: ;
+    // --custom-select-disabled-color: ;
+    // --custom-select-font-size: ;
+    // --custom-select-font-weight: ;
+    // --custom-select-placeholder-color: ;
+    // --custom-select-line-height: ;
+    // --custom-select-letter-spacing: ;
+    // --custom-select-background-color: ;
+    // --custom-select-disabled-background-color: ;
+    // --custom-select-border-width: ;
+    // --custom-select-border-color: ;
+    // --custom-select-border-radius: ;
+    // --custom-select-background-image: ;
+    // --custom-select-background-position-right: ;
+    // --custom-select-background-size: ;
+    // --custom-select-items-border-width: ;
+    // --custom-select-items-border-color: ;
+    // --custom-select-item-top: ;
+    // --custom-select-item-height: ;
+    // --custom-select-item-padding-y: ;
+    // --custom-select-item-padding-x: ;
+    // --custom-select-item-background-color: ;
+    // --custom-select-item-border-width: ;
+    // --custom-select-item-border-color: ;
+    // --custom-select-active-item-background-color: ;
+    // --custom-select-active-item-color: ;
+    // --custom-select-item-zindex: ;
+
+    @apply relative;
+
+    select {
+        @apply absolute top-full left-1/2 -translate-x-1/2 p-0 w-0.0625rem h-0.0625rem overflow-hidden pointer-events-none select-none;
+
+        &:disabled {
+            & + .select-selected {
+                @apply pointer-events-none select-none;
+                color: var(--custom-select-disabled-color);
+                background-color: var(--custom-select-disabled-background-color);
+            }
+        }
+    }
+
+    .select-selected {
+        @apply focus-within:outline-none;
+        padding: var(--custom-select-padding-y) var(--custom-select-padding-x);
+        color: var(--custom-select-color);
+        font-size: var(--custom-select-font-size);
+        font-weight: var(--custom-select-font-weight);
+        line-height: var(--custom-select-line-height);
+        letter-spacing: var(--custom-select-letter-spacing);
+        background-color: var(--custom-select-background-color);
+        border: var(--custom-select-border-width) solid var(--custom-select-border-color);
+        border-radius: var(--custom-select-border-radius);
+
+        &.select-selected-placeholder {
+            color: var(--custom-select-placeholder-color);
+            font-weight: var(--custom-select-font-weight);
+            line-height: var(--custom-select-line-height);
+            letter-spacing: var(--custom-select-letter-spacing);
+        }
+
+        &:after {
+            @apply content-empty absolute top-1/2 -translate-y-1/2 bg-no-repeat bg-center bg-contain transition-transform duration-300 ease-out;
+            width: var(--custom-select-background-size);
+            height: var(--custom-select-background-size);
+            right: var(--custom-select-background-position-right);
+            background-image: var(--custom-select-background-image);
+        }
+
+        &.select-arrow-active:after {
+            @apply rotate-180deg;
+        }
+    }
+
+    .select-items > div {
+        @apply transition-colors duration-300 ease-out cursor-pointer select-none;
+        padding: var(--custom-select-item-padding-y) var(--custom-select-item-padding-x);
+        border-bottom: var(--custom-select-item-border-width) solid var(--custom-select-item-border-color);
+        color: var(--custom-select-color);
+        font-size: var(--custom-select-font-size);
+        font-weight: var(--custom-select-font-weight);
+        line-height: var(--custom-select-line-height);
+        letter-spacing: var(--custom-select-letter-spacing);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .select-items {
+        @apply absolute inset-x-0 overflow-auto origin-center transition-colors duration-300 ease-out;
+
+        top: var(--custom-select-item-top);
+        max-height: var(--custom-select-item-height);
+        background-color: var(--custom-select-item-background-color);
+        z-index: var(--custom-select-item-zindex);
+        border: var(--custom-select-items-border-width) solid var(--custom-select-items-border-color);
+        border-top: none;
+
+        @include scrollbar.scrollbar;
+    }
+
+    .select-hide {
+        display: none;
+    }
+
+    .select-items div:hover,
+    .select-items div.same-as-selected {
+        color: var(--custom-select-active-item-color);
+        background-color: var(--custom-select-active-item-background-color);
+    }
+}

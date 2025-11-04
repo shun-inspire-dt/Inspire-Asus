@@ -1,0 +1,23 @@
+{
+  "unocss.enabled": true,
+  "unocss.languageIds": [
+    "astro",
+    "css",
+    "scss",
+    "sass",
+    "less",
+    "postcss",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte",
+    "vue"
+  ],
+  "css.validate": false,
+  "scss.validate": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.inlineSuggest.enabled": true
+}

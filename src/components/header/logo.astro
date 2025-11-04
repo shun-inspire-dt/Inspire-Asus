@@ -1,0 +1,15 @@
+---
+/** Style */
+import './logo.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'headerLogo', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+</div>

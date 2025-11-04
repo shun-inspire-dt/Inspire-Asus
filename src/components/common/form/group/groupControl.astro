@@ -1,0 +1,20 @@
+---
+/** Style */
+import './groupControl.scss';
+export interface Props {
+    id?: string;
+    className?: any;
+    style?: { [key: string]: string };
+    inline?: boolean;
+    invalidText?: string;
+    validText?: string;
+}
+
+const { id, className = '', style, inline, invalidText, validText } = Astro.props as Props;
+---
+
+<div id={id} class:list={['input-group-control', { 'input-group-control-inline': inline }, className]} style={style}>
+    <slot />
+    {invalidText && <div class="invalid-feedback">{invalidText}</div>}
+    {validText && <div class="valid-feedback">{validText}</div>}
+</div>

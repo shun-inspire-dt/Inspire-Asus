@@ -1,0 +1,29 @@
+# build output
+dist/
+build.local/
+icomoon/
+deploy/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# macOS-specific files
+.DS_Store
+
+.pnpm-store/
+# Local Netlify folder
+.netlify
+# My File
+.cache
+/test-results/
+/playwright-report/
+/playwright/.cache/
+test.*
+__backup__
+docs/

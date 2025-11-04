@@ -1,0 +1,64 @@
+---
+export type Props = {
+    google?: string;
+    custom?: {
+        css?: string;
+        fonts?: string[];
+        fontsPath?: string;
+        type?: string;
+    };
+    icon?: string;
+};
+
+const { google, custom, icon } = Astro.props;
+
+const defaultFontsPath = `${Astro.url.origin}/assets/fonts/fonts`;
+---
+
+{
+    google && (
+        <Fragment>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+            <link rel="preload" as="style" href={google} onload="this.onload = null; this.rel = 'stylesheet'" />
+            <noscript>
+                <link href={google} rel="stylesheet" type="text/css" />
+            </noscript>
+        </Fragment>
+    )
+}
+{
+    icon && (
+        <Fragment>
+            <link rel="preload" as="style" href={icon} onload={`this.onload = null; this.rel = 'stylesheet'`} />
+            <noscript>
+                <link rel="stylesheet" href={icon} />
+            </noscript>
+        </Fragment>
+    )
+}
+{
+    custom && (
+        <Fragment>
+            {custom?.fonts?.map((x) => (
+                <link
+                    rel="preload"
+                    href={`${custom?.fontsPath ?? defaultFontsPath}/${x}`}
+                    as="font"
+                    type={`font/${custom?.type}`}
+                    crossorigin
+                />
+            ))}
+        </Fragment>
+    )
+}
+{
+    custom && (
+        <Fragment>
+            <link rel="preload" as="style" href={custom.css} onload={`this.onload = null; this.rel = 'stylesheet'`} />
+            <noscript>
+                <link rel="stylesheet" href={custom.css} />
+            </noscript>
+        </Fragment>
+    )
+}

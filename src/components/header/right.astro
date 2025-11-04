@@ -1,0 +1,20 @@
+---
+/** Common Components */
+/** Picture */
+import Picture from '@components/common/images/picture.astro';
+/** Link */
+import ALink from '@components/common/button/link.astro';
+/** Style */
+import './right.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'headerRight', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}></div>

@@ -1,0 +1,42 @@
+@use "../../common/button/button-variant.scss" as button;
+
+@mixin toggleButton {
+    // --btn-gap: ;
+    // --icon-size: ;
+    position: relative;
+    padding-right: calc(var(--icon-size) + var(--btn-gap));
+
+    &::after {
+        @apply content-empty bg-contain bg-center bg-no-repeat transition-transform duration-300 ease-out;
+        width: var(--icon-size);
+        height: var(--icon-size);
+        background-image: url("data:image/svg+xml,%3Csvg width='13' height='12' viewBox='0 0 13 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.07364 10.4863C4.76322 10.7927 4.26415 10.7927 3.95373 10.4863C3.6376 10.1742 3.6376 9.66392 3.95373 9.35184L6.62915 6.71072C7.02578 6.31917 7.02578 5.67895 6.62915 5.28741L3.95373 2.64629C3.6376 2.33421 3.6376 1.82392 3.95373 1.51184C4.26415 1.2054 4.76322 1.2054 5.07364 1.51184L8.17735 4.57576C8.9706 5.35884 8.9706 6.63929 8.17735 7.42237L5.07364 10.4863Z' fill='%236D767C'/%3E%3C/svg%3E");
+    }
+    &:not(.active) {
+        color: map-get(button.$gray-outline, 'color');
+        background-color: map-get(button.$gray-outline, 'background');
+        border-color: map-get(button.$gray-outline, 'border');
+    }
+    &.active {
+        --btn-focus-color: var(--btn-color);
+        --btn-focus-bg: var(--btn-bg);
+        --btn-focus-border-color: var(--btn-border-color);
+        &::after {
+            transform: rotate(90deg);
+        }
+    }
+    &.active,
+    &:not(.active):hover {
+        &::after {
+            background-image: url("data:image/svg+xml,%3Csvg width='13' height='12' viewBox='0 0 13 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.07364 10.4863C4.76322 10.7927 4.26415 10.7927 3.95373 10.4863C3.6376 10.1742 3.6376 9.66392 3.95373 9.35184L6.62915 6.71072C7.02578 6.31917 7.02578 5.67895 6.62915 5.28741L3.95373 2.64629C3.6376 2.33421 3.6376 1.82392 3.95373 1.51184C4.26415 1.2054 4.76322 1.2054 5.07364 1.51184L8.17735 4.57576C8.9706 5.35884 8.9706 6.63929 8.17735 7.42237L5.07364 10.4863Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+        }
+    }
+    &:hover {
+        color: var(--btn-hover-color);
+        background-color: var(--btn-hover-bg) !important;
+        border-color: var(--btn-hover-border-color);
+    }
+}
+.ToggleButton {
+    @include toggleButton;
+}

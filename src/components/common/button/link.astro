@@ -1,0 +1,58 @@
+---
+/** Type */
+import 'astro/astro-jsx';
+/** Helpers */
+import { ext } from '@js/helpers/env';
+/** Style */
+import './button.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    link?: string;
+    extend?: boolean;
+    title?: string;
+    html?: string;
+    target?: astroHTML.JSX.HTMLAttributeAnchorTarget;
+    disabled?: boolean;
+    variant?: variant;
+    button?: boolean;
+    round?: boolean;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    block?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    link,
+    extend,
+    target,
+    title,
+    html,
+    variant,
+    button,
+    round = true,
+    disabled,
+    attribute = {},
+    style,
+    block
+} = Astro.props as Props;
+const href = link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}` : link) : '#';
+---
+
+<a
+    id={IDName}
+    class:list={[{ btn: button }, { 'btn-block': block, 'btn-round': round }, className]}
+    href={href}
+    target={target}
+    disabled={disabled}
+    data-variant={variant}
+    title={title}
+    {...attribute}
+    style={style}
+    set:html={html}
+>
+    <slot>{title}</slot>
+</a>

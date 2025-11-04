@@ -1,0 +1,73 @@
+---
+/** Main Components */
+import Input from '@components/common/form/input.astro';
+/** Style */
+import './inputDate.scss';
+
+export interface Props {
+    className?: any;
+    formGroupClassName?: any;
+    id?: string;
+    type?: inputType;
+    inputmode?: inputMode;
+    name?: string;
+    value?: string | number;
+    placeholder?: string;
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: 'readonly';
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    errorFeedback?: string;
+    successFeedback?: string;
+    FeedbackIcon?: boolean;
+    attribute?: attribute;
+    aria?: aria;
+}
+
+const {
+    id = '',
+    type = 'text',
+    className = '',
+    formGroupClassName = '',
+    inputmode = 'text',
+    name = undefined,
+    value = undefined,
+    placeholder = '',
+    required = undefined,
+    disabled = undefined,
+    readonly,
+    validClass,
+    validType,
+    validLabel,
+    errorFeedback,
+    successFeedback,
+    FeedbackIcon,
+    attribute = {},
+    aria = {}
+} = Astro.props as Props;
+---
+
+<div class:list={['input-date-container', formGroupClassName]}>
+    <Input
+        id={id}
+        className={`input-date ${className}`}
+        type={type}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        inputmode={inputmode}
+        required={required}
+        disabled={disabled}
+        readonly={readonly}
+        validClass={validClass}
+        validType={validType}
+        validLabel={validLabel}
+        errorFeedback={errorFeedback}
+        successFeedback={successFeedback}
+        FeedbackIcon={FeedbackIcon}
+        attribute={{ ...attribute, ...{ autocomplete: 'off' } }}
+        aria={aria}
+    />
+</div>

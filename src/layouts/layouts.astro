@@ -1,0 +1,203 @@
+---
+/** Style */
+import '../scss/main.scss';
+const site = Astro.url.origin;
+const OGImage = `${site}/assets/meta/Open-Graph-Image.jpg`;
+const favicon = [
+    {
+        rel: 'shortcut icon',
+        sizes: '16x16',
+        type: 'image/ico',
+        href: `${site}/assets/meta/favicon.ico`
+    },
+    {
+        rel: 'icon',
+        sizes: '16x16',
+        type: 'image/ico',
+        href: `${site}/assets/meta/favicon.ico`
+    },
+    {
+        rel: 'icon',
+        sizes: '192x192',
+        type: 'image/png',
+        href: `${site}/assets/meta/android-icon-192x192.png`
+    },
+    {
+        rel: 'icon',
+        sizes: '32x32',
+        type: 'image/png',
+        href: `${site}/assets/meta/favicon-32x32.png`
+    },
+    {
+        rel: 'icon',
+        sizes: '96x96',
+        type: 'image/png',
+        href: `${site}/assets/meta/favicon-96x96.png`
+    },
+    {
+        rel: 'icon',
+        sizes: '16x16',
+        type: 'image/png',
+        href: `${site}/assets/meta/favicon-16x16.png`
+    },
+    {
+        rel: 'bookmark',
+        sizes: '32x32',
+        type: 'image/png',
+        href: `${site}/assets/meta/favicon-32x32.png`
+    }
+];
+const appleTouchIcon = [
+    {
+        type: 'image/png',
+        sizes: '57x57',
+        href: `${site}/assets/meta/apple-icon-57x57.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '60x60',
+        href: `${site}/assets/meta/apple-icon-60x60.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '72x72',
+        href: `${site}/assets/meta/apple-icon-72x72.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '76x76',
+        href: `${site}/assets/meta/apple-icon-76x76.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '114x114',
+        href: `${site}/assets/meta/apple-icon-114x114.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '120x120',
+        href: `${site}/assets/meta/apple-icon-120x120.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '144x144',
+        href: `${site}/assets/meta/apple-icon-144x144.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '152x152',
+        href: `${site}/assets/meta/apple-icon-152x152.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '167x167',
+        href: `${site}/assets/meta/apple-icon-167x167.png`
+    },
+    {
+        type: 'image/png',
+        sizes: '180x180',
+        href: `${site}/assets/meta/apple-icon-180x180.png`
+    }
+];
+const GoogleFont =
+    'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap';
+/** footer */
+import Footer from '@components/footer/footer.astro';
+/** header */
+import Header from '@components/header/header.astro';
+/** Toaster */
+import Toast from '@components/common/toast/toast.astro';
+/** Css Variable */
+import CssVariable from '@components/common/css-variable.astro';
+/** Meta Head */
+import Seo from '@components/common/meta/seo.astro';
+/** Main components */
+/** Modal */
+/** Script */
+import Script from '@components/common/script/script.astro';
+
+export interface Props {
+    IDName?: string;
+    bodyClassName?: any;
+    className?: any;
+}
+
+const { IDName, className, bodyClassName } = Astro.props as Props;
+---
+
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <Seo
+            title={import.meta.env.PUBLIC_META_TITLE}
+            description={import.meta.env.PUBLIC_META_DESCRIPTION}
+            keywords={import.meta.env.PUBLIC_META_KEYWORDS.split(',')}
+            favicon={favicon}
+            appleTouchIcon={appleTouchIcon}
+            themeColor="#"
+            colorScheme="light"
+            facebook={{
+                image: OGImage,
+                url: site,
+                type: 'website'
+            }}
+            twitter={{
+                image: OGImage,
+                site: site,
+                card: 'summary'
+            }}
+            google={{
+                author: import.meta.env.PUBLIC_META_TITLE,
+                copyright: import.meta.env.PUBLIC_META_TITLE,
+                applicationName: import.meta.env.PUBLIC_META_TITLE
+            }}
+            robots={{
+                content: 'all'
+            }}
+            font={{
+                google: GoogleFont
+            }}
+            schemas={[
+                {
+                    '@context': 'https://schema.org',
+                    '@type': 'WorkersUnion',
+                    url: `${site}`,
+                    logo: `${site}/assets/logos/logo-text.png`,
+                    address: {
+                        '@type': 'PostalAddress',
+                        streetAddress: '',
+                        addressLocality: '',
+                        addressRegion: '',
+                        postalCode: '',
+                        addressCountry: 'Taiwan'
+                    },
+                    contactPoint: {
+                        '@type': 'ContactPoint',
+                        telephone: '',
+                        contactType: ''
+                    }
+                },
+                {
+                    '@context': 'https://schema.org',
+                    '@type': 'WebSite',
+                    url: `${site}`,
+                    name: '',
+                    alternateName: ''
+                }
+            ]}
+        />
+        <CssVariable />
+        <slot name="link" />
+    </head>
+    <body class:list={bodyClassName}>
+        <Toast />
+        <Header />
+        <main id={IDName} class:list={[className]} data-name={IDName}>
+            <slot />
+        </main>
+        <Footer />
+        <Script />
+        <slot name="script" />
+    </body>
+</html>

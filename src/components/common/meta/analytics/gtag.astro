@@ -1,0 +1,6 @@
+---
+import { GoogleAnalytics } from 'astro-google-analytics';
+const id = import.meta.env.PUBLIC_GTAG_ID;
+---
+
+{id && <GoogleAnalytics id={id} />}

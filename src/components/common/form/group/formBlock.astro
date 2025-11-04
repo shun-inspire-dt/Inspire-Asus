@@ -1,0 +1,35 @@
+---
+/** Style */
+import './formBlock.scss';
+export interface Props {
+    id?: string;
+    className?: any;
+    headclassName?: any;
+    titleclassName?: any;
+    contentclassName?: any;
+    title?: string;
+    style?: { [key: string]: string | number };
+    attribute?: attribute;
+}
+
+const { id, className, headClassName, titleClassName, contentClassName, title, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={id} class:list={['blocks-section', className]} style={style} {...attribute}>
+    {
+        title && (
+            <div class:list={['blocks-section-head', headClassName]}>
+                <slot name="head-left" />
+                <div class:list={['blocks-section-title', titleClassName]}>
+                    <slot name="title-left" />
+                    <slot name="title">{title}</slot>
+                    <slot name="title-right" />
+                </div>
+                <slot name="head-right" />
+            </div>
+        )
+    }
+    <div class:list={[contentClassName]}>
+        <slot />
+    </div>
+</div>

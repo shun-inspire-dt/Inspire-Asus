@@ -1,0 +1,19 @@
+header {
+    --header-position: fixed;
+    --header-width: 100%;
+    --header-top: 0;
+    --header-left: 0;
+    --header-translate-x: 0;
+    --header-z-index: 1047;
+    --header-padding-x: 5px;
+    --header-padding-y: 0rem;
+    --header-flex-direction: row;
+    --header-align-items: stretch;
+    --header-justify-content: flex-start;
+    --header-background-color: rgba(255, 255, 255, 0.95);
+    --header-border-bottom-width: 0.0625rem;
+    --header-border-bottom-color: var(--color-gold-3);
+    --headerBody-align-items: center;
+    --headerBody-justify-content: flex-start;
+    --header-menu-button-width: 5rem;
+}

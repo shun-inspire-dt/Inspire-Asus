@@ -1,0 +1,151 @@
+---
+/** Common Components */
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Input */
+import Input from '@components/common/form/input.astro';
+/** Icons */
+import Icons from '@components/common/icons/icons.astro';
+/** Style */
+import './spinbutton.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    inputClassName?: any;
+    buttonClassName?: any;
+    name?: string;
+    value?: string | number;
+    max?: string | number;
+    min?: string | number;
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: 'readonly';
+    autocomplete?: autocomlete;
+    placeholder?: string;
+    title?: string;
+    aria?: aria;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    inputClassName,
+    buttonClassName,
+    name,
+    value = 1,
+    max = 100,
+    min = 1,
+    required,
+    disabled,
+    readonly,
+    autocomplete,
+    placeholder = '1',
+    title = 'Spin Button Input',
+    aria
+} = Astro.props as Props;
+---
+
+<div
+    id={IDName ? `${IDName}Spinbutton` : undefined}
+    class:list={[
+        className,
+        'form-spinbutton',
+        { 'form-spinbutton-disabled': disabled },
+        { 'form-spinbutton-readonly': readonly }
+    ]}
+    style={style}
+    {...attribute}
+>
+    <Button
+        type={'button'}
+        className={['form-spinbutton-substract', buttonClassName as Class]}
+        title="Spin Button Substract"
+        button={false}
+        disabled={disabled || Boolean(readonly)}
+        attribute={{
+            'data-substract': ''
+        }}
+    >
+        <!-- <Icons icon={'icon-reduce'} custom /> -->
+    </Button>
+    <Input
+        type={'number'}
+        className={['form-spinbutton-input', inputClassName as Class]}
+        name={name}
+        max={max}
+        min={min}
+        value={value}
+        title={title}
+        required={required}
+        disabled={disabled}
+        readonly={readonly}
+        autocomplete={autocomplete}
+        placeholder={placeholder}
+        aria={aria}
+    />
+    <Button
+        type={'button'}
+        className={['form-spinbutton-add', buttonClassName as Class]}
+        title="Spin Button Add"
+        button={false}
+        disabled={disabled || Boolean(readonly)}
+        attribute={{
+            'data-add': ''
+        }}
+    >
+        <!-- <Icons icon={'icon-add'} custom /> -->
+    </Button>
+</div>
+
+<script>
+    const counters = document.querySelectorAll('.form-spinbutton') as NodeListOf<HTMLElement>;
+    [...counters].forEach((x) => {
+        if (x) {
+            let input = x?.querySelector('input[type="number"]') as HTMLInputElement;
+            const decrementButton = x?.querySelector('button[data-substract]') as HTMLButtonElement;
+            const incrementButton = x?.querySelector('button[data-add]') as HTMLButtonElement;
+            const max = parseInt(input.max as string) as number;
+            const min = parseInt(input.min as string) as number;
+            let current = parseInt(input.value as string) as number;
+
+            if (input) {
+                input.addEventListener('change', () => {
+                    input = x?.querySelector('input') as HTMLInputElement;
+                    current = parseInt(input.value as string) as number;
+                    const value = current >= max ? max : current <= min ? min : current;
+                    if (input) {
+                        input.value = value.toString();
+                        x.dispatchEvent(new CustomEvent('update', { detail: value.toString() }));
+                    }
+                });
+            }
+            if (decrementButton) {
+                decrementButton.addEventListener('click', () => {
+                    input = x?.querySelector('input') as HTMLInputElement;
+                    current = parseInt(input.value as string) as number;
+                    const value = current <= min ? min : current - 1;
+                    if (input) {
+                        input.value = value.toString();
+                        input.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+            if (incrementButton) {
+                incrementButton.addEventListener('click', () => {
+                    input = x?.querySelector('input') as HTMLInputElement;
+                    current = parseInt(input.value as string) as number;
+                    const value = current >= max ? max : current + 1;
+                    if (input) {
+                        input.value = value.toString();
+                        input.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+        }
+    });
+</script>

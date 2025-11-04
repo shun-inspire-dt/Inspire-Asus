@@ -1,0 +1,20 @@
+---
+/** Style */
+import './error.scss';
+export interface Props {
+    id?: string;
+    className?: string;
+    text: string;
+}
+
+const { id, className, text } = Astro.props as Props;
+---
+
+<div id={id}>
+    <div class:list={['invalid-text', className]}>
+        <span class="invalid-text-icon">
+            <i class="fa-close"></i>
+        </span>
+        <span class="invalid-text-text">{text}</span>
+    </div>
+</div>

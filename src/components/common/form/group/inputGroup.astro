@@ -1,0 +1,101 @@
+---
+/** Style */
+import './inputGroup.scss';
+export interface Props {
+    id?: string;
+    className?: any;
+    formGroupClassName?: any;
+    labelClassName?: any;
+    contentClassName?: any;
+    inputID?: string;
+    title?: string;
+    attribute?: attribute;
+    style?: { [key: string]: string | number };
+    labelStyle?: { [key: string]: string | number };
+    contentStyle?: { [key: string]: string | number };
+    border?: boolean;
+    inline?: boolean;
+    alwaysInline?: boolean;
+    inlineContent?: boolean;
+    inlineContentPadding?: boolean;
+    inlineContentWrap?: boolean;
+    alwaysInlineContent?: boolean;
+    inlineLabelPadding?: boolean;
+    inlineLabelCenter?: boolean;
+    inlineNoGutter?: boolean;
+    inlineRoundedLess?: boolean;
+    required?: boolean;
+}
+
+const {
+    id,
+    className,
+    formGroupClassName,
+    labelClassName,
+    contentClassName,
+    inputID,
+    title,
+    attribute = {},
+    style,
+    labelStyle,
+    contentStyle,
+    border,
+    inline,
+    alwaysInline,
+    inlineContent,
+    inlineContentPadding,
+    inlineContentWrap,
+    alwaysInlineContent,
+    inlineLabelCenter = true,
+    /** 如果是 checkbox 或是 radio 或是其他就 false，因為他們沒有 input 的 padding-y */
+    inlineLabelPadding = true,
+    required
+} = Astro.props as Props;
+---
+
+<div
+    id={id}
+    class:list={[
+        'form-input-group',
+        {
+            'border-bottom': border,
+            'inline-group': inline,
+            'always-inline-group': alwaysInline,
+            'input-group-required': required,
+            'input-group-padding-label': (inline || alwaysInline) && inlineLabelPadding,
+            'input-group-center-label': (inline || alwaysInline) && inlineLabelCenter,
+            'inline-group-content-padding': inlineContentPadding
+        },
+        formGroupClassName
+    ]}
+    style={style}
+    {...attribute}
+>
+    {
+        title && (
+            <label
+                class:list={['input-group-label', { 'input-group-required-label': required }, labelClassName]}
+                for={inputID}
+                style={labelStyle}
+            >
+                <slot name="title-left" />
+                {title}
+                <slot name="title-right" />
+            </label>
+        )
+    }
+    <div
+        class:list={[
+            'input-group-content',
+            { 'input-group-inline-content': inlineContent },
+            { 'input-group-always-inline-content': alwaysInlineContent },
+            { 'input-group-inline-content-wrap': inlineContentWrap },
+            contentClassName
+        ]}
+        style={contentStyle}
+    >
+        <slot />
+        <slot name="content-text" />
+    </div>
+    <slot name="right" />
+</div>

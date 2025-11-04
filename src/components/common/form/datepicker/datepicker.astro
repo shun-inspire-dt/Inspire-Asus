@@ -1,0 +1,15 @@
+---
+/** Style */
+export interface Prop {
+    id?: string;
+    className?: any;
+    style?: { [key: string]: string };
+    attribute?: attribute;
+}
+
+const { id = '', className = '', style, attribute = {} } = Astro.props as Prop;
+---
+
+<div id={id} class:list={['datepicker-container', className]} style={style} {...attribute}>
+    <slot />
+</div>

@@ -1,0 +1,18 @@
+.valid-text {
+    // --form-valid-color: ;
+    // --form-valid-line-height: ;
+    // --form-valid-icon-size: ;
+    // --form-valid-icon-background-image: ;
+    @apply flex items-center;
+    color: var(--form-valid-color);
+
+    &-icon {
+        @apply flex items-center justify-center bg-center bg-contain bg-no-repeat;
+        width: var(--form-valid-icon-size);
+        height: var(--form-valid-icon-size);
+        background-image: var(--form-valid-icon-background-image);
+    }
+    &-text {
+        line-height: var(--form-valid-line-height);
+    }
+}

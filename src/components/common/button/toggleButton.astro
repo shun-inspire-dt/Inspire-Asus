@@ -1,0 +1,53 @@
+---
+/** Common Components */
+/** Button */
+import Button from './button.astro';
+/** Style */
+import './button.scss';
+import './toggleButton.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    disabled?: boolean;
+    variant?: variant;
+    type?: 'button' | 'reset' | 'submit' | 'menu';
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+    title?: string;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    block?: boolean;
+    button?: boolean;
+    active?: boolean;
+}
+
+const {
+    IDName,
+    type = 'button',
+    size,
+    title,
+    className,
+    variant,
+    disabled,
+    block,
+    button = true,
+    attribute = {},
+    style,
+    active
+} = Astro.props as Props;
+---
+
+<Button
+    IDName={IDName}
+    className={[className as Class, 'ToggleButton', active ? 'active' : '']}
+    type={type}
+    size={size}
+    title={title}
+    style={style}
+    disabled={disabled}
+    attribute={attribute}
+    block={block}
+    button={button}
+>
+    <Fragment><slot /></Fragment>
+</Button>

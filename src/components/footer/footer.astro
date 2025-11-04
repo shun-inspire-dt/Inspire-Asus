@@ -1,0 +1,20 @@
+---
+/** data */
+/** Common Components */
+/** Main Components */
+/** Style */
+import './footer.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'footer', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<footer id={IDName} class:list={['footer', className]} style={style} {...attribute}>
+    
+</footer>

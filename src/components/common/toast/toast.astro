@@ -1,0 +1,46 @@
+---
+/** Common Components */
+/** Modal */
+import Modal from '@components/common/modal/modal.astro';
+/** Button */
+import ALink from '@components/common/button/link.astro';
+/** Style */
+import './toast.scss';
+---
+
+<!-- Alert -->
+<Modal id="toast" title="" sizes="sm" center hideFooter={true}>
+    <Fragment slot="title-left">
+        <div class="toast-icon" style="display: none;">
+            <div class="icon-close" data-toast-icon="error" style="display: none;"></div>
+            <div class="icon-check" data-toast-icon="success" style="display: none;"></div>
+        </div>
+    </Fragment>
+    <div class="toast-body">
+        <div class="toast-text" style="display: none;"></div>
+        <div class="toast-footer" style="display: none;">
+            <ALink
+                className="toast-button"
+                link="#"
+                button
+                attribute={{ 'data-toast-button-primary': '' }}
+                style={{ display: 'none' }}
+            />
+            <ALink
+                className="toast-button"
+                link="#"
+                button
+                attribute={{ 'data-toast-button-secondary': '' }}
+                style={{ display: 'none' }}
+            />
+        </div>
+    </div>
+</Modal>
+
+<script>
+    /** Modules */
+    import { Toast } from '@js/components/common/toast/toast';
+
+    const toast = new Toast();
+    toast.addMethod();
+</script>

@@ -1,0 +1,7 @@
+@import './input.scss';
+
+textarea.control-input {
+    &.noresize {
+        resize: none;
+    }
+}

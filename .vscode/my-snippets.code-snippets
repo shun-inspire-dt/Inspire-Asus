@@ -1,0 +1,430 @@
+{
+    /** Faker Image */
+    "Print faker image": {
+        "scope": "typescript,javascript,astro,typescriptreact",
+        "prefix": "astro:img-faker",
+        "body": ["\"https://fakeimg.pl/1x1\""],
+        "description": "Print faker image"
+    },
+    /** Local Image */
+    "Print assets logo images": {
+        "scope": "typescript,javascript,astro,typescriptreact",
+        "prefix": "astro:img-logo",
+        "body": ["\"/assets/logos/\""],
+        "description": "Print assets logo images"
+    },
+    "Print assets normal images": {
+        "scope": "typescript,javascript,astro,typescriptreact",
+        "prefix": "astro:img-image",
+        "body": ["\"/assets/images/pages/\""],
+        "description": "Print assets normal images"
+    },
+    /** Type Props */
+    "Props interface template": {
+        "prefix": "as:t-props",
+        "body": ["export interface Props {", "", "}"],
+        "description": "Props interface template"
+    },
+    /** Layouts && Components */
+    "My astro default components template": {
+        "scope": "astro",
+        "prefix": "astro:dc",
+        "body": [
+            "---",
+            "export interface Props {",
+            "    IDName?: string;",
+            "    className?: any;",
+            "    attribute?: attribute;",
+            "    style?: { [key: string]: string };",
+            "}",
+            "",
+            "const { IDName, className, style, attribute = {} } = Astro.props as Props;",
+            "---",
+            "",
+            "<div id={IDName} class:list={[className]} style={style} {...attribute}>",
+            "</div>"
+        ],
+        "description": "My astro default components template"
+    },
+    "My astro default Layouts templa": {
+        "scope": "astro",
+        "prefix": "astro:dl",
+        "body": [
+            "---",
+            "/** Layouts */",
+            "import Layouts from '@layouts/layouts.astro';",
+            "---",
+            "",
+            "<Layouts IDName=\"\">",
+            "</Layouts>",
+            ""
+        ],
+        "description": "my astro default Layouts templa"
+    },
+    /** Astro import Code */
+    "Astro import my Picture components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-pic",
+        "body": ["/** Picture */", "import Picture from '@components/common/images/picture.astro';"],
+        "description": "Astro import my Picture components"
+    },
+    "Astro import my Link components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-link",
+        "body": ["/** Link */", "import ALink from '@components/common/button/link.astro';"],
+        "description": "Astro import my Link components"
+    },
+    "Astro import my Toggle Link components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-ALinkToggle",
+        "body": ["/** Toggle ALink */", "import ToggleALink from '@components/common/button/toggleLink.astro';"],
+        "description": "Astro import my Toggle Link components"
+    },
+    "Astro import my Button components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-Button",
+        "body": ["/** Button */", "import Button from '@components/common/button/button.astro';"],
+        "description": "Astro import my Button components"
+    },
+    "Astro import my Toggle Button components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-ButtonToggle",
+        "body": ["/** Toggle Button */", "import ToggleButton from '@components/common/button/toggleButton.astro';"],
+        "description": "Astro import my Toggle Button components"
+    },
+    "Astro import my Pagination components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-pagi",
+        "body": ["/** Pagination */", "import Pagination from '@components/common/pagination/pagination.astro';"],
+        "description": "Astro import my Pagination components"
+    },
+    "Astro import my Modal components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-modal",
+        "body": ["/** Modal */", "import Modal from '@components/common/modal/modal.astro';"],
+        "description": "Astro import my Modal components"
+    },
+    "Astro import my Swiper components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-swiper",
+        "body": ["/** Swiper */", "import Swiper from '@components/common/swiper/swiper.astro';"],
+        "description": "Astro import my Swiper components"
+    },
+    "Astro import my Breadcrumb components": {
+        "prefix": "astro:i-breadcrumb",
+        "body": ["/** Breadcrumb */", "import Breadcrumb from '@components/common/breadcrumb/breadcrumb.astro'"],
+        "description": "Astro import my Breadcrumb components"
+    },
+    "Astro import my Icons components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-icons",
+        "body": ["/** Icons */", "import Icons from '@components/common/icons/icons.astro';"],
+        "description": "Astro import my Icons components"
+    },
+    /** Astro Form */
+    "Astro import my Input components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:input",
+        "body": ["/** Input */", "import Input from '@components/common/form/input.astro';"],
+        "description": "Astro import my Input components"
+    },
+    "Astro import my Password Input components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:inputpassword",
+        "body": ["/** Password Input */", "import InputPassword from '@components/common/form/inputPassword.astro';"],
+        "description": "Astro import my Password Input components"
+    },
+    "Astro import my Checkbox components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:checkbox",
+        "body": ["/** Checkbox */", "import Checkbox from '@components/common/form/checkbox.astro';"],
+        "description": "Astro import my Checkbox components"
+    },
+    "Astro import my ChoiceButton components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:choicebutton",
+        "body": ["/** ChoiceButton */", "import ChoiceButton from '@components/common/form/choiceButton.astro';"],
+        "description": "Astro import my ChoiceButton components"
+    },
+    "Astro import my Radio components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:radio",
+        "body": ["/** Radio */", "import Radio from '@components/common/form/radio.astro';"],
+        "description": "Astro import my Radio components"
+    },
+    "Astro import my Textarea components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:textarea",
+        "body": ["/** Textarea */", "import Textarea from '@components/common/form/textarea.astro';"],
+        "description": "Astro import my Textarea components"
+    },
+    "Astro import my Select components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:select",
+        "body": ["/** Select */", "import Select from '@components/common/form/select/select.astro';"],
+        "description": "Astro import my Select components"
+    },
+    "Astro import my CustomSelect components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:customselect",
+        "body": ["/** CustomSelect */", "import CustomSelect from '@components/common/form/select/customSelect.astro';"],
+        "description": "Astro import my CustomSelect components"
+    },
+    "Astro import my InputDate components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:inputdate",
+        "body": ["/** InputDate */", "import InputDate from '@components/common/form/datepicker/inputDate.astro';"],
+        "description": "Astro import my InputDate components"
+    },
+    "Astro import my Datepicker components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:datepicker",
+        "body": ["/** Datepicker */", "import Datepicker from '@components/common/form/datepicker/datepicker.astro';"],
+        "description": "Astro import my Datepicker components"
+    },
+    "Astro import my FormBlock components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:formblock",
+        "body": ["/** FormBlock */", "import FormBlock from '@components/common/form/group/formBlock.astro';"],
+        "description": "Astro import my FormBlock components"
+    },
+    "Astro import my GroupControl components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:groupcontrol",
+        "body": ["/** GroupControl */", "import GroupControl from '@components/common/form/group/groupControl.astro';"],
+        "description": "Astro import my GroupControl components"
+    },
+    "Astro import my InputGroup components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:inputgroup",
+        "body": ["/** InputGroup */", "import InputGroup from '@components/common/form/group/inputGroup.astro';"],
+        "description": "Astro import my InputGroup components"
+    },
+    "Astro import my ToggleGroup components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-form:togglegroup",
+        "body": ["/** ToggleGroup */", "import ToggleGroup from '@components/common/form/group/toggleGroup.astro';"],
+        "description": "Astro import my ToggleGroup components"
+    },
+    "Astro import my Tables template": {
+        "prefix": "astro:i-tables",
+        "body": ["/** Tables */", "import Tables from '@components/common/tables/tables.astro';"],
+        "description": "Astro import my Tables template"
+    },
+    "Astro import my Tabs template": {
+        "prefix": "astro:i-tabs",
+        "body": [
+            "/** Tabs */",
+            "import Tabs from '@components/common/tabs/tabs.astro';",
+            "import TabsContent from '@components/common/tabs/content.astro';",
+            "import TabsPanes from '@components/common/tabs/tabsPanes.astro';"
+        ],
+        "description": "Astro import my Tabs template"
+    },
+    /** Function */
+    "Astro \"getStaticPaths\" function": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:func-gsp",
+        "body": ["export async function getStaticPaths() {", "  return [", "    { params: { }, props: {} }", "  ];", "}"],
+        "description": "Astro \"getStaticPaths\" function"
+    },
+    /* Component */
+    "Astro Picture template": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:c-pic",
+        "body": ["<Picture", "    img={\"\"}", "    width={}", "    height={}", "    alt={\"\"}", "/>"],
+        "description": "Astro Picture template"
+    },
+    "Astro Link template": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:c-link",
+        "body": ["<ALink link={''} title={''}></ALink>"],
+        "description": "Astro Link template"
+    },
+    "Astro Button template": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:c-button",
+        "body": ["<Button type={''}></Button>"],
+        "description": "Astro Button template"
+    },
+    "Astro Icons template": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:c-icons",
+        "body": ["<Icons icon={''}></Icons>"],
+        "description": "Astro Icons template"
+    },
+    "Astro Form Block template": {
+        "prefix": "astro:c-form-block",
+        "body": ["<FormBlock id='' title=''></FormBlock>"],
+        "description": "Astro Form Block template"
+    },
+    "Astro Form Input Group template": {
+        "prefix": "astro:c-input-group",
+        "body": [
+            "<InputGroup id='' inputID={''}></InputGroup>"
+        ],
+        "description": "Astro Form Input Group template"
+    },
+    "Astro Form Checkbox template": {
+        "prefix": "astro:c-checkbox",
+        "body": ["<Checkbox id='' title={''}></Checkbox>"],
+        "description": "Astro Form Checkbox template"
+    },
+    "Astro Form Radio template": {
+        "prefix": "astro:c-radio",
+        "body": ["<Radio id='' title={''}></Radio>"],
+        "description": "Astro Form Radio template"
+    },
+    "Astro Form Choice Button template": {
+        "prefix": "astro:c-choice-button",
+        "body": ["<ChoiceButton id='' type={''} title={''}></ChoiceButton>"],
+        "description": "Astro Form Choice Button template"
+    },
+    "Astro Form Select template": {
+        "prefix": "astro:c-select",
+        "body": ["<Select id='' data={} placeholder={''} title={''} />"],
+        "description": "Astro Form Select template"
+    },
+    "Astro Form Custom Select template": {
+        "prefix": "astro:c-custom-select",
+        "body": ["<CustomSelect id='' data={} placeholder={''} title={''} />"],
+        "description": "Astro Form Custom Select template"
+    },
+    "Astro Form Input template": {
+        "prefix": "astro:c-input",
+        "body": ["<Input id='' type={''} placeholder={''} inputmode={''} title={''} />"],
+        "description": "Astro Form Input template"
+    },
+    "Astro Textarea Components": {
+        "prefix": "astro:c-textarea",
+        "body": ["<Textarea IDName='' rows={} maxlength={} title={''} placeholder={''} />"],
+        "description": "Astro Textarea Components"
+    },
+    "Astro Form Date Picker Input template": {
+        "prefix": "astro:c-date-picker-input",
+        "body": ["<Datepicker id=''>", "    <InputDate id='' placeholder={''}></InputDate>", "</Datepicker>"],
+        "description": "Astro Form Date Picker Input template"
+    },
+    "Astro Form Password Input template": {
+        "prefix": "astro:c-password-input",
+        "body": ["<InputPassword id='' placeholder={''} title={''} />"],
+        "description": "Astro Form Password Input template"
+    },
+    "Astro Spin Button Components": {
+        "prefix": "astro:c-spin-button",
+        "body": ["<Spinbutton IDName='' value={1} min={1} max={100} title={''} />"],
+        "description": "Astro Spin Button Components"
+    },
+    "Astro Pagination template": {
+        "prefix": "astro:c-pagination",
+        "body": ["<Pagination IDName='' row={}></Pagination>"],
+        "description": "Astro Pagination template"
+    },
+    "Astro Modal template": {
+        "prefix": "astro:c-modal",
+        "body": ["<Modal id='' title=''></Modal>"],
+        "description": "Astro Modal template"
+    },
+    "Astro Breadcrumb template": {
+        "prefix": "astro:c-breadcrumb",
+        "body": ["<Breadcrumb data={}></Breadcrumb>"],
+        "description": "Astro Breadcrumb template"
+    },
+    "Astro Swiper template": {
+        "prefix": "astro:c-swiper",
+        "body": ["<Swiper IDName='' pagination={} navigation={}></Swiper>"],
+        "description": "Astro Swiper template"
+    },
+    "Astro Tabs template": {
+        "prefix": "astro:c-tabs",
+        "body": [
+            "<Tabs tabsName={''} data={} activeIndex={}></Tabs>",
+            "<TabsContent IDName=''>",
+            "    <TabsPanes IDName='' tabsName={''} active={} fadeEffect={}></TabsPanes>",
+            "</TabsContent>"
+        ],
+        "description": "Astro Tabs template"
+    },
+    "Astro Tables template": {
+        "prefix": "astro:c-tables",
+        "body": ["<Tables IDName='' data={} MobileComponent={} mobileTable={}></Tables>"],
+        "description": "Astro Tables template"
+    },
+    /** HTML */
+    "Astro HTML Div with ClassName": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:html:div:class",
+        "body": ["<div class=\"\"></div>"],
+        "description": "Astro HTML Div with ClassName"
+    },
+    /** Css */
+    "UnoCss Css Transformer Directives": {
+        "scope": "css,scss,sass",
+        "prefix": "apply",
+        "body": ["@apply "],
+        "description": "UnoCss Css Transformer Directives"
+    },
+    "UnoCss Css Transformer Compile Class": {
+        "scope": "astro,typescriptreact",
+        "prefix": "uno:class",
+        "body": ["':uno-:'"],
+        "description": "UnoCss Css Transformer Compile Class"
+    },
+    /** Astro jsx */
+    "IDName Prefix": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:id:name",
+        "body": ["IDName ? `${ IDName }` : undefined"],
+        "description": "IDName Prefix"
+    },
+
+    /* Comment */
+    "Common Component Comment": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:common",
+        "body": ["/** Common Component */"],
+        "description": "Common Component Comment"
+    },
+    "Main Component Comment": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:main",
+        "body": ["/** Main Component */"],
+        "description": "Main Component Comment"
+    },
+    "Global Component Comment": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:global",
+        "body": ["/** Global Component */"],
+        "description": "Global Component Comment"
+    },
+    "MY Component Comment": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:MY",
+        "body": ["/** MY Component */"],
+        "description": "MY Component Comment"
+    },
+    "This Common is Typescript Type": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:type",
+        "body": ["/** Type */"],
+        "description": "This Common is Typescript Type"
+    },
+    "This Common is Data In Project": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:data",
+        "body": ["/** Data */"],
+        "description": "This Common is Data In Project"
+    },
+    "This Common is import Ts/Js Modules": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:modules",
+        "body": ["/** Modules */"],
+        "description": "This Common is import Ts/Js Modules"
+    },
+    "This Common is import Style": {
+        "scope": "typescript,javascript",
+        "prefix": "comment:style",
+        "body": ["/** Style */"],
+        "description": "This Common is import Style"
+    },
+}

@@ -1,0 +1,174 @@
+---
+/** Common Components */
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './modal.scss';
+
+export interface Props {
+    id: string;
+    sizes?: 'sm' | 'md' | 'lg' | 'xl';
+    center?: boolean;
+    scrollable?: boolean;
+    title?: string;
+    attribute?: attribute;
+
+    Modalclass?: string;
+    bodyClass?: string;
+    titleClass?: string;
+    dialogClass?: string;
+    contentClass?: string;
+
+    hideHeader?: boolean;
+    hideTitle?: boolean;
+    headerClass?: string;
+    hideColse?: boolean;
+
+    hideFooter?: boolean;
+    footerClass?: string;
+
+    cancelTitle?: string;
+    cancelVariant?: variant;
+    cancelDisabled?: boolean;
+    cancelClass?: string;
+    cancelOnly?: boolean;
+
+    okTitle?: string;
+    okVariant?: variant;
+    okDisabled?: boolean;
+    okClass?: string;
+    okAttribute?: string[];
+    okOnly?: boolean;
+}
+
+const {
+    id = 'example',
+    sizes = 'md',
+    center = true,
+    scrollable = false,
+    title = '',
+    attribute = {},
+
+    Modalclass = '',
+    bodyClass = '',
+    titleClass = '',
+    dialogClass = '',
+    contentClass = '',
+
+    hideHeader = false,
+    hideTitle = false,
+    headerClass = '',
+    hideColse = false,
+
+    hideFooter = false,
+    footerClass = '',
+
+    cancelTitle = '取消',
+    cancelVariant,
+    cancelDisabled = false,
+    cancelClass = '',
+    cancelOnly = false,
+
+    okTitle = '儲存',
+    okVariant,
+    okDisabled = false,
+    okClass = '',
+    okAttribute = [],
+    okOnly = false
+} = Astro.props as Props;
+
+const modalSizes: { [key: string]: string } = {
+    sm: 'modal-sm',
+    md: '',
+    lg: 'modal-lg',
+    xl: 'modal-xl'
+};
+const modalSize = modalSizes?.[sizes];
+---
+
+<div
+    class:list={['modal fade', Modalclass]}
+    id={`${id}Modal`}
+    tabindex="-1"
+    aria-labelledby={`${id}ModalLabel`}
+    aria-hidden="false"
+    data-bs-focus="false"
+    {...attribute}
+>
+    <div
+        class:list={[
+            'modal-dialog',
+            modalSize,
+            { 'modal-dialog-centered': center },
+            { 'modal-dialog-scrollable': scrollable },
+            dialogClass
+        ]}
+    >
+        <div class:list={['modal-content', contentClass]}>
+            {
+                !hideHeader && (
+                    <div class:list={['modal-header', { hideHeader: hideTitle }, headerClass]}>
+                        <slot name="title">
+                            {!hideTitle && (
+                                <div class:list={['modal-title', titleClass]} id={`${id}ModalLabel`}>
+                                    <slot name="title-left" />
+                                    <span>{title}</span>
+                                    <slot name="title-right" />
+                                </div>
+                            )}
+                        </slot>
+                        <slot name="header-right" />
+                        {!hideColse && (
+                            <Button
+                                IDName={id ? `${id}ModalCloseButton` : ''}
+                                className={`modal-close-button`}
+                                variant="green"
+                                attribute={{
+                                    'data-bs-dismiss': 'modal',
+                                    'aria-label': 'Close'
+                                }}
+                                button={false}
+                            />
+                        )}
+                    </div>
+                )
+            }
+            <div class:list={['modal-body', { hideFooter: hideFooter }, { hideTitle: hideTitle }, bodyClass]}>
+                <slot />
+            </div>
+            {
+                !hideFooter && (
+                    <div class:list={['modal-footer', footerClass]}>
+                        <slot name="footer">
+                            {!okOnly && (
+                                <Button
+                                    className={[cancelClass]}
+                                    variant={cancelVariant}
+                                    attribute={{ 'data-bs-dismiss': 'modal' }}
+                                    disabled={cancelDisabled}
+                                >
+                                    {cancelTitle}
+                                </Button>
+                            )}
+                            {!cancelOnly && (
+                                <Button className={[okClass]} variant={okVariant} disabled={okDisabled} {...okAttribute}>
+                                    {okTitle}
+                                </Button>
+                            )}
+                        </slot>
+                    </div>
+                )
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    /** Modules */
+    import { Modal } from '@js/components/common/modal/modal';
+
+    const modals = document.querySelectorAll('.modal') as NodeListOf<HTMLElement>;
+    [...modals].forEach((modal) => {
+        new Modal(modal).addMethod();
+    });
+</script>

@@ -1,0 +1,174 @@
+@use '../../../scss/mixin/scrollbar.scss' as scrollbar;
+
+.modal {
+    /** BS Modal 本身 */
+    // --bs-modal-zindex: ;
+    // --bs-modal-width: ;
+    /** BS Modal Body Padding */
+    // --bs-modal-padding: ;
+    // --bs-modal-margin: ;
+    /** BS Modal Font Color */
+    // --bs-modal-color: ;
+    // --bs-modal-bg: ;
+    // --bs-modal-border-color: ;
+    // --bs-modal-border-width: ;
+    // --bs-modal-border-radius: ;
+    // --bs-modal-box-shadow: ;
+    /** BS Modal Header */
+    // --bs-modal-inner-border-radius: ;
+    // --bs-modal-header-border-color: ;
+    // --bs-modal-header-border-width: ;
+    /** BS Modal Title */
+    // --bs-modal-title-line-height: ;
+    /** BS Footer Title */
+    // --bs-modal-footer-gap: ;
+    // --bs-modal-footer-bg: ;
+    // --bs-modal-footer-border-color: ;
+    // --bs-modal-footer-border-width: ;
+    /** BS Modal Size */
+    // --bs-modal-width-sm: ;
+    // --bs-modal-width-lg: ;
+    // --bs-modal-width-xl: ;
+
+    /** --------------------------------------------- */
+
+    /** Modal Header */
+    // --modal-header-justify: ;
+    // --modal-header-padding-x: ;
+    // --modal-header-padding-top: ;
+    // --modal-header-padding-bottom: ;
+    /** Modal Title */
+    // --modal-title-justify: ;
+    // --modal-title-padding-x: ;
+    // --modal-title-padding-top: ;
+    // --modal-title-padding-bottom: ;
+    // --modal-title-gap: ;
+    // --modal-title-font-size: ;
+    // --modal-title-color: ;
+    // --modal-title-font-weight: ;
+    // --modal-title-font-family: ;
+    // --modal-title-line-height: ;
+    // --modal-title-letter-spacing: ;
+    /** Footer Title */
+    // --modal-footer-padding-x: ;
+    // --modal-footer-padding-top: ;
+    // --modal-footer-padding-bottom: ;
+    // --modal-footer-justify: ;
+    // --modal-footer-button-max-width: ;
+    // --modal-footer-button-width: ;
+    /** Modal Body */
+    // --modal-body-padding-x: ;
+    // --modal-body-padding-top: ;
+    // --modal-body-padding-bottom: ;
+    // --modal-hide-header-body-padding-top: ;
+    // --modal-hide-footer-body-padding-bottom: ;
+    /** Modal Close Button */
+    // --modal-close-size: ;
+    // --modal-close-padding: ;
+    // --modal-close-top: ;
+    // --modal-close-right: ;
+    // --modal-close-background-image: ;
+    // --modal-close-hover-background-image: ;
+
+    /** Modal Size */
+    // &-sm {
+    //     --bs-modal-width: var(--bs-modal-width-sm);
+    // }
+    // &-lg {
+    //     @screen md {
+    //         --bs-modal-width: var(--bs-modal-width-lg);
+    //     }
+    // }
+    // &-xl {
+    //     @screen md {
+    //         --bs-modal-width: var(--bs-modal-width-xl);
+    //     }
+    // }
+
+    &-header {
+        @apply flex items-center relative z-5;
+        justify-content: var(--modal-header-justify);
+        padding: var(--modal-header-padding-top) var(--modal-header-padding-x) var(--modal-header-padding-bottom);
+
+        &.hideTitle {
+            .modal-title span {
+                @apply hidden;
+            }
+        }
+        &.hideHeader {
+            --bs-modal-header-top: 0rem;
+            --bs-modal-header-bottom: 0rem;
+            --bs-modal-header-padding: 0rem;
+            --modal-header-padding-x: 0rem;
+            --modal-header-padding-top: 0rem;
+            --modal-header-padding-bottom: 0rem;
+
+            .modal-title {
+                @apply hidden;
+            }
+        }
+        &.hideCloseButton {
+            .modal-close-button {
+                @apply hidden pointer-events-none;
+            }
+        }
+    }
+    &-title {
+        @apply flex items-center;
+        justify-content: var(--modal-title-justify);
+        gap: var(--modal-title-gap);
+        padding: var(--modal-title-padding-top) var(--modal-title-padding-x) var(--modal-title-padding-bottom);
+
+        span {
+            color: var(--modal-title-color);
+            font-size: var(--modal-title-font-size);
+            font-weight: var(--modal-title-font-weight);
+            font-family: var(--modal-title-font-family);
+            line-height: var(--modal-title-line-height);
+            letter-spacing: var(--modal-title-letter-spacing);
+            text-indent: var(--modal-title-letter-spacing);
+        }
+    }
+    &-body {
+        padding: var(--modal-body-padding-top) var(--modal-body-padding-x) var(--modal-body-padding-bottom);
+        @include scrollbar.scrollbar();
+
+        &.hideHeader {
+            padding-top: var(--modal-hide-header-body-padding-top);
+        }
+        &.hideFooter {
+            padding-bottom: var(--modal-hide-footer-body-padding-bottom);
+        }
+        :where(dev, p, span, li) {
+            @apply max-w-full whitespace-normal;
+        }
+    }
+    &-footer {
+        justify-content: var(--modal-footer-justify);
+        padding: var(--modal-footer-padding-top) var(--modal-footer-padding-x) var(--modal-footer-padding-bottom);
+        gap: var(--bs-modal-footer-gap);
+        & > * {
+            @apply m-0rem;
+        }
+        .btn {
+            max-width: var(--modal-footer-button-max-width);
+            width: var(--modal-footer-button-width);
+        }
+    }
+    &-close-button {
+        @apply bg-contain bg-center bg-no-repeat;
+        position: absolute;
+        top: var(--modal-close-top);
+        right: var(--modal-close-right);
+        width: var(--modal-close-size);
+        height: var(--modal-close-size);
+        background: var(--modal-close-background-image) !important;
+        padding: var(--modal-close-padding);
+
+        &:hover {
+            background: var(--modal-close-hover-background-image) !important;
+        }
+    }
+    &-backdrop {
+    }
+}

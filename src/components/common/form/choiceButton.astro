@@ -1,0 +1,109 @@
+---
+/** Common Components */
+/** Checkbox */
+import Checkbox from '@components/common/form/checkbox.astro';
+/** Style */
+import './choiceButton.scss';
+export interface Props {
+    id?: string;
+    className?: any;
+    inputClassName?: any;
+    labelClassName?: any;
+    type: 'checkbox' | 'radio';
+    name?: string;
+    title?: string;
+    value?: string | number;
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: 'readonly';
+    checked?: boolean;
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    customValidText?: string;
+    customInvalidText?: string;
+    attribute?: attribute;
+    aria?: aria;
+}
+
+const {
+    id,
+    className,
+    inputClassName,
+    labelClassName,
+    type = 'checkbox',
+    name,
+    title,
+    value,
+    checked,
+    required,
+    disabled,
+    readonly,
+    validClass,
+    validType,
+    validLabel,
+    customValidText,
+    customInvalidText,
+    attribute = {},
+    aria = {}
+} = Astro.props as Props;
+const validAttribute = {
+    'data-valid-class': validClass,
+    'data-valid-type': validType ? `${validType}|${type}` : undefined,
+    'data-valid-label': validLabel,
+    'data-custom-valid-text': customValidText,
+    'data-custom-invalid-text': customInvalidText
+};
+---
+
+<div id={id ? `${id}FromChoiceButton` : undefined} class:list={['form-choice-button', className]} data-name={name}>
+    <input
+        id={id}
+        class:list={['btn-choice', inputClassName]}
+        type={type}
+        name={name}
+        value={value}
+        checked={checked}
+        readonly={readonly}
+        disabled={disabled}
+        required={required}
+        autocomplete="off"
+        aria-label={title}
+        {...attribute}
+        {...aria}
+        {...validAttribute}
+    />
+    <label class:list={['btn-choice-label', labelClassName]} for={id}>
+        <slot />
+    </label>
+</div>
+
+<script>
+    const buttons = document.querySelectorAll('.form-choice-button') as NodeListOf<HTMLElement>;
+    [...buttons].forEach((button) => {
+        const btn = button.querySelector('.btn-choice-label button') as HTMLButtonElement;
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const input = button.querySelector('input') as HTMLInputElement;
+                input.checked = !input.checked;
+
+                const status = input.checked;
+                btn.classList.toggle('active', status);
+                if (!status) btn.blur();
+            });
+        }
+    });
+
+    const containers = document.querySelectorAll('[data-choice-button="radio"]') as NodeListOf<HTMLElement>;
+    [...containers].forEach((x) => {
+        const checkboxs = x?.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+        [...checkboxs].forEach((y) => {
+            y.addEventListener('change', () => {
+                if (y.checked) {
+                    [...checkboxs].forEach((x) => (x.checked = false));
+                    y.checked = true;
+                }
+            });
+        });
+    });
+</script>

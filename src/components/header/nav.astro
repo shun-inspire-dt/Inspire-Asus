@@ -1,0 +1,63 @@
+---
+/** type */
+import type { NavsData } from '@js/data/navs';
+/** Common Components */
+import MegaMenu from '@components/common/megaMenu/megaMenu.astro';
+/** Link */
+import ALink from '@components/common/button/link.astro';
+/** Icons */
+import Icons from '@components/common/icons/icons.astro';
+/** Main Components */
+import Logo from './logo.astro';
+/** Style */
+import './nav.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    data?: NavsData;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    type?: 'megaMenu' | 'dropdown';
+}
+
+const { IDName = 'headerNav', className, style, attribute = {}, data = [], type = 'dropdown' } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+    <nav>
+        {
+            data.map((x, i) => (
+                <div
+                    class="headerNavItem"
+                    {...(x.hasOwnProperty('children') ? { 'data-mega-menu-trigger': '', 'data-mega-menu-type': type } : {})}
+                >
+                    <ALink link={x.link} className="headerNavLink">
+                        <p>{x.title}</p>
+                        <span>{x.subTitle}</span>
+                    </ALink>
+                    {x.hasOwnProperty('children') && (
+                        <MegaMenu
+                            position="center"
+                            attribute={{
+                                'data-first': i === 0 ? '' : undefined
+                            }}
+                        >
+                            {x.children?.map((y) => (
+                                <ALink
+                                    IDName={y.id}
+                                    link={y.link}
+                                    className={y.className}
+                                    title={y.title}
+                                    attribute={y.attribute}
+                                >
+                                    {y.title}
+                                </ALink>
+                            ))}
+                        </MegaMenu>
+                    )}
+                </div>
+            ))
+        }
+    </nav>
+</div>

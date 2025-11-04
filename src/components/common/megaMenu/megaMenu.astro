@@ -1,0 +1,27 @@
+---
+/** Style */
+import './megaMenu.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    data?: Array<any>;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    position?: 'left' | 'right' | 'center';
+    transition?: boolean;
+}
+
+const { IDName, className, style, attribute = {}, data = [], position = 'left', transition = true } = Astro.props as Props;
+---
+
+<div
+    id={IDName ? `${IDName}MegaMenu` : undefined}
+    class:list={['megaMenu', className]}
+    style={style}
+    data-mega-menu
+    data-mega-menu-position={position}
+    {...transition ? { 'data-mega-menu-transition': '' } : {}}
+    {...attribute}
+>
+    <slot />
+</div>

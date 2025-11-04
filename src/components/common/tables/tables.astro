@@ -1,0 +1,153 @@
+---
+/** Type */
+import type { Props as IconsProps } from '@components/common/icons/icons.astro';
+import type { tableChidType, tableChidTRType, childComponentProps, EmptyComponentProps } from './tables.type';
+/** Style */
+import './tables.scss';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    field?: tableChidType[];
+    data?: tableChidTRType[];
+    scrollable?: boolean;
+    rouned?: 'top' | 'bottom' | 'all' | false;
+    sticky?: boolean;
+    mobileTable?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+    MobileComponent?: (_props: childComponentProps) => any;
+    EmptyComponent?: (_props: EmptyComponentProps) => any;
+    emptyHideHead?: boolean;
+    emptyIcon?: IconsProps['icon'];
+    emptyText?: string;
+    hideTitle?: boolean;
+    hideToolTip?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    field = [],
+    data = [],
+    scrollable,
+    sticky,
+    mobileTable,
+    rouned,
+    MobileComponent,
+    EmptyComponent,
+    emptyHideHead,
+    emptyIcon,
+    emptyText = '資料為空',
+    hideTitle,
+    hideToolTip
+} = Astro.props as Props;
+---
+
+<div
+    id={IDName ? `${IDName}Table` : undefined}
+    class:list={[
+        className,
+        'tableContainer',
+        {
+            mobileTable: !!mobileTable,
+            'mobileTable-sm': mobileTable === 'sm',
+            'mobileTable-md': mobileTable === 'md',
+            'mobileTable-lg': mobileTable === 'lg',
+            'mobileTable-xl': mobileTable === 'xl',
+            'mobileTable-2xl': mobileTable === '2xl'
+        },
+        { sticky: sticky },
+        { scrollable: scrollable },
+        { rouned: rouned === 'all' },
+        { 'rouned-top': rouned === 'top' },
+        { 'rouned-bottom': rouned === 'bottom' }
+    ]}
+    style={style}
+    {...attribute}
+>
+    {
+        !hideTitle && (
+            <div class="tableTitle">
+                <slot name="title" />
+            </div>
+        )
+    }
+    {
+        !hideToolTip && (
+            <div class="tableToolTip">
+                <slot name="tooltip" />
+            </div>
+        )
+    }
+    <table class="table">
+        {
+            !emptyHideHead && (
+                <thead>
+                    <tr>
+                        {field.map((x) => (
+                            <th scope="col" colspan={x.colspan} rowspan={x.rowspan} {...(x.attribute ? x.attribute : {})}>
+                                {x.text}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+            )
+        }
+        <tbody>
+            <slot>
+                {
+                    data.length ? (
+                        data.map((x, i) => (
+                            <tr {...(x.attribute ? x.attribute : {})}>
+                                {x.items.map((y, j) => (
+                                    <Fragment>
+                                        <td
+                                            scope={j === 0 ? 'row' : undefined}
+                                            colspan={y.colspan}
+                                            rowspan={y.rowspan}
+                                            {...(y.attribute ? y.attribute : {})}
+                                        >
+                                            {j === 0 ? (
+                                                <Fragment>
+                                                    {y.component ? (
+                                                        <y.component index={j} data={y} className={'TableFirstTdContent'} />
+                                                    ) : (
+                                                        <div class="TableFirstTdContent">{y.text}</div>
+                                                    )}
+                                                    {j === 0 && MobileComponent && (
+                                                        <MobileComponent
+                                                            className="MobileTableContainer"
+                                                            index={i}
+                                                            field={field}
+                                                            data={x.items}
+                                                        />
+                                                    )}
+                                                </Fragment>
+                                            ) : y.component ? (
+                                                <y.component index={j} data={y} />
+                                            ) : (
+                                                <div>{y.text}</div>
+                                            )}
+                                        </td>
+                                    </Fragment>
+                                ))}
+                            </tr>
+                        ))
+                    ) : (
+                        <th colspan={field.length}>
+                            <Fragment>
+                                {EmptyComponent ? (
+                                    <EmptyComponent emptyIcon={emptyIcon} emptyText={emptyText} />
+                                ) : (
+                                    <div class="emptyTd">{emptyText}</div>
+                                )}
+                            </Fragment>
+                        </th>
+                    )
+                }
+            </slot>
+        </tbody>
+    </table>
+</div>

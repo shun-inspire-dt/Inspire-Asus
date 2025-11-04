@@ -1,0 +1,24 @@
+---
+export type favicon = {
+    rel?: string;
+    type?: string;
+    sizes?: string;
+    href?: string;
+}[];
+export type appleTouchIcon = {
+    rel?: string;
+    sizes?: string;
+    href?: string;
+}[];
+export interface Props {
+    favicon?: favicon;
+    appleTouchIcon?: appleTouchIcon;
+}
+
+const { favicon = [], appleTouchIcon = [] } = Astro.props as Props;
+---
+
+{/** favicon && other icon */}
+{favicon.map((x) => <link rel={x.rel} href={x.href} type={x.type} sizes={x.sizes} />)}
+{/** apple touch icon */}
+{appleTouchIcon.map((x) => <link rel={x?.rel ?? 'apple-touch-icon'} sizes={x.sizes} href={x.href} />)}
