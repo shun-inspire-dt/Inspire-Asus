@@ -1,0 +1,453 @@
+/* ==================== Figma Semantics - Typography ==================== */
+
+/* === Label 系列 === */
+.label-01 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-12);
+    line-height: var(--line-height-12);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.label-02 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-13);
+    line-height: var(--line-height-13);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.label-03 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-14);
+    line-height: var(--line-height-14);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+/* === Body 系列 === */
+.body-00-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-14);
+    line-height: var(--line-height-14-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-01 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-14);
+    line-height: var(--line-height-14);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-01-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-16);
+    line-height: var(--line-height-16-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-02 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-16);
+    line-height: var(--line-height-16);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-02-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-18);
+    line-height: var(--line-height-18-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-03 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-18);
+    line-height: var(--line-height-18);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-03-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-04 {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.body-04-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-24);
+    line-height: var(--line-height-24);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+/* === Body Strong 系列 === */
+.body-01-strong {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-14);
+    line-height: var(--line-height-14);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.body-02-strong {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-16);
+    line-height: var(--line-height-16);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.body-03-strong {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-18);
+    line-height: var(--line-height-18);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.body-04-strong {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+/* === Heading 系列 === */
+.heading-01 {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-02 {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-24);
+    line-height: var(--line-height-24);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-03 {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-30);
+    line-height: var(--line-height-30);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-04 {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-36);
+    line-height: var(--line-height-36);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-05 {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-44);
+    line-height: var(--line-height-44);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-06 {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-52);
+    line-height: var(--line-height-52);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+/* === Heading Short 系列 === */
+.heading-00-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-16);
+    line-height: var(--line-height-16-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-01-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-18);
+    line-height: var(--line-height-18-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-02-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20-sh);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-03-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-24);
+    line-height: var(--line-height-24);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.heading-04-sh {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-30);
+    line-height: var(--line-height-30);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+/* === Fluid Heading 系列 === */
+/* 響應式標題，根據螢幕尺寸調整 */
+
+/* .fluid-heading-02-top-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-72);
+    line-height: var(--line-height-72);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-02-top-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-64);
+    line-height: var(--line-height-64);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-02-top-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-52);
+    line-height: var(--line-height-52);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-03-top-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-64);
+    line-height: var(--line-height-64);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-03-top-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-52);
+    line-height: var(--line-height-52);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-03-top-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-44);
+    line-height: var(--line-height-44);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-04-base-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-52);
+    line-height: var(--line-height-52);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-04-base-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-44);
+    line-height: var(--line-height-44);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-04-base-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-36);
+    line-height: var(--line-height-36);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-05-base-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-44);
+    line-height: var(--line-height-44);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-05-base-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-36);
+    line-height: var(--line-height-36);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-05-base-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-30);
+    line-height: var(--line-height-30);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-06-base-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-36);
+    line-height: var(--line-height-36);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-06-base-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-30);
+    line-height: var(--line-height-30);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-heading-06-base-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-24);
+    line-height: var(--line-height-24);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+} */
+
+/* === Fluid Quote 系列 === */
+/* 響應式引用文字 */
+
+/* .fluid-quote-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-30);
+    line-height: var(--line-height-30);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+    font-style: italic;
+}
+
+.fluid-quote-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-24);
+    line-height: var(--line-height-24);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+    font-style: italic;
+}
+
+.fluid-quote-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+    font-style: italic;
+} */
+
+/* === Fluid Paragraph 系列 === */
+/* 響應式段落文字 */
+
+/* .fluid-paragraph-lg {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-20);
+    line-height: var(--line-height-20);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.fluid-paragraph-md {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-18);
+    line-height: var(--line-height-18);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+}
+
+.fluid-paragraph-sm {
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-16);
+    line-height: var(--line-height-16);
+    letter-spacing: var(--letter-spacing);
+    font-weight: normal;
+} */
+
+/* === Fluid Display 系列 === */
+/* 響應式展示文字 */
+
+/* .fluid-display-01-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-72);
+    line-height: var(--line-height-72);
+    letter-spacing: -0.64px;
+    font-weight: medium;
+}
+
+.fluid-display-01-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-64);
+    line-height: var(--line-height-64);
+    letter-spacing: -0.64px;
+    font-weight: medium;
+}
+
+.fluid-display-01-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-52);
+    line-height: var(--line-height-52);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-display-02-lg {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-64);
+    line-height: var(--line-height-64);
+    letter-spacing: -0.64px;
+    font-weight: medium;
+}
+
+.fluid-display-02-md {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-52);
+    line-height: var(--line-height-52);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+}
+
+.fluid-display-02-sm {
+    font-family: var(--font-family-tt-norms-pro-medium);
+    font-size: var(--fs-44);
+    line-height: var(--line-height-44);
+    letter-spacing: var(--letter-spacing);
+    font-weight: medium;
+} */
