@@ -1,0 +1,57 @@
+/* Bookmark Icon Component Styles */
+
+.bookmark-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size, 18px);
+    height: var(--icon-size, 18px);
+    
+    .bookmark-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        
+        path {
+            fill: var(--icon-color, var(--color-blue-500));
+            transition: fill 0.2s ease-in-out;
+        }
+    }
+    
+    /* Status variants */
+    &.bookmark-active {
+        .bookmark-svg path {
+            fill: var(--icon-color, var(--color-blue-500));
+        }
+    }
+    
+    &.bookmark-normal {
+        .bookmark-svg path {
+            fill: var(--icon-color, var(--color-blue-500));
+        }
+    }
+    
+    &.bookmark-default {
+        padding: 1px 4px;
+        width: var(--icon-size, 24px);
+        height: var(--icon-size, 24px);
+    }
+
+    &.bookmark-thick {
+        padding: 0px 2px;
+    }
+    
+    /* Hover effects */
+    &:hover {
+        .bookmark-svg path {
+            fill: var(--color-blue-600, #0051a8);
+        }
+    }
+    
+    /* Focus states for accessibility */
+    &:focus-visible {
+        outline: 2px solid var(--color-blue-500);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+}

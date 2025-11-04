@@ -1,0 +1,420 @@
+---
+/** Bookmark Example Component */
+import BookmarkIcon from './bookmark.astro';
+
+// BookmarkExample component interface
+export interface BookmarkExampleProps {
+    IDName?: string;
+    className?: any;
+    isBookmarked?: boolean;
+    onToggle?: string;
+    item?: {
+        id: string;
+        title: string;
+        description?: string;
+    };
+}
+
+const sampleItems = [
+    {
+        id: '1',
+        title: 'ASUS ROG Strix G15 Gaming Laptop',
+        description: '15.6" FHD 144Hz, AMD Ryzen 7 5800H, RTX 3060, 16GB RAM, 512GB SSD'
+    },
+    {
+        id: '2', 
+        title: 'ASUS ZenBook 14 OLED',
+        description: 'Ultra-thin laptop with 14" OLED display, Intel Core i7, 16GB RAM'
+    },
+    {
+        id: '3',
+        title: 'ASUS TUF Gaming Monitor',
+        description: '27" 1440p 165Hz Gaming Monitor with G-SYNC Compatible'
+    }
+];
+---
+
+<section class="bookmark-examples">
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold mb-6">Bookmark Component Examples</h2>
+        
+        <!-- 基本狀態展示 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">基本狀態</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="p-4 border rounded-lg text-center">
+                    <h4 class="text-sm font-medium mb-2">Active - Default</h4>
+                    <BookmarkIcon status="Active" stroke="Default" />
+                </div>
+                <div class="p-4 border rounded-lg text-center">
+                    <h4 class="text-sm font-medium mb-2">Normal - Default</h4>
+                    <BookmarkIcon status="Normal" stroke="Default" />
+                </div>
+                <div class="p-4 border rounded-lg text-center">
+                    <h4 class="text-sm font-medium mb-2">Active - Thick</h4>
+                    <BookmarkIcon status="Active" stroke="Thick" />
+                </div>
+                <div class="p-4 border rounded-lg text-center">
+                    <h4 class="text-sm font-medium mb-2">Normal - Thick</h4>
+                    <BookmarkIcon status="Normal" stroke="Thick" />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 不同尺寸 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">不同尺寸</h3>
+            <div class="flex items-center gap-6">
+                <div class="text-center">
+                    <div class="mb-2">Small (16px)</div>
+                    <BookmarkIcon size={16} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2">Medium (24px)</div>
+                    <BookmarkIcon size={24} />
+                </div>
+                <div class="text-center">
+                    <div class="mb-2">Large (32px)</div>
+                    <BookmarkIcon size={32} />
+                </div>
+            </div>
+        </div>
+        
+        <!-- 產品列表使用範例 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">產品列表中的使用</h3>
+            <div class="space-y-3">
+                {sampleItems.map((item, index) => (
+                    <div class="bookmark-example">
+                        <div class="bookmark-item">
+                            <div class="bookmark-content">
+                                <h3 class="bookmark-title">{item.title}</h3>
+                                {item.description && (
+                                    <p class="bookmark-description">{item.description}</p>
+                                )}
+                            </div>
+                            <button 
+                                class="bookmark-button"
+                                onclick={`toggleBookmark('${item.id}')`}
+                                aria-label={index === 1 ? '取消收藏' : '加入收藏'}
+                                data-bookmarked={index === 1}
+                            >
+                                <BookmarkIcon 
+                                    status={index === 1 ? "Active" : "Normal"}
+                                    color="blue-500"
+                                    size={24}
+                                />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+        
+        <!-- 內聯使用 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">內聯使用</h3>
+            <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                <span>收藏此頁面</span>
+                <BookmarkIcon status="Normal" size={20} />
+                <span>|</span>
+                <span>已收藏的項目</span>
+                <BookmarkIcon status="Active" size={20} />
+                <span>|</span>
+                <span>不同顏色</span>
+                <BookmarkIcon status="Active" size={20} color="red-500" />
+            </div>
+        </div>
+        
+        <!-- 按鈕整合 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">按鈕整合</h3>
+            <div class="flex gap-4 flex-wrap">
+                <button class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50">
+                    <BookmarkIcon status="Normal" size={16} />
+                    <span>加入收藏</span>
+                </button>
+                
+                <button class="flex items-center gap-2 px-4 py-2 border border-blue-500 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                    <BookmarkIcon status="Active" size={16} color="#ffffff" />
+                    <span>已收藏</span>
+                </button>
+                
+                <button class="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50">
+                    <BookmarkIcon status="Normal" stroke="Thick" size={16} />
+                    <span>粗線條樣式</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 程式碼範例 -->
+        <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-4">使用方式</h3>
+            <div class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
+                <pre><code>{`<!-- 基本使用 -->
+<Bookmark />
+
+<!-- 自定義狀態和顏色 -->
+<Bookmark status="Active" color="blue-500" size={24} />
+
+<!-- 在產品列表中使用 -->
+<BookmarkExample 
+    item={{ id: '1', title: '產品名稱' }}
+    isBookmarked={false}
+    onToggle="toggleBookmark('1')"
+/>`}</code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // 模擬收藏切換功能
+    function toggleBookmark(itemId: string) {
+        console.log('Toggle bookmark for item:', itemId);
+        // 在實際應用中實現收藏邏輯
+    }
+    
+    // 將函數暴露到全域範圍
+    (window as any).toggleBookmark = toggleBookmark;
+</script>
+
+<style>
+    .bookmark-examples {
+        .container {
+            max-width: 1200px;
+        }
+        
+        /* BookmarkExample component styles */
+        .bookmark-example {
+            .bookmark-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+                background: white;
+                transition: all 0.2s ease-in-out;
+                
+                &:hover {
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    border-color: #d1d5db;
+                }
+            }
+            
+            .bookmark-content {
+                flex: 1;
+                margin-right: 1rem;
+            }
+            
+            .bookmark-title {
+                margin: 0 0 0.25rem 0;
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #374151;
+            }
+            
+            .bookmark-description {
+                margin: 0;
+                font-size: 0.875rem;
+                color: #6b7280;
+                line-height: 1.4;
+            }
+            
+            .bookmark-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem;
+                border: none;
+                background: transparent;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out;
+                
+                &:hover {
+                    background-color: #f3f4f6;
+                }
+                
+                &:focus-visible {
+                    outline: 2px solid var(--color-blue-500);
+                    outline-offset: 2px;
+                }
+                
+                &[data-bookmarked="true"] {
+                    &:hover {
+                        background-color: #fef2f2;
+                    }
+                }
+            }
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        @media (min-width: 768px) {
+            .md\\:grid-cols-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .gap-3 {
+            gap: 0.75rem;
+        }
+        
+        .gap-4 {
+            gap: 1rem;
+        }
+        
+        .gap-6 {
+            gap: 1.5rem;
+        }
+        
+        .space-y-3 > * + * {
+            margin-top: 0.75rem;
+        }
+        
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .p-4 {
+            padding: 1rem;
+        }
+        
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+        
+        .text-sm {
+            font-size: 0.875rem;
+        }
+        
+        .text-lg {
+            font-size: 1.125rem;
+        }
+        
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+        
+        .font-medium {
+            font-weight: 500;
+        }
+        
+        .font-semibold {
+            font-weight: 600;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .border {
+            border-width: 1px;
+            border-color: #d1d5db;
+        }
+        
+        .border-gray-300 {
+            border-color: #d1d5db;
+        }
+        
+        .border-blue-500 {
+            border-color: #3b82f6;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .rounded-md {
+            border-radius: 0.375rem;
+        }
+        
+        .bg-white {
+            background-color: white;
+        }
+        
+        .bg-gray-50 {
+            background-color: #f9fafb;
+        }
+        
+        .bg-gray-900 {
+            background-color: #111827;
+        }
+        
+        .bg-blue-500 {
+            background-color: #3b82f6;
+        }
+        
+        .text-white {
+            color: white;
+        }
+        
+        .text-gray-100 {
+            color: #f3f4f6;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .overflow-x-auto {
+            overflow-x: auto;
+        }
+        
+        button:hover.hover\\:bg-gray-50 {
+            background-color: #f9fafb;
+        }
+        
+        button:hover.hover\\:bg-blue-600 {
+            background-color: #2563eb;
+        }
+    }
+</style>

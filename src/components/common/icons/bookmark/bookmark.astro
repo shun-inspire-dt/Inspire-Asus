@@ -1,0 +1,63 @@
+---
+/** Bookmark Component */
+/** Style */
+import './bookmark.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    status?: "Active" | "Normal";
+    stroke?: "Default" | "Thick";
+    size?: number;
+    color?: string;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    status = "Active",
+    stroke = "Default",
+    size,
+    color
+} = Astro.props as Props;
+
+// SVG paths for different states
+const svgPaths = {
+    "Normal-Default": "M8 14.6811L14.8 19.762V1.2L1.2 1.2V19.762L8 14.6811ZM0 22V2C0 0.895433 0.895431 0 2 0H14C15.1046 0 16 0.895431 16 2V22L8 16.3711L0 22Z",
+    "Normal-Thick": "M8 13.6811L13.8 17.762V2.2H2.2V17.762L8 13.6811ZM0 22V2C0 0.895433 0.895431 0 2 0H14C15.1046 0 16 0.895431 16 2V22L8 16.3711L0 22Z",
+    "Active-Default": "M0 22V2C0 0.895433 0.895431 0 2 0H14C15.1046 0 16 0.895431 16 2V22L8 16.3711L0 22Z"
+};
+
+const currentPath = svgPaths[`${status}-${stroke}` as keyof typeof svgPaths] || svgPaths["Active-Default"];
+---
+
+<span
+    id={IDName}
+    class:list={[className, 'bookmark-icon', `bookmark-${status.toLowerCase()}`, `bookmark-${stroke.toLowerCase()}`]}
+    style={{
+        ...style,
+        '--icon-size': size ? `${size}px` : undefined,
+        '--icon-color': color ? color.charAt(0) === '#' ? color : `var(--color-${color})` : undefined
+    }}
+    {...attribute}
+>
+    <svg 
+        width="16"
+        height="22"
+        viewBox="0 0 16 22" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        class="bookmark-svg"
+    >
+        <path 
+            fill-rule="evenodd" 
+            clip-rule="evenodd" 
+            d={currentPath}
+            fill="var(--icon-color)"
+        />
+    </svg>
+</span>
