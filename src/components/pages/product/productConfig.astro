@@ -1,0 +1,76 @@
+---
+/** Common Component */
+import ChoiceButton from '@components/common/form/checkboxs/choiceButton.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    price?: string;
+    priceDescription?: string;
+    optionHint?: string;
+    showColorSelector?: boolean;
+    showPriceTag?: boolean;
+    showPriceDescription?: boolean;
+    showOptionHint?: boolean;
+    disabled?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title,
+    price,
+    priceDescription,
+    optionHint,
+    showColorSelector = true,
+    showPriceTag = true,
+    showPriceDescription = true,
+    showOptionHint = true,
+    disabled
+} = Astro.props as Props;
+
+const id = `FromProductConfig-${Math.floor(Math.random() * 1000)}`;
+---
+
+<ChoiceButton id={IDName || id} type="checkbox" name="product-config" disabled={disabled}>
+    <button
+        type="button"
+        class:list={[
+            className,
+            { disabled },
+            `:uno-product-config: w-full flex flex-col gap-0.5rem p-1rem bg-white border border-gray-500 rounded-lg disabled:border-gray-100 disabled:pointer-events-none disabled:cursor-not-allowed [&.active]:border-0.125rem [&.active]:border-blue-500 focus-within:border-gray-200 focus-within:outline focus-within:outline-2px focus-within:outline-blue-500 focus-within:outline-offset-2px [&.active:focus-within]:border-blue-500 group`
+        ]}
+        style={style}
+        {...attribute}
+        disabled={disabled}
+    >
+        <div class=":uno-product-config-header: w-full flex items-start justify-between">
+            <div class=":uno-product-config-title: flex items-center justify-between gap-8px heading-02-sh text-gray-900 group-disabled:text-gray-300">
+                {
+                    showColorSelector && (
+                        <span class=":uno-product-config-color-selector: w-1rem h-1lh flex items-center">
+                            <span class=":uno-product-config-color-selector-circle: inline size-1rem rounded-999 bg-#53565A group-disabled:opacity-30" />
+                        </span>
+                    )
+                }
+                {title}
+            </div>
+            {
+                showPriceTag && (
+                    <div class=":uno-product-config-price-tag: flex flex-col items-center gap-4px text-right">
+                        <span class=":uno-product-config-price: body-02-sh text-gray-900 group-disabled:text-gray-300">{price}</span>
+                        {showPriceDescription && (
+                            <span class=":uno-product-config-price-description: label-02 text-orange-600 group-disabled:text-orange-400">{priceDescription}</span>
+                        )}
+                    </div>
+                )
+            }
+        </div>
+        {showOptionHint && <p class=":uno-product-config-option-hint: w-full label-01 text-gray-600 text-left group-disabled:text-gray-200">{optionHint}</p>}
+    </button>
+</ChoiceButton>
