@@ -7,7 +7,10 @@ type breadcrumb = {
     link?: string;
     extend?: boolean;
 }[];
-type variant = 'blue';
+type variant = 'blue' | 'blue-outline' | 'neutral' | 'neutral-outline' | 'blue-ghost' | 'neutral-ghost';
+type select = { text: string | number; value: string | number; attribute?: attribute }[];
+type filter = { label: string; value: string; checked?: boolean }[];
+type category = { id?: string, title: string, show?: boolean, children: filter }[];
 
 const type = [
     'number',
