@@ -1,109 +1,120 @@
+/**
+ * Mega Menu Styles
+ * 大型下拉選單樣式
+ * 
+ * 功能說明：
+ * - 定義下拉選單和大型選單的視覺樣式
+ * - 支援三種定位模式的自動計算
+ * - 提供平滑的顯示/隱藏過渡動畫
+ * - 使用 CSS 自定義屬性實現主題化設計
+ * - 支援響應式佈局調整
+ */
+
 [data-mega-menu] {
-    // --megaMenu-width: ;
-    // --megaMenu-height: ;
-    // --megaMenu-top: ;
-    // --megaMenu-left: ;
-    // --megaMenu-offset: ;
-    // --megaMenu-background-color: ;
-    // --megaMenu-border-width: ;
-    // --megaMenu-border-color: ;
-    // --megaMenu-border-radius: ;
-    // --megaMenu-shadow: ;
+    /* === Layout Variables - 版面配置變數 === */
+    --megaMenu-width: 100%; /* 選單寬度 */
+    --megaMenu-height: auto; /* 選單寬度 */
+    --megaMenu-body-width: auto; /* 選單 Body 寬度 */
+    --megaMenu-body-display: flex; /* 選單 Body 顯示方式 */
+    --megaMenu-body-flex-direction: row; /* 選單 Body 水平排列 */
+    --megaMenu-body-flex-wrap: nowrap; /* 選單 Body 水平排列 */
+    --megaMenu-body-justify-content: center; /* 選單 Body 水平排列 */
+    --megaMenu-body-align-items: flex-start; /* 選單 Body 垂直排列 */
+    --megaMenu-body-gap: 2rem; /* 選單 Body 間距 */
+    --megaMenu-body-padding-x: 2.5rem; /* 選單 Body 水平內距 */
+    --megaMenu-body-padding-y: 2rem; /* 選單 Body 垂直內距 */
+    --megaMenu-body-height: 12.5rem; /* 選單最小高度 */
+    --megaMenu-top: calc(var(--header-height) + 0.0625rem); /* 選單頂部位置 */
+    --megaMenu-left: 0; /* 選單左側位置 */
+    --megaMenu-offset: 0; /* 選單偏移量（用於動畫） */
 
-    // --megaMenu-link-padding-x: ;
-    // --megaMenu-link-padding-y: ;
-    // --megaMenu-link-font-size: ;
-    // --megaMenu-link-font-weight: ;
-    // --megaMenu-link-line-height: ;
-    // --megaMenu-link-letter-spacing: ;
-    // --megaMenu-link-text-align: ;
-    // --megaMenu-link-color: ;
-    // --megaMenu-link-background-color: ;
-    // --megaMenu-link-hover-background-color: ;
-    // --megaMenu-link-active-background-color: ;
-    // --megaMenu-link-border-width: ;
-    // --megaMenu-link-border-color: ;
-    // --megaMenu-hover-link-color: ;
+    /* === Visual Style Variables - 視覺樣式變數 === */
+    --megaMenu-body-background-color: var(--color-white, #fff); /* 選單背景顏色 */
+    --megaMenu-body-border-width: 0rem; /* 邊框寬度 */
+    --megaMenu-body-border-color: transparent; /* 邊框顏色 */
+    --megaMenu-body-border-radius: 1rem; /* 邊框圓角 */
+    --megaMenu-body-shadow: none; /* 陰影效果 */
 
-    @apply flex flex-col items-center justify-center absolute inset-x-0 z-11 opacity-0 invisible;
+    /* === Base Menu Styles - 選單基礎樣式 === */
+    /* 預設狀態：絕對定位、隱藏、垂直排列 */
+    @apply container flex flex-col items-center justify-start fixed inset-x-0 z-11 opacity-0 invisible;
     top: var(--megaMenu-top);
     left: var(--megaMenu-left);
-    transform: translateY(var(--megaMenu-offset));
     width: var(--megaMenu-width);
-    min-height: var(--megaMenu-height);
-    padding: 0.75rem 0;
-    background-color: var(--megaMenu-background-color);
-    box-shadow: var(--megaMenu-shadow);
-    border: var(--megaMenu-border-width) solid var(--megaMenu-border-color);
-    border-top: none;
-    border-bottom-left-radius: var(--megaMenu-border-radius);
-    border-bottom-right-radius: var(--megaMenu-border-radius);
+    height: var(--megaMenu-height);
+    transform: translateY(var(--megaMenu-offset));
     overflow: hidden;
 
-    &[data-first] {
-        --megaMenu-width: 100%;
-        &[data-mega-menu-position='center'] {
-            --megaMenu-left: 0rem;
-        }
+    .mega-menu-body {
+        width: var(--megaMenu-body-width);
+        min-height: var(--megaMenu-body-height);
+        display: var(--megaMenu-body-display);
+        flex-direction: var(--megaMenu-body-flex-direction);
+        flex-wrap: var(--megaMenu-body-flex-wrap);
+        justify-content: var(--megaMenu-body-justify-content);
+        align-items: var(--megaMenu-body-align-items);
+        gap: var(--megaMenu-body-gap);
+        padding: var(--megaMenu-body-padding-y) var(--megaMenu-body-padding-x);
+        background-color: var(--megaMenu-body-background-color);
+        box-shadow: var(--megaMenu-body-shadow);
+        border: var(--megaMenu-body-border-width) solid var(--megaMenu-body-border-color);
+        border-top: none; /* 移除上邊框，與導航項目無縫連接 */
+        border-bottom-left-radius: var(--megaMenu-body-border-radius);
+        border-bottom-right-radius: var(--megaMenu-body-border-radius);
+        pointer-events: auto;
     }
-    &[data-mega-menu-transition] {
-        transition: visibility 0.3s ease-out 0.1s, transform 0.3s ease-out, opacity 0.3s ease-out;
-    }
-    &[data-mega-menu-position='left'] {
+
+    /* === Position Variants - 定位變體 === */
+    /* 左對齊定位 */
+    &[data-mega-menu-type='dropdown'][data-mega-menu-position='left'] {
         --megaMenu-left: 0rem;
     }
-    &[data-mega-menu-position='right'] {
+
+    /* 右對齊定位 */
+    &[data-mega-menu-type='dropdown'][data-mega-menu-position='right'] {
         --megaMenu-left: calc(100% - var(--megaMenu-width));
     }
-    &[data-mega-menu-position='center'] {
+
+    /* 置中定位（複雜計算以確保完美居中） */
+    &[data-mega-menu-type='dropdown'][data-mega-menu-position='center'] {
         --megaMenu-left: calc((100% - (var(--megaMenu-width) - var(--megaMenu-border-width))) / 2 - var(--megaMenu-border-width));
-    }
-
-    a {
-        @apply w-full transition-colors duration-300 ease-out;
-        padding: var(--megaMenu-link-padding-y) var(--megaMenu-link-padding-x);
-        font-size: var(--megaMenu-link-font-size);
-        font-weight: var(--megaMenu-link-font-weight);
-        line-height: var(--megaMenu-link-line-height);
-        letter-spacing: var(--megaMenu-link-letter-spacing);
-        color: var(--megaMenu-link-color);
-        text-align: var(--megaMenu-link-text-align);
-        background-color: var(--megaMenu-link-background-color);
-        border-top: var(--megaMenu-link-border-width) solid var(--megaMenu-link-border-color);
-
-        &:last-child {
-            border-bottom: none;
-        }
-        &:hover {
-            color: var(--megaMenu-hover-link-color);
-            background-color: var(--megaMenu-link-hover-background-color);
-        }
     }
 }
 
+/**
+ * Mega Menu Trigger Styles
+ * 大型選單觸發器樣式
+ * 
+ * 控制選單的顯示/隱藏邏輯和不同類型的行為
+ */
 [data-mega-menu-trigger] {
+    /* === Hover Activation - 懸停啟動 === */
     &:hover [data-mega-menu] {
+        /* 懸停時顯示選單：完全不透明、可見、回到原位 */
         @apply opacity-100 visible translate-y-0;
 
+        /* 懸停時的過渡動畫（移除延遲） */
         &[data-mega-menu-transition] {
-            transition:
-                visibility 0s,
-                transform 0.3s ease-out,
-                opacity 0.3s ease-out;
+            transition: visibility 0s, /* 立即顯示 */ transform 0.2s ease-in-out, /* 變形過渡 */ opacity 0.2s ease-in-out; /* 透明度過渡 */
         }
     }
 
+    /* === Last Item Special Handling - 最後項目特殊處理 === */
     &:last-child {
+        /* 最後一個項目的左對齊選單改為右對齊，避免超出螢幕 */
         [data-mega-menu][data-mega-menu-position='left'] {
             --megaMenu-left: calc(100% - var(--megaMenu-width));
         }
     }
+
+    /* === Menu Type Variants - 選單類型變體 === */
+    /* Dropdown 模式：相對定位 */
     &[data-mega-menu-type='dropdown'] {
         @apply relative;
     }
+
+    /* MegaMenu 模式：選單佔滿寬度 */
     &[data-mega-menu-type='megaMenu'] {
-        [data-mega-menu] {
-            --megaMenu-width: 100%;
-        }
+        --megaMenu-width: 100%;
     }
 }

@@ -1,6 +1,31 @@
 ---
-/** Style */
+/**
+ * Mega Menu Component
+ * 大型下拉選單組件
+ *
+ * 功能說明：
+ * - 提供靈活的下拉選單容器
+ * - 支援三種定位模式：left、right、center
+ * - 可配置過渡動畫效果
+ * - 支援 dropdown 和 megaMenu 兩種顯示模式
+ * - 透過 CSS 變數實現完全自定義樣式
+ */
+
+/** Styles - 樣式檔案 */
 import './megaMenu.scss';
+
+/**
+ * Component Props Interface
+ * 組件屬性介面定義
+ *
+ * @property {string} [IDName] - 組件 ID 名稱
+ * @property {any} [className] - 自定義 CSS 類別
+ * @property {Array<any>} [data] - 選單資料陣列（保留供未來使用）
+ * @property {attribute} [attribute] - HTML 屬性物件
+ * @property {{[key: string]: string}} [style] - 內聯樣式物件
+ * @property {'left' | 'right' | 'center'} [position] - 選單定位：'left' 靠左、'right' 靠右、'center' 置中
+ * @property {boolean} [transition] - 是否啟用過渡動畫效果
+ */
 export interface Props {
     IDName?: string;
     className?: any;
@@ -8,20 +33,40 @@ export interface Props {
     attribute?: attribute;
     style?: { [key: string]: string };
     position?: 'left' | 'right' | 'center';
+    type?: 'dropdown' | 'megaMenu';
     transition?: boolean;
 }
 
-const { IDName, className, style, attribute = {}, data = [], position = 'left', transition = true } = Astro.props as Props;
+/**
+ * Props Destructuring with Default Values
+ * 屬性解構並設定預設值
+ */
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    data = [],
+    position = 'left',
+    type = 'dropdown',
+    transition = true
+} = Astro.props as Props;
 ---
 
+<!-- Mega Menu Container - 大型選單容器 -->
 <div
-    id={IDName ? `${IDName}MegaMenu` : undefined}
-    class:list={['megaMenu', className]}
+    id={IDName ? `${IDName}mega-menu` : undefined}
+    class:list={['mega-menu', className]}
     style={style}
     data-mega-menu
     data-mega-menu-position={position}
+    data-mega-menu-type={type}
+    {/* 根據 transition 屬性決定是否添加過渡動畫標記 */}
     {...transition ? { 'data-mega-menu-transition': '' } : {}}
     {...attribute}
 >
-    <slot />
+    {/* 插槽：用於插入選單內容（通常是連結列表） */}
+    <div class="mega-menu-body">
+        <slot />
+    </div>
 </div>
