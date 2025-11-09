@@ -12,12 +12,13 @@
         "check.local": "LOCAL=true astro --config build.astro.config.mjs dev",
         "gitlab": "MODE=deploy astro --config gitlab.astro.config.mjs build",
         "netlify": "MODE=deploy astro --config netlify.astro.config.mjs build",
-        "prettier": "npx prettier -w --plugin-search-dir=. ./src ./*.mjs ./*.ts",
+        "prettier": "npx prettier -w --plugin-search-dir=. ./src ./*.mjs ./*.ts ./src/**/*.astro",
         "tsc:check": "tsc --noEmit",
         "astro": "astro",
         "plop": "plop --plopfile ./PlopJS/plopfile.js"
     },
     "dependencies": {
+        "@astrojs/check": "^0.9.5",
         "@astrojs/tailwind": "^6.0.2",
         "@mapbox/mapbox-gl-language": "^1.0.1",
         "@unocss/eslint-config": "^66.5.4",
@@ -34,9 +35,11 @@
         "dotenv": "^17.2.3",
         "jest": "^30.2.0",
         "mapbox-gl": "^3.14.0",
+        "schema-dts": "^1.1.5",
         "swiper": "^12.0.3",
         "tailwindcss": "^4.1.16",
         "ts-jest": "^29.1.5",
+        "typescript": "^5.9.3",
         "unocss": "^66.5.4",
         "unocss-preset-autoprefixer": "^0.0.9"
     },
