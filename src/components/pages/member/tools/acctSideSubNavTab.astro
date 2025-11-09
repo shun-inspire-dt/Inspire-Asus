@@ -1,0 +1,26 @@
+---
+/** Helpers */
+import { ext } from '@js/helpers/env';
+/** Style */
+import './acctSideSubNavTab.scss';
+
+/** Props */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    Tag?: 'div' | 'li' | 'a' | 'button';
+    text?: string;
+    extend?: boolean;
+}
+
+const { IDName, className, style, attribute = {}, Tag = 'div', text, extend } = Astro.props as Props;
+const link = attribute.href;
+const href = link ? (link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}` : link) : '#') : undefined;
+const Attr = link ? { ...attribute, href } : attribute;
+---
+
+<Tag id={IDName} class:list={[className, 'acct-side-sub-nav-tab']} style={style} {...Attr}>
+    <slot>{text}</slot>
+</Tag>

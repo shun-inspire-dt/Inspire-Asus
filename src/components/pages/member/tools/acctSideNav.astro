@@ -1,0 +1,72 @@
+---
+/** Data */
+import { memberNavItems as data } from '@components/pages/member/tools/navs';
+/** Common Component */
+import AcctSideNavTab from './acctSideNavTab.astro';
+import AcctSideNavSubTab from './acctSideSubNavTab.astro';
+import { undefined } from 'astro:schema';
+
+/** Props */
+interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+export type { Props };
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<nav
+    id={IDName}
+    class:list={[className, ':uno-acct-side-nav: w-18.4375rem padding-tablet py-1.5rem bg-white rounded-2xl']}
+    style={style}
+    {...attribute}
+>
+    <ul class=":uno-acct-side-nav-ul: flex flex-col gap-0.75rem">
+        {
+            data.map((item) => (
+                <li>
+                    <AcctSideNavTab
+                        icon={item.icon}
+                        type="stroke"
+                        Tag={item.children && item.children.length > 0 ? 'button' : 'a'}
+                        hasSub={item.children && item.children.length > 0}
+                        attribute={{
+                            title: item.label,
+                            type: item.children && item.children.length > 0 ? 'button' : null,
+                            'data-bs-toggle': item.children && item.children.length > 0 ? 'collapse' : null,
+                            'data-bs-target': item.children && item.children.length > 0 ? `#nav-${item.id}` : null,
+                            'aria-expanded': item.children && item.children.length > 0 ? 'false' : null,
+                            'aria-controls': item.children && item.children.length > 0 ? `nav-${item.id}` : null,
+                            ...(item.href ? { href: item.href } : {}),
+                        }}
+                    >
+                        {item.label}
+                    </AcctSideNavTab>
+                    {item.children && item.children.length > 0 && (
+                        <div id={`nav-${item.id}`} class="collapse">
+                            {item.children.map((subItem) => (
+                                <AcctSideNavSubTab
+                                    Tag="a"
+                                    attribute={{
+                                        href: subItem.href,
+                                        title: subItem.label
+                                    }}
+                                >
+                                    {subItem.label}
+                                </AcctSideNavSubTab>
+                            ))}
+                        </div>
+                    )}
+                </li>
+            ))
+        }
+    </ul>
+</nav>
+
+<script>
+    import { Collapse } from 'bootstrap';
+</script>

@@ -1,0 +1,130 @@
+---
+/** Helpers */
+import { ext } from '@js/helpers/env';
+/** Common Component */
+import CollapseArrow from '@components/common/icons/arrows/collapseArrow.astro';
+/** Style */
+import './acctSideNavTab.scss';
+
+/** Icon Map */
+const iconMap = {
+    'affiliate-programs': (await import('@components/common/icons/member/svg-astro/affiliateprograms.astro')).default,
+    'bookmark': (await import('@components/common/icons/member/svg-astro/bookmark.astro')).default,
+    'company-profile': (await import('@components/common/icons/member/svg-astro/companyprofile.astro')).default,
+    'contact': (await import('@components/common/icons/member/svg-astro/contact.astro')).default,
+    'e-receipt': (await import('@components/common/icons/member/svg-astro/ereceipt.astro')).default,
+    'events': (await import('@components/common/icons/member/svg-astro/events.astro')).default,
+    'faq': (await import('@components/common/icons/member/svg-astro/faq.astro')).default,
+    'invoice': (await import('@components/common/icons/member/svg-astro/invoice.astro')).default,
+    'message': (await import('@components/common/icons/member/svg-astro/message.astro')).default,
+    'my-product': (await import('@components/common/icons/member/svg-astro/myproduct.astro')).default,
+    'my-support': (await import('@components/common/icons/member/svg-astro/mysupport.astro')).default,
+    'order-aocc': (await import('@components/common/icons/member/svg-astro/order aocc.astro')).default,
+    'overview': (await import('@components/common/icons/member/svg-astro/overview.astro')).default,
+    'referral': (await import('@components/common/icons/member/svg-astro/referral.astro')).default,
+    'register': (await import('@components/common/icons/member/svg-astro/register.astro')).default,
+    'setting': (await import('@components/common/icons/member/svg-astro/setting.astro')).default,
+    'store-credit': (await import('@components/common/icons/member/svg-astro/store credit.astro')).default,
+    'tax-cert': (await import('@components/common/icons/member/svg-astro/tax cert.astro')).default,
+    'techinbox': (await import('@components/common/icons/member/svg-astro/techinbox.astro')).default,
+    'wishlist': (await import('@components/common/icons/member/svg-astro/wishlist.astro')).default,
+} as const;
+/** Icon Hover Map */
+const iconHoverMap = {
+    'affiliate-programs-hover': (await import('@components/common/icons/member/svg-astro/hover/affiliateprograms.astro')).default,
+    'bookmark-hover': (await import('@components/common/icons/member/svg-astro/hover/bookmark.astro')).default,
+    'company-profile-hover': (await import('@components/common/icons/member/svg-astro/hover/company profile.astro')).default,
+    'contact-hover': (await import('@components/common/icons/member/svg-astro/hover/contact.astro')).default,
+    'e-receipt-hover': (await import('@components/common/icons/member/svg-astro/hover/ereceipt.astro')).default,
+    'events-hover': (await import('@components/common/icons/member/svg-astro/hover/events.astro')).default,
+    'faq-hover': (await import('@components/common/icons/member/svg-astro/hover/faq.astro')).default,
+    'invoice-hover': (await import('@components/common/icons/member/svg-astro/hover/invoice.astro')).default,
+    'message-hover': (await import('@components/common/icons/member/svg-astro/hover/message.astro')).default,
+    'my-product-hover': (await import('@components/common/icons/member/svg-astro/hover/myproduct.astro')).default,
+    'my-support-hover': (await import('@components/common/icons/member/svg-astro/hover/mysupport.astro')).default,
+    'order-aocc-hover': (await import('@components/common/icons/member/svg-astro/hover/order aocc.astro')).default,
+    'overview-hover': (await import('@components/common/icons/member/svg-astro/hover/overview.astro')).default,
+    'referral-hover': (await import('@components/common/icons/member/svg-astro/hover/referral.astro')).default,
+    'register-hover': (await import('@components/common/icons/member/svg-astro/hover/register.astro')).default,
+    'setting-hover': (await import('@components/common/icons/member/svg-astro/hover/setting.astro')).default,
+    'store-credit-hover': (await import('@components/common/icons/member/svg-astro/hover/store credit.astro')).default,
+    'tax-cert-hover': (await import('@components/common/icons/member/svg-astro/hover/tax cert.astro')).default,
+    'techinbox-hover': (await import('@components/common/icons/member/svg-astro/hover/techinbox.astro')).default,
+    'wishlist-hover': (await import('@components/common/icons/member/svg-astro/hover/wishlist.astro')).default
+};
+/** Icon Focus Map */
+const iconFocusMap = {
+    'affiliate-programs-focus': (await import('@components/common/icons/member/svg-astro/focus/affiliateprograms.astro')).default,
+    'bookmark-focus': (await import('@components/common/icons/member/svg-astro/focus/bookmark.astro')).default,
+    'company-profile-focus': (await import('@components/common/icons/member/svg-astro/focus/companyprofile.astro')).default,
+    'contact-focus': (await import('@components/common/icons/member/svg-astro/focus/contact.astro')).default,
+    'e-receipt-focus': (await import('@components/common/icons/member/svg-astro/focus/ereceipt.astro')).default,
+    'events-focus': (await import('@components/common/icons/member/svg-astro/focus/events.astro')).default,
+    'faq-focus': (await import('@components/common/icons/member/svg-astro/focus/faq.astro')).default,
+    'invoice-focus': (await import('@components/common/icons/member/svg-astro/focus/invoice.astro')).default,
+    'message-focus': (await import('@components/common/icons/member/svg-astro/focus/message.astro')).default,
+    'my-product-focus': (await import('@components/common/icons/member/svg-astro/focus/myproduct.astro')).default,
+    'my-support-focus': (await import('@components/common/icons/member/svg-astro/focus/mysupport.astro')).default,
+    'order-aocc-focus': (await import('@components/common/icons/member/svg-astro/focus/order aocc.astro')).default,
+    'overview-focus': (await import('@components/common/icons/member/svg-astro/focus/overview.astro')).default,
+    'referral-focus': (await import('@components/common/icons/member/svg-astro/focus/referral.astro')).default,
+    'register-focus': (await import('@components/common/icons/member/svg-astro/focus/register.astro')).default,
+    'setting-focus': (await import('@components/common/icons/member/svg-astro/focus/setting.astro')).default,
+    'store-credit-focus': (await import('@components/common/icons/member/svg-astro/focus/store credit.astro')).default,
+    'tax-cert-focus': (await import('@components/common/icons/member/svg-astro/focus/tax cert.astro')).default,
+    'techinbox-focus': (await import('@components/common/icons/member/svg-astro/focus/techinbox.astro')).default,
+    'wishlist-focus': (await import('@components/common/icons/member/svg-astro/focus/wishlist.astro')).default
+};
+
+/** Props */
+interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    Tag?: 'div' | 'li' | 'a' | 'button';
+    text?: string;
+    icon: keyof typeof iconMap;
+    type?: 'fill' | 'stroke';
+    hasSub?: boolean;
+    extend?: boolean;
+}
+
+export type { Props };
+export { iconMap };
+
+const { IDName, className, style, attribute = {}, Tag = 'div', text, icon = 'overview', type = 'stroke', hasSub, extend } = Astro.props as Props;
+
+const IconComponent = iconMap[icon];
+const IconHoverComponent = iconHoverMap[`${icon}-hover`];
+const IconFocusComponent = iconFocusMap[`${icon}-focus`];
+/** 處理連結 */
+const link = attribute.href;
+const href = link ? (link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}` : link) : '#') : undefined;
+const Attr = link ? { ...attribute, href } : attribute;
+---
+
+<Tag
+    id={IDName}
+    class:list={[
+        className,
+        'acct-side-nav-tab'
+    ]}
+    style={style}
+    {...Attr}
+>
+    <div class="acct-side-nav-tab__content">
+        <span class="acct-side-nav-tab__icon">
+            <IconComponent type={type} />
+            {
+                type === 'fill' ? (
+                    <IconHoverComponent type={type} />
+                ) : IconFocusComponent ? (
+                    <IconFocusComponent type={type} />
+                ) : null
+            }
+        </span>
+        <slot>{text}</slot>
+    </div>
+    {hasSub && <CollapseArrow />}
+</Tag>

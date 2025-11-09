@@ -1,0 +1,71 @@
+/**
+ * AcctSideNavTab 組件樣式
+ */
+
+.acct-side-nav-tab {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 40px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    
+    &:hover,
+    &.active {
+        background-color: var(--gray-50, #f9fafb);
+        
+        .acct-side-nav-tab__content {
+            color: var(--blue-500, #3b82f6);
+        }
+        
+        .acct-side-nav-tab__icon {
+            svg:first-child {
+                display: none;
+            }
+            
+            svg:last-child {
+                display: block;
+            }
+        }
+        
+        .collapseArrow svg path {
+            stroke: var(--blue-500, #3b82f6);
+        }
+    }
+    
+    // 當有子選單且展開時，箭頭旋轉
+    &[aria-expanded="true"],
+    &.active {
+        .collapseArrow {
+            transform: rotate(180deg);
+        }
+    }
+    
+    // 圖標 hover 狀態控制
+    .acct-side-nav-tab__icon {
+        svg:last-child {
+            display: none;
+        }
+    }
+}
+
+.acct-side-nav-tab__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray-900, #181818);
+    @apply body-00-sh;
+}
+
+.acct-side-nav-tab__icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
