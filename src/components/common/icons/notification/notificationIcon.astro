@@ -1,0 +1,74 @@
+---
+/** Style */
+import './notificationIcon.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    size?: '13' | '16' | '24';
+    status?: 'solid' | 'outline';
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, size = '16', status = 'solid', style, attribute = {} } = Astro.props as Props;
+
+/**
+ * 動態生成 CSS 類別
+ * 根據尺寸和狀態屬性組合樣式類別
+ */
+const selectClasses = ['notification-icon', { [`size_${size}`]: size }, { [`status-${status}`]: status }, className].filter(
+    Boolean
+);
+---
+
+<span id={IDName} class:list={selectClasses} style={style} {...attribute}>
+    <span>
+        {
+            size === '13' && (
+                <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1.75 3.75C1.75 3.33579 1.41421 3 1 3C0.585786 3 0.25 3.33579 0.25 3.75V7.75C0.25 8.16421 0.585786 8.5 1 8.5C1.41421 8.5 1.75 8.16421 1.75 7.75V3.75Z"
+                        fill="var(--color-white, #fff)"
+                    />
+                    <path
+                        d="M2 1C2 0.447715 1.55228 0 1 0C0.447715 0 0 0.447715 0 1C0 1.55228 0.447715 2 1 2C1.55228 2 2 1.55228 2 1Z"
+                        fill="var(--color-white, #fff)"
+                    />
+                </svg>
+            )
+        }
+        {
+            size === '16' && (
+                <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect
+                        x="1.75"
+                        y="5.5"
+                        width="1.5"
+                        height="5.5"
+                        rx="0.75"
+                        transform="rotate(-180 1.75 5.5)"
+                        fill="var(--color-white, #fff)"
+                    />
+                    <rect
+                        x="2"
+                        y="8.5"
+                        width="2"
+                        height="2"
+                        rx="1"
+                        transform="rotate(-180 2 8.5)"
+                        fill="var(--color-white, #fff)"
+                    />
+                </svg>
+            )
+        }
+        {
+            size === '24' && (
+                <svg width="2" height="14" viewBox="0 0 2 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L1 8" stroke="var(--color-white, #fff)" stroke-width="2" stroke-linecap="round" />
+                    <path d="M1 12L1 13" stroke="var(--color-white, #fff)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            )
+        }
+    </span>
+</span>
