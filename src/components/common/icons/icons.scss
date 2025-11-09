@@ -8,15 +8,15 @@
             stroke: var(--stroke, inherit);
             stroke-width: var(--strokeWidth, inherit);
             transition-property: fill, stroke;
-            transition-timing-function: cubic-bezier(0, 0, 0.2, 1);;
-            transition-duration: 300ms;
+            transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            transition-duration: 0.2s;
         }
     }
     svg {
         width: 100%;
         height: 100%;
         transition-property: width, height;
-        transition-timing-function: cubic-bezier(0, 0, 0.2, 1);;
-        transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+        transition-duration: 0.2s;
     }
 }
