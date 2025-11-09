@@ -1,0 +1,25 @@
+---
+/** Style */
+import './collapseArrow.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    Tag?: 'span' | 'button' | 'a' | 'div';
+}
+
+const { IDName, className, style, attribute = {}, Tag = 'span' } = Astro.props as Props;
+---
+
+<Tag id={IDName} class:list={[className, 'collapseArrow']} style={style} {...attribute}>
+    <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M11.5 0.5L6.00001 6.2L0.5 0.5"
+            stroke="var(--color-gray-900, #181818)"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+    </svg>
+</Tag>

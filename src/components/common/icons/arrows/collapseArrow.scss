@@ -1,0 +1,6 @@
+.collapseArrow {
+    @apply size-16px flex items-center justify-center flex-none py-5px px-2.5px transition-transform duration-200 ease-in-out;
+    svg {
+        @apply size-a;
+    }
+}

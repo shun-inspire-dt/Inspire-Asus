@@ -1,0 +1,90 @@
+.after-arrow-font {
+    font-family: 'AsusIconFont', sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    display: inline-block;
+    vertical-align: baseline;
+
+    /* 確保字體圖示正確顯示 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* 防止文字選取 */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* 字重變體 */
+.after-arrow-font--regular {
+    font-weight: 400;
+}
+
+.after-arrow-font--medium {
+    font-weight: 500;
+}
+
+.after-arrow-font--bold {
+    font-weight: 700;
+}
+
+/* 尺寸變體 */
+.after-arrow-font--12 {
+    font-size: var(--fs-12, 12px);
+}
+
+.after-arrow-font--13 {
+    font-size: var(--fs-13, 13px);
+}
+
+.after-arrow-font--14 {
+    font-size: var(--fs-14, 14px);
+}
+
+.after-arrow-font--16 {
+    font-size: var(--fs-16, 16px);
+}
+
+.after-arrow-font--18 {
+    font-size: var(--fs-18, 18px);
+}
+
+.after-arrow-font--20 {
+    font-size: var(--fs-20, 20px);
+}
+
+.after-arrow-font--24 {
+    font-size: var(--fs-24, 24px);
+}
+
+/* 方向變體（如需要特殊樣式） */
+.after-arrow-font--up {
+    /* 向上箭頭的特殊樣式 */
+}
+
+.after-arrow-font--down {
+    /* 向下箭頭的特殊樣式 */
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .after-arrow-font {
+        /* 移動端調整 */
+    }
+}
+
+/* 高對比模式支援 */
+@media (prefers-contrast: high) {
+    .after-arrow-font {
+        font-weight: bolder;
+    }
+}
+
+/* 減少動畫偏好支援 */
+@media (prefers-reduced-motion: reduce) {
+    .after-arrow-font {
+        transition: none;
+    }
+}

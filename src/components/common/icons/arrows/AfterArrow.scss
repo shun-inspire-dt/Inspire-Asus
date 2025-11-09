@@ -1,82 +1,79 @@
 .after-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease-in-out;
-  flex-shrink: 0;
-  position: relative;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out;
+    flex-shrink: 0;
 
-  svg {
-    width: auto;
-    height: auto;
-    display: block;
-  }
+    svg {
+        position: absolute;
+        top: var(--top);
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        height: auto;
+        display: block;
+    }
 
-  // 尺寸變體
-  &--12 {
-    width: var(--fs-12, 12px);
-    height: var(--fs-12, 12px);
-  }
+    // 尺寸變體
+    &--12 {
+        // 尺寸樣式
+    }
 
-  &--13 {
-    width: var(--fs-13, 13px);
-    height: var(--fs-13, 13px);
-  }
+    &--13 {
+        // 尺寸樣式
+    }
 
-  &--14 {
-    width: var(--fs-14, 14px);
-    height: var(--fs-14, 14px);
-  }
+    &--14 {
+        // 尺寸樣式
+    }
 
-  &--16 {
-    width: var(--fs-16, 16px);
-    height: var(--fs-16, 16px);
-  }
+    &--16 {
+        // 尺寸樣式
+    }
 
-  &--18 {
-    width: var(--fs-18, 18px);
-    height: var(--fs-18, 18px);
-  }
+    &--18 {
+        // 尺寸樣式
+    }
 
-  &--20 {
-    width: var(--fs-20, 20px);
-    height: var(--fs-20, 20px);
-  }
+    &--20 {
+        // 尺寸樣式
+    }
 
-  &--24 {
-    width: var(--fs-24, 24px);
-    height: var(--fs-24, 24px);
-  }
+    &--24 {
+        // 尺寸樣式
+    }
 
-  // 字重變體
-  &--regular {
-    // 預設樣式
-  }
+    // 字重變體
+    &--regular {
+        // 預設樣式
+    }
 
-  &--medium {
-    // 中等粗細
-  }
+    &--medium {
+        // 中等粗細
+    }
 
-  &--bold {
-    // 粗體
-  }
+    &--bold {
+        // 粗體
+    }
 
-  // 方向變體
-  &--up {
-    // 向上箭頭
-  }
+    // 方向變體
+    &--up {
+        // 向上箭頭
+    }
 
-  &--down {
-    // 向下箭頭
-  }
+    &--down {
+        // 向下箭頭
+    }
 
-  // 展開狀態（如果需要）
-  &[data-expanded="true"] {
-    transform: rotate(180deg);
-  }
+    // 展開狀態（如果需要）
+    &[data-expanded='true'] {
+        transform: rotate(180deg);
+    }
 
-  // 無障礙設定
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
+    // 無障礙設定
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
 }

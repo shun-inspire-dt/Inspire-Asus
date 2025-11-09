@@ -1,0 +1,64 @@
+---
+/** Style */
+import './paginationArrow.scss';
+/** Common Component */
+import paginationArrowDown_12 from './svg-astro/Pagination-Arrow-down-12.astro';
+import paginationArrowDown_16 from './svg-astro/Pagination-Arrow-down-16.astro';
+import paginationArrowDown_24 from './svg-astro/Pagination-Arrow-down-24.astro';
+import paginationArrowDown_40 from './svg-astro/Pagination-Arrow-down-40.astro';
+import paginationArrowLeft_12 from './svg-astro/Pagination-Arrow-left-12.astro';
+import paginationArrowLeft_16 from './svg-astro/Pagination-Arrow-left-16.astro';
+import paginationArrowLeft_24 from './svg-astro/Pagination-Arrow-left-24.astro';
+import paginationArrowLeft_40 from './svg-astro/Pagination-Arrow-left-40.astro';
+import paginationArrowRight_12 from './svg-astro/Pagination-Arrow-Right-12.astro';
+import paginationArrowRight_16 from './svg-astro/Pagination-Arrow-right-16.astro';
+import paginationArrowRight_24 from './svg-astro/Pagination-Arrow-right-24.astro';
+import paginationArrowRight_40 from './svg-astro/Pagination-Arrow-right-40.astro';
+import paginationArrowUp_12 from './svg-astro/Pagination-Arrow-up-12.astro';
+import paginationArrowUp_16 from './svg-astro/Pagination-Arrow-up-16.astro';
+import paginationArrowUp_24 from './svg-astro/Pagination-Arrow-up-24.astro';
+import paginationArrowUp_40 from './svg-astro/Pagination-Arrow-up-40.astro';
+
+export interface Props {
+    size?: '12' | '16' | '24' | '40';
+    direction?: 'up' | 'down';
+    class?: any;
+    [key: string]: any;
+}
+
+const { size = '12', direction = 'down', class: className = '', ...rest } = Astro.props;
+
+const classes = ['pagination-arrow', `pagination-arrow--${size}`, `pagination-arrow--${direction}`, className]
+    .filter(Boolean)
+    .join(' ');
+
+// 根據 props 選擇對應的 SVG 元件
+const getSvgComponent = () => {
+    const key = `${size}-${direction}`;
+    const componentMap = {
+        '12-up': paginationArrowUp_12,
+        '12-down': paginationArrowDown_12,
+        '12-left': paginationArrowLeft_12,
+        '12-right': paginationArrowRight_12,
+        '16-up': paginationArrowUp_16,
+        '16-down': paginationArrowDown_16,
+        '16-left': paginationArrowLeft_16,
+        '16-right': paginationArrowRight_16,
+        '24-up': paginationArrowUp_24,
+        '24-down': paginationArrowDown_24,
+        '24-left': paginationArrowLeft_24,
+        '24-right': paginationArrowRight_24,
+        '40-up': paginationArrowUp_40,
+        '40-down': paginationArrowDown_40,
+        '40-left': paginationArrowLeft_40,
+        '40-right': paginationArrowRight_40
+    };
+    return componentMap[key as keyof typeof componentMap];
+};
+
+const SvgComponent = getSvgComponent();
+---
+
+<span class={classes} data-pagination-arrow data-size={size} data-direction={direction} {...rest}>
+    <SvgComponent />
+</span>
