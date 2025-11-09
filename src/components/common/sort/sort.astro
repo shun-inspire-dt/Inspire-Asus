@@ -1,0 +1,22 @@
+---
+/** Common Component */
+import SortSelector from './sortSelector.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    total?: number;
+    data?: select;
+}
+
+const { IDName, className, style, attribute = {}, total, data } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ":uno-sort: flex items-center justify-between gap-0.5rem"]} style={style} {...attribute}>
+    <span class=":uno-sort-result: body-02-sh text-gray-900">篩選結果: {total} 結果</span>
+    <div class=":uno-sort-selector-container: lt-sm:hidden">
+        <SortSelector data={data} />
+    </div>
+</div>

@@ -1,0 +1,19 @@
+---
+/** Select */
+import Select from '@components/common/form/select/select.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data?: select;
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ':uno-sort-selector: flex flex-col sm:flex-row sm:items-center gap-0.5rem sm:gap-0.625rem body-01-sh']} style={style} {...attribute}>
+    <span class=":uno-sort-selector-label: flex-none">排序：</span>
+    <Select status="sort" size="sm" data={data} style={{ minWidth: '9.5rem' }} />
+</div>
