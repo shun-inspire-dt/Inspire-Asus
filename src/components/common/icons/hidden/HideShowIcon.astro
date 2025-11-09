@@ -3,13 +3,19 @@
 import './HideShowIcon.scss';
 
 export interface Props {
+    Tag?: 'button' | 'span';
     state?: 'show' | 'hide';
     class?: any;
+    attribute?: attribute;
+    aria?: aria;
 }
 
 const {
+    Tag = 'span',
     state = 'show',
-    class: className = ''
+    class: className = '',
+    attribute = {},
+    aria = {}
 } = Astro.props;
 
 // 根據 props 決定樣式類別
@@ -17,11 +23,11 @@ const getVariantClass = () => {
     const baseClass = 'hide-show-icon';
     const stateClass = `hide-show-icon--${state}`;
     
-    return `${baseClass} ${stateClass}`;
+    return `${baseClass} ${stateClass}`.trim();
 };
 ---
 
-<span class={`${getVariantClass()} ${className}`}>
+<Tag class={`${getVariantClass()} ${className}`} data-state={state} {...attribute} {...aria}> 
     {state === 'show' ? (
         <!-- Show State SVG -->
         <svg width="22" height="15" viewBox="0 0 22 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,4 +45,4 @@ const getVariantClass = () => {
             />
         </svg>
     )}
-</span>
+</Tag>
