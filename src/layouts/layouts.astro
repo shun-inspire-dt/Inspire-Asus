@@ -191,7 +191,7 @@ const { IDName, className, bodyClassName } = Astro.props as Props;
         <slot name="link" />
     </head>
     <body class:list={bodyClassName}>
-        <Toast />
+        <!-- <Toast /> -->
         <Header />
         <main id={IDName} class:list={[className]} data-name={IDName}>
             <slot />
