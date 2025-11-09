@@ -6,7 +6,7 @@
     --adp-z-index: 1200;
     --adp-padding: 0rem;
     --adp-grid-areas: 'nav' 'body' 'timepicker' 'buttons';
-    --adp-transition-duration: 0.3s;
+    --adp-transition-duration: 200ms;
     --adp-transition-ease: ease-out;
     --adp-transition-offset: 0.5rem;
     --adp-background-color: var(--color-gold-1);
@@ -114,18 +114,17 @@
             height: var(--datepicker-arrow-size);
         }
 
-        &[data-action="prev"] {
+        &[data-action='prev'] {
             padding-left: var(--datepicker-arrow-padding);
         }
 
-        &[data-action="next"] {
+        &[data-action='next'] {
             padding-right: var(--datepicker-arrow-padding);
         }
     }
 
     &-nav--action,
     &-nav--title {
-
         &:hover,
         &:active {
             color: var(--datepicker-hover-title-color);
@@ -181,7 +180,6 @@
         // 其他月份/年代
         &.-other-month-,
         &.-other-decade- {
-
             &.-selected-,
             &.-focus- {
                 color: var(--datepicker-hover-cells-color);
