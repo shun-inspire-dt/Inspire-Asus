@@ -1,0 +1,42 @@
+---
+/** Main Component */
+import BusinessHorizontalDark from './svg-astro/Business-Horizontal-Dark.astro'
+import BusinessHorizontalLight from './svg-astro/Business-Horizontal-Light.astro'
+import BusinessSiteNameDark from './svg-astro/Business-SiteName-Dark.astro'
+import BusinessSiteNameLight from './svg-astro/Business-SiteName-Light.astro'
+import BusinessTangramDark from './svg-astro/Business-Tangram-Dark.astro'
+import BusinessTangramLight from './svg-astro/Business-Tangram-Light.astro'
+import BusinessVerticalDark from './svg-astro/Business-Vertical-Dark.astro'
+import BusinessVerticalLight from './svg-astro/Business-Vertical-Light.astro'
+import EducationHorizontalDark from './svg-astro/Education-Horizontal-Dark.astro'
+import EducationHorizontalLight from './svg-astro/Education-Horizontal-Light.astro'
+import EducationSiteNameDark from './svg-astro/Education-SiteName-Dark.astro'
+import EducationSiteNameLight from './svg-astro/Education-SiteName-Light.astro'
+import EducationTangramDark from './svg-astro/Education-Tangram-Dark.astro'
+import EducationTangramLight from './svg-astro/Education-Tangram-Light.astro'
+import EducationVerticalDark from './svg-astro/Education-Vertical-Dark.astro'
+import EducationVerticalLight from './svg-astro/Education-Vertical-Light.astro'
+
+export interface Props {
+    type?: 'BusinessHorizontalDark' | 'BusinessHorizontalLight' | 'BusinessSiteNameDark' | 'BusinessSiteNameLight' | 'BusinessTangramDark' | 'BusinessTangramLight' | 'BusinessVerticalDark' | 'BusinessVerticalLight' | 'EducationHorizontalDark' | 'EducationHorizontalLight' | 'EducationSiteNameDark' | 'EducationSiteNameLight' | 'EducationTangramDark' | 'EducationTangramLight' | 'EducationVerticalDark' | 'EducationVerticalLight';
+}
+
+const { type } = Astro.props as Props;
+---
+
+{type === 'BusinessHorizontalDark' && <BusinessHorizontalDark />}
+{type === 'BusinessHorizontalLight' && <BusinessHorizontalLight />}
+{type === 'BusinessSiteNameDark' && <BusinessSiteNameDark />}
+{type === 'BusinessSiteNameLight' && <BusinessSiteNameLight />}
+{type === 'BusinessTangramDark' && <BusinessTangramDark />}
+{type === 'BusinessTangramLight' && <BusinessTangramLight />}
+{type === 'BusinessVerticalDark' && <BusinessVerticalDark />}
+{type === 'BusinessVerticalLight' && <BusinessVerticalLight />}
+{type === 'EducationHorizontalDark' && <EducationHorizontalDark />}
+{type === 'EducationHorizontalLight' && <EducationHorizontalLight />}
+{type === 'EducationSiteNameDark' && <EducationSiteNameDark />}
+{type === 'EducationSiteNameLight' && <EducationSiteNameLight />}
+{type === 'EducationTangramDark' && <EducationTangramDark />}
+{type === 'EducationTangramLight' && <EducationTangramLight />}
+{type === 'EducationVerticalDark' && <EducationVerticalDark />}
+{type === 'EducationVerticalLight' && <EducationVerticalLight />}
