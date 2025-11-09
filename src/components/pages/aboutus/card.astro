@@ -1,0 +1,92 @@
+---
+/** Common Component */
+/** Picture */
+import Picture, { type Props as PictureProps } from '@components/common/images/picture.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    text?: string;
+    img?: string;
+    imgBreakpoints?: PictureProps['breakpoints'];
+    width?: string | number;
+    direction?: 'row' | 'row-reverse';
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title = '使命',
+    text = '在全球化與數位化的浪潮下，企業正面臨前所未有的挑戰。供應鏈重組、跨國競爭加劇、科技快速演進，加上後疫情時代的工作型態轉變，都迫使企業必須更快適應市場的不確定性。對多數中小企業而言，技術資源與專業有限，使數位轉型成為一條艱鉅卻不得不走的道路。',
+    img, // 響應式圖片斷點設定，依照不同螢幕尺寸載入對應圖片
+    // 支援多種像素密度 (1x, 1.5x, 2x) 提供更清晰的顯示效果
+    imgBreakpoints = [
+        {
+            width: 1280, // 桌面版斷點 (1280px+)
+            img: '/assets/images/pages/aboutus-BG-1', // 向後相容的預設圖片
+            densities: {
+                '1x': '/assets/images/pages/aboutus-BG-1', // 標準解析度
+                '1.5x': '/assets/images/pages/aboutus-BG-1', // 1.5倍解析度
+                '2x': '/assets/images/pages/aboutus-BG-1' // 2倍解析度（高解析度螢幕）
+            }
+        },
+        {
+            width: 731, // 平板版斷點 (731px-1279px)
+            img: '/assets/images/pages/aboutus-BG-1',
+            densities: {
+                '1x': '/assets/images/pages/aboutus-BG-1',
+                '1.5x': '/assets/images/pages/aboutus-BG-1',
+                '2x': '/assets/images/pages/aboutus-BG-1'
+            }
+        },
+        {
+            width: 0, // 手機版斷點 (730px 以下)
+            img: '/assets/images/pages/aboutus-BG-1',
+            densities: {
+                '1x': '/assets/images/pages/aboutus-BG-1',
+                '1.5x': '/assets/images/pages/aboutus-BG-1',
+                '2x': '/assets/images/pages/aboutus-BG-1'
+            }
+        }
+    ],
+    width,
+    direction = 'row'
+} = Astro.props as Props;
+
+const cardStyle = {
+    ...(width ? { '--card-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...(direction ? { '--card-direction': direction } : {}),
+    ...style
+};
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-aboutus-card: max-w-[var(--card-width,100%)] flex flex-col lg:[flex-direction:var(--card-direction)] lg:items-center lg:gap-4rem overflow-hidden group'
+    ]}
+    style={cardStyle}
+    {...attribute}
+>
+    <div class=":uno-aboutus-card-image-container: w-full aspect-82/53 lg:flex-1 lg:max-w-1/2 rounded-xl overflow-hidden">
+        <Picture
+            img={img}
+            className=":uno-aboutus-card-image: size-full object-cover object-center"
+            breakpoints={imgBreakpoints}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            noWebp
+        />
+    </div>
+    <div class=":uno-aboutus-card-content: w-full lg:flex-1 lg:max-w-1/2 py-2rem lg:py-0 flex flex-col items-center lg:items-start gap-1rem lg:gap-2rem">
+        <strong class=":uno-aboutus-card-title: text-gray-900 font-tt-normal text-30 lg:text-36 lh-30 lg:lh-36 font-bold text-center lg:text-left">{title}</strong>
+        <p class=":uno-aboutus-card-text: text-gray-900 font-roboto text-subtitle lh-18 font-normal text-center lg:text-left">{text}</p>
+    </div>
+</div>
