@@ -3,438 +3,452 @@ import SocialIconComponent from './SocialIcon.astro';
 ---
 
 <section class="social-icon-examples">
-  <div class="container">
-    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">🌐 SocialIcon 組件範例</h1>
-    
-    <!-- 基本使用方法 -->
-    <div class="example-section">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">📋 基本使用方法</h2>
-      <div class="example-card">
-        <div class="example-title">預設使用（Google 圖示，32px）</div>
-        <div class="icon-showcase">
-          <SocialIconComponent />
-          <div class="icon-info">
-            <div class="icon-name">Google</div>
-            <div class="icon-size">32x32px (Default)</div>
-          </div>
-        </div>
-        <div class="code-block">&lt;SocialIcon /&gt;</div>
-      </div>
-    </div>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">🌐 SocialIcon 組件範例</h1>
 
-    <!-- 尺寸比較 -->
-    <div class="example-section">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">📏 尺寸比較</h2>
-      <div class="size-comparison">
-        <div class="size-item">
-          <SocialIconComponent type="icon_google" size="sm" />
-          <span class="size-label">Small (20px)</span>
-        </div>
-        <div class="size-item">
-          <SocialIconComponent type="icon_google" size="md" />
-          <span class="size-label">Medium (24px)</span>
-        </div>
-        <div class="size-item">
-          <SocialIconComponent type="icon_google" size="lg" />
-          <span class="size-label">Default (32px)</span>
-        </div>
-      </div>
-      <div class="code-block">
-&lt;SocialIcon type="icon_google" size="sm" /&gt;
-&lt;SocialIcon type="icon_google" size="md" /&gt;
-&lt;SocialIcon type="icon_google" size="lg" /&gt;
-      </div>
-    </div>
-
-    <!-- 所有平台展示 -->
-    <div class="example-section">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">🌍 所有平台展示</h2>
-      <div class="platform-grid">
-        <div class="platform-card">
-          <div class="platform-name">Microsoft</div>
-          <div class="platform-icons">
-            <SocialIconComponent type="icon_microsoft" size="sm" />
-            <SocialIconComponent type="icon_microsoft" size="md" />
-            <SocialIconComponent type="icon_microsoft" size="lg" />
-          </div>
-          <div class="code-block">&lt;SocialIcon type="icon_microsoft" size="md" /&gt;</div>
-        </div>
-        
-        <div class="platform-card">
-          <div class="platform-name">Line</div>
-          <div class="platform-icons">
-            <SocialIconComponent type="icon_line" size="sm" />
-            <SocialIconComponent type="icon_line" size="md" />
-            <SocialIconComponent type="icon_line" size="lg" />
-          </div>
-          <div class="code-block">&lt;SocialIcon type="icon_line" size="md" /&gt;</div>
-        </div>
-        
-        <div class="platform-card">
-          <div class="platform-name">Google</div>
-          <div class="platform-icons">
-            <SocialIconComponent type="icon_google" size="sm" />
-            <SocialIconComponent type="icon_google" size="md" />
-            <SocialIconComponent type="icon_google" size="lg" />
-          </div>
-          <div class="code-block">&lt;SocialIcon type="icon_google" size="md" /&gt;</div>
-        </div>
-        
-        <div class="platform-card">
-          <div class="platform-name">Facebook</div>
-          <div class="platform-icons">
-            <SocialIconComponent type="icon_fb" size="sm" />
-            <SocialIconComponent type="icon_fb" size="md" />
-            <SocialIconComponent type="icon_fb" size="lg" />
-          </div>
-          <div class="code-block">&lt;SocialIcon type="icon_fb" size="md" /&gt;</div>
-        </div>
-        
-        <div class="platform-card">
-          <div class="platform-name">Apple</div>
-          <div class="platform-icons">
-            <SocialIconComponent type="icon_apple" size="sm" />
-            <SocialIconComponent type="icon_apple" size="md" />
-            <SocialIconComponent type="icon_apple" size="lg" />
-          </div>
-          <div class="code-block">&lt;SocialIcon type="icon_apple" size="md" /&gt;</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 進階使用範例 -->
-    <div class="example-section">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">🎨 進階使用範例</h2>
-      <div class="example-grid">
-        <div class="example-card">
-          <div class="example-title">自訂 CSS 類別</div>
-          <div class="icon-showcase">
-            <SocialIconComponent type="icon_apple" size="md" class="custom-apple-icon" />
-            <div class="icon-info">
-              <div class="icon-name">Apple with Custom Class</div>
-              <div class="icon-size">24x24px + Custom Styling</div>
+        <!-- 基本使用方法 -->
+        <div class="example-section">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">📋 基本使用方法</h2>
+            <div class="example-card">
+                <div class="example-title">預設使用（Google 圖示，32px）</div>
+                <div class="icon-showcase">
+                    <SocialIconComponent />
+                    <div class="icon-info">
+                        <div class="icon-name">Google</div>
+                        <div class="icon-size">32x32px (Default)</div>
+                    </div>
+                </div>
+                <div class="code-block">&lt;SocialIcon /&gt;</div>
             </div>
-          </div>
-          <div class="code-block">&lt;SocialIcon type="icon_apple" size="md" class="custom-apple-icon" /&gt;</div>
         </div>
-        
-        <div class="example-card">
-          <div class="example-title">按鈕組合</div>
-          <div class="icon-showcase" style="justify-content: center;">
-            <SocialIconComponent type="icon_google" size="md" />
-            <SocialIconComponent type="icon_fb" size="md" />
-            <SocialIconComponent type="icon_apple" size="md" />
-            <SocialIconComponent type="icon_line" size="md" />
-            <SocialIconComponent type="icon_microsoft" size="md" />
-          </div>
-          <div class="code-block">
-&lt;SocialIcon type="icon_google" size="md" /&gt;
-&lt;SocialIcon type="icon_fb" size="md" /&gt;
-&lt;SocialIcon type="icon_apple" size="md" /&gt;
-&lt;SocialIcon type="icon_line" size="md" /&gt;
-&lt;SocialIcon type="icon_microsoft" size="md" /&gt;
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- 實際應用場景 -->
-    <div class="example-section">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">🚀 實際應用場景</h2>
-      
-      <!-- 社群登入按鈕 -->
-      <div class="application-example">
-        <h3 class="text-lg font-medium mb-3 text-gray-600">社群登入按鈕</h3>
-        <div class="login-buttons">
-          <button class="social-btn google-btn">
-            <SocialIconComponent type="icon_google" size="md" />
-            <span>使用 Google 登入</span>
-          </button>
-          
-          <button class="social-btn facebook-btn">
-            <SocialIconComponent type="icon_fb" size="md" />
-            <span>使用 Facebook 登入</span>
-          </button>
-          
-          <button class="social-btn apple-btn">
-            <SocialIconComponent type="icon_apple" size="md" />
-            <span>使用 Apple 登入</span>
-          </button>
+        <!-- 尺寸比較 -->
+        <div class="example-section">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">📏 尺寸比較</h2>
+            <div class="size-comparison">
+                <div class="size-item">
+                    <SocialIconComponent type="icon_google" size="sm" />
+                    <span class="size-label">Small (20px)</span>
+                </div>
+                <div class="size-item">
+                    <SocialIconComponent type="icon_google" size="md" />
+                    <span class="size-label">Medium (24px)</span>
+                </div>
+                <div class="size-item">
+                    <SocialIconComponent type="icon_google" size="lg" />
+                    <span class="size-label">Default (32px)</span>
+                </div>
+            </div>
+            <div class="code-block">
+                &lt;SocialIcon type="icon_google" size="sm" /&gt; &lt;SocialIcon type="icon_google" size="md" /&gt; &lt;SocialIcon
+                type="icon_google" size="lg" /&gt;
+            </div>
         </div>
-      </div>
 
-      <!-- 社群分享按鈕 -->
-      <div class="application-example">
-        <h3 class="text-lg font-medium mb-3 text-gray-600">社群分享按鈕</h3>
-        <div class="share-buttons">
-          <a href="#" class="share-btn" title="分享到 Facebook">
-            <SocialIconComponent type="icon_fb" size="sm" />
-          </a>
-          <a href="#" class="share-btn" title="分享到 Line">
-            <SocialIconComponent type="icon_line" size="sm" />
-          </a>
-          <a href="#" class="share-btn" title="分享到 Google">
-            <SocialIconComponent type="icon_google" size="sm" />
-          </a>
+        <!-- 所有平台展示 -->
+        <div class="example-section">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">🌍 所有平台展示</h2>
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-name">Microsoft</div>
+                    <div class="platform-icons">
+                        <SocialIconComponent type="icon_microsoft" size="sm" />
+                        <SocialIconComponent type="icon_microsoft" size="md" />
+                        <SocialIconComponent type="icon_microsoft" size="lg" />
+                    </div>
+                    <div class="code-block">&lt;SocialIcon type="icon_microsoft" size="md" /&gt;</div>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-name">Line</div>
+                    <div class="platform-icons">
+                        <SocialIconComponent type="icon_line" size="sm" />
+                        <SocialIconComponent type="icon_line" size="md" />
+                        <SocialIconComponent type="icon_line" size="lg" />
+                    </div>
+                    <div class="code-block">&lt;SocialIcon type="icon_line" size="md" /&gt;</div>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-name">Google</div>
+                    <div class="platform-icons">
+                        <SocialIconComponent type="icon_google" size="sm" />
+                        <SocialIconComponent type="icon_google" size="md" />
+                        <SocialIconComponent type="icon_google" size="lg" />
+                    </div>
+                    <div class="code-block">&lt;SocialIcon type="icon_google" size="md" /&gt;</div>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-name">Facebook</div>
+                    <div class="platform-icons">
+                        <SocialIconComponent type="icon_fb" size="sm" />
+                        <SocialIconComponent type="icon_fb" size="md" />
+                        <SocialIconComponent type="icon_fb" size="lg" />
+                    </div>
+                    <div class="code-block">&lt;SocialIcon type="icon_fb" size="md" /&gt;</div>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-name">Apple</div>
+                    <div class="platform-icons">
+                        <SocialIconComponent type="icon_apple" size="sm" />
+                        <SocialIconComponent type="icon_apple" size="md" />
+                        <SocialIconComponent type="icon_apple" size="lg" />
+                    </div>
+                    <div class="code-block">&lt;SocialIcon type="icon_apple" size="md" /&gt;</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- API 參考 -->
-    <div class="example-section">
-      <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">📚 API 參考</h2>
-      <div class="api-table">
-        <table class="w-full border-collapse">
-          <thead>
-            <tr class="bg-gray-50">
-              <th class="border border-gray-300 px-4 py-2 text-left">參數</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">類型</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">預設值</th>
-              <th class="border border-gray-300 px-4 py-2 text-left">說明</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">type</code></td>
-              <td class="border border-gray-300 px-4 py-2">string</td>
-              <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">'icon_google'</code></td>
-              <td class="border border-gray-300 px-4 py-2">社群平台類型</td>
-            </tr>
-            <tr class="bg-gray-50">
-              <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">size</code></td>
-              <td class="border border-gray-300 px-4 py-2">string</td>
-              <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">'Default'</code></td>
-              <td class="border border-gray-300 px-4 py-2">圖示尺寸</td>
-            </tr>
-            <tr>
-              <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">class</code></td>
-              <td class="border border-gray-300 px-4 py-2">string</td>
-              <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">''</code></td>
-              <td class="border border-gray-300 px-4 py-2">自訂 CSS 類別</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <!-- 進階使用範例 -->
+        <div class="example-section">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">🎨 進階使用範例</h2>
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-title">自訂 CSS 類別</div>
+                    <div class="icon-showcase">
+                        <SocialIconComponent type="icon_apple" size="md" class="custom-apple-icon" />
+                        <div class="icon-info">
+                            <div class="icon-name">Apple with Custom Class</div>
+                            <div class="icon-size">24x24px + Custom Styling</div>
+                        </div>
+                    </div>
+                    <div class="code-block">&lt;SocialIcon type="icon_apple" size="md" class="custom-apple-icon" /&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">按鈕組合</div>
+                    <div class="icon-showcase" style="justify-content: center;">
+                        <SocialIconComponent type="icon_google" size="md" />
+                        <SocialIconComponent type="icon_fb" size="md" />
+                        <SocialIconComponent type="icon_apple" size="md" />
+                        <SocialIconComponent type="icon_line" size="md" />
+                        <SocialIconComponent type="icon_microsoft" size="md" />
+                    </div>
+                    <div class="code-block">
+                        &lt;SocialIcon type="icon_google" size="md" /&gt; &lt;SocialIcon type="icon_fb" size="md" /&gt;
+                        &lt;SocialIcon type="icon_apple" size="md" /&gt; &lt;SocialIcon type="icon_line" size="md" /&gt;
+                        &lt;SocialIcon type="icon_microsoft" size="md" /&gt;
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 實際應用場景 -->
+        <div class="example-section">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">🚀 實際應用場景</h2>
+
+            <!-- 社群登入按鈕 -->
+            <div class="application-example">
+                <h3 class="text-lg font-medium mb-3 text-gray-600">社群登入按鈕</h3>
+                <div class="login-buttons">
+                    <button class="social-btn google-btn">
+                        <SocialIconComponent type="icon_google" size="md" />
+                        <span>使用 Google 登入</span>
+                    </button>
+
+                    <button class="social-btn facebook-btn">
+                        <SocialIconComponent type="icon_fb" size="md" />
+                        <span>使用 Facebook 登入</span>
+                    </button>
+
+                    <button class="social-btn apple-btn">
+                        <SocialIconComponent type="icon_apple" size="md" />
+                        <span>使用 Apple 登入</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 社群分享按鈕 -->
+            <div class="application-example">
+                <h3 class="text-lg font-medium mb-3 text-gray-600">社群分享按鈕</h3>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn" title="分享到 Facebook">
+                        <SocialIconComponent type="icon_fb" size="sm" />
+                    </a>
+                    <a href="#" class="share-btn" title="分享到 Line">
+                        <SocialIconComponent type="icon_line" size="sm" />
+                    </a>
+                    <a href="#" class="share-btn" title="分享到 Google">
+                        <SocialIconComponent type="icon_google" size="sm" />
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- API 參考 -->
+        <div class="example-section">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700 border-l-4 border-blue-500 pl-4">📚 API 參考</h2>
+            <div class="api-table">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="border border-gray-300 px-4 py-2 text-left">參數</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">類型</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">預設值</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2"
+                                ><code class="bg-gray-100 px-2 py-1 rounded">type</code></td
+                            >
+                            <td class="border border-gray-300 px-4 py-2">string</td>
+                            <td class="border border-gray-300 px-4 py-2"
+                                ><code class="bg-gray-100 px-2 py-1 rounded">'icon_google'</code></td
+                            >
+                            <td class="border border-gray-300 px-4 py-2">社群平台類型</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2"
+                                ><code class="bg-gray-100 px-2 py-1 rounded">size</code></td
+                            >
+                            <td class="border border-gray-300 px-4 py-2">string</td>
+                            <td class="border border-gray-300 px-4 py-2"
+                                ><code class="bg-gray-100 px-2 py-1 rounded">'Default'</code></td
+                            >
+                            <td class="border border-gray-300 px-4 py-2">圖示尺寸</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2"
+                                ><code class="bg-gray-100 px-2 py-1 rounded">class</code></td
+                            >
+                            <td class="border border-gray-300 px-4 py-2">string</td>
+                            <td class="border border-gray-300 px-4 py-2"><code class="bg-gray-100 px-2 py-1 rounded">''</code></td
+                            >
+                            <td class="border border-gray-300 px-4 py-2">自訂 CSS 類別</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <style>
-  .social-icon-examples {
-    padding: 2rem 0;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-
-  .example-section {
-    margin: 3rem 0;
-  }
-
-  .example-card {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    margin: 1rem 0;
-  }
-
-  .example-title {
-    font-weight: bold;
-    color: #495057;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-  }
-
-  .icon-showcase {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 1rem 0;
-    padding: 1rem;
-    background: white;
-    border-radius: 6px;
-    border: 1px solid #dee2e6;
-  }
-
-  .icon-info {
-    flex: 1;
-  }
-
-  .icon-name {
-    font-weight: 600;
-    color: #212529;
-  }
-
-  .icon-size {
-    font-size: 0.9rem;
-    color: #6c757d;
-  }
-
-  .code-block {
-    background: #f1f3f4;
-    padding: 1rem;
-    border-radius: 6px;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: 0.9rem;
-    overflow-x: auto;
-    margin: 1rem 0;
-    border-left: 4px solid #007acc;
-    white-space: pre;
-  }
-
-  .size-comparison {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-    margin: 1rem 0;
-    justify-content: center;
-  }
-
-  .size-item {
-    text-align: center;
-  }
-
-  .size-label {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #6c757d;
-    font-weight: 500;
-  }
-
-  .platform-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin: 2rem 0;
-  }
-
-  .platform-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-    text-align: center;
-  }
-
-  .platform-name {
-    font-weight: bold;
-    margin: 0 0 1rem 0;
-    color: #495057;
-    font-size: 1.1rem;
-  }
-
-  .platform-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin: 1rem 0;
-  }
-
-  .example-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
-  }
-
-  .application-example {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-  }
-
-  /* 社群登入按鈕樣式 */
-  .login-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    max-width: 300px;
-  }
-
-  .social-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-  }
-
-  .social-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .google-btn:hover { border-color: #4285f4; }
-  .facebook-btn:hover { border-color: #1877f2; }
-  .apple-btn:hover { border-color: #000; }
-
-  /* 社群分享按鈕樣式 */
-  .share-buttons {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .share-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #f5f5f5;
-    transition: all 0.3s ease;
-    text-decoration: none;
-  }
-
-  .share-btn:hover {
-    background: #e0e0e0;
-    transform: scale(1.1);
-  }
-
-  /* 自訂效果 */
-  .custom-apple-icon {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    transition: transform 0.3s ease;
-  }
-
-  .custom-apple-icon:hover {
-    transform: scale(1.1) rotate(5deg);
-  }
-
-  /* 響應式設計 */
-  @media (max-width: 768px) {
-    .size-comparison {
-      flex-direction: column;
-      gap: 1rem;
+    .social-icon-examples {
+        padding: 2rem 0;
     }
 
-    .login-buttons {
-      max-width: 100%;
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .example-section {
+        margin: 3rem 0;
+    }
+
+    .example-card {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        margin: 1rem 0;
+    }
+
+    .example-title {
+        font-weight: bold;
+        color: #495057;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .icon-showcase {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        padding: 1rem;
+        background: white;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+
+    .icon-info {
+        flex: 1;
+    }
+
+    .icon-name {
+        font-weight: 600;
+        color: #212529;
+    }
+
+    .icon-size {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .code-block {
+        background: #f1f3f4;
+        padding: 1rem;
+        border-radius: 6px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 0.9rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+        border-left: 4px solid #007acc;
+        white-space: pre;
+    }
+
+    .size-comparison {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        margin: 1rem 0;
+        justify-content: center;
+    }
+
+    .size-item {
+        text-align: center;
+    }
+
+    .size-label {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 500;
     }
 
     .platform-grid {
-      grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .platform-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        text-align: center;
+    }
+
+    .platform-name {
+        font-weight: bold;
+        margin: 0 0 1rem 0;
+        color: #495057;
+        font-size: 1.1rem;
+    }
+
+    .platform-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0;
     }
 
     .example-grid {
-      grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
     }
-  }
+
+    .application-example {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
+
+    /* 社群登入按鈕樣式 */
+    .login-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 300px;
+    }
+
+    .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+    }
+
+    .social-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .google-btn:hover {
+        border-color: #4285f4;
+    }
+    .facebook-btn:hover {
+        border-color: #1877f2;
+    }
+    .apple-btn:hover {
+        border-color: #000;
+    }
+
+    /* 社群分享按鈕樣式 */
+    .share-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .share-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .share-btn:hover {
+        background: #e0e0e0;
+        transform: scale(1.1);
+    }
+
+    /* 自訂效果 */
+    .custom-apple-icon {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        transition: transform 0.2s ease;
+    }
+
+    .custom-apple-icon:hover {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+        .size-comparison {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .login-buttons {
+            max-width: 100%;
+        }
+
+        .platform-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .example-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>

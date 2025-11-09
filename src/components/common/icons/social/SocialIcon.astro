@@ -1,153 +1,68 @@
 ---
 /** Style */
-import { undefined } from 'astro:schema';
 import './SocialIcon.scss';
 
 export interface Props {
+    class?: any;
+    Tag?: 'span' | 'a' | 'button' | 'div';
     type?: 'icon_microsoft' | 'icon_line' | 'icon_google' | 'icon_fb' | 'icon_apple';
     size?: 'lg' | 'md' | 'sm';
     width?: string | number;
-    class?: any;
     [key: string]: any;
 }
 
-const { width ,type = 'icon_google', size = 'lg', class: className = '', ...rest } = Astro.props;
+const { width, type = 'icon_google', size = 'lg', class: className = '', Tag = 'span', ...rest } = Astro.props;
 
-// 根據 props 獲取對應的 SVG 路徑和尺寸
-const getSvgConfig = (type: string, size: string) => {
-    const configMap: Record<
-        string,
-        {
-            svgPath: string;
-            width: number;
-            height: number;
-            displayName: string;
-        }
-    > = {
-        'icon_microsoft-lg': {
-            svgPath: '/assets/images/icons/social/type_icon_microsoft-size_lg.svg',
-            width: 32,
-            height: 32,
-            displayName: 'Microsoft'
-        },
-        'icon_microsoft-md': {
-            svgPath: '/assets/images/icons/social/type_icon_microsoft-size_md.svg',
-            width: 24,
-            height: 24,
-            displayName: 'Microsoft'
-        },
-        'icon_microsoft-sm': {
-            svgPath: '/assets/images/icons/social/type_icon_microsoft-size_sm.svg',
-            width: 20,
-            height: 20,
-            displayName: 'Microsoft'
-        },
-        'icon_line-lg': {
-            svgPath: '/assets/images/icons/social/type_icon_line-size_lg.svg',
-            width: 32,
-            height: 32,
-            displayName: 'Line'
-        },
-        'icon_line-md': {
-            svgPath: '/assets/images/icons/social/type_icon_line-size_md.svg',
-            width: 24,
-            height: 24,
-            displayName: 'Line'
-        },
-        'icon_line-sm': {
-            svgPath: '/assets/images/icons/social/type_icon_line-size_sm.svg',
-            width: 20,
-            height: 20,
-            displayName: 'Line'
-        },
-        'icon_google-lg': {
-            svgPath: '/assets/images/icons/social/type_icon_google-size_lg.svg',
-            width: 32,
-            height: 32,
-            displayName: 'Google'
-        },
-        'icon_google-md': {
-            svgPath: '/assets/images/icons/social/type_icon_google-size_md.svg',
-            width: 24,
-            height: 24,
-            displayName: 'Google'
-        },
-        'icon_google-sm': {
-            svgPath: '/assets/images/icons/social/type_icon_google-size_sm.svg',
-            width: 20,
-            height: 20,
-            displayName: 'Google'
-        },
-        'icon_fb-lg': {
-            svgPath: '/assets/images/icons/social/type_icon_fb-size_lg.svg',
-            width: 32,
-            height: 32,
-            displayName: 'Facebook'
-        },
-        'icon_fb-md': {
-            svgPath: '/assets/images/icons/social/type_icon_fb-size_md.svg',
-            width: 24,
-            height: 24,
-            displayName: 'Facebook'
-        },
-        'icon_fb-sm': {
-            svgPath: '/assets/images/icons/social/type_icon_fb-size_sm.svg',
-            width: 20,
-            height: 20,
-            displayName: 'Facebook'
-        },
-        'icon_apple-lg': {
-            svgPath: '/assets/images/icons/social/type_icon_apple-size_lg.svg',
-            width: 32,
-            height: 32,
-            displayName: 'Apple'
-        },
-        'icon_apple-md': {
-            svgPath: '/assets/images/icons/social/type_icon_apple-size_md.svg',
-            width: 24,
-            height: 24,
-            displayName: 'Apple'
-        },
-        'icon_apple-sm': {
-            svgPath: '/assets/images/icons/social/type_icon_apple-size_sm.svg',
-            width: 20,
-            height: 20,
-            displayName: 'Apple'
-        }
+// 動態引入對應的 SVG 組件
+const iconMap = {
+    'icon_microsoft-lg': (await import('./svg-astro/type_icon_microsoft-size_lg.astro')).default,
+    'icon_microsoft-md': (await import('./svg-astro/type_icon_microsoft-size_md.astro')).default,
+    'icon_microsoft-sm': (await import('./svg-astro/type_icon_microsoft-size_sm.astro')).default,
+    'icon_line-lg': (await import('./svg-astro/type_icon_line-size_lg.astro')).default,
+    'icon_line-md': (await import('./svg-astro/type_icon_line-size_md.astro')).default,
+    'icon_line-sm': (await import('./svg-astro/type_icon_line-size_sm.astro')).default,
+    'icon_google-lg': (await import('./svg-astro/type_icon_google-size_lg.astro')).default,
+    'icon_google-md': (await import('./svg-astro/type_icon_google-size_md.astro')).default,
+    'icon_google-sm': (await import('./svg-astro/type_icon_google-size_sm.astro')).default,
+    'icon_fb-lg': (await import('./svg-astro/type_icon_fb-size_lg.astro')).default,
+    'icon_fb-md': (await import('./svg-astro/type_icon_fb-size_md.astro')).default,
+    'icon_fb-sm': (await import('./svg-astro/type_icon_fb-size_sm.astro')).default,
+    'icon_apple-lg': (await import('./svg-astro/type_icon_apple-size_lg.astro')).default,
+    'icon_apple-md': (await import('./svg-astro/type_icon_apple-size_md.astro')).default,
+    'icon_apple-sm': (await import('./svg-astro/type_icon_apple-size_sm.astro')).default
+} as const;
+
+// 獲取配置信息
+const getIconConfig = (type: string, size: string) => {
+    const configMap: Record<string, { displayName: string; width: number; height: number }> = {
+        'icon_microsoft-lg': { displayName: 'Microsoft', width: 32, height: 32 },
+        'icon_microsoft-md': { displayName: 'Microsoft', width: 24, height: 24 },
+        'icon_microsoft-sm': { displayName: 'Microsoft', width: 20, height: 20 },
+        'icon_line-lg': { displayName: 'Line', width: 32, height: 32 },
+        'icon_line-md': { displayName: 'Line', width: 24, height: 24 },
+        'icon_line-sm': { displayName: 'Line', width: 20, height: 20 },
+        'icon_google-lg': { displayName: 'Google', width: 32, height: 32 },
+        'icon_google-md': { displayName: 'Google', width: 24, height: 24 },
+        'icon_google-sm': { displayName: 'Google', width: 20, height: 20 },
+        'icon_fb-lg': { displayName: 'Facebook', width: 32, height: 32 },
+        'icon_fb-md': { displayName: 'Facebook', width: 24, height: 24 },
+        'icon_fb-sm': { displayName: 'Facebook', width: 20, height: 20 },
+        'icon_apple-lg': { displayName: 'Apple', width: 32, height: 32 },
+        'icon_apple-md': { displayName: 'Apple', width: 24, height: 24 },
+        'icon_apple-sm': { displayName: 'Apple', width: 20, height: 20 }
     };
 
     const key = `${type}-${size}`;
     return configMap[key] || configMap['icon_google-lg'];
 };
 
-const svgConfig = getSvgConfig(type, size);
+const iconKey = `${type}-${size}` as keyof typeof iconMap;
+const IconComponent = iconMap[iconKey] || iconMap['icon_google-lg'];
+const iconConfig = getIconConfig(type, size);
 
 const classes = ['social-icon', `social-icon--${type.replace('icon_', '')}`, `social-icon--${size.toLowerCase()}`, className]
     .filter(Boolean)
     .join(' ');
-
-// 獲取對應的 CSS 變數尺寸
-const getSizeVariable = (size: string): string => {
-    const sizeMap = {
-        lg: 'var(--social-icon-size-lg, 32px)',
-        md: 'var(--social-icon-size-md, 24px)',
-        sm: 'var(--social-icon-size-sm, 20px)'
-    };
-    return sizeMap[size as keyof typeof sizeMap] || sizeMap['lg'];
-};
-
-const sizeVar = getSizeVariable(size);
-
-// 動態載入 SVG 內容
-const svgResponse = await fetch(new URL(svgConfig.svgPath, Astro.site || 'http://localhost:4321'));
-const svgContent = await svgResponse.text();
-
-// 清理 SVG 內容，移除 width 和 height 屬性以便 CSS 控制
-const cleanedSvgContent = svgContent
-    .replace(/width="[^"]*"/g, '')
-    .replace(/height="[^"]*"/g, '')
-    .replace(/<svg/, `<svg width="${svgConfig.width}" height="${svgConfig.height}"`);
-
 
 // 根據 props.width 設定對應的 CSS 變數，用於控制圖示尺寸
 const widthVar = !isNaN(width as number) ? `${parseInt(width as string) / 16}rem` : undefined;
@@ -159,15 +74,16 @@ const style = {
 };
 ---
 
-<span
+<Tag
     class={classes}
     data-social-icon
     data-type={type}
     data-size={size}
-    title={`${svgConfig.displayName} 圖示`}
+    title={`${iconConfig.displayName} 圖示`}
     role="img"
-    aria-label={`${svgConfig.displayName} 社群媒體圖示`}
+    aria-label={`${iconConfig.displayName} 社群媒體圖示`}
     style={style}
     {...rest}
-    set:html={cleanedSvgContent}
-/>
+>
+    <IconComponent />
+</Tag>
