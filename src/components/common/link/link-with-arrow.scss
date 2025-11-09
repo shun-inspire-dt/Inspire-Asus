@@ -1,0 +1,310 @@
+/* ==================== Link with Arrow Component ==================== */
+
+.link-with-arrow {
+    /* 基礎樣式 */
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    /* 預設顏色 */
+    --link-color: var(--color-blue-500, #006ce1);
+    --link-hover-color: var(--color-blue-500, #006ce1);
+    --link-pressed-color: var(--color-blue-600, #0051a8);
+    --link-disabled-color: var(--color-gray-300, #b3b3b3);
+
+    /* 預設間距 */
+    --link-gap: 0.3em;
+
+    /* 文字樣式 */
+    .link-text {
+        color: var(--link-color);
+        white-space: nowrap;
+
+        /* 字體樣式會由尺寸類別控制 */
+    }
+
+    /* 箭頭圖標 */
+    .link-arrow {
+        display: inline-flex;
+        align-items: center;
+        margin-left: var(--link-gap);
+        flex-shrink: 0;
+        position: relative;
+
+        /* SVG 箭頭樣式 */
+        &.svg-arrow svg {
+            display: inline-flex;
+            fill: currentColor;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            color: var(--link-color);
+        }
+
+        /* Web Font 箭頭樣式 */
+        &.web-font-arrow {
+            &::after {
+                content: '→';
+                color: var(--link-color);
+                font-size: inherit;
+                line-height: inherit;
+            }
+        }
+    }
+
+    /* === 狀態樣式 === */
+
+    /* 懸停狀態 */
+    &:hover:not(.disabled),
+    &.hover {
+        .link-text {
+            color: var(--link-hover-color);
+            text-decoration: underline;
+            text-underline-offset: var(--underline-offset);
+        }
+
+        .link-arrow.svg-arrow svg {
+            color: var(--link-hover-color);
+        }
+
+        .link-arrow.web-font-arrow::after {
+            color: var(--link-hover-color);
+        }
+    }
+
+    /* 按壓狀態 */
+    &:active:not(.disabled),
+    &.pressed {
+        .link-text {
+            color: var(--link-pressed-color);
+            text-decoration: underline;
+            text-underline-offset: var(--underline-offset);
+        }
+
+        .link-arrow.svg-arrow svg {
+            color: var(--link-pressed-color);
+        }
+
+        .link-arrow.web-font-arrow::after {
+            color: var(--link-pressed-color);
+        }
+    }
+
+    /* 禁用狀態 */
+    &.disabled,
+    &:disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+
+        .link-text {
+            color: var(--link-disabled-color);
+        }
+
+        .link-arrow.svg-arrow svg {
+            color: var(--link-disabled-color);
+        }
+
+        .link-arrow.web-font-arrow::after {
+            color: var(--link-disabled-color);
+        }
+    }
+
+    /* === 尺寸變體 === */
+
+    /* 12px 尺寸 */
+    &.size_12 {
+        --link-gap: 3.6px;
+        --arrow-width: 4px;
+        --arrow-bottom: 3.75px;
+
+        .link-text {
+            font-size: var(--fs-12, 12px);
+            line-height: var(--line-height-12, 16px);
+            letter-spacing: 0.32px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-12, 16px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* 13px 尺寸 */
+    &.size_13 {
+        --link-gap: 3.9px;
+        --arrow-width: 5px;
+        --arrow-bottom: 3.75px;
+
+        .link-text {
+            font-size: var(--fs-13, 13px);
+            line-height: var(--line-height-13, 18px);
+            letter-spacing: 0px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-13, 18px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* 14px 尺寸 */
+    &.size_14 {
+        --link-gap: 4.2px;
+        --arrow-width: 5px;
+        --arrow-bottom: 3.91px;
+
+        .link-text {
+            font-size: var(--fs-14, 14px);
+            line-height: var(--line-height-14-sh, 18px);
+            letter-spacing: 0px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-14-sh, 18px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* 16px 尺寸 */
+    &.size_16 {
+        --link-gap: 4.8px;
+        --arrow-width: 6px;
+        --arrow-bottom: 5.9px;
+
+        .link-text {
+            font-size: var(--fs-16, 16px);
+            line-height: var(--line-height-16-sh, 22px);
+            letter-spacing: 0px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-16-sh, 22px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* 18px 尺寸 */
+    &.size_18 {
+        --link-gap: 5.4px;
+        --arrow-width: 6px;
+        --arrow-bottom: 5.89px;
+
+        .link-text {
+            font-size: var(--fs-18, 18px);
+            line-height: var(--line-height-18-sh, 24px);
+            letter-spacing: 0px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-18-sh, 24px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* 20px 尺寸 */
+    &.size_20 {
+        --link-gap: 6px;
+        --arrow-width: 7px;
+        --arrow-bottom: 5.87px;
+
+        .link-text {
+            font-size: var(--fs-20, 20px);
+            line-height: var(--line-height-20-sh, 26px);
+            letter-spacing: 0px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-20-sh, 26px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* 24px 尺寸 */
+    &.size_24 {
+        --link-gap: 7.2px;
+        --arrow-width: 8px;
+        --arrow-bottom: 7.85px;
+
+        .link-text {
+            font-size: var(--fs-24, 24px);
+            line-height: var(--line-height-24, 32px);
+            letter-spacing: 0px;
+        }
+
+        .link-arrow {
+            width: var(--arrow-width);
+            height: var(--line-height-24, 32px);
+
+            svg {
+                bottom: var(--arrow-bottom);
+            }
+        }
+    }
+
+    /* === 字體變體 === */
+
+    /* Roboto 字體 */
+    &.font-roboto .link-text {
+        font-family: var(--font-family-roboto, 'Roboto', sans-serif);
+
+        &.weight-regular {
+            font-weight: var(--font-weight-400, 400);
+        }
+
+        &.weight-medium {
+            font-weight: var(--font-weight-500, 500);
+        }
+
+        &.weight-bold {
+            font-weight: var(--font-weight-700, 700);
+        }
+    }
+
+    /* TT Norms Pro 字體 */
+    &.font-tt .link-text {
+        &.weight-regular {
+            font-family: var(--font-family-tt-norms-pro-normal, 'TTNormsProNormal', 'Roboto', sans-serif);
+            font-weight: var(--font-weight-450, 450);
+        }
+
+        &.weight-medium {
+            font-family: var(--font-family-tt-norms-pro-medium, 'TTNormsProMedium', 'Roboto', sans-serif);
+            font-weight: var(--font-weight-500, 500);
+        }
+
+        &.weight-bold {
+            font-family: var(--font-family-tt-norms-pro-medium, 'TTNormsProMedium', 'Roboto', sans-serif);
+            font-weight: var(--font-weight-700, 700);
+        }
+    }
+
+    /* === 無箭頭變體 === */
+    &.no-arrow .link-arrow {
+        display: none;
+    }
+}

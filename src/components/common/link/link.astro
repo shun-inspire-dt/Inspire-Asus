@@ -1,0 +1,141 @@
+---
+/** Type */
+import 'astro/astro-jsx';
+/** Helpers */
+import { ext } from '@js/helpers/env';
+/** Style */
+import './link-with-arrow.scss';
+/** SVG Components */
+import Arrow12 from './svg/arrow-12.astro';
+import Arrow13 from './svg/arrow-13.astro';
+import Arrow14 from './svg/arrow-14.astro';
+import Arrow16 from './svg/arrow-16.astro';
+import Arrow18 from './svg/arrow-18.astro';
+import Arrow20 from './svg/arrow-20.astro';
+import Arrow24 from './svg/arrow-24.astro';
+
+/**
+ * 連結組件的屬性
+ * @property {string} [IDName] - HTML ID 名稱
+ * @property {string | any} [className] - CSS 類別名稱
+ * @property {string} [link] - 連結網址
+ * @property {boolean} [extend] - 是否為外部連結（不處理副檔名）
+ * @property {string} [title] - 連結標題
+ * @property {string} [html] - 自定義 HTML 內容
+ * @property {astroHTML.JSX.HTMLAttributeAnchorTarget} [target] - 連結開啟目標
+ * @property {boolean} [disabled] - 是否禁用連結
+ * @property {variant} [variant] - 連結變體樣式
+ * @property {boolean} [button] - 是否顯示為按鈕樣式
+ * @property {boolean} [round] - 是否顯示圓角
+ * @property {attribute} [attribute] - 自定義屬性
+ * @property {{[key: string]: string}} [style] - 自定義 CSS 樣式
+ * @property {boolean} [block] - 是否顯示為區塊級元素
+ * @property {boolean} [showArrow] - 是否顯示箭頭圖標
+ * @property {boolean} [webFontInstalled] - 是否使用 Web Font 箭頭（否則使用 SVG）
+ * @property {'12'|'13'|'14'|'16'|'18'|'20'|'24'} [size] - 字體大小
+ * @property {'roboto'|'tt'} [font] - 字體家族
+ * @property {'regular'|'medium'|'bold'} [weight] - 字體粗細
+ * @property {'default'|'hover'|'pressed'|'disabled'} [status] - 連結狀態
+ */
+interface Props {
+    IDName?: string;
+    className?: any;
+    link?: string;
+    extend?: boolean;
+    title?: string;
+    html?: string;
+    target?: astroHTML.JSX.HTMLAttributeAnchorTarget;
+    disabled?: boolean;
+    variant?: variant;
+    button?: boolean;
+    round?: boolean;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    block?: boolean;
+    showArrow?: boolean;
+    webFontInstalled?: boolean;
+    size?: '12' | '13' | '14' | '16' | '18' | '20' | '24';
+    font?: 'roboto' | 'tt';
+    weight?: 'regular' | 'medium' | 'bold';
+    status?: 'default' | 'hover' | 'pressed' | 'disabled';
+    Tag?: 'a' | 'span'
+}
+
+const {
+    IDName,
+    className,
+    link,
+    extend,
+    target,
+    title,
+    html,
+    variant,
+    button,
+    round,
+    disabled,
+    attribute = {},
+    style,
+    block,
+    showArrow = false,
+    webFontInstalled = false,
+    size = '16',
+    font = 'roboto',
+    weight = 'regular',
+    status = 'default',
+    Tag = 'a'
+} = Astro.props as Props;
+const href = link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}` : link) : '#';
+
+// 建立 CSS 類別
+const linkClasses = [
+    'link-with-arrow',
+    `size_${size}`,
+    `font-${font}`,
+    showArrow ? '' : 'no-arrow',
+    webFontInstalled ? 'web-font' : 'svg-arrow',
+    { btn: button },
+    { 'btn-block': block, 'btn-round': round },
+    status && status !== 'default' && status,
+    disabled && 'disabled',
+    className
+].filter(Boolean);
+
+// 取得對應尺寸的箭頭組件
+const arrowComponents = {
+    '12': Arrow12,
+    '13': Arrow13,
+    '14': Arrow14,
+    '16': Arrow16,
+    '18': Arrow18,
+    '20': Arrow20,
+    '24': Arrow24
+};
+
+const ArrowComponent = arrowComponents[size as keyof typeof arrowComponents] || Arrow16;
+---
+
+<Tag
+    id={IDName}
+    class:list={linkClasses}
+    href={href}
+    target={target}
+    disabled={disabled}
+    data-variant={variant}
+    title={Tag === 'a' ? title : undefined}
+    aria-label={title}
+    {...attribute}
+    style={style}
+>
+    <span class:list={['link-text', `weight-${weight}`]}>
+        {html ? <Fragment set:html={html} /> : <slot>{title}</slot>}
+    </span>
+    {showArrow && (
+        webFontInstalled ? (
+            <span class="link-arrow web-font-arrow"></span>
+        ) : (
+            <span class="link-arrow svg-arrow">
+                <ArrowComponent />
+            </span>
+        )
+    )}
+</Tag>
