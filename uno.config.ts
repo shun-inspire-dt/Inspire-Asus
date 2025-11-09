@@ -61,15 +61,15 @@ export default defineConfig({
         'label-03': 'font-roboto text-14 leading-14 tracking-0 font-normal',
 
         // Body 系列
-        'body-00-sh': 'font-roboto text-14 leading-14-sh tracking-0 font-normal',
+        'body-00-sh': 'font-roboto text-13 leading-13 tracking-0 font-normal',
         'body-01': 'font-roboto text-14 leading-14 tracking-0 font-normal',
-        'body-01-sh': 'font-roboto text-16 leading-16-sh tracking-0 font-normal',
+        'body-01-sh': 'font-roboto text-14 leading-14-sh tracking-0 font-normal',
         'body-02': 'font-roboto text-16 leading-16 tracking-0 font-normal',
-        'body-02-sh': 'font-roboto text-18 leading-18-sh tracking-0 font-normal',
+        'body-02-sh': 'font-roboto text-16 leading-16-sh tracking-0 font-normal',
         'body-03': 'font-roboto text-18 leading-18 tracking-0 font-normal',
-        'body-03-sh': 'font-roboto text-20 leading-20-sh tracking-0 font-normal',
+        'body-03-sh': 'font-roboto text-18 leading-18-sh tracking-0 font-normal',
         'body-04': 'font-roboto text-20 leading-20 tracking-0 font-normal',
-        'body-04-sh': 'font-roboto text-24 leading-24 tracking-0 font-normal',
+        'body-04-sh': 'font-roboto text-20 leading-20-sh tracking-0 font-normal',
 
         // Body Strong 系列
         'body-01-strong': 'font-roboto text-14 leading-14 tracking-0 font-medium',
@@ -86,18 +86,42 @@ export default defineConfig({
         'heading-06': 'font-tt-medium text-52 leading-52 tracking-0 font-medium',
 
         // Heading Short 系列
-        'heading-00-sh': 'font-roboto text-16 leading-16-sh tracking-0 font-medium',
-        'heading-01-sh': 'font-roboto text-18 leading-18-sh tracking-0 font-medium',
-        'heading-02-sh': 'font-roboto text-20 leading-20-sh tracking-0 font-medium',
-        'heading-03-sh': 'font-roboto text-24 leading-24 tracking-0 font-medium',
-        'heading-04-sh': 'font-roboto text-30 leading-30 tracking-0 font-medium'
+        'heading-00-sh': 'font-roboto text-13 leading-13 tracking-0 font-medium',
+        'heading-01-sh': 'font-roboto text-14 leading-14 tracking-0 font-medium',
+        'heading-02-sh': 'font-roboto text-16 leading-16 tracking-0 font-medium',
+        'heading-03-sh': 'font-roboto text-18 leading-18 tracking-0 font-medium',
+        'heading-04-sh': 'font-roboto text-20 leading-20 tracking-0 font-medium',
+
+        // spacing 系列
+        'sect-p-xl': 'pt-120px pb-120px',
+        'sect-p-lg': 'pt-80px pb-80px',
+        'sect-p-md': 'pt-64px pb-64px',
+        'sect-p-sm': 'pt-48px pb-48px',
+        'sect-p-xl-t': 'pt-120px',
+        'sect-p-lg-t': 'pt-80px',
+        'sect-p-md-t': 'pt-64px',
+        'sect-p-sm-t': 'pt-48px',
+        'sect-p-xl-b': 'pb-120px',
+        'sect-p-lg-b': 'pb-80px',
+        'sect-p-md-b': 'pb-64px',
+        'sect-p-sm-b': 'pb-48px',
+        'sect-p-sub-xl-t': 'pt-120px pb-80px',
+        'sect-p-sub-xl-b': 'pt-80px pb-120px',
+        'sect-p-sub-lg-t': 'pt-80px pb-64px',
+        'sect-p-sub-lg-b': 'pt-64px pb-80px',
+        'sect-p-sub-md-t': 'pt-64px pb-48px',
+        'sect-p-sub-md-b': 'pt-48px pb-64px',
+        'sect-p-sub-sm-t': 'pt-48px pb-32px',
+        'sect-p-sub-sm-b': 'pt-32px pb-48px',
+
+        // 自定義 container 規則
+        'container': 'w-full mx-auto px-4 sm:max-w-[87.5%] sm:px-0',
+        'underline-offset-3': 'underline-offset-[var(--underline-offset)]'
     },
-    rules: [],
+    rules: [
+        ['padding-tablet', { 'padding-left': 'var(--screen-tablet-padding-x)', 'padding-right': 'var(--screen-tablet-padding-x)' }]
+    ],
     theme: {
-        container: {
-            center: true,
-            padding: '0rem'
-        },
         colors: {
             // 黑色系列
             black: {
@@ -253,9 +277,6 @@ export default defineConfig({
                 '500': 'var(--color-cyan-500)',
                 '700': 'var(--color-cyan-700)'
             },
-            component: {
-                grid: 'var(--color-component-grid)'
-            },
             // 社群媒體品牌色
             facebook: 'var(--color-facebook)',
             linkin: 'var(--color-linkin)',
@@ -343,7 +364,7 @@ export default defineConfig({
             '500': 'var(--font-weight-500)',
             '600': 'var(--font-weight-600)',
             '700': 'var(--font-weight-700)',
-            normal: 'var(--font-weight-450)',
+            normal: 'var(--font-weight-400)',
             medium: 'var(--font-weight-500)',
             semibold: 'var(--font-weight-600)',
             bold: 'var(--font-weight-700)'
@@ -368,4 +389,3 @@ export default defineConfig({
         }
     }
 });
-
