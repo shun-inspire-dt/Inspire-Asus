@@ -1,44 +1,177 @@
 ---
-/** Common Component */
-/** Icons */
-// import Icons from '@components/common/icons/icons.astro';
-/** Style */
+/**
+ * 分頁組件 (Pagination Component)
+ *
+ * 功能特色：
+ * - 支援 Light 和 Dark 主題
+ * - 響應式設計，適配各種螢幕尺寸
+ * - 完整的鍵盤導航支援
+ * - 無障礙支援 (ARIA 屬性)
+ * - 可自訂樣式和行為
+ * - 支援省略號顯示
+ *
+ * @author Asus Team
+ * @version 1.0.0
+ */
+
+/** 引入樣式檔案 */
 import './pagination.scss';
 
+/**
+ * 組件屬性介面定義
+ *
+ * @interface Props
+ * @property {string} [IDName] - 分頁組件唯一識別碼
+ * @property {string} [className] - 自訂 CSS 類別
+ * @property {attribute} [attribute] - 額外的 HTML 屬性
+ * @property {{ [key: string]: string }} [style] - 內聯樣式
+ * @property {number} [active] - 當前頁碼 (1-based)
+ * @property {number} [total] - 總頁數
+ * @property {"Light" | "Dark"} [mode] - 主題模式
+ * @property {boolean} [showEllipsis] - 是否顯示省略號
+ * @property {number} [visiblePages] - 可見頁碼數量
+ */
 export interface Props {
     IDName?: string;
     className?: any;
     attribute?: attribute;
-    style?: { [key: string]: string };
     active?: number;
     total?: number;
+    mode?: 'Light' | 'Dark';
+    showEllipsis?: boolean;
+    visiblePages?: number;
+    style?: { [key: string]: string };
 }
 
-const { IDName, className, style, attribute = {}, active = 1, total = 12 } = Astro.props as Props;
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    active = 1,
+    total = 12,
+    mode = 'Light',
+    showEllipsis = true,
+    visiblePages = 7
+} = Astro.props as Props;
+
+/**
+ * 計算要顯示的頁碼範圍
+ */
+function calculatePageRange(current: number, total: number, visible: number) {
+    if (total <= visible) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+
+    const half = Math.floor(visible / 2);
+    let start = Math.max(1, current - half);
+    let end = Math.min(total, start + visible - 1);
+
+    if (end - start + 1 < visible) {
+        start = Math.max(1, end - visible + 1);
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
+const pageRange = calculatePageRange(active, total, visiblePages);
+const showStartEllipsis = showEllipsis && pageRange[0] > 2;
+const showEndEllipsis = showEllipsis && pageRange[pageRange.length - 1] < total - 1;
 ---
 
-<div id={IDName} class:list={[`pagination`, className]} style={style} {...attribute}>
-    <!-- 上一頁（disabled 範例） -->
-    <a href="#" title="上一頁" class:list={[`pagination-step`, { disabled: active === 1 }]}>
-        <!-- <Icons custom /> -->
+<!-- 分頁容器 - 支援 Light 和 Dark 主題 -->
+<div
+    id={IDName}
+    class:list={['pagination', `pagination--${mode.toLowerCase()}`, className]}
+    style={style}
+    {...attribute}
+    role="navigation"
+    aria-label="分頁導航"
+>
+    <!-- 上一頁按鈕 -->
+    <a
+        href={active > 1 ? `#page-${active - 1}` : undefined}
+        title="上一頁"
+        class:list={['pagination__arrow', 'pagination__arrow--prev', { 'pagination__arrow--disabled': active === 1 }]}
+        aria-label="上一頁"
+        aria-disabled={active === 1}
+        tabindex={active === 1 ? -1 : 0}
+    >
+        <span class="pagination__arrow-icon pagination__arrow-icon--prev" aria-hidden="true"></span>
     </a>
-    <!-- 頁碼 -->
-    <a href="#" title="第一頁" class:list={[`pagination-item`, { active: active === 1 }]}>
-        1
-    </a>
-    <a href="#" title="第二頁" class:list={[`pagination-item`, { active: active === 2 }]}>
-        2
-    </a>
-    <a href="#" title="第三頁" class:list={[`pagination-item`, { active: active === 3 }]}>
-        3
-    </a>
-    <!-- 省略 -->
-    <span class="pagination-ellipsis">...</span>
-    <a href="#" title="第十二頁" class:list={[`pagination-item`, { active: active === total }]}>
-        {total}
-    </a>
-    <!-- 下一頁 -->
-    <a href="#" title="下一頁" class:list={[`pagination-step`, { disabled: active === total }]}>
-        <!-- <Icons custom /> -->
+
+    <!-- 第一頁 (如果不在範圍內) -->
+    {
+        pageRange[0] > 1 && (
+            <a
+                href="#page-1"
+                title="第 1 頁"
+                class:list={['pagination__item', { 'pagination__item--active': active === 1 }]}
+                aria-label="第 1 頁"
+                aria-current={active === 1 ? 'page' : undefined}
+            >
+                1
+            </a>
+        )
+    }
+
+    <!-- 開始省略號 -->
+    {
+        showStartEllipsis && (
+            <span class="pagination__ellipsis" aria-hidden="true">
+                ...
+            </span>
+        )
+    }
+
+    <!-- 頁碼範圍 -->
+    {
+        pageRange.map((page) => (
+            <a
+                href={`#page-${page}`}
+                title={`第 ${page} 頁`}
+                class:list={['pagination__item', { 'pagination__item--active': active === page }]}
+                aria-label={`第 ${page} 頁`}
+                aria-current={active === page ? 'page' : undefined}
+            >
+                {page}
+            </a>
+        ))
+    }
+
+    <!-- 結束省略號 -->
+    {
+        showEndEllipsis && (
+            <span class="pagination__ellipsis" aria-hidden="true">
+                ...
+            </span>
+        )
+    }
+
+    <!-- 最後一頁 (如果不在範圍內) -->
+    {
+        pageRange[pageRange.length - 1] < total && (
+            <a
+                href={`#page-${total}`}
+                title={`第 ${total} 頁`}
+                class:list={['pagination__item', { 'pagination__item--active': active === total }]}
+                aria-label={`第 ${total} 頁`}
+                aria-current={active === total ? 'page' : undefined}
+            >
+                {total}
+            </a>
+        )
+    }
+
+    <!-- 下一頁按鈕 -->
+    <a
+        href={active < total ? `#page-${active + 1}` : undefined}
+        title="下一頁"
+        class:list={['pagination__arrow', 'pagination__arrow--next', { 'pagination__arrow--disabled': active === total }]}
+        aria-label="下一頁"
+        aria-disabled={active === total}
+        tabindex={active === total ? -1 : 0}
+    >
+        <span class="pagination__arrow-icon pagination__arrow-icon--next" aria-hidden="true"></span>
     </a>
 </div>
