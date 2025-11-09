@@ -1,9 +1,43 @@
 ---
-/** Style */
+/**
+ * Select 選擇器組件
+ *
+ * 基於原生 HTML <select> 元素的樣式化選擇器組件
+ * 支援自定義樣式、表單驗證和無障礙功能
+ *
+ * @author Asus Team
+ * @version 1.0.0
+ */
+
+/** 樣式檔案 */
 import './select.scss';
+
+/**
+ * Select 組件屬性介面
+ *
+ * @interface Props
+ * @property {string} [id] - 選擇器的唯一識別碼
+ * @property {Array} [data] - 選項資料陣列，包含顯示文字、值和額外屬性
+ * @property {any} [className] - 自定義 CSS 類別名稱
+ * @property {string} [name] - 表單欄位名稱，用於表單提交
+ * @property {string|number} [value] - 當前選中的值
+ * @property {string} [placeholder] - 佔位符文字，當沒有選中值時顯示
+ * @property {string} [title] - 選擇器標題，用於無障礙標籤
+ * @property {boolean} [required] - 是否為必填欄位
+ * @property {boolean} [disabled] - 是否禁用選擇器
+ * @property {string} [size] - 選擇器尺寸：xl, lg, md, sm
+ * @property {string} [status] - 選擇器狀態：value, error, disabled, placeholder, selected, placeholder-selected, active, placeholder-active
+ * @property {string} [validClass] - 表單驗證類別
+ * @property {string} [validType] - 表單驗證類型
+ * @property {string} [validLabel] - 表單驗證標籤
+ * @property {string} [customValidText] - 自定義驗證成功訊息
+ * @property {string} [customInvalidText] - 自定義驗證失敗訊息
+ * @property {string} [onchange] - 值改變時的事件處理函數
+ * @property {attribute} [attribute] - 額外的 HTML 屬性
+ */
 export interface Props {
     id?: string;
-    data?: { text: string | number; value: string | number; attribute?: attribute }[];
+    data?: select;
     className?: any;
     name?: string;
     value?: string | number;
@@ -11,6 +45,16 @@ export interface Props {
     title?: string;
     required?: boolean;
     disabled?: boolean;
+    size?: 'xl' | 'lg' | 'md' | 'sm';
+    status?:
+        | 'value'
+        | 'error'
+        | 'disabled'
+        | 'active'
+        | 'selected'
+        | 'placeholder'
+        | 'placeholder-active'
+        | 'sort';
     validClass?: string;
     validType?: string;
     validLabel?: string;
@@ -18,54 +62,106 @@ export interface Props {
     customInvalidText?: string;
     onchange?: string;
     attribute?: attribute;
+    style?: { [key: string]: string };
 }
 
+/**
+ * 解構組件屬性並設定預設值
+ */
 const {
-    id,
-    data = [],
-    className,
-    required,
-    disabled,
-    name,
-    value,
-    placeholder = '請選擇',
-    title,
-    validClass = 'form',
-    validType,
-    validLabel,
-    customValidText,
-    customInvalidText,
-    onchange,
-    attribute = {}
+    id, // 選擇器 ID
+    data = [], // 選項資料，預設為空陣列
+    className, // 自定義 CSS 類別
+    required, // 是否必填
+    disabled, // 是否禁用
+    name, // 表單欄位名稱
+    value, // 當前選中值
+    placeholder = '請選擇', // 佔位符文字，預設為「請選擇」
+    title, // 無障礙標籤
+    size = 'md', // 尺寸，預設為 md
+    status, // 狀態，預設為 value
+    validClass, // 驗證類別，預設為 'form'
+    validType, // 驗證類型
+    validLabel, // 驗證標籤
+    customValidText, // 自定義驗證成功訊息
+    customInvalidText, // 自定義驗證失敗訊息
+    onchange, // 值改變事件處理
+    attribute = {}, // 額外屬性，預設為空物件
+    style = {} // 額外樣式，預設為空物件
 } = Astro.props as Props;
+
+/**
+ * 表單驗證相關的 data 屬性
+ * 用於前端表單驗證系統
+ */
 const validAttribute = {
-    'data-valid-class': validClass,
-    'data-valid-type': validType,
-    'data-valid-label': validLabel,
-    'data-custom-valid-text': customValidText,
-    'data-custom-invalid-text': customInvalidText
+    'data-valid-class': validClass, // 驗證類別
+    'data-valid-type': validType, // 驗證類型
+    'data-valid-label': validLabel, // 驗證標籤
+    'data-custom-valid-text': customValidText, // 自定義成功訊息
+    'data-custom-invalid-text': customInvalidText // 自定義失敗訊息
 };
+
+/**
+ * 動態生成 CSS 類別
+ * 根據尺寸和狀態屬性組合樣式類別
+ */
+const selectClasses = [
+    'control-input',
+    'control-select',
+    { [`size-${size}`]: size },
+    { [`status-${status}`]: status },
+    className
+].filter(Boolean);
 ---
 
+<!-- 
+    原生 HTML Select 元素
+    使用動態生成的 CSS 類別進行樣式化
+    支援多種尺寸、狀態、表單驗證和無障礙功能
+-->
 <select
     id={id}
-    class:list={['control-input control-select', className]}
+    class:list={selectClasses}
     name={name}
     value={value}
     required={required}
     disabled={disabled}
+    style={style}
     onchange={onchange}
     aria-label={title}
     {...attribute}
     {...validAttribute}
 >
+    <!-- 
+        佔位符選項插槽
+        允許自定義佔位符選項的內容和行為
+    -->
     <slot name="index">
-        <option class="control-select-placeholder" value="" disabled={!!value} {...!value ? { selected: '' } : {}}
-            >{placeholder}</option
-        >
+        <!-- 
+            預設佔位符選項
+            - 值為空字串
+            - 當有選中值時禁用
+            - 當沒有選中值時自動選中
+        -->
+        <option class="control-select-placeholder" value="" disabled={!!value} {...!value ? { selected: '' } : {}}>
+            {placeholder}
+        </option>
     </slot>
+
+    <!-- 
+        選項內容插槽
+        允許自定義選項列表，或使用 data 屬性自動生成
+    -->
     <slot>
         {
+            /*
+             * 根據 data 屬性動態生成選項
+             * - 遍歷 data 陣列
+             * - 設定選項值和顯示文字
+             * - 根據當前值自動選中對應選項
+             * - 支援每個選項的自定義屬性
+             */
             data.map((x) => (
                 <option value={x.value} selected={value === x.value} {...x.attribute}>
                     {x.text}
@@ -74,3 +170,8 @@ const validAttribute = {
         }
     </slot>
 </select>
+
+<script>
+    import './select-expansion';
+    import './select-placeholder';
+</script>

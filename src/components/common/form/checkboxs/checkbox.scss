@@ -1,0 +1,161 @@
+/**
+ * 複選框組件樣式
+ * 支援標準複選框、圓角複選框等變體
+ * 使用 CSS 變數系統提供靈活的主題化支援
+ */
+.form-check {
+    --checkbox-flex: flex;
+    --checkbox-flex-direction: row;
+    --checkbox-align-items: center;
+    --checkbox-justify-content: flex-start;
+
+    /* 容器尺寸變數 */
+    --checkbox-height: 24px; /* 容器高度，與標籤行高對齊 */
+    --checkbox-size: 16px; /* 複選框尺寸 (寬高) */
+    --checkbox-gap: 8px; /* 複選框與標籤間距 */
+
+    /* 背景色變數 */
+    --checkbox-background-color: var(--color-white, #ffffff); /* 預設背景色 */
+    --checkbox-disabled-background-color: var(--color-gray-300-10, rgba(179, 179, 179, 0.1)); /* 禁用狀態背景色 */
+    --checkbox-checked-background-color: var(--color-blue-500, #006ce1); /* 選中狀態背景色 */
+    --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.875 8.16071L6.74457 11.375L12.125 4.625" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 選中狀態背景圖片 (勾選標記) */
+
+    /* 邊框變數 */
+    --checkbox-border-width: 1px; /* 邊框寬度 */
+    --checkbox-border-color: var(--color-gray-500, #818181); /* 預設邊框色 */
+    --checkbox-border-radius: 4px; /* 邊框圓角 */
+    --checkbox-checked-border-color: var(--color-blue-500, #006ce1); /* 選中狀態邊框色 */
+    --checkbox-disabled-border-color: var(--color-gray-300, #b3b3b3); /* 禁用狀態邊框色 */
+
+    /* Focus outline 相關屬性 */
+    --checkbox-outline-width: 2px; /* 焦點外框寬度 */
+    --checkbox-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+    --checkbox-outline-offset: 2px; /* 焦點外框偏移 */
+
+    /* 文字顏色變數 */
+    --checkbox-color: var(--color-gray-900, #181818); /* 預設文字顏色 */
+    --checkbox-disabled-color: var(--color-gray-300, #b3b3b3); /* 禁用狀態文字顏色 */
+    --checkbox-checked-color: var(--color-gray-900, #181818); /* 選中狀態文字顏色 */
+
+    /* 字體樣式變數 */
+    --checkbox-font-family: var(--font-family-roboto); /* 字體家族 */
+    --checkbox-font-size: var(--fs-16); /* 字體大小 */
+    --checkbox-font-weight: var(--font-weight-400); /* 字體粗細 */
+    --checkbox-line-height: var(--line-height-16); /* 行高 */
+    --checkbox-letter-spacing: var(--letter-spacing); /* 字母間距 */
+
+    /* 標籤佈局變數 */
+    --checkbox-label-flex-direction: row; /* 標籤內容排列方向 */
+    --checkbox-label-align-items: center; /* 標籤垂直對齊 */
+    --checkbox-label-justify-content: flex-start; /* 標籤水平對齊 */
+    --checkbox-label-gap: 0px; /* 標籤內容間距 */
+
+    /* 容器基本佈局 - 水平排列，垂直置中 */
+    display: var(--checkbox-flex);
+    flex-direction: var(--checkbox-flex-direction);
+    align-items: var(--checkbox-align-items);
+    justify-content: var(--checkbox-justify-content);
+    height: var(--checkbox-height);
+    gap: var(--checkbox-gap);
+
+    &.form-check-right {
+        --checkbox-flex-direction: row-reverse;
+    }
+
+    /* 複選框輸入元素樣式 (支援 checkbox 和 radio) */
+    .form-check-input,
+    .form-radio-input {
+        /* 移除預設樣式，設定為背景圖片模式 */
+        @apply float-left vertical-top bg-no-repeat bg-center bg-contain appearance-none cursor-pointer;
+        width: var(--checkbox-size);
+        height: var(--checkbox-size);
+        background-color: var(--checkbox-background-color);
+        border: var(--checkbox-border-width) solid var(--checkbox-border-color);
+        border-radius: var(--checkbox-border-radius);
+
+        /* 選中狀態樣式 */
+        &:checked {
+            background-color: var(--checkbox-checked-background-color);
+            border-color: var(--checkbox-checked-border-color);
+            background-image: var(--checkbox-checked-background-image);
+
+            /* 選中時標籤文字顏色變化 */
+            & + .form-check-label {
+                color: var(--checkbox-checked-color);
+            }
+        }
+
+        /* Focus outline 相關屬性 */
+        &:focus {
+            outline: var(--checkbox-outline-width) solid var(--checkbox-outline-color);
+            outline-offset: var(--checkbox-outline-offset);
+        }
+
+        /* 禁用狀態樣式 */
+        &:disabled {
+            background-color: var(--checkbox-disabled-background-color);
+            border-color: var(--checkbox-disabled-border-color);
+
+            &:checked {
+                --checkbox-disabled-background-color: var(--color-gray-300, #b3b3b3);
+            }
+            /* 禁用時標籤文字顏色變化 */
+            & + .form-check-label {
+                color: var(--checkbox-disabled-color);
+            }
+        }
+    }
+
+    /* 標籤文字樣式 */
+    .form-check-label {
+        /* 禁止文字選取，設定游標為指標 */
+        @apply select-none cursor-pointer;
+        display: flex;
+        flex-direction: var(--checkbox-label-flex-direction);
+        align-items: var(--checkbox-label-align-items);
+        justify-content: var(--checkbox-label-justify-content);
+        color: var(--checkbox-color);
+        font-family: var(--checkbox-font-family);
+        font-size: var(--checkbox-font-size);
+        font-weight: var(--checkbox-font-weight);
+        line-height: var(--checkbox-line-height);
+        letter-spacing: var(--checkbox-letter-spacing);
+        gap: var(--checkbox-label-gap);
+
+        a {
+            color: var(--color-blue-500, #006ce1);
+            text-decoration: underline;
+            text-underline-offset: var(--underline-offset);
+            text-decoration-thickness: 1px;
+
+            &:hover {
+                color: var(--color-blue-600, #006ce1);
+            }
+        }
+    }
+}
+
+/**
+ * 圓角複選框變體
+ * 可覆寫特定變數以實現圓角樣式
+ */
+.form-check.rounded-check {
+    /* 圓角變體可覆寫的變數 */
+    --checkbox-border-radius: 50%; /* 圓角半徑 (通常設為 50% 或較大值) */
+}
+
+.form-check.indeterminate-check {
+    --checkbox-checked-background-color: var(--color-white, #ffffff); /** 選中狀態背景色 */
+    --checkbox-checked-border-color: var(--color-gray-500, #818181); /** 選中狀態邊框色 */
+    --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="8" height="8" rx="2" fill="%23006CE1"/></svg>'); /** 選中狀態背景圖片 */
+
+    .form-check-input {
+        /* 禁用狀態樣式 */
+        &:disabled {
+            &:checked {
+                --checkbox-disabled-background-color: var(--color-white, #ffffff); /** 選中狀態背景色 */
+                --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="8" height="8" rx="2" fill="%23B3B3B3"/></svg>'); /** 禁用&選中狀態背景圖片 */
+            }
+        }
+    }
+}

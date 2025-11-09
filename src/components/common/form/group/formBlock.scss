@@ -22,13 +22,6 @@
 
     background-color: var(--blocks-section-background-color);
 
-    @screen lg {
-        --blocks-section-head-padding-bottom: 1.25rem;
-    }
-    @screen 2xl {
-        --blocks-section-title-font-size: var(--fontSize-h5);
-    }
-
     &.blocks-section-center {
         .blocks-section-head {
             @apply justify-center;

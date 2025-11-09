@@ -1,0 +1,53 @@
+/**
+ * 輸入框容器樣式
+ * 提供相對定位容器來容納輸入框和圖標
+ */
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/**
+ * 圖標容器樣式
+ * 使用絕對定位，Y 軸置中，X 軸距離右側 16px
+ */
+.input-icons {
+    /** 圖標顏色 */
+    --input-icon-color: var(--color-gray-700, #4d4d4d); /* 圖標顏色 */
+
+    /** 基礎設定 */
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    /**
+     * 個別圖標樣式
+     */
+    .input-icon {
+        &.hide-show-icon.hide-show-icon--show,
+        &.hide-show-icon.hide-show-icon--hide {
+            --icon-size: 24px;
+            --icon-color: var(--input-icon-color); /* 圖標顏色 */
+        }
+        &.search-icon {
+            --icon-size: 16px;
+            --icon-color: var(--input-icon-color); /* 圖標顏色 */
+            padding: 0px;
+        }
+        &.cross-icon {
+            --icon-size: 16px;
+            --icon-color: var(--input-icon-color); /* 圖標顏色 */
+            padding: 2px;
+        }
+        svg {
+            display: block;
+            flex-shrink: 0;
+        }
+    }
+}

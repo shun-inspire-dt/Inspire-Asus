@@ -1,0 +1,189 @@
+---
+/**
+ * 複選框組件 (Checkbox Component)
+ *
+ * 功能特色：
+ * - 支援標準複選框和圓角複選框
+ * - 內建表單驗證功能
+ * - 支援條件必填欄位設定
+ * - 無障礙支援 (ARIA 屬性)
+ * - 可自訂樣式和行為
+ *
+ * @author Asus Team
+ * @version 1.0.0
+ */
+
+/** 引入樣式檔案 */
+import './checkbox.scss';
+
+/**
+ * 組件屬性介面定義
+ *
+ * @interface Props
+ * @property {string} [id] - 複選框唯一識別碼
+ * @property {string} [className] - 自訂 CSS 類別
+ * @property {boolean} [required] - 是否為必填欄位
+ * @property {boolean} [disabled] - 是否禁用
+ * @property {boolean} [readonly] - 是否為唯讀 (點擊無效)
+ * @property {boolean} [checked] - 是否預設選中
+ * @property {string} [name] - 表單欄位名稱
+ * @property {string} [label] - 標籤文字內容
+ * @property {string | number} [value] - 複選框值
+ * @property {string} [title] - 無障礙標籤 (aria-label)
+ * @property {boolean} [rounded] - 是否使用圓角樣式
+ * @property {string} [validClass] - 驗證成功時的 CSS 類別
+ * @property {string} [validType] - 驗證類型
+ * @property {string} [validLabel] - 驗證標籤
+ * @property {string} [customValidText] - 自訂驗證成功訊息
+ * @property {string} [customInvalidText] - 自訂驗證失敗訊息
+ * @property {string} [setRequired] - 條件必填設定 - 當此複選框選中時，指定的欄位變為必填
+ * @property {attribute} [attribute] - 額外的 HTML 屬性
+ * @property {aria} [aria] - ARIA 無障礙屬性
+ * @property {{ [key: string]: string }} [style] - 內聯樣式
+ */
+export interface Props {
+    id?: string;
+    className?: any;
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: boolean;
+    checked?: boolean;
+    name?: string;
+    label?: string;
+    value?: string | number;
+    title?: string;
+    rounded?: boolean;
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    customValidText?: string;
+    customInvalidText?: string;
+    setRequired?: string;
+    attribute?: attribute;
+    aria?: aria;
+    style?: { [key: string]: string };
+    indeterminate?: boolean;
+    alignment?: 'left' | 'right';
+}
+
+/**
+ * 解構組件屬性
+ */
+const {
+    id,
+    className,
+    name,
+    required,
+    disabled,
+    readonly,
+    label,
+    value,
+    checked,
+    title,
+    rounded,
+    validClass,
+    validType,
+    validLabel,
+    customValidText,
+    customInvalidText,
+    setRequired,
+    attribute = {},
+    aria = {},
+    style,
+    indeterminate,
+    alignment
+} = Astro.props as Props;
+
+/**
+ * 建構表單驗證相關的 data 屬性
+ * 這些屬性會被前端驗證腳本使用
+ */
+const validAttribute = {
+    'data-valid-class': validClass,
+    'data-valid-type': validType ? `${validType}|checkbox` : undefined,
+    'data-valid-label': validLabel,
+    'data-custom-valid-text': customValidText,
+    'data-custom-invalid-text': customInvalidText
+};
+---
+
+<!-- 複選框容器 - 支援標準和圓角樣式 -->
+<div class:list={['form-check', { 'rounded-check': rounded, 'indeterminate-check': indeterminate, 'form-check-right': alignment === 'right' }, className]} style={style}>
+    <!-- 複選框輸入元素 -->
+    <input
+        id={id}
+        class="form-check-input"
+        type="checkbox"
+        value={value}
+        name={name}
+        disabled={disabled}
+        required={required}
+        checked={checked}
+        autocomplete="off"
+        {...readonly ? { onclick: 'return false;' } : {}}
+        data-set-required={setRequired}
+        {...attribute}
+        {...aria}
+        aria-label={title}
+        {...validAttribute}
+    />
+    <!-- 標籤文字 - 支援插槽內容或 label 屬性 -->
+    <label class="form-check-label" for={id}>
+        <slot>{label}</slot>
+    </label>
+</div>
+
+<script>
+    /**
+     * 複選框組件前端腳本
+     * 處理特殊行為：單選模式和條件必填
+     */
+
+    /**
+     * 單選模式處理
+     * 針對標記為 data-checkbox="radio" 的容器，
+     * 讓其內部的複選框表現如單選按鈕 (只能選一個)
+     */
+    const containers = document.querySelectorAll('[data-checkbox="radio"]') as NodeListOf<HTMLElement>;
+    [...containers].forEach((container) => {
+        const checkboxes = container?.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+        [...checkboxes].forEach((checkbox) => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    // 取消其他複選框的選中狀態
+                    [...checkboxes].forEach((otherCheckbox) => (otherCheckbox.checked = false));
+                    // 重新選中當前複選框
+                    checkbox.checked = true;
+                }
+            });
+        });
+    });
+
+    /**
+     * 條件必填處理
+     * 當複選框有 data-set-required 屬性時，
+     * 選中該複選框會讓指定的其他欄位變為必填
+     */
+    const conditionalCheckboxes = document.querySelectorAll(
+        'input[type="checkbox"][data-set-required]'
+    ) as NodeListOf<HTMLInputElement>;
+    [...conditionalCheckboxes].forEach((checkbox) => {
+        checkbox.addEventListener('change', () => {
+            const targetInputsString = checkbox.getAttribute('data-set-required');
+            if (targetInputsString) {
+                // 解析目標輸入欄位的選擇器 (以逗號分隔)
+                const targetSelectors = targetInputsString.split(',');
+                const targetInputs = [...targetSelectors]
+                    .map((selector) => document.querySelector(selector))
+                    .filter((input) => !!input);
+
+                // 根據複選框狀態設定或移除必填屬性
+                if (checkbox.checked) {
+                    [...targetInputs].forEach((input) => input?.setAttribute('required', ''));
+                } else {
+                    [...targetInputs].forEach((input) => input?.removeAttribute('required'));
+                }
+            }
+        });
+    });
+</script>

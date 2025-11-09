@@ -1,118 +1,109 @@
-@mixin inline {
-    /** inline */
-    // --form-input-group-flex-direction: ;
-    // --form-input-group-label-width: ;
-    // --form-input-group-content-width: ;
-    &.inline-group-content-padding {
-        // --form-input-group-content-padding-top: ;
-    }
-    &.input-group-padding-label {
-        // --form-input-group-label-padding-top: ;
-        // --form-input-group-label-padding-bottom: ;
-    }
-    &.input-group-center-label {
-        &.inline-group-content-padding {
-            // --form-input-group-content-padding-top: ;
-        }
-        .input-group-label {
-            align-items: center;
-        }
-    }
-    &.input-group-center-label {
-        // --form-input-group-align-items: ;
-    }
-}
-@mixin inline-content {
-    /** inline-content */
-    // --form-input-group-content-flex-direction: ;
-    // --form-input-group-content-align-items: ;
-    // --form-input-group-content-gap: ;
+@use './inputGroup-mixin.scss' as *;
 
-    &.input-group-inline-content-wrap {
-        // --form-input-group-content-flex-wrap: ;
-    }
-    &.input-group-inline-no-gutter {
-        // --form-input-group-content-gap: ;
-    }
-    &.input-group-inline-rounded-less {
-        :where(input, select, textarea, .datepicker-container) + .btn {
-            @apply border-l-none;
-        }
-        .btn {
-            // --btn-border-radius: ;
-        }
-    }
-    .btn {
-        // --btn-padding-y: ;
-    }
-    .flex-auto {
-        @apply flex-auto;
-    }
-    .flex-none {
-        @apply flex-none;
-    }
-}
-
+/**
+ * 表單輸入群組樣式 (form-input-group)
+ * 
+ * 提供標籤和輸入內容的結構化佈局容器，支援響應式水平/垂直排列、自定義樣式和無障礙功能
+ * 
+ * 對應 JSON 規範：
+ * - subTitle: 副標題文字（helperText）
+ * - infoText: 驗證訊息文字（validationMessage）
+ * 
+ * @author Asus Team
+ * @version 1.0.0
+ */
 .form-input-group {
-    // --form-input-group-border-width: ;
-    // --form-input-group-border-color: ;
-    // --form-input-group-flex-direction: ;
-    // --form-input-group-align-items: ;
-    // --form-input-group-label-width: ;
-    // --form-input-group-label-flex-direction: ;
-    // --form-input-group-label-align-items: ;
-    // --form-input-group-label-justify-content: ;
-    // --form-input-group-label-gap: ;
-    // --form-input-group-label-color: ;
-    // --form-input-group-label-font-size: ;
-    // --form-input-group-label-font-weight: ;
-    // --form-input-group-label-line-height: ;
-    // --form-input-group-label-letter-spacing: ;
-    // --form-input-group-label-font-family: ;
-    // --form-input-group-label-padding-x: ;
-    // --form-input-group-label-padding-top: ;
-    // --form-input-group-label-padding-bottom: ;
-    // --form-input-group-gap: ;
-    // --form-input-group-content-padding-x: ;
-    // --form-input-group-content-padding-top: ;
-    // --form-input-group-content-padding-bottom: ;
-    // --form-input-group-content-width: ;
-    // --form-input-group-content-flex-direction: ;
-    // --form-input-group-content-flex-wrap: ;
-    // --form-input-group-content-align-items: ;
-    // --form-input-group-content-justify-center: ;
-    // --form-input-group-content-gap: ;
-    // --form-input-group-required-dot-font-size: ;
-    // --form-input-group-required-dot-color: ;
-    // --form-input-group-required-dot-top: ;
-    /** Content Small Text */
-    // --form-input-group-content-small-text-display: ;
-    // --form-input-group-content-small-text-align-items: ;
-    // --form-input-group-content-small-text-justify-content: ;
-    // --form-input-group-content-small-text-gap: ;
-    // --form-input-group-content-small-text-color: ;
-    // --form-input-group-content-small-text-font-size: ;
-    // --form-input-group-content-small-text-font-weight: ;
-    // --form-input-group-content-small-text-line-height: ;
-    // --form-input-group-content-small-text-letter-spacing: ;
-    // --form-input-group-content-small-text-font-family: ;
+    /* CSS 變數定義 - 群組容器 */
+    --form-input-group-border-width: 1px; /* 邊框寬度 */
+    --form-input-group-border-color: var(--color-gray-200); /* 邊框顏色 */
+    --form-input-group-flex-direction: column; /* 主軸方向 (row/column) */
+    --form-input-group-align-items: stretch; /* 交叉軸對齊 */
+    --form-input-group-gap: 12px; /* 標籤與內容間距 */
 
+    /* CSS 變數定義 - 標籤區域 */
+    --form-input-group-label-width: auto; /* 標籤寬度 */
+    --form-input-group-label-flex-direction: row; /* 標籤內部排列方向 */
+    --form-input-group-label-align-items: baseline; /* 標籤垂直對齊 */
+    --form-input-group-label-justify-content: flex-start; /* 標籤水平對齊 */
+    --form-input-group-label-gap: 0px; /* 標籤內部元素間距 */
+    --form-input-group-label-color: var(--color-gray-900); /* 標籤文字顏色 */
+    --form-input-group-label-font-size: var(--fs-16); /* 標籤字體大小 */
+    --form-input-group-label-font-weight: var(--font-weight-400); /* 標籤字體粗細 */
+    --form-input-group-label-line-height: var(--line-height-16-sh); /* 標籤行高 */
+    --form-input-group-label-letter-spacing: var(--letter-spacing); /* 標籤字母間距 */
+    --form-input-group-label-font-family: var(--font-family-roboto); /* 標籤字體家族 */
+    --form-input-group-label-padding-x: 0; /* 標籤水平內邊距 */
+    --form-input-group-label-padding-top: 0; /* 標籤上內邊距 */
+    --form-input-group-label-padding-bottom: 0; /* 標籤下內邊距 */
+
+    /* CSS 變數定義 - 標題頭部容器 */
+    --form-input-group-head-flex-direction: column; /* 頭部排列方向 */
+    --form-input-group-head-flex-wrap: nowrap; /* 頭部換行設定 */
+    --form-input-group-head-align-items: flex-start; /* 頭部垂直對齊 */
+    --form-input-group-head-justify-content: flex-start; /* 頭部水平對齊 */
+    --form-input-group-head-gap: 4px; /* 頭部元素間距 */
+
+    /* CSS 變數定義 - 副標題（helperText） */
+    --form-input-group-sub-title-font-size: var(--fs-14); /* 副標題字體大小 */
+    --form-input-group-sub-title-font-weight: var(--font-weight-400); /* 副標題字體粗細 */
+    --form-input-group-sub-title-line-height: var(--line-height-14-sh); /* 副標題行高 */
+    --form-input-group-sub-title-letter-spacing: 0.16px; /* 副標題字母間距 */
+    --form-input-group-sub-title-font-family: var(--font-family-roboto); /* 副標題字體家族 */
+    --form-input-group-sub-title-color: var(--color-gray-600); /* 副標題文字顏色 */
+
+    /* CSS 變數定義 - 內容區域 */
+    --form-input-group-content-padding-x: 0; /* 內容水平內邊距 */
+    --form-input-group-content-padding-top: 0; /* 內容上內邊距 */
+    --form-input-group-content-padding-bottom: 0; /* 內容下內邊距 */
+    --form-input-group-content-width: 100%; /* 內容最大寬度 */
+    --form-input-group-content-flex-direction: column; /* 內容排列方向 */
+    --form-input-group-content-flex-wrap: nowrap; /* 內容換行設定 */
+    --form-input-group-content-align-items: center; /* 內容垂直對齊 */
+    --form-input-group-content-justify-center: flex-start; /* 內容水平對齊 */
+    --form-input-group-content-gap: 8px; /* 內容元素間距 */
+
+    /* CSS 變數定義 - 必填標記 */
+    --form-input-group-required-dot-font-size: var(--fs-14); /* 必填星號字體大小 */
+    --form-input-group-required-dot-color: var(--color-red-300); /* 必填星號顏色 */
+    --form-input-group-required-dot-top: 0px; /* 必填星號垂直位置 */
+
+    /* CSS 變數定義 - 驗證訊息文字（validationMessage） */
+    --form-input-group-content-info-text-width: 100%; /* 驗證訊息寬度 */
+    --form-input-group-content-info-text-display: flex; /* 驗證訊息顯示方式 */
+    --form-input-group-content-info-text-align-items: center; /* 驗證訊息垂直對齊 */
+    --form-input-group-content-info-text-justify-content: flex-start; /* 驗證訊息水平對齊 */
+    --form-input-group-content-info-text-gap: 8px; /* 驗證訊息元素間距 */
+    --form-input-group-content-info-text-color: var(--color-gray-600); /* 驗證訊息顏色 */
+    --form-input-group-content-info-text-font-size: var(--fs-14); /* 驗證訊息字體大小 */
+    --form-input-group-content-info-text-font-weight: var(--font-weight-400); /* 驗證訊息字體粗細 */
+    --form-input-group-content-info-text-line-height: var(--line-height-14-sh); /* 驗證訊息行高 */
+    --form-input-group-content-info-text-letter-spacing: 0.16px; /* 驗證訊息字母間距 */
+    --form-input-group-content-info-text-font-family: var(--font-family-roboto); /* 驗證訊息字體家族 */
+
+    /* 基礎佈局設定 */
     @apply relative flex;
     flex-direction: var(--form-input-group-flex-direction);
     align-items: var(--form-input-group-align-items);
     gap: var(--form-input-group-gap);
 
+    /* 底部邊框變體 */
     &.border-bottom {
         border-bottom: var(--form-input-group-border-width) solid var(--form-input-group-border-color);
     }
+
+    /* 水平排列變體 - 總是水平 */
     &.always-inline-group {
         @include inline();
     }
+
+    /* 水平排列變體 - 大螢幕時水平 */
     &.inline-group {
         @screen lg {
             @include inline();
         }
     }
+
+    /* 必填欄位標記 */
     &.input-group-required {
         .input-group-label {
             &::after {
@@ -123,8 +114,25 @@
             }
         }
     }
+    /* 輸入群組子元素 */
     .input-group {
         @apply w-full;
+
+        /* 標題頭部容器樣式 */
+        &-head {
+            @apply relative whitespace-normal flex-none;
+            width: var(--form-input-group-label-width);
+            display: flex;
+            flex-direction: var(--form-input-group-head-flex-direction);
+            flex-wrap: var(--form-input-group-head-flex-wrap);
+            align-items: var(--form-input-group-head-align-items);
+            justify-content: var(--form-input-group-head-justify-content);
+            gap: var(--form-input-group-head-gap);
+            padding: var(--form-input-group-label-padding-top) var(--form-input-group-label-padding-x)
+                var(--form-input-group-label-padding-bottom);
+        }
+
+        /* 標籤區域樣式 */
         &-label {
             @apply relative whitespace-normal flex-none;
             width: var(--form-input-group-label-width);
@@ -133,8 +141,6 @@
             align-items: var(--form-input-group-label-align-items);
             justify-content: var(--form-input-group-label-justify-content);
             gap: var(--form-input-group-label-gap);
-            padding: var(--form-input-group-label-padding-top) var(--form-input-group-label-padding-x)
-                var(--form-input-group-label-padding-bottom);
             color: var(--form-input-group-label-color);
             font-size: var(--form-input-group-label-font-size);
             font-weight: var(--form-input-group-label-font-weight);
@@ -142,6 +148,18 @@
             line-height: var(--form-input-group-label-line-height);
             letter-spacing: var(--form-input-group-label-letter-spacing);
         }
+
+        /* 副標題樣式（helperText） */
+        &-sub-title {
+            font-size: var(--form-input-group-sub-title-font-size);
+            font-weight: var(--form-input-group-sub-title-font-weight);
+            line-height: var(--form-input-group-sub-title-line-height);
+            letter-spacing: var(--form-input-group-sub-title-letter-spacing);
+            font-family: var(--form-input-group-sub-title-font-family);
+            color: var(--form-input-group-sub-title-color);
+        }
+
+        /* 內容區域樣式 */
         &-content {
             @apply w-full flex flex-auto relative;
             max-width: var(--form-input-group-content-width);
@@ -153,26 +171,39 @@
             justify-content: var(--form-input-group-content-justify-center);
             gap: var(--form-input-group-content-gap);
 
+            /* 內容水平排列變體 - 總是水平 */
             &.input-group-always-inline-content {
                 @include inline-content();
             }
+
+            /* 內容水平排列變體 - 中螢幕以上水平 */
             &.input-group-inline-content {
                 @screen md {
                     @include inline-content();
                 }
             }
 
-            .small-text {
-                display: var(--form-input-group-content-small-text-display);
-                align-items: var(--form-input-group-content-small-text-align-items);
-                justify-content: var(--form-input-group-content-small-text-justify-content);
-                gap: var(--form-input-group-content-small-text-gap);
-                color: var(--form-input-group-content-small-text-color);
-                font-size: var(--form-input-group-content-small-text-font-size);
-                font-weight: var(--form-input-group-content-small-text-font-weight);
-                font-family: var(--form-input-group-content-small-text-font-family);
-                line-height: var(--form-input-group-content-small-text-line-height);
-                letter-spacing: var(--form-input-group-content-small-text-letter-spacing);
+            /* 驗證訊息文字樣式（validationMessage） */
+            .info-text {
+                width: var(--form-input-group-content-info-text-width);
+                display: var(--form-input-group-content-info-text-display);
+                align-items: var(--form-input-group-content-info-text-align-items);
+                justify-content: var(--form-input-group-content-info-text-justify-content);
+                gap: var(--form-input-group-content-info-text-gap);
+                color: var(--form-input-group-content-info-text-color);
+                font-size: var(--form-input-group-content-info-text-font-size);
+                font-weight: var(--form-input-group-content-info-text-font-weight);
+                font-family: var(--form-input-group-content-info-text-font-family);
+                line-height: var(--form-input-group-content-info-text-line-height);
+                letter-spacing: var(--form-input-group-content-info-text-letter-spacing);
+
+                &.error-text {
+                    --form-input-group-content-info-text-color: var(--color-red-300); /* 錯誤提示文字顏色 */
+                }
+
+                .notification-icon {
+                    --color: var(--color-red-300);
+                }
             }
         }
     }

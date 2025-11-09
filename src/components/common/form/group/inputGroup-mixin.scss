@@ -1,0 +1,102 @@
+/**
+ * 水平排列 Mixin (inline)
+ * 
+ * 將標籤和內容水平排列的樣式設定
+ * 適用於較寬的螢幕或需要緊湊佈局的情況
+ */
+@mixin inline {
+    /* 水平排列基礎設定 */
+    --form-input-group-flex-direction: row; /* 設定為 row */
+    --form-input-group-label-width: 114px; /* 標籤固定寬度 */
+    --form-input-group-content-width: 100%; /* 內容區域寬度 */
+
+    /* 內容區域上邊距調整 */
+    &.inline-group-content-padding {
+        --form-input-group-content-padding-top: 0px;
+    }
+
+    /* 標籤區域上下邊距調整 */
+    &.input-group-padding-label {
+        --form-input-group-label-padding-top: 7px;
+        --form-input-group-label-padding-bottom: 0px;
+
+        /* === 尺寸變體 === */
+
+        /** XL 尺寸 (56px) */
+        &.size-xl {
+            --form-input-group-label-padding-top: calc(8px + (var(--line-height-20-sh) - var(--fs-20)) / 2);
+        }
+        /** LG 尺寸 (48px) */
+        &.size-lg {
+            --form-input-group-label-padding-top: calc(11px + (var(--line-height-18-sh) - var(--fs-18)) / 2);
+        }
+        /** MD 尺寸 (40px) */
+        &.size-md {
+            --form-input-group-label-padding-top: calc(7px + (var(--line-height-16-sh) - var(--fs-16)) / 2);
+        }
+        /** SM 尺寸 (36px) */
+        &.size-sm {
+            --form-input-group-label-padding-top: calc(4px + (var(--line-height-14-sh) - var(--fs-14)) / 2);
+        }
+    }
+
+    /* 標籤垂直置中對齊 */
+    &.input-group-center-label {
+        &.inline-group-content-padding {
+            --form-input-group-content-padding-top: 0px;
+        }
+        .input-group-label {
+            align-items: center;
+        }
+    }
+
+    /* 整體垂直對齊設定 */
+    &.input-group-center-label {
+        --form-input-group-align-items: center;
+    }
+}
+/**
+ * 內容水平排列 Mixin (inline-content)
+ * 
+ * 將內容區域內的元素水平排列
+ * 適用於輸入框與按鈕組合、多個表單控制項並排等情況
+ */
+@mixin inline-content {
+    /* 內容水平排列基礎設定 */
+    --form-input-group-content-flex-direction: row; /* 設定為 row */
+    --form-input-group-content-align-items: center; /* 垂直對齊方式 */
+    --form-input-group-content-gap: 8px; /* 元素間距 */
+
+    /* 內容換行設定 */
+    &.input-group-inline-content-wrap {
+        --form-input-group-content-flex-wrap: wrap; /* 允許換行 */
+    }
+
+    /* 移除元素間距 */
+    &.input-group-inline-no-gutter {
+        --form-input-group-content-gap: 0px; /* 設定為 0 */
+    }
+
+    /* 連接樣式 - 移除相鄰元素間的邊框和圓角 */
+    &.input-group-inline-rounded-less {
+        :where(input, select, textarea, .datepicker-container) + .btn {
+            @apply border-l-none; /* 移除左邊框 */
+        }
+        .btn {
+            --btn-border-radius: 0px; /* 調整按鈕圓角 */
+        }
+    }
+
+    /* 按鈕垂直內邊距調整 */
+    // .btn {
+    //     --btn-padding-y: ;                          /* 與輸入框高度對齊 */
+    // }
+
+    /* Flex 工具類別 */
+    .flex-auto {
+        @apply flex-auto; /* 自動伸縮 */
+    }
+    .flex-none {
+        @apply flex-none; /* 固定尺寸 */
+    }
+}

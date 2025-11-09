@@ -1,0 +1,181 @@
+@use '../../../../scss/mixin/scrollbar.scss' as scrollbar;
+@import '../input.scss';
+
+/**
+ * 自定義選擇器組件 (custom-select)
+ * 
+ * 完全自定義的下拉選擇器，不依賴原生 <select> 元素
+ * 提供更靈活的樣式控制和互動體驗
+ * 包含選擇器本體、下拉選項列表和各種狀態樣式
+ */
+.custom-select {
+    /* === 選擇器本體樣式變數 === */
+    --custom-select-padding-x: ; /* 水平內邊距 */
+    --custom-select-padding-y: ; /* 垂直內邊距 */
+    --custom-select-color: ; /* 文字顏色 */
+    --custom-select-disabled-color: ; /* 禁用狀態文字顏色 */
+    --custom-select-font-size: ; /* 字體大小 */
+    --custom-select-font-weight: ; /* 字體粗細 */
+    --custom-select-placeholder-color: ; /* 佔位符文字顏色 */
+    --custom-select-line-height: ; /* 行高 */
+    --custom-select-letter-spacing: ; /* 字母間距 */
+    --custom-select-background-color: ; /* 背景顏色 */
+    --custom-select-disabled-background-color: ; /* 禁用狀態背景顏色 */
+    --custom-select-border-width: ; /* 邊框寬度 */
+    --custom-select-border-color: ; /* 邊框顏色 */
+    --custom-select-border-radius: ; /* 邊框圓角 */
+
+    /* === 下拉箭頭圖標變數 === */
+    --custom-select-background-image: ; /* 箭頭圖標 */
+    --custom-select-background-position-right: ; /* 箭頭距離右邊的距離 */
+    --custom-select-background-size: ; /* 箭頭尺寸 */
+
+    /* === 下拉選項容器變數 === */
+    --custom-select-items-border-width: ; /* 選項容器邊框寬度 */
+    --custom-select-items-border-color: ; /* 選項容器邊框顏色 */
+    --custom-select-item-top: ; /* 選項容器頂部位置 */
+    --custom-select-item-height: ; /* 選項容器最大高度 */
+
+    /* === 單個選項樣式變數 === */
+    --custom-select-item-padding-y: ; /* 選項垂直內邊距 */
+    --custom-select-item-padding-x: ; /* 選項水平內邊距 */
+    --custom-select-item-background-color: ; /* 選項背景顏色 */
+    --custom-select-item-border-width: ; /* 選項邊框寬度 */
+    --custom-select-item-border-color: ; /* 選項邊框顏色 */
+    --custom-select-active-item-background-color: ; /* 選中/懸停選項背景顏色 */
+    --custom-select-active-item-color: ; /* 選中/懸停選項文字顏色 */
+    --custom-select-item-zindex: ; /* 選項容器層級 */
+
+    /* 設定為相對定位，作為下拉選項的定位參考 */
+    @apply relative;
+
+    /* 
+     * 隱藏的原生 select 元素
+     * 保留用於表單提交和無障礙功能，但在視覺上完全隱藏
+     */
+    select {
+        /* 將原生 select 隱藏但保持可訪問性 */
+        @apply absolute top-full left-1/2 -translate-x-1/2 p-0 w-0.0625rem h-0.0625rem overflow-hidden pointer-events-none select-none;
+
+        /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
+        &:disabled {
+            & + .select-selected {
+                @apply pointer-events-none select-none;
+                color: var(--custom-select-disabled-color);
+                background-color: var(--custom-select-disabled-background-color);
+            }
+        }
+    }
+
+    /*
+     * 選擇器顯示區域 (select-selected)
+     * 顯示當前選中的值或佔位符文字
+     * 包含下拉箭頭和各種狀態樣式
+     */
+    .select-selected {
+        /* 移除焦點時的預設外框 */
+        @apply focus-within:outline-none;
+
+        /* 基礎樣式：使用 CSS 變數控制外觀 */
+        padding: var(--custom-select-padding-y) var(--custom-select-padding-x);
+        color: var(--custom-select-color);
+        font-size: var(--custom-select-font-size);
+        font-weight: var(--custom-select-font-weight);
+        line-height: var(--custom-select-line-height);
+        letter-spacing: var(--custom-select-letter-spacing);
+        background-color: var(--custom-select-background-color);
+        border: var(--custom-select-border-width) solid var(--custom-select-border-color);
+        border-radius: var(--custom-select-border-radius);
+
+        /* 佔位符狀態：當沒有選中值時顯示的樣式 */
+        &.select-selected-placeholder {
+            color: var(--custom-select-placeholder-color);
+            font-weight: var(--custom-select-font-weight);
+            line-height: var(--custom-select-line-height);
+            letter-spacing: var(--custom-select-letter-spacing);
+        }
+
+        /* 
+         * 下拉箭頭偽元素
+         * 使用 ::after 偽元素創建箭頭圖標
+         */
+        &:after {
+            @apply content-empty absolute top-1/2 -translate-y-1/2 bg-no-repeat bg-center bg-contain transition-transform duration-300 ease-out;
+            width: var(--custom-select-background-size);
+            height: var(--custom-select-background-size);
+            right: var(--custom-select-background-position-right);
+            background-image: var(--custom-select-background-image);
+        }
+
+        /* 展開狀態：箭頭旋轉 180 度 */
+        &.select-arrow-active:after {
+            @apply rotate-180deg;
+        }
+    }
+
+    /*
+     * 下拉選項項目 (select-items > div)
+     * 每個可選擇的選項樣式
+     * 包含懸停效果和選中狀態
+     */
+    .select-items > div {
+        /* 基礎互動樣式：顏色過渡、指標和禁止選取 */
+        @apply transition-colors duration-300 ease-out cursor-pointer select-none;
+
+        /* 選項內容樣式：使用與選擇器相同的字體設定 */
+        padding: var(--custom-select-item-padding-y) var(--custom-select-item-padding-x);
+        border-bottom: var(--custom-select-item-border-width) solid var(--custom-select-item-border-color);
+        color: var(--custom-select-color);
+        font-size: var(--custom-select-font-size);
+        font-weight: var(--custom-select-font-weight);
+        line-height: var(--custom-select-line-height);
+        letter-spacing: var(--custom-select-letter-spacing);
+
+        /* 最後一個選項：移除底部邊框 */
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    /*
+     * 下拉選項容器 (select-items)
+     * 包含所有選項的下拉選單容器
+     * 支援滾動和定位控制
+     */
+    .select-items {
+        /* 絕對定位：相對於 .custom-select 容器定位 */
+        @apply absolute inset-x-0 overflow-auto origin-center transition-colors duration-300 ease-out;
+
+        /* 容器位置和尺寸 */
+        top: var(--custom-select-item-top); /* 距離選擇器頂部的位置 */
+        max-height: var(--custom-select-item-height); /* 最大高度，超出時顯示滾動條 */
+        background-color: var(--custom-select-item-background-color);
+        z-index: var(--custom-select-item-zindex); /* 確保顯示在其他元素之上 */
+
+        /* 邊框設定：與選擇器連接，頂部無邊框 */
+        border: var(--custom-select-items-border-width) solid var(--custom-select-items-border-color);
+        border-top: none; /* 移除頂部邊框，與選擇器無縫連接 */
+
+        /* 自定義滾動條樣式 */
+        @include scrollbar.scrollbar;
+    }
+
+    /*
+     * 隱藏狀態類別 (select-hide)
+     * 用於隱藏下拉選項容器
+     */
+    .select-hide {
+        display: none;
+    }
+
+    /*
+     * 選項互動狀態
+     * 懸停和選中狀態的樣式
+     */
+    .select-items div:hover,                    /* 滑鼠懸停狀態 */
+    .select-items div.same-as-selected {
+        /* 當前選中的選項 */
+        color: var(--custom-select-active-item-color);
+        background-color: var(--custom-select-active-item-background-color);
+    }
+}

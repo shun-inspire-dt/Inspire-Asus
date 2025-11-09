@@ -1,145 +1,89 @@
-@use '../../../../scss/mixin/scrollbar.scss' as scrollbar;
-@import '../input.scss';
+/**
+ * Select 組件樣式
+ * 
+ * 基於 Figma 設計規範的選擇器組件
+ * 支援多種尺寸、狀態和 CSS background-image 箭頭
+ */
 
+@use '../../../../scss/mixin/scrollbar.scss' as scrollbar;
+@import '../input/input.scss';
+
+/**
+ * 原生選擇器樣式 (control-select)
+ * 
+ * 基於原生 HTML <select> 元素，通過 CSS 自定義外觀
+ * 移除瀏覽器預設樣式並新增自定義背景圖標
+ */
 .control-select {
-    // --select-background-image: ;
-    // --select-background-position-right: ;
-    // --select-background-size: ;
+    /* CSS 變數定義 - 背景圖標相關 */
+    --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    --select-background-position-right: 16px;
+    --select-background-size: 20px;
+
+    /* 移除瀏覽器預設的下拉箭頭樣式 */
     @apply appearance-none;
 
-    padding-right: calc(var(--select-background-position-right) + var(--select-background-size) + 10px);
+    /* 右側內邊距：為自定義箭頭圖標預留空間 */
+    padding-right: calc(var(--select-background-position-right) + var(--select-background-size));
+
+    /* 背景圖標定位和樣式 */
     background-position: right var(--select-background-position-right) center;
     background-size: var(--select-background-size);
     background-repeat: no-repeat;
     background-image: var(--select-background-image);
 
+    /* 佔位符選項樣式 */
     option.control-select-placeholder {
-        @apply var(--input-placeholder-color);
+        color: var(--input-placeholder-color, #666666);
     }
-}
 
-/**
-.needs-validate {
-    &.was-invalidated {
-        .control-select:invalid {
-            @apply border-primary;
-        }
+    /* 尺寸變體 */
+    &.size-xl {
+        --select-background-size: 20px;
     }
-}
-*/
 
-.custom-select {
-    // --custom-select-padding-x: ;
-    // --custom-select-padding-y: ;
-    // --custom-select-color: ;
-    // --custom-select-disabled-color: ;
-    // --custom-select-font-size: ;
-    // --custom-select-font-weight: ;
-    // --custom-select-placeholder-color: ;
-    // --custom-select-line-height: ;
-    // --custom-select-letter-spacing: ;
-    // --custom-select-background-color: ;
-    // --custom-select-disabled-background-color: ;
-    // --custom-select-border-width: ;
-    // --custom-select-border-color: ;
-    // --custom-select-border-radius: ;
-    // --custom-select-background-image: ;
-    // --custom-select-background-position-right: ;
-    // --custom-select-background-size: ;
-    // --custom-select-items-border-width: ;
-    // --custom-select-items-border-color: ;
-    // --custom-select-item-top: ;
-    // --custom-select-item-height: ;
-    // --custom-select-item-padding-y: ;
-    // --custom-select-item-padding-x: ;
-    // --custom-select-item-background-color: ;
-    // --custom-select-item-border-width: ;
-    // --custom-select-item-border-color: ;
-    // --custom-select-active-item-background-color: ;
-    // --custom-select-active-item-color: ;
-    // --custom-select-item-zindex: ;
+    &.size-lg {
+        --select-background-size: 18px;
+    }
 
-    @apply relative;
+    &.size-md {
+        --select-background-size: 16px;
+    }
 
-    select {
-        @apply absolute top-full left-1/2 -translate-x-1/2 p-0 w-0.0625rem h-0.0625rem overflow-hidden pointer-events-none select-none;
+    &.size-sm {
+        --select-background-size: 14px;
+    }
 
-        &:disabled {
-            & + .select-selected {
-                @apply pointer-events-none select-none;
-                color: var(--custom-select-disabled-color);
-                background-color: var(--custom-select-disabled-background-color);
-            }
+    &.status-active,
+    &.status-placeholder-active {
+        border-color: var(--color-blue-500, #006ce1);
+        border-width: 2px;
+        --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    }
+
+    &.status-sort {
+        --input-color: var(--color-blue-500, #006ce1);
+        --input-placeholder-color: var(--color-blue-500, #006ce1);
+        --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23006ce1" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    }
+
+    /* 展開狀態 - 通過 JavaScript 動態切換 */
+    &.is-expanded {
+        --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+
+        &.status-sort {
+            --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23006ce1" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
         }
     }
 
-    .select-selected {
-        @apply focus-within:outline-none;
-        padding: var(--custom-select-padding-y) var(--custom-select-padding-x);
-        color: var(--custom-select-color);
-        font-size: var(--custom-select-font-size);
-        font-weight: var(--custom-select-font-weight);
-        line-height: var(--custom-select-line-height);
-        letter-spacing: var(--custom-select-letter-spacing);
-        background-color: var(--custom-select-background-color);
-        border: var(--custom-select-border-width) solid var(--custom-select-border-color);
-        border-radius: var(--custom-select-border-radius);
-
-        &.select-selected-placeholder {
-            color: var(--custom-select-placeholder-color);
-            font-weight: var(--custom-select-font-weight);
-            line-height: var(--custom-select-line-height);
-            letter-spacing: var(--custom-select-letter-spacing);
-        }
-
-        &:after {
-            @apply content-empty absolute top-1/2 -translate-y-1/2 bg-no-repeat bg-center bg-contain transition-transform duration-300 ease-out;
-            width: var(--custom-select-background-size);
-            height: var(--custom-select-background-size);
-            right: var(--custom-select-background-position-right);
-            background-image: var(--custom-select-background-image);
-        }
-
-        &.select-arrow-active:after {
-            @apply rotate-180deg;
-        }
+    /* Placeholder 顏色狀態 - 通過 JavaScript 動態切換 */
+    &.has-placeholder {
+        color: var(--input-placeholder-color, #666666);
     }
 
-    .select-items > div {
-        @apply transition-colors duration-300 ease-out cursor-pointer select-none;
-        padding: var(--custom-select-item-padding-y) var(--custom-select-item-padding-x);
-        border-bottom: var(--custom-select-item-border-width) solid var(--custom-select-item-border-color);
-        color: var(--custom-select-color);
-        font-size: var(--custom-select-font-size);
-        font-weight: var(--custom-select-font-weight);
-        line-height: var(--custom-select-line-height);
-        letter-spacing: var(--custom-select-letter-spacing);
-
-        &:last-child {
-            border-bottom: none;
-        }
-    }
-
-    .select-items {
-        @apply absolute inset-x-0 overflow-auto origin-center transition-colors duration-300 ease-out;
-
-        top: var(--custom-select-item-top);
-        max-height: var(--custom-select-item-height);
-        background-color: var(--custom-select-item-background-color);
-        z-index: var(--custom-select-item-zindex);
-        border: var(--custom-select-items-border-width) solid var(--custom-select-items-border-color);
-        border-top: none;
-
-        @include scrollbar.scrollbar;
-    }
-
-    .select-hide {
-        display: none;
-    }
-
-    .select-items div:hover,
-    .select-items div.same-as-selected {
-        color: var(--custom-select-active-item-color);
-        background-color: var(--custom-select-active-item-background-color);
+    /* 佔位符選項的特殊樣式（備用方案） */
+    option.control-select-placeholder {
+        color: var(--input-placeholder-color, #666666);
+        font-style: italic;
     }
 }

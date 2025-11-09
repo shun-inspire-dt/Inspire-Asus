@@ -1,0 +1,164 @@
+---
+/**
+ * 輸入框組件 - 通用表單輸入元件
+ * 支援多種輸入類型、驗證功能和自定義樣式
+ */
+/** 輸入框組件屬性介面 */
+import type { Props as InputProps } from './input.astro';
+/** 輸入框組件 */
+import Input from './input.astro';
+/** 圖標組件 */
+import HideShowIcon from '../../icons/hidden/HideShowIcon.astro';
+import CrossIcon from '../../icons/header-menu/cross.astro';
+import SearchIcon from '../../icons/search/search.astro';
+/** Style */
+import './inputWrapper.scss';
+
+/**
+ * 輸入框組件屬性介面
+ * 通用表單輸入元件，支援多種輸入類型、驗證功能、圖標和自定義樣式
+ *
+ * @interface Props
+ * @property {string} [inputId] - ID
+ * @property {any} [inputClassName] - 自定義 CSS 類別名稱
+ * @property {attribute} [inputAttribute] - 其他自定義 HTML 屬性
+ * @property {{ [key: string]: string }} [inputStyle] - 自定義 CSS 樣式
+ */
+export interface Props extends InputProps {
+    inputId?: string;
+    inputClassName?: any;
+    inputAttribute?: attribute;
+    inputStyle?: { [key: string]: string };
+    pwdShowIcon?: boolean;
+    pwdHideIcon?: boolean;
+    closeIcon?: boolean;
+    searchIcon?: boolean;
+}
+
+/**
+ * 從 Astro.props 解構所有屬性
+ * 設定預設值並準備傳遞給 HTML input 元素
+ */
+const {
+    id, // 輸入框 ID
+    className, // 自定義 CSS 類別
+    attribute = {}, // 其他 HTML 屬性，預設為空物件
+    style = {}, // 自定義 CSS 樣式，預設為空物件
+    pwdShowIcon, // 是否顯示密碼顯示圖標，預設為 false
+    pwdHideIcon, // 是否顯示密碼隱藏圖標，預設為 false
+    closeIcon, // 是否顯示清除圖標，預設為 false
+    searchIcon, // 是否顯示搜尋圖標，預設為 false
+
+    /** Input 屬性 */
+
+    inputId, // Input ID
+    inputClassName, // Input CSS 類別
+    name, // 表單欄位名稱
+    value, // 輸入框值
+    type = 'text', // 輸入框類型
+    maxLength, // 最大字元長度
+    minLength, // 最小字元長度
+    placeholder = '請輸入密碼', // 佔位符文字，預設為密碼提示
+    inputmode = 'text', // 輸入模式，預設為文字
+    required, // 是否必填
+    disabled, // 是否禁用
+    readonly, // 是否唯讀
+    autocomplete = 'current-password', // 自動完成，預設為當前密碼
+    title, // 標題（用於無障礙）
+    transparent, // 是否透明樣式
+    size, // 輸入框尺寸，預設為 xl
+    status, // 輸入框狀態，預設為 value
+    focus, // 是否顯示焦點邊框，預設為 false
+    validClass, // 驗證 CSS 類別
+    validType, // 驗證類型
+    validLabel, // 驗證標籤
+    validRegex, // 驗證正規表達式
+    errorFeedback, // 錯誤回饋訊息
+    successFeedback, // 成功回饋訊息
+    FeedbackIcon, // 是否顯示回饋圖標
+    aria = {}, // ARIA 屬性，預設為空物件
+    inputAttribute = {}, // Input 屬性，預設為空物件
+    inputStyle = {} // Input 樣式，預設為空物件
+} = Astro.props as Props;
+
+/**
+ * 生成唯一的組件 ID
+ * 如果沒有提供 id，則生成一個隨機 ID
+ */
+const componentId = id || `input-wrapper-${Math.random().toString(36).substr(2, 9)}`;
+const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<!-- 
+    輸入框容器，包含輸入框和圖標
+    使用相對定位來容納絕對定位的圖標
+-->
+<div id={id || componentId} class:list={['input-wrapper', className]} {...attribute} style={style}>
+    <Input
+        id={inputID}
+        className={inputClassName}
+        type={type}
+        name={name}
+        value={value}
+        maxLength={maxLength}
+        minLength={minLength}
+        placeholder={placeholder}
+        inputmode={inputmode}
+        required={required}
+        disabled={disabled}
+        readonly={readonly}
+        autocomplete={autocomplete}
+        title={title}
+        transparent={transparent}
+        size={size}
+        status={status}
+        focus={focus}
+        validClass={validClass}
+        validType={validType}
+        validLabel={validLabel}
+        validRegex={validRegex}
+        errorFeedback={errorFeedback}
+        successFeedback={successFeedback}
+        FeedbackIcon={FeedbackIcon}
+        aria={aria}
+        attribute={inputAttribute}
+        style={inputStyle}
+    />
+    <!-- 圖標容器 - 使用絕對定位，Y 軸置中，X 軸距離右側 16px -->
+    {
+        (pwdShowIcon || pwdHideIcon || closeIcon || searchIcon) && (
+            <div class="input-icons">
+                {pwdShowIcon && (
+                    <HideShowIcon
+                        state="show"
+                        Tag="button"
+                        attribute={{ type: 'button', 'data-pwd-expand': 'true' }}
+                        aria={{ 'aria-label': '顯示密碼' }}
+                    />
+                )}
+                {pwdHideIcon && (
+                    <HideShowIcon
+                        state="hide"
+                        Tag="button"
+                        attribute={{ type: 'button', 'data-pwd-expand': 'false' }}
+                        aria={{ 'aria-label': '隱藏密碼' }}
+                    />
+                )}
+                {closeIcon && (
+                    <CrossIcon
+                        Tag="button"
+                        attribute={{ type: 'button' }}
+                        aria={{ 'aria-label': '清除輸入' }}
+                    />
+                )}
+                {searchIcon && (
+                    <SearchIcon
+                        Tag="button"
+                        attribute={{ type: 'button' }}
+                        aria={{ 'aria-label': '搜尋' }}
+                    />
+                )}
+            </div>
+        )
+    }
+</div>

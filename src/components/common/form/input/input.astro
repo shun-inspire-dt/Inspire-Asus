@@ -1,0 +1,172 @@
+---
+/**
+ * 輸入框組件 - 通用表單輸入元件
+ * 支援多種輸入類型、驗證功能和自定義樣式
+ */
+
+/** 類型定義 */
+import type { HTMLAttributes } from 'astro/types';
+
+/** 樣式檔案 */
+import './input.scss';
+
+/**
+ * 輸入框組件屬性介面
+ * 通用表單輸入元件，支援多種輸入類型、驗證功能、圖標和自定義樣式
+ *
+ * @interface Props
+ * @property {string} [id] - 輸入框的唯一識別碼
+ * @property {any} [className] - 自定義 CSS 類別名稱
+ * @property {HTMLAttributes<'input'>['type']} [type] - 輸入框類型 (text, email, password, number, date, search, file 等)
+ * @property {string} [name] - 表單欄位名稱，用於表單提交
+ * @property {string | number} [value] - 輸入框的預設值
+ * @property {string | number} [maxLength] - 最大字元長度限制
+ * @property {string | number} [minLength] - 最小字元長度限制
+ * @property {string | number} [max] - 數值輸入的最大值
+ * @property {string | number} [min] - 數值輸入的最小值
+ * @property {string} [placeholder] - 佔位符文字，當輸入框為空時顯示
+ * @property {HTMLAttributes<'input'>['inputmode']} [inputmode] - 輸入模式，影響行動裝置鍵盤類型
+ * @property {boolean} [required] - 是否為必填欄位
+ * @property {boolean} [disabled] - 是否禁用輸入框
+ * @property {'readonly'} [readonly] - 是否為唯讀狀態
+ * @property {autocomlete} [autocomplete] - 自動完成屬性，協助瀏覽器填入建議值
+ * @property {string} [title] - 輸入框標題，用於無障礙標籤
+ * @property {boolean} [transparent] - 是否使用透明樣式（無背景、無邊框）
+ * @property {'xl' | 'lg' | 'md' | 'sm'} [size] - 輸入框尺寸
+ * @property {'value' | 'error' | 'disabled' | 'placeholder' | 'selected' | 'placeholder-selected'} [status] - 輸入框狀態
+ * @property {boolean} [focus] - 是否顯示焦點邊框
+ * @property {boolean} [pwdShowIcon] - 是否顯示密碼顯示圖標（眼睛開啟）
+ * @property {boolean} [pwdHideIcon] - 是否顯示密碼隱藏圖標（眼睛關閉）
+ * @property {boolean} [closeIcon] - 是否顯示清除圖標
+ * @property {boolean} [searchIcon] - 是否顯示搜尋圖標
+ * @property {string} [validClass] - 驗證相關屬性 - CSS 類別名稱
+ * @property {string} [validType] - 驗證類型
+ * @property {string} [validLabel] - 驗證標籤
+ * @property {string} [validRegex] - 驗證用的正規表達式
+ * @property {string} [errorFeedback] - 錯誤訊息回饋文字
+ * @property {string} [successFeedback] - 成功訊息回饋文字
+ * @property {boolean} [FeedbackIcon] - 是否顯示回饋圖標
+ * @property {aria} [aria] - ARIA 無障礙屬性
+ * @property {attribute} [attribute] - 其他自定義 HTML 屬性
+ */
+export interface Props {
+    id?: string;
+    className?: any;
+    type?: HTMLAttributes<'input'>['type'];
+    name?: string;
+    value?: string | number;
+    maxLength?: string | number;
+    minLength?: string | number;
+    max?: string | number;
+    min?: string | number;
+    placeholder?: string;
+    inputmode?: HTMLAttributes<'input'>['inputmode'];
+    required?: boolean;
+    disabled?: boolean;
+    readonly?: 'readonly';
+    autocomplete?: autocomlete;
+    title?: string;
+    transparent?: boolean;
+    size?: 'xl' | 'lg' | 'md' | 'sm';
+    status?: 'value' | 'error' | 'disabled' | 'placeholder' | 'selected' | 'placeholder-selected';
+    focus?: boolean;
+    validClass?: string;
+    validType?: string;
+    validLabel?: string;
+    validRegex?: string;
+    errorFeedback?: string;
+    successFeedback?: string;
+    FeedbackIcon?: boolean;
+    aria?: aria;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+/**
+ * 從 Astro.props 解構所有屬性
+ * 設定預設值並準備傳遞給 HTML input 元素
+ */
+const {
+    id, // 輸入框 ID
+    className, // 自定義 CSS 類別
+    type = 'text', // 輸入框類型，預設為文字輸入
+    name, // 表單欄位名稱
+    value, // 輸入框值
+    placeholder, // 佔位符文字
+    inputmode = 'text', // 輸入模式，預設為文字
+    maxLength, // 最大字元長度
+    minLength, // 最小字元長度
+    max, // 最大數值
+    min, // 最小數值
+    required, // 是否必填
+    disabled, // 是否禁用
+    readonly, // 是否唯讀
+    autocomplete, // 自動完成
+    title, // 標題（用於無障礙）
+    transparent, // 是否透明樣式
+    size = 'xl', // 輸入框尺寸，預設為 xl
+    status, // 輸入框狀態，預設為 value
+    focus = false, // 是否顯示焦點邊框，預設為 false
+    validClass, // 驗證 CSS 類別
+    validType, // 驗證類型
+    validLabel, // 驗證標籤
+    validRegex, // 驗證正規表達式
+    errorFeedback, // 錯誤回饋訊息
+    successFeedback, // 成功回饋訊息
+    FeedbackIcon, // 是否顯示回饋圖標
+    attribute = {}, // 其他 HTML 屬性，預設為空物件
+    aria = {}, // ARIA 屬性，預設為空物件
+    style = {}, // 自定義樣式
+} = Astro.props as Props;
+
+/**
+ * 建立 CSS 類別列表
+ * 根據屬性動態組合樣式類別
+ */
+const inputClasses = [
+    'control-input', // 基礎輸入框類別
+    { [`size-${size}`]: size }, // 尺寸類別
+    { [`status-${status}`]: status }, // 狀態類別
+    { 'input-transparent': transparent }, // 透明樣式
+    { 'has-focus': focus }, // 焦點狀態
+    className // 自定義類別
+].filter(Boolean);
+
+/**
+ * 建立驗證相關的 data 屬性物件
+ * 這些屬性會被 JavaScript 驗證腳本使用
+ */
+const validAttribute = {
+    'data-valid-class': validClass, // 驗證成功時要套用的 CSS 類別
+    'data-valid-type': validType, // 驗證類型識別
+    'data-valid-label': validLabel, // 驗證標籤文字
+    'data-valid-regex': validRegex, // 驗證用正規表達式
+    'data-custom-feedback': errorFeedback || successFeedback ? '' : undefined, // 是否有自定義回饋訊息
+    'data-error-feedback': errorFeedback, // 錯誤回饋訊息
+    'data-success-feedback': successFeedback, // 成功回饋訊息
+    'data-feedback-icon': FeedbackIcon ? '' : undefined // 是否顯示回饋圖標
+};
+---
+
+<input
+    id={id}
+    class:list={inputClasses}
+    value={value}
+    type={type}
+    name={name}
+    max={max}
+    min={min}
+    maxlength={maxLength}
+    minlength={minLength}
+    placeholder={placeholder}
+    inputmode={inputmode}
+    required={required}
+    disabled={disabled}
+    readonly={readonly}
+    autocomplete={autocomplete}
+    aria-label={title}
+    {...attribute}
+    {...aria}
+    {...validAttribute}
+    style={style}
+/>

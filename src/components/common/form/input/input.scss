@@ -1,0 +1,260 @@
+/**
+ * 通用輸入框樣式類別
+ * 根據 Figma 設計規範實作，支援多種尺寸、狀態和圖標
+ */
+.control-input {
+    /* === 基礎樣式變數 === */
+
+    --input-padding-x: 16px; /* 水平內邊距 */
+    --input-padding-y: 7px; /* 垂直內邊距 */
+    --input-font-size: var(--fs-16, 16px); /* 字體大小 */
+    --input-line-height: var(--line-height-16-sh, 22px); /* 行高 */
+    --input-letter-spacing: 0px; /* 字元間距 */
+
+    /** 基礎設定 */
+    --input-color: var(--color-gray-900, #181818); /* 輸入值文字顏色 */
+    --input-placeholder-color: var(--color-gray-600, #666666); /* 佔位符文字顏色 */
+    --input-background-color: var(--color-white, #ffffff); /* 背景顏色 */
+    --input-border-color: var(--color-gray-500, #818181); /* 邊框顏色 */
+    --input-border-width: 1px; /* 邊框寬度 */
+    --input-border-radius: 8px; /* 邊框圓角 */
+    --input-font-family: var(--font-family-roboto, 'Roboto', sans-serif); /* 字體家族 */
+    --input-font-weight: 400; /* 字體粗細 */
+    --input-text-align: left; /* 文字對齊 */
+
+    /** 狀態顏色 */
+    --input-disabled-color: var(--color-gray-300, #b3b3b3); /* 禁用文字顏色 */
+    --input-disabled-background-color: var(--color-gray-300-10, rgba(179, 179, 179, 0.1)); /* 禁用背景顏色 */
+    --input-disabled-border-color: var(--color-gray-300, #b3b3b3); /* 禁用邊框顏色 */
+    --input-error-border-color: var(--color-red-300, #b42d18); /* 錯誤邊框顏色 */
+    --input-selected-border-color: var(--color-blue-500, #006ce1); /* 選中邊框顏色 */
+    --input-focus-border-color: var(--color-blue-500, #006ce1); /* 焦點邊框顏色 */
+
+    /** 過渡效果 */
+    --input-transition: none; /* 平滑過渡效果 */
+
+    /** Focus outline 相關屬性 */
+    --input-outline-width: 0px; /* 焦點外框寬度 */
+    --input-outline-color: transparent; /* 焦點外框顏色 */
+    --input-outline-offset: 0px; /* 焦點外框偏移 */
+
+    /* === 基礎樣式套用 === */
+
+    width: 100%; /* 寬度 100% */
+    transition: var(--input-transition); /* 平滑過渡效果 */
+
+    /* 使用 CSS 變數套用樣式 */
+    padding: var(--input-padding-y) var(--input-padding-x); /* 內邊距：垂直 水平 */
+    font-family: var(--input-font-family); /* 字體家族 */
+    font-size: var(--input-font-size); /* 字體大小 */
+    font-weight: var(--input-font-weight); /* 字體粗細 */
+    line-height: var(--input-line-height); /* 行高 */
+    letter-spacing: var(--input-letter-spacing); /* 字元間距 */
+    text-align: var(--input-text-align); /* 文字對齊 */
+    color: var(--input-color); /* 文字顏色 */
+    background-color: var(--input-background-color); /* 背景顏色 */
+    border: var(--input-border-width) solid var(--input-border-color); /* 邊框：寬度 樣式 顏色 */
+    border-radius: var(--input-border-radius); /* 邊框圓角 */
+
+    /* === 狀態樣式 === */
+
+    /** 佔位符樣式 */
+    &::placeholder {
+        color: var(--input-placeholder-color); /* 佔位符文字顏色 */
+    }
+
+    /** 焦點狀態 */
+    &:focus:not(.status-error),
+    &.has-focus,
+    &.status-selected {
+        --input-border-width: 1px; /* 焦點邊框寬度 */
+        border-color: var(--input-focus-border-color); /* 焦點邊框顏色 */
+
+        /* Focus outline 相關屬性 */
+        outline: var(--input-outline-width) solid var(--input-outline-color); /* 焦點外框 */
+        outline-offset: var(--input-outline-offset); /* 焦點外框偏移 */
+    }
+
+    /** 禁用狀態樣式 */
+    &:disabled,
+    &.status-disabled {
+        color: var(--input-disabled-color); /* 禁用時的文字顏色 */
+        background-color: var(--input-disabled-background-color); /* 禁用時的背景顏色 */
+        border-color: var(--input-disabled-border-color); /* 禁用時的邊框顏色 */
+        cursor: not-allowed; /* 禁用游標 */
+
+        &::placeholder {
+            color: var(--input-disabled-color); /* 禁用時佔位符顏色 */
+        }
+
+        & + .input-icons {
+            --input-icon-color: var(--color-gray-300, #b3b3b3); /* 禁用時圖標顏色 */
+            pointer-events: none;
+        }
+    }
+
+    /** 錯誤狀態 */
+    &.status-error {
+        border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
+    }
+
+    /* === 尺寸變體 === */
+
+    /** XL 尺寸 (56px) */
+    &.size-xl {
+        --input-padding-x: 16px; /* 水平內邊距 */
+        --input-padding-y: 8px; /* 垂直內邊距 */
+        --input-font-size: var(--fs-20, 20px); /* 字體大小 */
+        --input-line-height: var(--line-height-20-sh, 26px); /* 行高 */
+        --input-letter-spacing: 0px; /* 字元間距 */
+        height: 56px;
+    }
+
+    /** LG 尺寸 (48px) */
+    &.size-lg {
+        --input-padding-x: 16px; /* 水平內邊距 */
+        --input-padding-y: 11px; /* 垂直內邊距 */
+        --input-font-size: var(--fs-18, 18px); /* 字體大小 */
+        --input-line-height: var(--line-height-18-sh, 24px); /* 行高 */
+        --input-letter-spacing: 0px; /* 字元間距 */
+        height: 48px;
+    }
+
+    /** MD 尺寸 (40px) */
+    &.size-md {
+        --input-padding-x: 16px; /* 水平內邊距 */
+        --input-padding-y: 7px; /* 垂直內邊距 */
+        --input-font-size: var(--fs-16, 16px); /* 字體大小 */
+        --input-line-height: var(--line-height-16-sh, 22px); /* 行高 */
+        --input-letter-spacing: 0px; /* 字元間距 */
+        height: 40px;
+    }
+
+    /** SM 尺寸 (36px) */
+    &.size-sm {
+        --input-padding-x: 16px; /* 水平內邊距 */
+        --input-padding-y: 4px; /* 垂直內邊距 */
+        --input-font-size: var(--fs-14, 14px); /* 字體大小 */
+        --input-line-height: var(--line-height-14-sh, 18px); /* 行高 */
+        --input-letter-spacing: 0.16px; /* 字元間距 */
+        height: 36px;
+    }
+
+    /* === 圖標支援 === */
+
+    /** 有圖標時調整右側內邊距 */
+    &.has-pwd-show-icon,
+    &.has-pwd-hide-icon {
+        padding-right: 40px; /* 為圖標預留空間 */
+    }
+    &.has-close-icon,
+    &.has-search-icon {
+        padding-right: 32px; /* 為圖標預留空間 */
+    }
+
+    /* === 特殊樣式類別 === */
+
+    /** 透明輸入框樣式 */
+    &.input-transparent {
+        --input-padding-x: 0rem; /* 水平內邊距為 0 */
+        --input-background-color: transparent; /* 背景透明 */
+        --input-disabled-background-color: transparent; /* 禁用狀態背景透明 */
+        --input-readonly-background-color: transparent; /* 唯讀狀態背景透明 */
+        --input-border-width: 0rem; /* 邊框寬度為 0 */
+        --input-border-color: transparent; /* 邊框透明 */
+        --input-disabled-border-color: transparent; /* 禁用狀態邊框透明 */
+        --input-readonly-border-color: transparent; /* 唯讀狀態邊框透明 */
+        --input-border-radius: 0rem; /* 邊框圓角為 0 */
+    }
+
+    /** 彈性輸入框樣式 */
+    &.flexible-control-input {
+        @apply min-w-unset; /* 移除最小寬度限制 */
+    }
+}
+
+/* === 特殊輸入類型樣式 === */
+.control-input {
+    /** 搜尋輸入框 (使用 CSS 類別) */
+    &.input-search {
+        /* 計算右側內邊距，為搜尋圖標預留空間 */
+        padding-right: calc(var(--search-input-background-position-right) + var(--search-input-background-size));
+        background-image: var(--search-input-background-image); /* 搜尋圖標背景圖片 */
+        background-repeat: no-repeat; /* 不重複背景圖片 */
+        background-position: right var(--search-input-background-position-right) center; /* 圖標位置：右側指定距離，垂直置中 */
+        background-size: var(--search-input-background-size); /* 背景圖片大小 */
+    }
+    /** 日期輸入框 (type="date") */
+    &[type='date'] {
+        /* 自定義 WebKit 瀏覽器的日期選擇器圖標 */
+        &::-webkit-calendar-picker-indicator {
+            color: rgba(0, 0, 0, 0); /* 隱藏原始圖標顏色 */
+            opacity: 1; /* 保持完全不透明 */
+            display: block; /* 顯示為區塊元素 */
+            background-image: var(--date-input-background-image); /* 自定義日期圖標 */
+            background-repeat: no-repeat; /* 不重複背景圖片 */
+            background-position: center; /* 圖標置中 */
+            background-size: cover; /* 背景圖片覆蓋整個區域 */
+            width: var(--date-input-background-size); /* 圖標寬度 */
+            height: var(--date-input-background-size); /* 圖標高度 */
+            border-width: thin; /* 細邊框 */
+        }
+
+        /* 日期編輯區域樣式 */
+        &::-webkit-datetime-edit {
+            color: var(--input-placeholder-color); /* 日期文字顏色使用佔位符顏色 */
+        }
+    }
+    /** 文字輸入框模擬日期輸入 (type="text" + .input-date) */
+    &[type='text'].input-date {
+        /* 計算右側內邊距，為日期圖標預留空間（額外加 2.125rem） */
+        padding-right: calc(var(--date-input-background-position-right) + var(--date-input-background-size) + 2.125rem);
+        background-image: var(--date-input-background-image); /* 日期圖標背景圖片 */
+        background-repeat: no-repeat; /* 不重複背景圖片 */
+        background-position: right var(--date-input-background-position-right) center; /* 圖標位置：右側指定距離，垂直置中 */
+        background-size: var(--date-input-background-size); /* 背景圖片大小 */
+
+        /* WebKit 瀏覽器的日期時間值樣式 */
+        &::-webkit-date-and-time-value {
+            text-align: var(--input-text-align); /* 日期時間值的文字對齊方式 */
+        }
+    }
+    /** 檔案輸入框 (type="file") */
+    &[type='file'] {
+        @apply hidden; /* 隱藏原始檔案輸入框 */
+
+        /* 相鄰的 label 元素樣式（作為自定義按鈕） */
+        & + label {
+            position: relative; /* 相對定位 */
+            /* 計算右側內邊距，為檔案圖標預留空間 */
+            padding-right: calc(var(--date-input-background-position-right) + var(--date-input-background-size));
+            background-image: var(--file-input-background-image); /* 檔案圖標背景圖片 */
+            background-repeat: no-repeat; /* 不重複背景圖片 */
+            background-position: right var(--date-input-background-position-right) center; /* 圖標位置：右側指定距離，垂直置中 */
+            background-size: var(--date-input-background-size); /* 背景圖片大小 */
+            /* 計算最小高度：字體大小 × 行高 + （2 × 內邊距 + 2 × 邊框寬度） */
+            min-height: calc(
+                var(--input-font-size) * var(--input-line-height) + (2 * var(--input-padding-y) + (2 * var(--input-border-width)))
+            );
+        }
+
+        /* 空檔案狀態樣式 */
+        &[data-empty='true'] + label {
+            color: var(--input-placeholder-color); /* 空檔案時使用佔位符顏色 */
+        }
+
+        /* 檔案輸入框禁用狀態 */
+        &:disabled + label {
+            color: var(--input-disabled-color); /* 禁用時的文字顏色 */
+            background-color: var(--input-disabled-background-color); /* 禁用時的背景顏色 */
+            border-color: var(--input-disabled-border-color); /* 禁用時的邊框顏色 */
+        }
+
+        /* 檔案輸入框唯讀狀態 */
+        &:not(.control-select)[readonly='readonly'] + label {
+            color: var(--input-readonly-color); /* 唯讀時的文字顏色 */
+            background-color: var(--input-readonly-background-color); /* 唯讀時的背景顏色 */
+            border-color: var(--input-readonly-border-color); /* 唯讀時的邊框顏色 */
+        }
+    }
+}

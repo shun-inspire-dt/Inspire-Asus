@@ -1,14 +1,56 @@
 ---
-/** Style */
+/**
+ * 表單輸入群組組件 (InputGroup)
+ *
+ * 提供標籤和輸入內容的結構化佈局容器
+ * 支援響應式水平/垂直排列、自定義樣式和無障礙功能
+ *
+ * @author Asus Team
+ * @version 1.0.0
+ */
+/** Common Component */
+import ErrorIcon from '@components/common/icons/notification/notificationIcon.astro';
+/** 樣式檔案 */
 import './inputGroup.scss';
+
+/**
+ * 表單輸入群組組件屬性介面
+ *
+ * @interface Props
+ * @property {string} [id] - 群組容器的唯一識別碼
+ * @property {any} [formGroupClassName] - 表單群組的額外 CSS 類別
+ * @property {any} [labelClassName] - 標籤區域的自定義 CSS 類別
+ * @property {any} [contentClassName] - 內容區域的自定義 CSS 類別
+ * @property {string} [inputID] - 關聯的輸入框 ID，用於 label 的 for 屬性
+ * @property {string} [label] - 標籤文字內容
+ * @property {string} [subTitle] - 副標題文字（對應 JSON 規範中的 helperText）
+ * @property {string} [infoText] - 驗證訊息文字（對應 JSON 規範中的 validationMessage）
+ * @property {attribute} [attribute] - 額外的 HTML 屬性
+ * @property {Object} [style] - 群組容器的自定義 CSS 樣式
+ * @property {Object} [labelStyle] - 標籤區域的自定義 CSS 樣式
+ * @property {Object} [contentStyle] - 內容區域的自定義 CSS 樣式
+ * @property {boolean} [border=false] - 是否顯示底部邊框
+ * @property {boolean} [inline=false] - 是否在大螢幕時水平排列
+ * @property {boolean} [alwaysInline=false] - 是否總是水平排列
+ * @property {boolean} [inlineContent=false] - 內容區域是否在中螢幕以上水平排列
+ * @property {boolean} [inlineContentPadding=false] - 水平排列時是否調整內容上邊距
+ * @property {boolean} [inlineContentWrap=false] - 內容區域是否允許換行
+ * @property {boolean} [alwaysInlineContent=false] - 內容區域是否總是水平排列
+ * @property {boolean} [inlineLabelPadding=true] - 水平排列時是否調整標籤內邊距（checkbox、radio 等無 padding-y 元素應設為 false）
+ * @property {boolean} [inlineLabelCenter=true] - 水平排列時標籤是否垂直置中
+ * @property {boolean} [inlineNoGutter=false] - 是否移除內容元素間距
+ * @property {boolean} [inlineRoundedLess=false] - 是否使用連接樣式（移除相鄰元素邊框）
+ * @property {boolean} [required=false] - 是否為必填欄位（顯示星號標記）
+ * @property {string} [inputSize='xl'] - 輸入框尺寸
+ * @property {boolean} [error=false] - 是否顯示錯誤狀態
+ */
 export interface Props {
     id?: string;
-    className?: any;
     formGroupClassName?: any;
     labelClassName?: any;
     contentClassName?: any;
     inputID?: string;
-    title?: string;
+    label?: string;
     attribute?: attribute;
     style?: { [key: string]: string | number };
     labelStyle?: { [key: string]: string | number };
@@ -25,77 +67,118 @@ export interface Props {
     inlineNoGutter?: boolean;
     inlineRoundedLess?: boolean;
     required?: boolean;
+    inputSize?: 'xl' | 'lg' | 'md' | 'sm';
+    infoText?: string;
+    subTitle?: string;
+    error?: boolean;
 }
 
+/**
+ * 解構組件屬性並設定預設值
+ * 從 Astro.props 中提取所有屬性，並為部分屬性設定合理的預設值
+ */
 const {
-    id,
-    className,
-    formGroupClassName,
-    labelClassName,
-    contentClassName,
-    inputID,
-    title,
-    attribute = {},
-    style,
-    labelStyle,
-    contentStyle,
-    border,
-    inline,
-    alwaysInline,
-    inlineContent,
-    inlineContentPadding,
-    inlineContentWrap,
-    alwaysInlineContent,
-    inlineLabelCenter = true,
-    /** 如果是 checkbox 或是 radio 或是其他就 false，因為他們沒有 input 的 padding-y */
-    inlineLabelPadding = true,
-    required
+    id, // 群組容器 ID
+    formGroupClassName, // 表單群組額外 CSS 類別
+    labelClassName, // 標籤區域 CSS 類別
+    contentClassName, // 內容區域 CSS 類別
+    inputID, // 關聯輸入框 ID
+    label, // 標籤文字
+    attribute = {}, // 額外 HTML 屬性，預設為空物件
+    style, // 群組容器樣式
+    labelStyle, // 標籤區域樣式
+    contentStyle, // 內容區域樣式
+    border, // 是否顯示底部邊框
+    inline, // 大螢幕時是否水平排列
+    alwaysInline, // 是否總是水平排列
+    inlineContent, // 內容區域是否水平排列
+    inlineContentPadding, // 水平排列時內容上邊距調整
+    inlineContentWrap, // 內容區域是否允許換行
+    alwaysInlineContent, // 內容區域是否總是水平排列
+    inlineLabelCenter = true, // 水平排列時標籤垂直置中，預設為 true
+    /**
+     * 水平排列時標籤內邊距調整，預設為 true
+     * 注意：如果是 checkbox、radio 或其他沒有 input padding-y 的元素，應設為 false
+     */
+    inlineLabelPadding, // 水平排列時標籤內邊距調整
+    required, // 是否為必填欄位
+    inputSize, // 輸入框尺寸
+    infoText, // 小字說明文字
+    subTitle, // 副標題文字
+    error // 是否已錯誤顯示並提示
 } = Astro.props as Props;
 ---
 
 <div
     id={id}
     class:list={[
-        'form-input-group',
+        'form-input-group', // 基礎樣式類別
         {
-            'border-bottom': border,
-            'inline-group': inline,
-            'always-inline-group': alwaysInline,
-            'input-group-required': required,
-            'input-group-padding-label': (inline || alwaysInline) && inlineLabelPadding,
-            'input-group-center-label': (inline || alwaysInline) && inlineLabelCenter,
-            'inline-group-content-padding': inlineContentPadding
+            'border-bottom': border, // 底部邊框
+            'inline-group': inline, // 大螢幕時水平排列
+            'always-inline-group': alwaysInline, // 總是水平排列
+            'input-group-required': required, // 必填欄位標記
+            'input-group-padding-label': (inline || alwaysInline) && inlineLabelPadding, // 水平排列時標籤內邊距
+            'input-group-center-label': (inline || alwaysInline) && inlineLabelCenter, // 水平排列時標籤置中
+            'inline-group-content-padding': inlineContentPadding, // 水平排列時內容上邊距
+            [`size-${inputSize}`]: inputSize // 輸入框尺寸類別
         },
-        formGroupClassName
+        formGroupClassName // 額外的自定義類別
     ]}
     style={style}
     {...attribute}
 >
     {
-        title && (
-            <label
-                class:list={['input-group-label', { 'input-group-required-label': required }, labelClassName]}
-                for={inputID}
-                style={labelStyle}
-            >
-                <slot name="title-left" />
-                {title}
-                <slot name="title-right" />
-            </label>
+        (label || subTitle) && (
+            <div class="input-group-head">
+                {label && (
+                    <label
+                        class:list={[
+                            'input-group-label', // 基礎標籤樣式
+                            { 'input-group-required-label': required }, // 必填標籤樣式
+                            labelClassName // 自定義標籤類別
+                        ]}
+                        for={inputID}
+                        style={labelStyle}
+                    >
+                        <slot name="label-left" />
+                        {label}
+                        <slot name="label-right" />
+                    </label>
+                )}
+                {subTitle && (
+                    <span class="input-group-sub-title">
+                        {subTitle}
+                        <slot name="sub-title-right" />
+                    </span>
+                )}
+                <slot name="head-extra" />
+            </div>
         )
     }
+
     <div
         class:list={[
-            'input-group-content',
-            { 'input-group-inline-content': inlineContent },
-            { 'input-group-always-inline-content': alwaysInlineContent },
-            { 'input-group-inline-content-wrap': inlineContentWrap },
-            contentClassName
+            'input-group-content', // 基礎內容樣式
+            { 'input-group-inline-content': inlineContent }, // 中螢幕以上水平排列
+            { 'input-group-always-inline-content': alwaysInlineContent }, // 總是水平排列
+            { 'input-group-inline-content-wrap': inlineContentWrap }, // 允許換行
+            contentClassName // 自定義內容類別
         ]}
         style={contentStyle}
     >
         <slot />
-        <slot name="content-text" />
+        <slot name="content-text">
+            {
+                infoText && (
+                    <span class:list={['info-text', { 'error-text': error }]}>
+                        {error && <ErrorIcon />}
+                        <span>{infoText}</span>
+                    </span>
+                )
+            }
+        </slot>
     </div>
+
     <slot name="right" />
 </div>

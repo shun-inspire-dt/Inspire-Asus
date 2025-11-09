@@ -1,18 +1,20 @@
 ---
 /** Type */
 import type { HTMLAttributes } from 'astro/types';
+import type { Props as InputProps } from '@components/common/form/input/input.astro';
+import type { Props as InputGroupProps } from '@components/common/form/group/inputGroup.astro';
 /** Common Component */
 /** InputGroup */
-import InputGroup, { type Props as InputGroupProps } from '@components/common/form/group/inputGroup.astro';
+import InputGroup from '@components/common/form/group/inputGroup.astro';
 /** Input */
-import Input, { type Props as InputProps } from '@components/common/form/input.astro';
+import Input from '@components/common/form/input/input.astro';
 /** Main Components */
 /** Button */
 import Button from '@components/common/button/button.astro';
 /** Style */
 import './search.scss';
 
-export interface Props extends InputGroupProps, InputProps {
+export interface Props extends Omit<InputGroupProps, 'style'>, Omit<InputProps, 'style'> {
     searchIDName?: string;
     actions?: HTMLAttributes<'form'>['action'];
     /** Input Group */
@@ -28,6 +30,8 @@ export interface Props extends InputGroupProps, InputProps {
     inputTitle?: string;
     inputAttribute?: attribute;
     inputAria?: aria;
+    /** 統一的 style 屬性 */
+    style?: { [key: string]: string };
 }
 
 const {
@@ -81,12 +85,11 @@ const {
 <form id={searchIDName} class:list={['SearchForm', className]} action={actions} style={style}>
     <InputGroup
         id={inputGroupIDName}
-        className={inputGroupClassName}
         formGroupClassName={['SearchInputGroup', formGroupClassName]}
         labelClassName={labelClassName}
         contentClassName={contentClassName}
         inputID={IDName}
-        title={inputGroupTitle}
+        label={inputGroupTitle}
         attribute={inputGroupAttribute}
         style={inputGroupStyle}
         labelStyle={labelStyle}
