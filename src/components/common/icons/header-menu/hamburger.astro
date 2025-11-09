@@ -13,7 +13,7 @@ export interface Props {
     mode?: 'light' | 'dark';
 }
 
-const { IDName, className, style, attribute = {}, size = 24, color, mode = 'light' } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, size, color, mode = 'light' } = Astro.props as Props;
 ---
 
 <span

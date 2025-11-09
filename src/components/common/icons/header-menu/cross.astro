@@ -6,17 +6,19 @@ import './header-menu.scss';
 export interface Props {
     IDName?: string;
     className?: any;
-    attribute?: attribute;
     style?: { [key: string]: string };
     size?: number;
     color?: string;
     mode?: 'light' | 'dark';
+    Tag?: 'button' | 'span';
+    attribute?: attribute;
+    aria?: aria;
 }
 
-const { IDName, className, style, attribute = {}, size = 24, color, mode = 'light' } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, size, color, mode = 'light', Tag = 'span', aria = {} } = Astro.props as Props;
 ---
 
-<span
+<Tag
     id={IDName}
     class:list={[className, 'cross-icon', `mode-${mode}`]}
     style={{
@@ -25,6 +27,7 @@ const { IDName, className, style, attribute = {}, size = 24, color, mode = 'ligh
         '--icon-color': color ? color.charAt(0) === '#' ? color : `var(--color-${color})` : undefined
     }}
     {...attribute}
+    {...aria}
 >
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="cross-svg">
         <path
@@ -33,4 +36,4 @@ const { IDName, className, style, attribute = {}, size = 24, color, mode = 'ligh
             stroke-width="1"
             stroke-linecap="round"></path>
     </svg>
-</span>
+</Tag>
