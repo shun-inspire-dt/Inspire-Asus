@@ -1,0 +1,30 @@
+---
+/** Common Component */
+import Icon from '@components/common/icons/notification/notificationIcon.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    text?: string;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    text = '選擇篩選條件會重整結果，並可能影響其他選項的可用性。'
+} = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[className, ':uno-filter-notification: flex items-start gap-0.5rem py-0.75rem border-t border-gray-200 label-03 text-gray-900']}
+    style={style}
+    {...attribute}
+>
+    <Icon size="16" style={{ '--color': 'var(--color-blue-600, #0051A8)' }} />
+    <span class="flex-1">{text}</span>
+</div>
