@@ -1,0 +1,22 @@
+---
+/** Common Component */
+import Notice from '../notice/notice.astro';
+import Filter from './filter.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data?: category;
+}
+
+const { IDName, className, style, attribute = {}, data = [] } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ":uno-category: [&>div:last-child]:pb-0"]} style={style} {...attribute}>
+    <Notice />
+    {data?.map((item) => (
+        <Filter title={item.title} show={item.show} data={item.children} />
+    ))}
+</div>

@@ -1,0 +1,133 @@
+---
+/** Style */
+import './collapseSelect.scss';
+/** Arrow Component */
+import AfterArrow from '../icons/arrows/AfterArrow.astro';
+
+/**
+ * 摺疊選擇組件的屬性
+ * @property {string} [IDName] - HTML ID 名稱
+ * @property {string | any} [className] - CSS 類別名稱
+ * @property {any} [attribute] - 額外的 HTML 屬性
+ * @property {{[key: string]: string}} [style] - 內聯樣式
+ * @property {'expand' | 'collapse'} [type] - 摺疊類型，expand 顯示向下箭頭，collapse 顯示向上箭頭
+ * @property {'12' | '13' | '14' | '16' | '18' | '20' | '24'} [size] - 字體大小
+ * @property {'roboto' | 'tt'} [font] - 字體家族
+ * @property {'regular' | 'medium' | 'bold'} [weight] - 字體粗細
+ * @property {'default' | 'hover' | 'pressed' | 'disabled'} [status] - 選擇框狀態
+ * @property {boolean} [webFontInstalled] - 是否使用 Web Font 箭頭（否則使用 SVG）
+ * @property {boolean} [disabled] - 是否禁用選擇框
+ * @property {string} [name] - select 元素的 name 屬性
+ * @property {string | number} [value] - select 元素的預設值
+ * @property {boolean} [required] - 是否為必填欄位
+ * @property {boolean} [multiple] - 是否允許多選
+ * @property {Array<{value: string | number, label: string, disabled?: boolean}>} [options] - 選項列表
+ */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: any;
+    style?: { [key: string]: string };
+    type?: 'expand' | 'collapse';
+    size?: '12' | '13' | '14' | '16' | '18' | '20' | '24';
+    font?: 'roboto' | 'tt';
+    weight?: 'regular' | 'medium' | 'bold';
+    status?: 'default' | 'hover' | 'pressed' | 'disabled';
+    webFontInstalled?: boolean;
+    disabled?: boolean;
+    name?: string;
+    value?: string | number;
+    required?: boolean;
+    multiple?: boolean;
+    options?: Array<{ value: string | number; label: string; disabled?: boolean }>;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    type = 'expand',
+    size = '16',
+    font = 'roboto',
+    weight = 'regular',
+    status = 'default',
+    webFontInstalled = false,
+    disabled = false,
+    name,
+    value,
+    required = false,
+    multiple = false,
+    options = []
+} = Astro.props as Props;
+
+// 建立 CSS 類別
+const collapseSelectClasses = [
+    'collapse-select',
+    `collapse-select--${type}`,
+    `collapse-select--size-${size}`,
+    `collapse-select--font-${font}`,
+    `collapse-select--weight-${weight}`,
+    status && status !== 'default' && `collapse-select--${status}`,
+    webFontInstalled ? 'collapse-select--web-font' : 'collapse-select--svg',
+    disabled && 'collapse-select--disabled',
+    className
+].filter(Boolean);
+
+// 根據 type 決定箭頭方向
+const arrowDirection = type === 'expand' ? 'down' : 'up';
+---
+
+<div
+    class:list={collapseSelectClasses}
+    style={style}
+    data-type={type}
+    data-size={size}
+    data-font={font}
+    data-weight={weight}
+    data-status={status}
+    {...attribute}
+>
+    <select
+        id={IDName}
+        name={name}
+        class="collapse-select__element"
+        disabled={disabled}
+        required={required}
+        value={value}
+    >
+        <slot name="default-option">
+            <option value="" disabled selected>
+                {type === 'expand' ? '請選擇...' : '已選擇'}
+            </option>
+        </slot>
+        {
+            options.map((option) => (
+                <option value={option.value} disabled={option.disabled} selected={value === option.value}>
+                    {option.label}
+                </option>
+            ))
+        }
+        <slot />
+    </select>
+
+    <span class="collapse-select__label">
+        <slot>{type === 'expand' ? '選擇選項' : '已選擇'}</slot>
+    </span>
+
+    {
+        !webFontInstalled && (
+            <span class="collapse-select__icon">
+                <AfterArrow fontSize={`${size}px`} direction={arrowDirection} weight={weight} />
+            </span>
+        )
+    }
+    {webFontInstalled && <span class="collapse-select__icon collapse-select__icon--web-font" />}
+</div>
+
+<script>
+    import { initCollapseSelect } from './collapseSelect.ts';
+    
+    // 初始化當前組件
+    initCollapseSelect(document.currentScript?.parentElement?.parentElement || document);
+</script>

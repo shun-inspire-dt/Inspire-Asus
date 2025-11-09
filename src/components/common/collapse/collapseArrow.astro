@@ -1,0 +1,90 @@
+---
+/** Style */
+import './collapseArrow.scss';
+/** Arrow Component */
+import AfterArrow from '../icons/arrows/AfterArrow.astro';
+
+/**
+ * 摺疊箭頭組件的屬性
+ * @property {string} [IDName] - HTML ID 名稱
+ * @property {string | any} [className] - CSS 類別名稱
+ * @property {any} [attribute] - 額外的 HTML 屬性
+ * @property {{[key: string]: string}} [style] - 內聯樣式
+ * @property {'expand' | 'collapse'} [type] - 摺疊類型，expand 顯示向下箭頭，collapse 顯示向上箭頭
+ * @property {'12' | '13' | '14' | '16' | '18' | '20' | '24'} [size] - 字體大小
+ * @property {'roboto' | 'tt'} [font] - 字體家族
+ * @property {'regular' | 'medium' | 'bold'} [weight] - 字體粗細
+ * @property {'default' | 'hover' | 'pressed' | 'disabled'} [status] - 按鈕狀態
+ * @property {boolean} [webFontInstalled] - 是否使用 Web Font 箭頭（否則使用 SVG）
+ * @property {boolean} [disabled] - 是否禁用按鈕
+ */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    type?: 'expand' | 'collapse';
+    size?: '12' | '13' | '14' | '16' | '18' | '20' | '24';
+    font?: 'roboto' | 'tt';
+    weight?: 'regular' | 'medium' | 'bold';
+    status?: 'default' | 'hover' | 'pressed' | 'disabled';
+    webFontInstalled?: boolean;
+    disabled?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    type = 'expand',
+    size = '16',
+    font = 'roboto',
+    weight = 'regular',
+    status = 'default',
+    webFontInstalled = false,
+    disabled = false
+} = Astro.props as Props;
+
+// 建立 CSS 類別
+const collapseArrowClasses = [
+    'collapse-arrow',
+    `collapse-arrow--${type}`,
+    `collapse-arrow--size-${size}`,
+    `collapse-arrow--font-${font}`,
+    `collapse-arrow--weight-${weight}`,
+    status && status !== 'default' && `collapse-arrow--${status}`,
+    webFontInstalled ? 'collapse-arrow--web-font' : 'collapse-arrow--svg',
+    disabled && 'collapse-arrow--disabled',
+    className
+].filter(Boolean);
+
+// 根據 type 決定箭頭方向
+const arrowDirection = type === 'expand' ? 'down' : 'up';
+---
+
+<button
+    id={IDName}
+    type="button"
+    class:list={collapseArrowClasses}
+    style={style}
+    disabled={disabled}
+    data-type={type}
+    data-size={size}
+    data-font={font}
+    data-weight={weight}
+    data-status={status}
+    {...attribute}
+>
+    <span class="collapse-arrow__text">
+        <slot>{type === 'expand' ? 'Expand' : 'Collapse'}</slot>
+    </span>
+    {
+        !webFontInstalled && (
+            <span class="collapse-arrow__icon">
+                <AfterArrow fontSize={`${size}px`} direction={arrowDirection} weight={weight} />
+            </span>
+        )
+    }
+    {webFontInstalled && <span class="collapse-arrow__icon collapse-arrow__icon--web-font" />}
+</button>

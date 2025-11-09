@@ -1,0 +1,45 @@
+---
+/** Common Component */
+import CollapseArrow from '@components/common/icons/arrows/collapseArrow.astro';
+
+/** Props */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    show?: boolean;
+    data?: { label: string; value: string; checked?: boolean }[]
+}
+
+const { IDName, className, style, attribute = {}, title, show, data = [] } = Astro.props as Props;
+const componentId = IDName || `collapse-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div
+    class:list={[className, ':uno-collapse: w-full flex flex-col space-y-[var(--collapse-gap)] py-[var(--collapse-padding-y)] border-t-[size:var(--collapse-border-width)] border-solid border-t-[color:var(--collapse-border-color)] [--collapse-padding-y:0rem] [--collapse-gap:0rem] [--collapse-border-width:1px] [--collapse-border-color:var(--color-gray-200)] [--collapse-btn-padding-x:0rem] [--collapse-btn-padding-y:0.75rem]']}
+    style={{ ...style }}
+    data-collapse
+    {...attribute}
+>
+    <button
+        type="button"
+        class=":uno-collapse-button: w-full flex items-center justify-between py-[var(--collapse-btn-padding-y)] px-[var(--collapse-btn-padding-x)] text-subtitle font-roboto leading-125 font-medium text-gray-900 [&[aria-expanded=true]_.collapseArrow]:rotate-180"
+        title={title}
+        data-bs-toggle="collapse"
+        data-bs-target={`#${componentId}`}
+        aria-expanded={show}
+        data-bs-controls={componentId}
+    >
+        {title}
+        <CollapseArrow />
+    </button>
+    <div id={componentId} class:list={['collapse', { show: show }]}>
+        <slot />
+    </div>
+</div>
+
+<script>
+    import { Collapse } from 'bootstrap';
+</script>

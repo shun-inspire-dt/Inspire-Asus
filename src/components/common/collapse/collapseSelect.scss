@@ -1,0 +1,338 @@
+/**
+ * 摺疊選擇組件樣式
+ * 支援多種尺寸、字體、狀態和主題
+ */
+
+/* ===== CSS 變數定義 ===== */
+.collapse-select {
+    /* 基本佈局變數 */
+    --collapse-select-display: inline-flex;
+    --collapse-select-align-items: center;
+    --collapse-select-position: relative;
+    --collapse-select-background: transparent;
+    --collapse-select-cursor: pointer;
+
+    /* Gap 變數 - 根據不同尺寸 */
+    --collapse-select-gap-12: 3.6px;
+    --collapse-select-gap-13: 3.9px;
+    --collapse-select-gap-14: 4.2px;
+    --collapse-select-gap-16: 4.8px;
+    --collapse-select-gap-18: 5.4px;
+    --collapse-select-gap-20: 6px;
+    --collapse-select-gap-24: 7.2px;
+
+    /* 字體變數 - Roboto */
+    --collapse-select-font-family-roboto: var(--font-family-roboto);
+    --collapse-select-font-family-tt: var(--font-family-tt-norms-pro-normal);
+
+    /* 字體大小變數 */
+    --collapse-select-font-size-12: var(--fs-12); /* 12px */
+    --collapse-select-font-size-13: var(--fs-13); /* 13px */
+    --collapse-select-font-size-14: var(--fs-14); /* 14px */
+    --collapse-select-font-size-16: var(--fs-16); /* 16px */
+    --collapse-select-font-size-18: var(--fs-18); /* 18px */
+    --collapse-select-font-size-20: var(--fs-20); /* 20px */
+    --collapse-select-font-size-24: var(--fs-24); /* 24px */
+
+    /* 行高變數 */
+    --collapse-select-line-height-12: var(--line-height-12); /* 16px */
+    --collapse-select-line-height-13: var(--line-height-13); /* 18px */
+    --collapse-select-line-height-14: var(--line-height-14-sh); /* 18px */
+    --collapse-select-line-height-16: var(--line-height-16-sh); /* 22px */
+    --collapse-select-line-height-18: var(--line-height-18-sh); /* 24px */
+    --collapse-select-line-height-20: var(--line-height-20-sh); /* 26px */
+    --collapse-select-line-height-24: var(--line-height-24); /* 32px */
+
+    /* 字重變數 */
+    --collapse-select-font-weight-regular: var(--font-weight-400); /* 400 */
+    --collapse-select-font-weight-medium: var(--font-weight-500); /* 500 */
+    --collapse-select-font-weight-bold: var(--font-weight-700); /* 700 */
+
+    /* 字母間距變數 */
+    --collapse-select-letter-spacing-12: 0.32px;
+    --collapse-select-letter-spacing-13: 0.32px;
+    --collapse-select-letter-spacing-14: 0.32px;
+    --collapse-select-letter-spacing-16: 0.32px;
+    --collapse-select-letter-spacing-18: 0.32px;
+    --collapse-select-letter-spacing-20: 0.32px;
+    --collapse-select-letter-spacing-24: 0.32px;
+
+    /* 顏色變數 - Default 狀態 */
+    --collapse-select-color-default: var(--color-gray-900); /* #181818 */
+    --collapse-select-color-hover: var(--color-gray-900); /* #181818 */
+    --collapse-select-color-pressed: var(--color-gray-900); /* #181818 */
+    --collapse-select-color-disabled: var(--color-gray-300); /* #b3b3b3 */
+
+    /* 箭頭尺寸變數 */
+    --collapse-select-icon-width-12: 7px;
+    --collapse-select-icon-width-13: 8px;
+    --collapse-select-icon-width-14: 9px;
+    --collapse-select-icon-width-16: 10px;
+    --collapse-select-icon-width-18: 11px;
+    --collapse-select-icon-width-20: 12px;
+    --collapse-select-icon-width-24: 14px;
+
+    /* 基本樣式 */
+    display: var(--collapse-select-display);
+    align-items: var(--collapse-select-align-items);
+    position: var(--collapse-select-position);
+    gap: var(--collapse-select-gap-16); /* 預設使用 16px 的 gap */
+    background: var(--collapse-select-background);
+    cursor: var(--collapse-select-cursor);
+
+    /* 聚焦樣式 */
+    &:focus-within,
+    &:hover {
+        outline: none;
+
+        .collapse-select__label {
+            text-decoration: underline;
+            text-underline-offset: var(--underline-offset);
+            text-decoration-thickness: 1px;
+        }
+    }
+
+    /* 禁用狀態 */
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+/* ===== Select 元素樣式 ===== */
+.collapse-select__element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    user-select: none;
+    z-index: 2;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+/* ===== 標籤元素樣式 ===== */
+.collapse-select__label {
+    text-align: left;
+    color: var(--collapse-select-color-default);
+    transition: color 0.2s ease-in-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===== 箭頭圖示樣式 ===== */
+.collapse-select__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: transform 0.2s ease-in-out;
+    transform-origin: center;
+
+    /* Web Font 箭頭 */
+    &--web-font {
+        &::before {
+            content: '\25BC'; /* 向下箭頭 */
+            font-size: inherit;
+            color: currentColor;
+            transition: transform 0.2s ease-in-out;
+        }
+    }
+}
+
+/* Select 打開時的箭頭旋轉 */
+.collapse-select:focus-within .collapse-select__icon {
+    transform: rotate(180deg);
+}
+
+/* ===== 字體家族變體 ===== */
+.collapse-select--font-roboto {
+    .collapse-select__label {
+        font-family: var(--collapse-select-font-family-roboto);
+    }
+}
+
+.collapse-select--font-tt {
+    .collapse-select__label {
+        font-family: var(--collapse-select-font-family-tt);
+    }
+}
+
+/* ===== 尺寸變體 ===== */
+.collapse-select--size-12 {
+    gap: var(--collapse-select-gap-12);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-12);
+        line-height: var(--collapse-select-line-height-12);
+        letter-spacing: var(--collapse-select-letter-spacing-12);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-12);
+        height: var(--collapse-select-line-height-12);
+    }
+}
+
+.collapse-select--size-13 {
+    gap: var(--collapse-select-gap-13);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-13);
+        line-height: var(--collapse-select-line-height-13);
+        letter-spacing: var(--collapse-select-letter-spacing-13);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-13);
+        height: var(--collapse-select-line-height-13);
+    }
+}
+
+.collapse-select--size-14 {
+    gap: var(--collapse-select-gap-14);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-14);
+        line-height: var(--collapse-select-line-height-14);
+        letter-spacing: var(--collapse-select-letter-spacing-14);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-14);
+        height: var(--collapse-select-line-height-14);
+    }
+}
+
+.collapse-select--size-16 {
+    gap: var(--collapse-select-gap-16);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-16);
+        line-height: var(--collapse-select-line-height-16);
+        letter-spacing: var(--collapse-select-letter-spacing-16);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-16);
+        height: var(--collapse-select-line-height-16);
+    }
+}
+
+.collapse-select--size-18 {
+    gap: var(--collapse-select-gap-18);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-18);
+        line-height: var(--collapse-select-line-height-18);
+        letter-spacing: var(--collapse-select-letter-spacing-18);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-18);
+        height: var(--collapse-select-line-height-18);
+    }
+}
+
+.collapse-select--size-20 {
+    gap: var(--collapse-select-gap-20);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-20);
+        line-height: var(--collapse-select-line-height-20);
+        letter-spacing: var(--collapse-select-letter-spacing-20);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-20);
+        height: var(--collapse-select-line-height-20);
+    }
+}
+
+.collapse-select--size-24 {
+    gap: var(--collapse-select-gap-24);
+    .collapse-select__label {
+        font-size: var(--collapse-select-font-size-24);
+        line-height: var(--collapse-select-line-height-24);
+        letter-spacing: var(--collapse-select-letter-spacing-24);
+    }
+    .collapse-select__icon {
+        width: var(--collapse-select-icon-width-24);
+        height: var(--collapse-select-line-height-24);
+    }
+}
+
+/* ===== 字重變體 ===== */
+.collapse-select--weight-regular {
+    .collapse-select__label {
+        font-weight: var(--collapse-select-font-weight-regular);
+    }
+}
+
+.collapse-select--weight-medium {
+    .collapse-select__label {
+        font-weight: var(--collapse-select-font-weight-medium);
+    }
+}
+
+.collapse-select--weight-bold {
+    .collapse-select__label {
+        font-weight: var(--collapse-select-font-weight-bold);
+    }
+}
+
+/* ===== 狀態變體 ===== */
+/* Default 狀態 */
+.collapse-select {
+    .collapse-select__label {
+        color: var(--collapse-select-color-default); /* var(--color-gray-900) #181818 */
+    }
+}
+
+/* Hover 狀態 */
+.collapse-select:hover:not(.collapse-select--disabled),
+.collapse-select--hover {
+    .collapse-select__label {
+        color: var(--collapse-select-color-hover); /* var(--color-gray-900) #181818 */
+    }
+}
+
+/* Pressed 狀態 (Focus) */
+.collapse-select:focus-within,
+.collapse-select--pressed {
+    .collapse-select__label {
+        color: var(--collapse-select-color-pressed); /* var(--color-gray-900) #181818 */
+    }
+}
+
+/* Disabled 狀態 */
+.collapse-select--disabled {
+    .collapse-select__label {
+        color: var(--collapse-select-color-disabled); /* var(--color-gray-300) #b3b3b3 */
+    }
+    .collapse-select__icon {
+        svg path {
+            fill: var(--collapse-select-color-disabled);
+        }
+    }
+}
+
+/* ===== 類型變體 ===== */
+/* Expand 類型 - 向下箭頭 */
+.collapse-select--expand {
+    /* 預設樣式，無需額外設定 */
+}
+
+/* Collapse 類型 - 向上箭頭 */
+.collapse-select--collapse {
+    /* 箭頭方向由 AfterArrow 組件的 direction 屬性控制 */
+}
+
+/* ===== Web Font 支援 ===== */
+.collapse-select--web-font {
+    /* Web Font 特定樣式 */
+    .collapse-select__icon--web-font {
+        /* 根據不同尺寸和字體設定 Web Font 箭頭 */
+    }
+}
+
+/* ===== SVG 箭頭支援 ===== */
+.collapse-select--svg {
+    /* SVG 箭頭特定樣式 */
+    .collapse-select__icon {
+        /* SVG 箭頭由 AfterArrow 組件處理 */
+    }
+}
