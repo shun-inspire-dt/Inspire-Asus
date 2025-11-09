@@ -91,7 +91,9 @@
             height: var(--toast-button-loader-size);
             border-radius: 50%;
             background-color: #fff;
-            box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff, calc(var(--toast-button-loader-size) * -2) 0 #fff;
+            box-shadow:
+                calc(var(--toast-button-loader-size) * 2) 0 #fff,
+                calc(var(--toast-button-loader-size) * -2) 0 #fff;
             position: relative;
             animation: flash 0.5s ease-out infinite alternate;
         }
@@ -99,15 +101,21 @@
         @keyframes flash {
             0% {
                 background-color: #fff2;
-                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff2, calc(var(--toast-button-loader-size) * -2) 0 #fff;
+                box-shadow:
+                    calc(var(--toast-button-loader-size) * 2) 0 #fff2,
+                    calc(var(--toast-button-loader-size) * -2) 0 #fff;
             }
             50% {
                 background-color: #fff;
-                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff2, calc(var(--toast-button-loader-size) * -2) 0 #fff2;
+                box-shadow:
+                    calc(var(--toast-button-loader-size) * 2) 0 #fff2,
+                    calc(var(--toast-button-loader-size) * -2) 0 #fff2;
             }
             100% {
                 background-color: #fff2;
-                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff, calc(var(--toast-button-loader-size) * -2) 0 #fff2;
+                box-shadow:
+                    calc(var(--toast-button-loader-size) * 2) 0 #fff,
+                    calc(var(--toast-button-loader-size) * -2) 0 #fff2;
             }
         }
     }
