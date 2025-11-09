@@ -19,6 +19,12 @@ export interface Props {
         noWebp?: boolean;
         type?: string;
         blank?: string;
+        // 支援多種像素密度的圖片設定
+        densities?: {
+            '1x': string;    // 標準解析度圖片路徑
+            '1.5x'?: string; // 1.5倍解析度圖片路徑
+            '2x'?: string;   // 2倍解析度圖片路徑
+        };
     }[];
     style?: { [key: string]: string };
     attribute?: attribute;
@@ -50,13 +56,33 @@ const {
                 <Fragment>
                     {!noWebp && (
                         <source
-                            srcset={!blank ? `${Astro.url.origin}${x.img}.webp` : `${x.blankWebpImg}`}
+                            srcset={
+                                x.densities
+                                    ? Object.entries(x.densities)
+                                          .map(([density, imgPath]) => 
+                                              !blank 
+                                                  ? `${Astro.url.origin}${imgPath}.webp ${density}`
+                                                  : `${imgPath}.webp ${density}`
+                                          )
+                                          .join(', ')
+                                    : (!blank ? `${Astro.url.origin}${x.img}.webp` : `${x.blankWebpImg}`)
+                            }
                             media={`(min-width:${x.width}px)`}
                             type="image/webp"
                         />
                     )}
                     <source
-                        srcset={!blank ? `${Astro.url.origin}${x.img}.${x.type || type}` : `${x.img}`}
+                        srcset={
+                            x.densities
+                                ? Object.entries(x.densities)
+                                      .map(([density, imgPath]) => 
+                                          !blank 
+                                              ? `${Astro.url.origin}${imgPath}.${x.type || type} ${density}`
+                                              : `${imgPath} ${density}`
+                                      )
+                                      .join(', ')
+                                : (!blank ? `${Astro.url.origin}${x.img}.${x.type || type}` : `${x.img}`)
+                        }
                         media={`(min-width:${x.width}px)`}
                         type={`image/${x.type || type}`}
                     />
