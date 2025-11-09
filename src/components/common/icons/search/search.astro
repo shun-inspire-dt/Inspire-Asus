@@ -6,12 +6,14 @@ import './search.scss';
 export interface Props {
     IDName?: string;
     className?: any;
-    attribute?: attribute;
     style?: { [key: string]: string };
-    mode?: "light" | "dark";
-    state?: "normal" | "placeholder" | "disable";
-    size?: number;
+    mode?: 'light' | 'dark';
+    state?: 'normal' | 'placeholder' | 'disable';
+    width?: number | string;
     color?: string;
+    Tag?: 'button' | 'span';
+    attribute?: attribute;
+    aria?: aria;
 }
 
 const {
@@ -19,39 +21,32 @@ const {
     className,
     style,
     attribute = {},
-    mode = "light",
-    state = "normal",
-    size = 20,
-    color
+    mode = 'light',
+    state = 'normal',
+    width,
+    color,
+    Tag = 'span',
+    aria = {}
 } = Astro.props as Props;
 
-const searchPath = "M10.5363 10.5359L13.6 13.5996M12.0216 6.30986C12.0216 9.46453 9.46489 12.0212 6.31023 12.0212C3.15773 12.0212 0.599976 9.46453 0.599976 6.30986C0.599976 3.15736 3.15664 0.599609 6.31023 0.599609C9.46489 0.599609 12.0216 3.15628 12.0216 6.30986Z";
+const searchPath =
+    'M10.5364 10.5359L13.6001 13.5996M12.0217 6.30986C12.0217 9.46453 9.46501 12.0212 6.31035 12.0212C3.15785 12.0212 0.600098 9.46453 0.600098 6.30986C0.600098 3.15736 3.15676 0.599609 6.31035 0.599609C9.46501 0.599609 12.0217 3.15628 12.0217 6.30986Z';
+const svgClass = ['search-icon', { [`mode-${mode}`]: mode }, { [`state-${state}`]: state }, className];
+const iconStyle = {
+    ...(width ? { '--icon-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...(color ? { '--icon-color': color.charAt(0) === '#' ? color : `var(--color-${color})` } : {}),
+    ...style
+};
 ---
 
-<span
+<Tag
     id={IDName}
-    class:list={[className, 'search-icon', `mode-${mode}`, `state-${state}`]}
-    style={{
-        ...style,
-        '--icon-size': `${size}px`,
-        '--icon-color': color ? (color.charAt(0) === '#' ? color : `var(--color-${color})`) : undefined
-    }}
+    class:list={svgClass}
     {...attribute}
+    {...aria}
+    style={iconStyle}
 >
-    <svg 
-        width="15" 
-        height="15" 
-        viewBox="0 0 15 15"
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        class="search-svg"
-    >
-        <path 
-            d={searchPath}
-            fill="none"
-            stroke="var(--icon-color)"
-            stroke-width="1"
-            stroke-linecap="round"
-        />
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-svg">
+        <path d={searchPath} fill="none" stroke="var(--icon-color)" stroke-width="1.2" stroke-linecap="round"></path>
     </svg>
-</span>
+</Tag>

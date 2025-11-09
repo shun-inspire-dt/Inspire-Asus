@@ -13,11 +13,11 @@ import SearchIcon from './search.astro';
             <div class="grid grid-cols-2 gap-6">
                 <div class="text-center p-4 border rounded-lg">
                     <h4 class="text-sm font-medium mb-3">Light Mode</h4>
-                    <SearchIcon mode="light" size={18} />
+                    <SearchIcon mode="light" width={18} />
                 </div>
                 <div class="text-center p-4 border rounded-lg bg-gray-800">
                     <h4 class="text-sm font-medium mb-3 text-white">Dark Mode</h4>
-                    <SearchIcon mode="dark" size={18} />
+                    <SearchIcon mode="dark" width={18} />
                 </div>
             </div>
         </div>
@@ -28,15 +28,15 @@ import SearchIcon from './search.astro';
             <div class="grid grid-cols-3 gap-6">
                 <div class="text-center p-4 border rounded-lg">
                     <h4 class="text-sm font-medium mb-3">Normal</h4>
-                    <SearchIcon state="normal" size={18} />
+                    <SearchIcon state="normal" width={18} />
                 </div>
                 <div class="text-center p-4 border rounded-lg">
                     <h4 class="text-sm font-medium mb-3">Placeholder</h4>
-                    <SearchIcon state="placeholder" size={18} />
+                    <SearchIcon state="placeholder" width={18} />
                 </div>
                 <div class="text-center p-4 border rounded-lg">
                     <h4 class="text-sm font-medium mb-3">Disable</h4>
-                    <SearchIcon state="disable" size={18} />
+                    <SearchIcon state="disable" width={18} />
                 </div>
             </div>
         </div>
@@ -50,15 +50,15 @@ import SearchIcon from './search.astro';
                     <h4 class="text-md font-medium text-center">Light Mode</h4>
                     <div class="text-center p-4 border rounded-lg">
                         <div class="mb-2 text-sm">Normal</div>
-                        <SearchIcon mode="light" state="normal" size={18} />
+                        <SearchIcon mode="light" state="normal" width={18} />
                     </div>
                     <div class="text-center p-4 border rounded-lg">
                         <div class="mb-2 text-sm">Placeholder</div>
-                        <SearchIcon mode="light" state="placeholder" size={18} />
+                        <SearchIcon mode="light" state="placeholder" width={18} />
                     </div>
                     <div class="text-center p-4 border rounded-lg">
                         <div class="mb-2 text-sm">Disable</div>
-                        <SearchIcon mode="light" state="disable" size={18} />
+                        <SearchIcon mode="light" state="disable" width={18} />
                     </div>
                 </div>
                 
@@ -67,15 +67,15 @@ import SearchIcon from './search.astro';
                     <h4 class="text-md font-medium text-center text-white">Dark Mode</h4>
                     <div class="text-center p-4 border rounded-lg bg-gray-800">
                         <div class="mb-2 text-sm text-white">Normal</div>
-                        <SearchIcon mode="dark" state="normal" size={18} />
+                        <SearchIcon mode="dark" state="normal" width={18} />
                     </div>
                     <div class="text-center p-4 border rounded-lg bg-gray-800">
                         <div class="mb-2 text-sm text-white">Placeholder</div>
-                        <SearchIcon mode="dark" state="placeholder" size={18} />
+                        <SearchIcon mode="dark" state="placeholder" width={18} />
                     </div>
                     <div class="text-center p-4 border rounded-lg bg-gray-800">
                         <div class="mb-2 text-sm text-white">Disable</div>
-                        <SearchIcon mode="dark" state="disable" size={18} />
+                        <SearchIcon mode="dark" state="disable" width={18} />
                     </div>
                 </div>
                 
@@ -84,15 +84,15 @@ import SearchIcon from './search.astro';
                     <h4 class="text-md font-medium text-center">不同尺寸</h4>
                     <div class="text-center p-4 border rounded-lg">
                         <div class="mb-2 text-sm">Small (16px)</div>
-                        <SearchIcon size={16} />
+                        <SearchIcon width={16} />
                     </div>
                     <div class="text-center p-4 border rounded-lg">
                         <div class="mb-2 text-sm">Medium (20px)</div>
-                        <SearchIcon size={20} />
+                        <SearchIcon width={20} />
                     </div>
                     <div class="text-center p-4 border rounded-lg">
                         <div class="mb-2 text-sm">Large (24px)</div>
-                        <SearchIcon size={24} />
+                        <SearchIcon width={24} />
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@ import SearchIcon from './search.astro';
                         class="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-lg"
                     />
                     <button class="h-full flex items-center justify-center w-12 absolute right-0 top-1/2 -translate-y-1/2">
-                        <SearchIcon mode="light" state="normal" size={18} />
+                        <SearchIcon mode="light" state="normal" width={18} />
                     </button>
                 </div>
             </div>
@@ -128,10 +128,10 @@ import SearchIcon from './search.astro';
 <SearchIcon mode="dark" state="placeholder" />
 
 <!-- 自定義尺寸 -->
-<SearchIcon size={24} />
+<SearchIcon width={24} />
 
 <!-- 在搜尋框中使用 -->
-<SearchIcon mode="light" state="normal" size={20} />`}</code></pre>
+<SearchIcon mode="light" state="normal" width={20} />`}</code></pre>
                 </div>
             </div>
         </div>
