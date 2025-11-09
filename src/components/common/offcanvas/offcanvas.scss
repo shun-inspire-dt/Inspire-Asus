@@ -1,4 +1,4 @@
-@use "../../../scss/mixin/scrollbar.scss" as scrollbar;
+@use '../../../scss/mixin/scrollbar.scss' as scrollbar;
 
 .offcanvas,
 .offcanvas-xxl,
@@ -7,33 +7,33 @@
 .offcanvas-md,
 .offcanvas-sm {
     /** Offcanvas Size */
-    // --bs-offcanvas-width-xxl: ;
-    // --bs-offcanvas-width-xl: ;
-    // --bs-offcanvas-width-lg: ;
-    // --bs-offcanvas-width-md: ;
-    // --bs-offcanvas-width-sm: ;
+    --bs-offcanvas-width-xxl: 100%;
+    --bs-offcanvas-width-xl: 100%;
+    --bs-offcanvas-width-lg: 100%;
+    --bs-offcanvas-width-md: 100%;
+    --bs-offcanvas-width-sm: 100%;
     /** 主要 */
-    // --bs-offcanvas-width: ;
-    // --bs-offcanvas-bg: ;
-    // --bs-offcanvas-color: ;
-    // --bs-offcanvas-transition: ;
-    // --bs-offcanvas-border-width: ;
-    // --bs-offcanvas-border-color: ;
-    // --bs-offcanvas-close-size: ;
-    // --offcanvas-close-background-image: ;
-    // --bs-offcanvas-title-line-height: ;
+    --bs-offcanvas-width: 100%;
+    --bs-offcanvas-bg: var(--color-white, #ffffff);
+    --bs-offcanvas-color: var(--color-gray-900, #181818);
+    --bs-offcanvas-transition: all 0.2s ease-in-out;
+    --bs-offcanvas-border-width: 0;
+    --bs-offcanvas-border-color: transparent;
+    --bs-offcanvas-close-size: 1.125rem;
+    --offcanvas-close-background-image: url('data:image/svg+xml,<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 3L3 15M3 3L15 15" stroke="%234D4D4D" stroke-width="1.2" stroke-linecap="round"/></svg>');
+    --bs-offcanvas-title-line-height: 100%;
     /** 次要 */
-    // --bs-offcanvas-zindex: ;
-    // --bs-offcanvas-height: ;
-    // --bs-offcanvas-padding-x: ;
-    // --bs-offcanvas-padding-y: ;
-    // --bs-offcanvas-box-shadow: ;
+    --bs-offcanvas-zindex: 1042;
+    --bs-offcanvas-height: calc(100vh - var(--header-height));
+    --bs-offcanvas-padding-x: 0;
+    --bs-offcanvas-padding-y: 0;
+    --bs-offcanvas-box-shadow: none;
     /** Offcanvas Body */
-    // --offcanvas-body-display: ;
-    // --offcanvas-body-flex-direction: ;
-    // --offcanvas-body-align-items: t
-    // --offcanvas-body-justify-content: ;
-    // --offcanvas-body-gap: ;
+    --offcanvas-body-display: ;
+    --offcanvas-body-flex-direction: ;
+    --offcanvas-body-align-items: t
+    --offcanvas-body-justify-content: ;
+    --offcanvas-body-gap: ;
 
     height: var(--bs-offcanvas-height);
     box-shadow: var(--bs-offcanvas-box-shadow);
@@ -69,8 +69,8 @@
 }
 
 .offcanvas-backdrop {
-    // --bs-offcanvas-backdrop-color: ;
-    // --bs-offcanvas-backdrop-opacity: ;
+    --bs-offcanvas-backdrop-color: var(--backdrop-color);
+    --bs-offcanvas-backdrop-opacity: var(--backdrop-opacity);
 
     background-color: var(--bs-offcanvas-backdrop-color);
 
