@@ -1,0 +1,154 @@
+---
+/** Common Component */
+/** Picture */
+import Picture, { type Props as PictureProps } from '@components/common/images/picture.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+import A from '@components/common/link/a.astro';
+/** Calendar */
+import Calendar from '@components/common/icons/arrows/calendar.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    label?: string;
+    breif?: string;
+    date?: string;
+    logoImage?: string;
+    img?: string;
+    link?: string;
+    imgBreakpoints?: PictureProps['breakpoints'];
+    width?: string | number;
+    showDate?: boolean;
+    showLabel?: boolean;
+    showBreif?: boolean;
+    showLogo?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title = '華碩商用師電腦市佔開局奪冠！',
+    label = '科技與製造',
+    breif = '市調機構IDC最新報告，華碩商用電腦再次拿下2025年!',
+    date = '2025/11/07',
+    logoImage = '/assets/logos/Business-Vertical-Dark',
+    img = '/assets/images/pages/Article-card-image-1.png',
+    link = '',
+    width = '100%',
+    showDate = true,
+    showLabel = true,
+    showBreif = true,
+    showLogo = true,
+    // 響應式圖片斷點設定，依照不同螢幕尺寸載入對應圖片
+    // 支援多種像素密度 (1x, 1.5x, 2x) 提供更清晰的顯示效果
+    imgBreakpoints = [
+        {
+            width: 1280, // 桌面版斷點 (1280px+)
+            img: '/assets/images/pages/Article-card-image-1', // 向後相容的預設圖片
+            densities: {
+                '1x': '/assets/images/pages/Article-card-image-1', // 標準解析度
+                '1.5x': '/assets/images/pages/Article-card-image-1', // 1.5倍解析度
+                '2x': '/assets/images/pages/Article-card-image-1' // 2倍解析度（高解析度螢幕）
+            }
+        },
+        {
+            width: 731, // 平板版斷點 (731px-1279px)
+            img: '/assets/images/pages/Article-card-image-1',
+            densities: {
+                '1x': '/assets/images/pages/Article-card-image-1',
+                '1.5x': '/assets/images/pages/Article-card-image-1',
+                '2x': '/assets/images/pages/Article-card-image-1'
+            }
+        },
+        {
+            width: 0, // 手機版斷點 (730px 以下)
+            img: '/assets/images/pages/Article-card-image-1',
+            densities: {
+                '1x': '/assets/images/pages/Article-card-image-1',
+                '1.5x': '/assets/images/pages/Article-card-image-1',
+                '2x': '/assets/images/pages/Article-card-image-1'
+            }
+        }
+    ]
+} = Astro.props as Props;
+
+const cardStyle = {
+    ...(width ? { '--card-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...style
+};
+---
+
+<A
+    IDName={IDName}
+    link={link}
+    className={[className, ':uno-collection-card: w-[var(--card-width,100%)] min-h-30rem md:min-h-34.5rem lg:min-h-40rem flex items-end relative rounded-xl overflow-hidden group']}
+    style={cardStyle}
+    attribute={attribute}
+    title={title}
+>
+    <Picture
+        className=":uno-collection-card-image: size-full absolute inset-0 object-center object-cover group-hover:scale-110 transition-transform duration-300 origin-center z-1"
+        img={img}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+        breakpoints={imgBreakpoints}
+        noWebp
+    />
+    <div class=":uno-collection-card-body: w-full relative z-2">
+        <div class=":uno-collection-card-overlay: absolute inset-x-0 bottom-0 w-full h-[min(160%,25rem)] z-0 bg-[linear-gradient(180deg,rgba(27,27,27,0)_0%,rgba(27,27,27,0.95)_40%)] z-2 pointer-events-none"></div>
+        <div class=":uno-collection-card-content: flex flex-col pb-2rem px-2rem relative rounded-b-xl z-3">
+            {
+                showDate && (
+                    <div class=":uno-collection-card-date: flex items-center gap-0.25rem mb-0.75rem">
+                        <Calendar color="white" />
+                        <span class=":uno-collection-card-date-text: text-white font-roboto text-base leading-16-sh font-normal">
+                            {date}
+                        </span>
+                    </div>
+                )
+            }
+            <div class=":uno-collection-card-head: flex flex-col">
+                {
+                    title && (
+                        <strong class=":uno-collection-card-title: text-white font-tt-normal text-h5 leading-120 font-medium hover:underline-0.0625rem hover:underline hover:underline-offset-3">
+                            {title}
+                        </strong>
+                    )
+                }
+                {
+                    Boolean(showLabel && label) && (
+                        <span
+                            class=":uno-collection-card-label: mt-0.75rem text-white font-roboto text-base leading-120 font-normal"
+                            set:html={label}
+                        />
+                    )
+                }
+                {
+                    Boolean(showBreif && breif) && (
+                        <span
+                            class=":uno-collection-card-breif: mt-1rem text-white font-roboto text-base leading-140 font-normal line-clamp-3"
+                            set:html={breif}
+                        />
+                    )
+                }
+            </div>
+            <div class=":uno-collection-card-footer: flex flex-col">
+                {
+                    showLogo && (
+                        <div class=":uno-collection-card-logo: w-5.25rem h-2.625rem aspect-2/1 mt-1rem [&_img]:size-full [&_img]:object-center-left [&_img]:object-contain">
+                            <Picture img={logoImage} alt={title} type="svg" loading="lazy" decoding="async" noWebp />
+                        </div>
+                    )
+                }
+                <ALink link={link} className=":uno-collection-card-link: mt-1rem" title={'了解更多'} size="16" showArrow Tag="span" />
+            </div>
+        </div>
+    </div>
+</A>

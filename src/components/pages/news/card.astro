@@ -1,0 +1,153 @@
+---
+/** Common Component */
+/** Picture */
+import Picture, { type Props as PictureProps } from '@components/common/images/picture.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+import A from '@components/common/link/a.astro';
+/** Calendar */
+import Calendar from '@components/common/icons/arrows/calendar.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    label?: string;
+    breif?: string;
+    date?: string;
+    logoImage?: string;
+    img?: string;
+    link?: string;
+    imgBreakpoints?: PictureProps['breakpoints'];
+    width?: string | number;
+    showDate?: boolean;
+    showLabel?: boolean;
+    showBreif?: boolean;
+    showLogo?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title = '華碩商用電腦市佔開局奪冠！全新「AI雙機」強化企業數位戰力',
+    label = '科技與製造',
+    breif = 'Welcome to Burger Bliss, where we take your cravings to a whole new!\nWelcome to Burger Bliss.',
+    date = '2025/11/07',
+    logoImage = '/assets/logos/Business-Vertical-Light',
+    img = '/assets/images/pages/Article-card-image.png',
+    link = '',
+    width = '100%',
+    showDate = true,
+    showLabel = true,
+    showBreif = true,
+    showLogo = true,
+    // 響應式圖片斷點設定，依照不同螢幕尺寸載入對應圖片
+    // 支援多種像素密度 (1x, 1.5x, 2x) 提供更清晰的顯示效果
+    imgBreakpoints = [
+        {
+            width: 1280, // 桌面版斷點 (1280px+)
+            img: '/assets/images/pages/Article-card-image', // 向後相容的預設圖片
+            densities: {
+                '1x': '/assets/images/pages/Article-card-image', // 標準解析度
+                '1.5x': '/assets/images/pages/Article-card-image', // 1.5倍解析度
+                '2x': '/assets/images/pages/Article-card-image' // 2倍解析度（高解析度螢幕）
+            }
+        },
+        {
+            width: 731, // 平板版斷點 (731px-1279px)
+            img: '/assets/images/pages/Article-card-image',
+            densities: {
+                '1x': '/assets/images/pages/Article-card-image',
+                '1.5x': '/assets/images/pages/Article-card-image',
+                '2x': '/assets/images/pages/Article-card-image'
+            }
+        },
+        {
+            width: 0, // 手機版斷點 (730px 以下)
+            img: '/assets/images/pages/Article-card-image',
+            densities: {
+                '1x': '/assets/images/pages/Article-card-image',
+                '1.5x': '/assets/images/pages/Article-card-image',
+                '2x': '/assets/images/pages/Article-card-image'
+            }
+        }
+    ]
+} = Astro.props as Props;
+
+const cardStyle = {
+    ...(width ? { '--card-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...style
+};
+---
+
+<A
+    IDName={IDName}
+    link={link}
+    className={[className, ':uno-news-card: max-w-[var(--card-width,100%)] block border border-gray-500 rounded-xl overflow-hidden group']}
+    style={cardStyle}
+    attribute={attribute}
+    title={title}
+>
+    <div class=":uno-news-card-image-container: w-full aspect-203/126 relative overflow-hidden">
+        <Picture
+            className=":uno-news-card-image: size-full absolute inset-0 object-center object-cover group-hover:scale-110 transition-transform duration-300 origin-center"
+            img={img}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            breakpoints={imgBreakpoints}
+            noWebp
+        />
+    </div>
+    <div class=":uno-news-card-content: flex flex-col p-1.5rem bg-white rounded-b-xl">
+        {
+            showDate && (
+                <div class=":uno-news-card-date: flex items-center gap-0.25rem mb-0.75rem">
+                    <Calendar />
+                    <span class=":uno-news-card-date-text: text-gray-700 font-roboto text-base leading-16-sh font-normal">
+                        {date}
+                    </span>
+                </div>
+            )
+        }
+        <div class=":uno-news-card-head: flex flex-col">
+            {
+                title && (
+                    <strong class=":uno-news-card-title: text-gray-900 font-tt-normal text-subtitle leading-125 font-medium hover:underline-0.0625rem hover:underline hover:underline-offset-3">
+                        {title}
+                    </strong>
+                )
+            }
+            {
+                Boolean(showLabel && label) && (
+                    <span
+                        class=":uno-news-card-label: mt-0.75rem text-gray-700 font-roboto text-base leading-120 font-normal"
+                        set:html={label}
+                    />
+                )
+            }
+            {
+                Boolean(showBreif && breif) && (
+                    <span
+                        class=":uno-news-card-breif: mt-0.75rem text-gray-900 font-roboto text-base leading-140 font-normal line-clamp-3"
+                        set:html={breif}
+                    />
+                )
+            }
+        </div>
+        <div class=":uno-news-card-footer: flex flex-col">
+            {
+                showLogo && (
+                    <div class=":uno-news-card-logo: w-5.25rem h-2.625rem aspect-2/1 mt-0.75rem [&_img]:size-full [&_img]:object-center-left [&_img]:object-contain">
+                        <Picture img={logoImage} alt={title} type="svg" loading="lazy" decoding="async" noWebp />
+                    </div>
+                )
+            }
+            <ALink link={link} className=":uno-news-card-link: mt-1rem" title={'了解更多'} size="16" showArrow Tag="span" />
+        </div>
+    </div>
+</A>
