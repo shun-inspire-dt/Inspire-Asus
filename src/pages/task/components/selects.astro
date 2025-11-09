@@ -1,0 +1,348 @@
+---
+/**
+ * Select 組件測試頁面
+ * 
+ * 展示基於 Figma 設計規範的 Select 組件
+ * 包含不同尺寸、狀態和互動效果的範例
+ */
+
+import Layout from '../../../layouts/layouts.astro';
+import Select from '../../../components/common/form/select/select.astro';
+
+// 測試資料
+const selectOptions = [
+    { text: '選項 1', value: 'option1' },
+    { text: '選項 2', value: 'option2' },
+    { text: '選項 3', value: 'option3' },
+    { text: '選項 4', value: 'option4' },
+    { text: '選項 5', value: 'option5' }
+];
+
+const cityOptions = [
+    { text: '台北市', value: 'taipei' },
+    { text: '新北市', value: 'new-taipei' },
+    { text: '桃園市', value: 'taoyuan' },
+    { text: '台中市', value: 'taichung' },
+    { text: '台南市', value: 'tainan' },
+    { text: '高雄市', value: 'kaohsiung' }
+];
+---
+
+<Layout>
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Select 組件測試</h1>
+        
+        <!-- 尺寸變體 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">尺寸變體 (Size Variants)</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Extra Large (XL)</label>
+                    <Select 
+                        id="select-xl"
+                        size="xl"
+                        placeholder="請選擇城市"
+                        data={cityOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Large (LG)</label>
+                    <Select 
+                        id="select-lg"
+                        size="lg"
+                        placeholder="請選擇城市"
+                        data={cityOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Medium (MD)</label>
+                    <Select 
+                        id="select-md"
+                        size="md"
+                        placeholder="請選擇城市"
+                        data={cityOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Small (SM)</label>
+                    <Select 
+                        id="select-sm"
+                        size="sm"
+                        placeholder="請選擇城市"
+                        data={cityOptions}
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- 狀態變體 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">狀態變體 (Status Variants)</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">預設狀態 (Value)</label>
+                    <Select 
+                        id="select-default"
+                        status="value"
+                        placeholder="請選擇選項"
+                        data={selectOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">錯誤狀態 (Error)</label>
+                    <Select 
+                        id="select-error"
+                        status="error"
+                        placeholder="請選擇選項"
+                        data={selectOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">禁用狀態 (Disabled)</label>
+                    <Select 
+                        id="select-disabled"
+                        status="disabled"
+                        disabled={true}
+                        placeholder="請選擇選項"
+                        data={selectOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">已選中狀態 (Selected)</label>
+                    <Select 
+                        id="select-selected"
+                        status="selected"
+                        value="option2"
+                        placeholder="請選擇選項"
+                        data={selectOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">佔位符已選中 (Placeholder Selected)</label>
+                    <Select 
+                        id="select-placeholder-selected"
+                        placeholder="已選中的佔位符"
+                        data={selectOptions}
+                    />
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">展開狀態 (Active)</label>
+                    <Select 
+                        id="select-active"
+                        status="active"
+                        value="option3"
+                        placeholder="請選擇選項"
+                        data={selectOptions}
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- 組合範例 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">組合範例 (Combined Examples)</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-lg font-medium">表單範例</h3>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">居住城市 *</label>
+                        <Select 
+                            id="city-select"
+                            name="city"
+                            size="lg"
+                            required={true}
+                            placeholder="請選擇您的居住城市"
+                            data={cityOptions}
+                            validType="required"
+                            validLabel="居住城市"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">興趣領域</label>
+                        <Select 
+                            id="interest-select"
+                            name="interest"
+                            size="md"
+                            placeholder="請選擇興趣領域"
+                            data={[
+                                { text: '科技', value: 'tech' },
+                                { text: '設計', value: 'design' },
+                                { text: '商業', value: 'business' },
+                                { text: '教育', value: 'education' }
+                            ]}
+                        />
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <h3 class="text-lg font-medium">不同尺寸組合</h3>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">大型選擇器</label>
+                        <Select 
+                            id="large-combo"
+                            size="xl"
+                            status="selected"
+                            value="option1"
+                            data={selectOptions}
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">小型選擇器</label>
+                        <Select 
+                            id="small-combo"
+                            size="sm"
+                            placeholder="小型選擇器"
+                            data={selectOptions}
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 展開狀態測試 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">展開狀態測試 (Expansion State)</h2>
+            <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                <p class="text-sm text-blue-800 mb-4">
+                    <strong>測試說明：</strong>點擊或使用鍵盤 Tab 鍵聚焦到下方的選擇器，觀察箭頭方向的變化。
+                    展開時箭頭向上，收合時箭頭向下。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">測試展開效果 - 大尺寸</label>
+                        <Select 
+                            id="expansion-test-lg"
+                            size="lg"
+                            placeholder="點擊測試展開效果"
+                            data={cityOptions}
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">測試展開效果 - 中尺寸</label>
+                        <Select 
+                            id="expansion-test-md"
+                            size="md"
+                            placeholder="使用鍵盤 Tab 測試"
+                            data={selectOptions}
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Placeholder 顏色測試 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Placeholder 顏色測試 (Placeholder Colors)</h2>
+            <div class="bg-green-50 p-6 rounded-lg mb-6">
+                <p class="text-sm text-green-800 mb-4">
+                    <strong>測試說明：</strong>觀察 placeholder 文字和選中值的顏色差異。
+                    Placeholder 為灰色 (#666)，選中值為深色 (#181818)。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">無預設值 (Placeholder 顏色)</label>
+                        <Select 
+                            id="placeholder-test-1"
+                            size="md"
+                            placeholder="請選擇城市"
+                            data={cityOptions}
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">有預設值 (正常顏色)</label>
+                        <Select 
+                            id="placeholder-test-2"
+                            size="md"
+                            placeholder="請選擇選項"
+                            value="option2"
+                            data={selectOptions}
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">自定義 Placeholder</label>
+                        <Select 
+                            id="placeholder-test-3"
+                            size="md"
+                            placeholder="選擇你喜歡的水果"
+                            data={[
+                                { value: 'apple', text: '🍎 蘋果' },
+                                { value: 'banana', text: '🍌 香蕉' },
+                                { value: 'orange', text: '🍊 橘子' },
+                                { value: 'grape', text: '🍇 葡萄' }
+                            ]}
+                        />
+                    </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-white rounded border">
+                    <h4 class="font-medium mb-2">顏色說明：</h4>
+                    <ul class="text-sm space-y-1">
+                        <li><span class="inline-block w-4 h-4 bg-gray-600 rounded mr-2"></span><strong>Placeholder：</strong> #666666 (灰色)</li>
+                        <li><span class="inline-block w-4 h-4 bg-gray-900 rounded mr-2"></span><strong>選中值：</strong> #181818 (深色)</li>
+                        <li><span class="inline-block w-4 h-4 bg-gray-700 rounded mr-2"></span><strong>焦點 Placeholder：</strong> #333333 (中灰色)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 互動說明 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">功能特色</h2>
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <ul class="space-y-2 text-sm">
+                    <li>✅ <strong>多種尺寸</strong>：支援 XL、LG、MD、SM 四種尺寸</li>
+                    <li>✅ <strong>狀態管理</strong>：包含預設、錯誤、禁用、選中、展開等狀態</li>
+                    <li>✅ <strong>動態箭頭</strong>：獨立 JS 檔案自動切換箭頭方向（展開向上，收合向下）</li>
+                    <li>✅ <strong>Placeholder 顏色</strong>：獨立 JS 檔案動態管理 placeholder 和選中值的顏色差異</li>
+                    <li>✅ <strong>模組化架構</strong>：展開狀態和 placeholder 管理分離為獨立 JS 檔案</li>
+                    <li>✅ <strong>CSS 箭頭</strong>：使用 SVG data URL 實現箭頭圖標</li>
+                    <li>✅ <strong>鍵盤支援</strong>：支援 Tab、Space、Enter、Escape 鍵操作</li>
+                    <li>✅ <strong>響應式設計</strong>：適配不同螢幕尺寸</li>
+                    <li>✅ <strong>無障礙支援</strong>：支援鍵盤導航和螢幕閱讀器</li>
+                    <li>✅ <strong>表單驗證</strong>：整合表單驗證系統</li>
+                    <li>✅ <strong>全域 API</strong>：提供 SelectExpansion 和 SelectPlaceholder 全域 API</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    /* 額外的頁面樣式 */
+    .container {
+        max-width: 1200px;
+    }
+    
+    label {
+        color: var(--color-gray-900, #181818);
+    }
+    
+    section {
+        border-bottom: 1px solid var(--color-gray-200, #cccccc);
+        padding-bottom: 2rem;
+    }
+    
+    section:last-child {
+        border-bottom: none;
+    }
+</style>

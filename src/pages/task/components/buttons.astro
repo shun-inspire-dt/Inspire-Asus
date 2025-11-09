@@ -1,0 +1,156 @@
+---
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Components */
+import Button from '@components/common/button/button.astro';
+---
+
+<Layouts IDName="test-components-buttons">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8">按鈕組件示範</h1>
+        
+        <!-- 按鈕尺寸示範 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">按鈕尺寸 (Button Sizes)</h2>
+            <div class="grid grid-cols-5 gap-4 items-center">
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-2">XS (24px)</p>
+                    <Button size="xs" variant="blue">Label</Button>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-2">SM (32px)</p>
+                    <Button size="sm" variant="blue">Label</Button>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-2">MD (36px)</p>
+                    <Button size="md" variant="blue">Label</Button>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-2">LG (40px)</p>
+                    <Button size="lg" variant="blue">Label</Button>
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-2">XL (56px)</p>
+                    <Button size="xl" variant="blue">Label</Button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 按鈕變體示範 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">按鈕變體 (Button Variants)</h2>
+            <div class="grid grid-cols-6 gap-3">
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-4">Blue (Primary Solid)</p>
+                    <div class="space-y-3">
+                        <Button variant="blue" size="lg">Normal</Button>
+                        <Button variant="blue" size="lg" className="hover">Hover</Button>
+                        <Button variant="blue" size="lg" className="focus">Focus</Button>
+                        <Button variant="blue" size="lg" className="active">Pressed</Button>
+                        <Button variant="blue" size="lg" disabled>Disabled</Button>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-4">Blue Outline (Primary Border)</p>
+                    <div class="space-y-3">
+                        <Button variant="blue-outline" size="lg">Normal</Button>
+                        <Button variant="blue-outline" size="lg" className="hover">Hover</Button>
+                        <Button variant="blue-outline" size="lg" className="focus">Focus</Button>
+                        <Button variant="blue-outline" size="lg" className="active">Pressed</Button>
+                        <Button variant="blue-outline" size="lg" disabled>Disabled</Button>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-4">Blue Ghost (Blue Transparent)</p>
+                    <div class="space-y-3">
+                        <Button variant="blue-ghost" size="lg">Normal</Button>
+                        <Button variant="blue-ghost" size="lg" className="hover">Hover</Button>
+                        <Button variant="blue-ghost" size="lg" className="focus">Focus</Button>
+                        <Button variant="blue-ghost" size="lg" className="active">Pressed</Button>
+                        <Button variant="blue-ghost" size="lg" disabled>Disabled</Button>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-4">Neutral (Neutral Solid)</p>
+                    <div class="space-y-3">
+                        <Button variant="neutral" size="lg">Normal</Button>
+                        <Button variant="neutral" size="lg" className="hover">Hover</Button>
+                        <Button variant="neutral" size="lg" className="focus">Focus</Button>
+                        <Button variant="neutral" size="lg" className="active">Pressed</Button>
+                        <Button variant="neutral" size="lg" disabled>Disabled</Button>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-4">Neutral Outline (Neutral Border)</p>
+                    <div class="space-y-3">
+                        <Button variant="neutral-outline" size="lg">Normal</Button>
+                        <Button variant="neutral-outline" size="lg" className="hover">Hover</Button>
+                        <Button variant="neutral-outline" size="lg" className="focus">Focus</Button>
+                        <Button variant="neutral-outline" size="lg" className="active">Pressed</Button>
+                        <Button variant="neutral-outline" size="lg" disabled>Disabled</Button>
+                    </div>
+                </div>
+                
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-4">Neutral Ghost (Neutral Transparent)</p>
+                    <div class="space-y-3">
+                        <Button variant="neutral-ghost" size="lg">Normal</Button>
+                        <Button variant="neutral-ghost" size="lg" className="hover">Hover</Button>
+                        <Button variant="neutral-ghost" size="lg" className="focus">Focus</Button>
+                        <Button variant="neutral-ghost" size="lg" className="active">Pressed</Button>
+                        <Button variant="neutral-ghost" size="lg" disabled>Disabled</Button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 按鈕狀態說明 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-6">狀態說明 (State Description)</h2>
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 text-sm">
+                    <div>
+                        <strong class="text-blue-600">Normal</strong>
+                        <p class="text-gray-600">預設狀態</p>
+                    </div>
+                    <div>
+                        <strong class="text-blue-600">Hover</strong>
+                        <p class="text-gray-600">滑鼠懸停</p>
+                    </div>
+                    <div>
+                        <strong class="text-blue-600">Focus</strong>
+                        <p class="text-gray-600">鍵盤聚焦 (有 outline)</p>
+                    </div>
+                    <div>
+                        <strong class="text-blue-600">Pressed</strong>
+                        <p class="text-gray-600">點擊按壓 (active/focus-within)</p>
+                    </div>
+                    <div>
+                        <strong class="text-blue-600">Disabled</strong>
+                        <p class="text-gray-600">禁用狀態</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <style>
+        /* 模擬狀態樣式 */
+        .hover {
+            @apply hover:bg-blue-600 hover:border-blue-600;
+        }
+        
+        .focus {
+            @apply focus:outline-2 focus:outline-blue-500 focus:outline-offset-2;
+        }
+        
+        .active {
+            @apply bg-blue-600 border-blue-600;
+        }
+    </style>
+</Layouts>

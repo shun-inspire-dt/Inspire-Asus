@@ -1,0 +1,328 @@
+---
+/** 輸入框組件測試頁面 */
+import Layouts from '../../../layouts/layouts.astro';
+import InputWrapper from '../../../components/common/form/input/inputWrapper.astro';
+import Input from '../../../components/common/form/input/input.astro';
+import PasswordInput from '../../../components/common/form/input/passwordInput.astro';
+---
+
+<Layouts>
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold mb-8">Input 組件測試</h1>
+
+        <!-- 尺寸變體 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">尺寸變體 (Size Variants)</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-3">XL (56px)</h3>
+                    <Input size="xl" placeholder="XL 尺寸輸入框" />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">LG (48px)</h3>
+                    <Input size="lg" placeholder="LG 尺寸輸入框" />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">MD (40px)</h3>
+                    <Input size="md" placeholder="MD 尺寸輸入框" />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">SM (36px)</h3>
+                    <Input size="sm" placeholder="SM 尺寸輸入框" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 狀態變體 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">狀態變體 (Status Variants)</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-3">預設狀態</h3>
+                    <Input size="xl" status="value" placeholder="預設狀態輸入框" />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">選中狀態</h3>
+                    <Input size="xl" status="selected" placeholder="選中狀態輸入框" focus={true} />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">錯誤狀態</h3>
+                    <Input size="xl" status="error" placeholder="錯誤狀態輸入框" />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">禁用狀態</h3>
+                    <Input size="xl" status="disabled" placeholder="禁用狀態輸入框" disabled={true} />
+                </div>
+            </div>
+        </section>
+
+        <!-- 圖標變體 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">圖標變體 (Icon Variants)</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-3">密碼輸入框</h3>
+                    <InputWrapper 
+                        size="xl" 
+                        type="password" 
+                        placeholder="請輸入密碼" 
+                        pwdHideIcon={true} 
+                    />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">搜尋輸入框</h3>
+                    <InputWrapper 
+                        size="xl" 
+                        type="search" 
+                        placeholder="搜尋內容..." 
+                        searchIcon={true} 
+                    />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">可清除輸入框</h3>
+                    <InputWrapper 
+                        size="xl" 
+                        placeholder="可清除的輸入框" 
+                        closeIcon={true} 
+                        value="可以清除這段文字"
+                    />
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">多圖標組合</h3>
+                    <InputWrapper 
+                        size="xl" 
+                        type="password" 
+                        placeholder="密碼 + 清除" 
+                        pwdHideIcon={true} 
+                        closeIcon={true} 
+                    />
+                </div>
+            </div>
+        </section>
+
+        <!-- 不同尺寸的圖標組合 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">不同尺寸圖標組合</h2>
+            <div class="grid grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-3">密碼輸入框</h3>
+                    <div class="space-y-4">
+                        <InputWrapper size="xl" type="password" placeholder="XL 密碼輸入框" pwdHideIcon={true} />
+                        <InputWrapper size="lg" type="password" placeholder="LG 密碼輸入框" pwdHideIcon={true} />
+                        <InputWrapper size="md" type="password" placeholder="MD 密碼輸入框" pwdHideIcon={true} />
+                        <InputWrapper size="sm" type="password" placeholder="SM 密碼輸入框" pwdHideIcon={true} />
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-3">搜尋輸入框</h3>
+                    <div class="space-y-4">
+                        <InputWrapper size="xl" placeholder="XL 搜尋框" searchIcon={true} />
+                        <InputWrapper size="lg" placeholder="LG 搜尋框" searchIcon={true} />
+                        <InputWrapper size="md" placeholder="MD 搜尋框" searchIcon={true} />
+                        <InputWrapper size="sm" placeholder="SM 搜尋框" searchIcon={true} />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 表單範例 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">表單範例 (Form Example)</h2>
+            <form class="max-w-md space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">使用者名稱</label>
+                    <InputWrapper 
+                        size="lg" 
+                        name="username" 
+                        placeholder="請輸入使用者名稱" 
+                        required={true}
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">電子郵件</label>
+                    <InputWrapper 
+                        size="lg" 
+                        type="email" 
+                        name="email" 
+                        placeholder="請輸入電子郵件" 
+                        required={true}
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">密碼</label>
+                    <InputWrapper 
+                        size="lg" 
+                        type="password" 
+                        name="password" 
+                        placeholder="請輸入密碼" 
+                        pwdHideIcon={true} 
+                        required={true}
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">搜尋</label>
+                    <InputWrapper 
+                        size="lg" 
+                        type="search" 
+                        name="search" 
+                        placeholder="搜尋內容..." 
+                        searchIcon={true}
+                    />
+                </div>
+                <button 
+                    type="submit" 
+                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                    提交表單
+                </button>
+            </form>
+        </section>
+
+        <!-- 密碼輸入框組件測試 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">密碼輸入框組件 (PasswordInput Component)</h2>
+            
+            <!-- 基本密碼輸入框 -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">基本密碼輸入框</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">預設隱藏密碼</label>
+                        <PasswordInput 
+                            size="lg" 
+                            placeholder="請輸入密碼" 
+                            name="password1"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">預設顯示密碼</label>
+                        <PasswordInput 
+                            size="lg" 
+                            placeholder="請輸入密碼" 
+                            name="password2"
+                            showPassword={true}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- 不同尺寸的密碼輸入框 -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">不同尺寸</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">XL 尺寸 (56px)</label>
+                        <PasswordInput size="xl" placeholder="XL 密碼輸入框" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">LG 尺寸 (48px)</label>
+                        <PasswordInput size="lg" placeholder="LG 密碼輸入框" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">MD 尺寸 (40px)</label>
+                        <PasswordInput size="md" placeholder="MD 密碼輸入框" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">SM 尺寸 (36px)</label>
+                        <PasswordInput size="sm" placeholder="SM 密碼輸入框" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- 不同狀態的密碼輸入框 -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">不同狀態</h3>
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">一般狀態</label>
+                        <PasswordInput size="lg" placeholder="一般狀態密碼框" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">選中狀態</label>
+                        <PasswordInput size="lg" status="selected" focus={true} placeholder="選中狀態密碼框" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">錯誤狀態</label>
+                        <PasswordInput size="lg" status="error" placeholder="錯誤狀態密碼框" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">禁用狀態</label>
+                        <PasswordInput size="lg" status="disabled" disabled={true} placeholder="禁用狀態密碼框" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- 表單範例 -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">表單範例</h3>
+                <form class="max-w-md space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">新密碼</label>
+                        <PasswordInput 
+                            size="lg" 
+                            name="new_password" 
+                            placeholder="請輸入新密碼" 
+                            required={true}
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">確認密碼</label>
+                        <PasswordInput 
+                            size="lg" 
+                            name="confirm_password" 
+                            placeholder="請再次輸入密碼" 
+                            required={true}
+                        />
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                        設定密碼
+                    </button>
+                </form>
+            </div>
+
+            <!-- 互動功能展示 -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4">互動功能展示</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">點擊眼睛圖標切換顯示/隱藏</label>
+                        <PasswordInput 
+                            size="lg" 
+                            placeholder="測試密碼切換功能" 
+                            value="MySecretPassword123"
+                        />
+                        <p class="text-sm text-gray-600 mt-1">
+                            💡 點擊右側的眼睛圖標來切換密碼顯示狀態
+                        </p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">鍵盤支援 (Tab + Enter/Space)</label>
+                        <PasswordInput 
+                            size="lg" 
+                            placeholder="使用 Tab 鍵導航到圖標，然後按 Enter 或 Space" 
+                            value="KeyboardAccessible"
+                        />
+                        <p class="text-sm text-gray-600 mt-1">
+                            ⌨️ 使用 Tab 鍵可以導航到眼睛圖標，按 Enter 或 Space 鍵切換
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 狀態組合測試 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">狀態組合測試</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <InputWrapper size="lg" status="selected" focus={true} placeholder="選中 + 焦點" searchIcon={true} />
+                <InputWrapper size="lg" status="error" placeholder="錯誤狀態" closeIcon={true} />
+                <InputWrapper size="lg" status="disabled" disabled={true} placeholder="禁用狀態" pwdHideIcon={true} />
+                <InputWrapper size="lg" placeholder="一般狀態" closeIcon={true} searchIcon={true} />
+                <PasswordInput size="lg" placeholder="密碼輸入框測試" />
+            </div>
+        </section>
+    </div>
+</Layouts>
