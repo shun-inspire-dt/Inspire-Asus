@@ -2,7 +2,7 @@
 
 :root {
     /* ==================== Figma Variables - Collection ==================== */
-    
+
     /* === 黑色系列 === */
     --color-black: #000000;
     --color-black-6: rgba(0, 0, 0, 0.0578);
@@ -17,7 +17,7 @@
     /* === 深色系列 === */
     --color-dark: var(--color-black);
     --color-dark-80: rgba(0, 0, 0, 0.8);
-    
+
     /* === 白色系列 === */
     --color-white: #ffffff;
     --color-white-0: rgba(255, 255, 255, 0);
@@ -41,7 +41,7 @@
     --color-slate-800: #4b4b4d;
     --color-slate-900: #334155;
     --color-slate-950: #1e293b;
-    
+
     /* === Neutral 顏色系列 === */
     --color-neutral-50: #f7f8fa;
     --color-neutral-100: #f2f4f7;
@@ -54,7 +54,7 @@
     --color-neutral-800: #4b4b4d;
     --color-neutral-900: #282829;
     --color-neutral-950: #1b1b1c;
-    
+
     /* === Gray 顏色系列 === */
     --color-gray-50: #f5f5f5;
     --color-gray-100: #dcdcdc;
@@ -71,7 +71,7 @@
     --color-gray-900: #181818;
     --color-gray-900-68: rgba(24, 24, 24, 0.68);
     --color-gray-950: #111111;
-    
+
     /* === Blue 顏色系列 === */
     --color-blue-50: #ecf5ff;
     --color-blue-100: #cce4ff;
@@ -86,7 +86,7 @@
     --color-blue-800: #002752;
     --color-blue-900: #172554;
     --color-blue-950: #001936;
-    
+
     /* === Green 顏色系列 === */
     --color-green-50: #f0fdf4;
     --color-green-100: #e0ffe0;
@@ -99,7 +99,7 @@
     --color-green-800: #1e481f;
     --color-green-900: #14532d;
     --color-green-950: #052e16;
-    
+
     /* === Orange 顏色系列 === */
     --color-orange-50: #fff8f1;
     --color-orange-100: #feecdc;
@@ -112,38 +112,38 @@
     --color-orange-800: #9a3412;
     --color-orange-900: #7c2d12;
     --color-orange-950: #431407;
-    
+
     /* === 紅色系列 === */
     --color-red-50: #fae6e3;
     --color-red-100: #f3ada5;
     --color-red-200: #e75b4b;
     --color-red-300: #b42d18;
     --color-red-400: #5a140c;
-    
+
     /* === 特殊顏色 === */
-    --header-border-bottom: #Dadce0;
-    --footer-bg-background: Linear-Gradient(180deg, #F1f5f9 0%, #E2e8f0 100%);
+    --header-border-bottom: #dadce0;
+    --footer-bg-background: Linear-Gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
     --header-drop-down-bg: Linear-Gradient(180deg, #475569 0%, #334155 50%, #1e293b 100%);
-    --why-business-bg: Linear-gradient(140.99deg, #Dcdcdc 0%, #Cccccc 100%);
-    --section-bg-1: Linear-Gradient(180deg, #F5f5f5 0%, #Ffffff 100%);
-    --swiper-bg-1: Linear-gradient(104.68deg, #F5f5f5 0%, #Ecf5ff 100%);
+    --why-business-bg: Linear-gradient(140.99deg, #dcdcdc 0%, #cccccc 100%);
+    --section-bg-1: Linear-Gradient(180deg, #f5f5f5 0%, #ffffff 100%);
+    --swiper-bg-1: Linear-gradient(104.68deg, #f5f5f5 0%, #ecf5ff 100%);
     --about-card-bg-1: Linear-Gradient(180deg, Rgba(11, 16, 33, 0) 49%, Rgba(11, 16, 33, 0.8) 75%);
     --about-card-bg-2: rgba(11, 16, 33, 0.8);
-    
+
     /* === Microsoft 品牌色 === */
     --microsoft-logo-border-color: #8c8c8c;
     --microsoft-blue: #00a4ef;
     --microsoft-green: #7fba00;
     --microsoft-red: #f25022;
     --microsoft-yellow: #ffb900;
-    
+
     /* === Google 品牌色 === */
     --google-logo-border-color: #747775;
     --google-green: #34a853;
     --google-blue: #4285f4;
     --google-red: #e94235;
     --google-yellow: #fbbc04;
-    
+
     /* === ASUS 品牌色 === */
     --asus-black: var(--color-dark);
     --asus-blur-dark: #0064d2;
@@ -152,13 +152,12 @@
     --asus-green-light: #00b464;
     --asus-green: #009b64;
     --asus-green-dark: #008264;
-    
-    
+
     /* === 其他品牌色 === */
     --color-cyan-500: #01d4ff;
     --color-cyan-700: #007a99;
     --color-component-grid: #8a38f5;
-    
+
     /* === 社群媒體品牌色 === */
     --color-facebook: #0866ff;
     --color-linkin: #007cba;
@@ -166,11 +165,8 @@
     --color-youtube: #ef505c;
     --color-google: var(--google-red);
     --color-apple: #000000;
-    --color-instgram: linear-gradient(45deg,
-            rgba(253, 179, 81, 1) 0%,
-            rgba(193, 39, 149, 1) 46.35%,
-            rgba(88, 65, 211, 1) 100%);
-    
+    --color-instgram: linear-gradient(45deg, rgba(253, 179, 81, 1) 0%, rgba(193, 39, 149, 1) 46.35%, rgba(88, 65, 211, 1) 100%);
+
     /* === Badge 顏色 === */
     --badge-light-outline: rgba(0, 0, 0, 0.1622);
     --badge-dark-standard-bg: rgba(255, 255, 255, 0.0419);
@@ -189,12 +185,12 @@
     --screen-320px-padding-x: 20px;
     --screen-375px-padding-x: 23.4375px;
     --screen-mobile-padding-x: 16px;
-    
+
     /* === 容器寬度 === */
     --tablet-width: 672px;
     --desktop-width: 1260px;
     --360px-width: 315px;
-    
+
     /* === 表單寬度 === */
     --desktop-form-width: 630px;
     --tablet-form-width: 560px;
@@ -202,11 +198,11 @@
 
     /* === 基礎數值 === */
     --spacing-24: 24px;
-    
+
     /* === 間距 === */
     --gap-32px: 32px;
     --gap-24px: 24px;
-    
+
     /* === 基礎字體大小 === */
     --fs-12: 12px;
     --fs-13: 13px;
@@ -221,7 +217,7 @@
     --fs-52: 52px;
     --fs-64: 64px;
     --fs-72: 72px;
-    
+
     /* === 語義化字體大小 === */
     --fs-xs: var(--fs-12);
     --fs-sm: var(--fs-14);
@@ -235,57 +231,57 @@
     --fs-h1: var(--fs-52);
     --fs-display-sm: var(--fs-64);
     --fs-display-lg: var(--fs-72);
-    
+
     /* === 行高 === */
     --line-height: 1;
-    --line-height-12: 16px;   /* lh-12 */
-    --line-height-13: 18px;   /* lh-13 */
-    --line-height-14: 20px;   /* lh-14 */
+    --line-height-12: 16px; /* lh-12 */
+    --line-height-13: 18px; /* lh-13 */
+    --line-height-14: 20px; /* lh-14 */
     --line-height-14-sh: 18px; /* lh-14-sh (short) */
-    --line-height-16: 24px;   /* lh-16 */
+    --line-height-16: 24px; /* lh-16 */
     --line-height-16-sh: 22px; /* lh-16-sh (short) */
-    --line-height-18: 26px;   /* lh-18 */
+    --line-height-18: 26px; /* lh-18 */
     --line-height-18-sh: 24px; /* lh-18-sh (short) */
-    --line-height-20: 28px;   /* lh-20 */
+    --line-height-20: 28px; /* lh-20 */
     --line-height-20-sh: 26px; /* lh-20-sh (short) */
-    --line-height-24: 32px;   /* lh-24 */
-    --line-height-30: 38px;   /* lh-30 */
-    --line-height-36: 44px;   /* lh-36 */
-    --line-height-44: 52px;   /* lh-44 */
-    --line-height-52: 60px;   /* lh-52 */
-    --line-height-64: 72px;   /* lh-64 */
-    --line-height-72: 80px;   /* lh-72 */
-    
+    --line-height-24: 32px; /* lh-24 */
+    --line-height-30: 38px; /* lh-30 */
+    --line-height-36: 44px; /* lh-36 */
+    --line-height-44: 52px; /* lh-44 */
+    --line-height-52: 60px; /* lh-52 */
+    --line-height-64: 72px; /* lh-64 */
+    --line-height-72: 80px; /* lh-72 */
+
     /* === 百分比行高 === */
-    --line-height-100: 1;      /* 100% */
-    --line-height-120: 1.2;    /* 120% */
-    --line-height-125: 1.25;   /* 125% */
-    --line-height-133: 1.333;  /* 133.3% */
-    --line-height-140: 1.4;    /* 140% */
-    --line-height-150: 1.5;    /* 150% */
-    --line-height-155: 1.55;   /* 155% */
-    --line-height-160: 1.6;    /* 160% */
-    --line-height-180: 1.8;    /* 180% */
-    
+    --line-height-100: 1; /* 100% */
+    --line-height-120: 1.2; /* 120% */
+    --line-height-125: 1.25; /* 125% */
+    --line-height-130: 1.3; /* 130% */
+    --line-height-133: 1.333; /* 133.3% */
+    --line-height-140: 1.4; /* 140% */
+    --line-height-150: 1.5; /* 150% */
+    --line-height-155: 1.55; /* 155% */
+    --line-height-160: 1.6; /* 160% */
+    --line-height-180: 1.8; /* 180% */
+
     /* === 字體間距 === */
     --letter-spacing: 0;
 
     /* === 字體樣式 === */
-    --font-style-italic: "Italic";
-    --font-style-sb-italic: "SemiBold Italic";
-    
+    --font-style-italic: 'Italic';
+    --font-style-sb-italic: 'SemiBold Italic';
+
     /* === 字體粗細 === */
-    --font-weight-400: "400";
-    --font-weight-450: "Normal";
-    --font-weight-500: "500";
-    --font-weight-600: "600";
-    --font-weight-700: "Bold";
+    --font-weight-400: '400';
+    --font-weight-450: 'Normal';
+    --font-weight-500: '500';
+    --font-weight-600: '600';
+    --font-weight-700: '700';
 
     /* === 字體家族 === */
     --font-family-tt-norms-pro-normal: TTNormsProNormal, Roboto, sans-serif;
     --font-family-tt-norms-pro-medium: TTNormsProMedium, Roboto, sans-serif;
     --font-family-roboto: Roboto, sans-serif;
-    
 
     /** Scrollbar 元件顏色 */
     --scrollbar-width: 0.25rem;
@@ -299,13 +295,13 @@
     --scrollbar-thumb-border-radius: 0.625rem;
 
     /** Font */
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol';
 
     /* === 阴影 === */
-    --shadow-2xs: 0px 1px 0px  rgba(0, 0, 0, 0.05);
-    --shadow-xs: 0px 1px 2px  rgba(0, 0, 0, 0.05);
-    --shadow-sm: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px  rgba(0, 0, 0, 0.1);
+    --shadow-2xs: 0px 1px 0px rgba(0, 0, 0, 0.05);
+    --shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1);
     --shadow-md: 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0px 8px 10px -6px rgba(0, 0, 0, 0.1), 0px 25px 25px -5px rgba(0, 0, 0, 0.1);
@@ -322,9 +318,16 @@
     --header-height: 3rem;
     --InputPaddingY: 0.4375rem;
     --footer-margin-top: 0rem;
+    --backdrop-color: var(--color-black);
+    --backdrop-opacity: 0.68;
+    --underline-offset: 3px;
 }
 
-body, body:lang(tw), body:lang(zh), body:lang(zh-TW), body:lang(zh-tw) {
+body,
+body:lang(tw),
+body:lang(zh),
+body:lang(zh-TW),
+body:lang(zh-tw) {
     font-family: var(--font-family-tt-norms-pro-normal);
 }
 
@@ -335,7 +338,26 @@ body {
 }
 
 main {
+    margin-top: var(--header-height);
 }
 
-.container {
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--backdrop-color);
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+    
+    &.show {
+        opacity: var(--backdrop-opacity);
+    }
+    
+    &.fade {
+        opacity: 0;
+    }
 }
