@@ -1,9 +1,12 @@
 .header-inquery {
+    --icon-size: 1.125rem;
+    --icon-color: var(--color-gray-900, #181818);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: var(--icon-size, 1.125rem);
+    height: var(--icon-size, 1.125rem);
+    color: var(--icon-color);
     position: relative;
     cursor: pointer;
 
@@ -11,10 +14,14 @@
         width: auto;
         height: auto;
         display: block;
+
+        path {
+            transition: all 0.2s ease-in-out;
+        }
     }
 
     // 數量標籤定位
-    &__quantity {
+    .quantity-label {
         display: flex;
         position: absolute;
         top: -8px;
@@ -26,17 +33,17 @@
         &.header-inquery--false {
             &.header-inquery--normal {
                 &.header-inquery--normal {
-                    color: var(--color-gray-700, #4d4d4d);
+                    --icon-color: var(--color-gray-700, #4d4d4d);
                 }
 
                 &.header-inquery--hover {
-                    color: var(--color-gray-900, #181818);
+                    --icon-color: var(--color-gray-900, #181818);
                 }
             }
 
             &.header-inquery--hover {
                 &.header-inquery--hover {
-                    color: var(--color-gray-900, #181818);
+                    --icon-color: var(--color-gray-900, #181818);
                 }
             }
         }
@@ -44,17 +51,17 @@
         &.header-inquery--true {
             &.header-inquery--normal {
                 &.header-inquery--normal {
-                    color: var(--color-gray-700, #4d4d4d);
+                    --icon-color: var(--color-gray-700, #4d4d4d);
                 }
 
                 &.header-inquery--hover {
-                    color: var(--color-gray-900, #181818);
+                    --icon-color: var(--color-gray-900, #181818);
                 }
             }
 
             &.header-inquery--hover {
                 &.header-inquery--hover {
-                    color: var(--color-gray-900, #181818);
+                    --icon-color: var(--color-gray-900, #181818);
                 }
             }
         }
@@ -66,31 +73,24 @@
             &.header-inquery--cart {
                 &.header-inquery--false {
                     &.header-inquery--normal {
-                        color: var(--color-gray-300, #b3b3b3);
+                        --icon-color: var(--color-gray-300, #b3b3b3);
                     }
 
                     &.header-inquery--hover {
-                        color: var(--color-white, #ffffff);
+                        --icon-color: var(--color-white, #ffffff);
                     }
                 }
 
                 &.header-inquery--true {
                     &.header-inquery--normal {
-                        color: var(--color-gray-300, #b3b3b3);
+                        --icon-color: var(--color-gray-300, #b3b3b3);
                     }
 
                     &.header-inquery--hover {
-                        color: var(--color-white, #ffffff);
+                        --icon-color: var(--color-white, #ffffff);
                     }
                 }
             }
         }
-    }
-
-    // Focus states for accessibility
-    &:focus-visible {
-        outline: 2px solid var(--color-blue-500, #006ce1);
-        outline-offset: 2px;
-        border-radius: 2px;
     }
 }

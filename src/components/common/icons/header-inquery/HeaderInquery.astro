@@ -10,7 +10,11 @@ export interface Props {
     state?: 'normal' | 'hover';
     mode?: 'light' | 'dark';
     quantity?: string | number;
-    class?: any;
+    className?: any;
+    Tag?: 'button' | 'a' | 'div' | 'span';
+    attribute?: attribute;
+    aria?: aria;
+    style?: { [key: string]: string };
 }
 
 const {
@@ -20,7 +24,11 @@ const {
     state = 'normal',
     mode = 'light',
     quantity = '2',
-    class: className = ''
+    className = '',
+    Tag = 'span',
+    attribute = {},
+    aria = {},
+    style = {}
 } = Astro.props;
 
 // 根據 props 決定樣式類別
@@ -39,7 +47,7 @@ const getVariantClass = () => {
 const hasQuantityLabel = haveItems === 'true' || (haveItems === 'header' && colorMode === 'true');
 ---
 
-<span class={`${getVariantClass()} ${className}`}>
+<Tag class={`${getVariantClass()} ${className}`} {...attribute} {...aria} style={style}>
     <!-- Inline SVG -->
     <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -51,11 +59,5 @@ const hasQuantityLabel = haveItems === 'true' || (haveItems === 'header' && colo
     </svg>
 
     <!-- 數量標籤 (條件顯示) -->
-    {
-        hasQuantityLabel && (
-            <span class="header-inquery__quantity">
-                <QuantityLabel quantity={quantity} />
-            </span>
-        )
-    }
-</span>
+    {hasQuantityLabel && <QuantityLabel quantity={quantity} />}
+</Tag>
