@@ -5,31 +5,54 @@
 /* 按鈕基礎樣式類別 */
 .btn {
     /* CSS 自定義屬性 (CSS Variables) - 可被外部覆蓋的樣式變數 */
-    --btn-min-height: ;           /* 按鈕最小高度 */
-    --btn-padding-x: ;            /* 按鈕水平內邊距 */
-    --btn-padding-y: ;            /* 按鈕垂直內邊距 */
-    --btn-gap: ;                  /* 按鈕內元素間距 (如圖標與文字) */
-    --btn-font-family: ;          /* 按鈕字體家族 */
-    --btn-font-size: ;            /* 按鈕字體大小 */
-    --btn-font-weight: ;          /* 按鈕字體粗細 */
-    --btn-line-height: ;          /* 按鈕行高 */
-    --btn-letter-spacing: ;       /* 按鈕字母間距 */
-    --btn-color: ;                /* 按鈕文字顏色 */
-    --btn-bg: ;                   /* 按鈕背景顏色 */
-    --btn-border-width: ;         /* 按鈕邊框寬度 */
-    --btn-border-color: ;         /* 按鈕邊框顏色 */
-    --btn-border-radius: ;        /* 按鈕圓角 */
-    --btn-box-shadow: ;           /* 按鈕陰影 */
-    --btn-disabled-opacity: ;     /* 禁用狀態透明度 */
-    --btn-focus-box-shadow: ;     /* 聚焦狀態陰影 */
+    --btn-min-height: 40px; /* 按鈕最小高度 */
+    --btn-min-width: 80px; /* 按鈕最小寬度 */
+    --btn-padding-x: 16px; /* 按鈕水平內邊距 */
+    --btn-padding-y: 8px; /* 按鈕垂直內邊距 */
+    --btn-gap: 8px; /* 按鈕內元素間距 (如圖標與文字) */
+    --btn-font-family: var(--font-family-roboto, 'Roboto', sans-serif); /* 按鈕字體家族 */
+    --btn-font-size: 16px; /* 按鈕字體大小 */
+    --btn-font-weight: 400; /* 按鈕字體粗細 */
+    --btn-line-height: var(--line-height-16-sh, 22px); /* 按鈕行高 - 預設 16px 字體對應 22px 行高 */
+    --btn-letter-spacing: 0; /* 按鈕字母間距 */
+    --btn-color: var(--color-gray-900, #181818); /* 按鈕文字顏色 */
+    --btn-bg: var(--color-white, #ffffff); /* 按鈕背景顏色 */
+    --btn-border-width: 0; /* 按鈕邊框寬度 - 預設無邊框 */
+    --btn-border-color: transparent; /* 按鈕邊框顏色 - 預設透明 */
+    --btn-border-radius: 8px; /* 按鈕圓角 */
+    --btn-box-shadow: none; /* 按鈕陰影 */
+    --btn-disabled-opacity: 1; /* 禁用狀態透明度 */
+    --btn-focus-box-shadow: none; /* 聚焦狀態陰影 */
+
+    /* Focus outline 相關屬性 */
+    --btn-focus-outline: 2px solid var(--color-blue-500, #006ce1); /* 聚焦外框 */
+    --btn-focus-outline-offset: 2px; /* 聚焦外框偏移 */
+
+    /* 狀態顏色變數 */
+    --btn-hover-color: var(--btn-color); /* 懸停文字顏色 */
+    --btn-hover-bg: var(--color-gray-50, #f9f9f9); /* 懸停背景顏色 */
+    --btn-hover-border-color: var(--color-gray-400, #999999); /* 懸停邊框顏色 */
+
+    --btn-focus-color: var(--btn-color); /* 聚焦文字顏色 */
+    --btn-focus-bg: var(--btn-bg); /* 聚焦背景顏色 */
+    --btn-focus-border-color: var(--color-blue-500, #006ce1); /* 聚焦邊框顏色 */
+
+    --btn-focus-within-color: var(--btn-color); /* 按壓文字顏色 */
+    --btn-focus-within-bg: var(--color-gray-100, #f0f0f0); /* 按壓背景顏色 */
+    --btn-focus-within-border-color: var(--color-blue-600, #0051a8); /* 按壓邊框顏色 */
+
+    --btn-disabled-color: var(--color-gray-400, #999999); /* 禁用文字顏色 */
+    --btn-disabled-bg: var(--color-gray-100, #f0f0f0); /* 禁用背景顏色 */
+    --btn-disabled-border-color: var(--color-gray-200, #e0e0e0); /* 禁用邊框顏色 */
     /* 按鈕過渡動畫屬性 */
-    --btn-transition-property: ;     /* 過渡屬性 */
-    --btn-transition-duration: ;     /* 過渡持續時間 */
-    --btn-transition-timing-function: ; /* 過渡緩動函數 */
+    --btn-transition-property: color, background-color, border-color, box-shadow, outline; /* 過渡屬性 */
+    --btn-transition-duration: 200ms; /* 過渡持續時間 */
+    --btn-transition-timing-function: ease-in-out; /* 過渡緩動函數 */
+
     /* 圖標過渡動畫屬性 */
-    --icon-transition-property: ;                    /* 圖標過渡屬性 */
-    --icon-transition-duration: ;                    /* 圖標過渡持續時間 */
-    --icon-transition-timing-function: ;             /* 圖標過渡緩動函數 */
+    --icon-transition-property: fill, stroke, transform; /* 圖標過渡屬性 */
+    --icon-transition-duration: 200ms; /* 圖標過渡持續時間 */
+    --icon-transition-timing-function: ease-in-out; /* 圖標過渡緩動函數 */
 
     /* 使用 UnoCSS 原子化類別設定基礎佈局 */
     @apply flex items-center justify-center;
@@ -37,112 +60,171 @@
     transition-property: var(--btn-transition-property);
     transition-duration: var(--btn-transition-duration);
     transition-timing-function: var(--btn-transition-timing-function);
-    
+
     /* 基礎樣式屬性 */
-    min-height: var(--btn-min-height);                    /* 設定最小高度 */
-    gap: var(--btn-gap);                                  /* 內部元素間距 */
-    padding: var(--btn-padding-y) var(--btn-padding-x);  /* 內邊距 */
-    position: relative;                                   /* 相對定位，用於子元素絕對定位 */
-    color: var(--btn-color);                             /* 文字顏色 */
-    font-size: var(--btn-font-size);                     /* 字體大小 */
-    font-weight: var(--btn-font-weight);                 /* 字體粗細 */
-    text-align: center;                                  /* 文字居中對齊 */
-    line-height: var(--btn-line-height);                 /* 行高 */
-    letter-spacing: var(--btn-letter-spacing);           /* 字母間距 */
-    text-indent: var(--btn-letter-spacing);              /* 文字縮排，配合字母間距使用 */
-    font-family: var(--btn-font-family);                 /* 字體家族 */
-    background-color: var(--btn-bg);                     /* 背景顏色 */
-    border: var(--btn-border-width) solid var(--btn-border-color); /* 邊框樣式 */
-    box-shadow: var(--btn-box-shadow);                   /* 陰影效果 */
+    min-height: var(--btn-min-height); /* 設定最小高度 */
+    min-width: var(--btn-min-width); /* 設定最小寬度 */
+    gap: var(--btn-gap); /* 內部元素間距 */
+    padding: var(--btn-padding-y) var(--btn-padding-x); /* 內邊距 */
+    position: relative; /* 相對定位，用於子元素絕對定位 */
+    color: var(--btn-color); /* 文字顏色 */
+    font-size: var(--btn-font-size); /* 字體大小 */
+    font-weight: var(--btn-font-weight); /* 字體粗細 */
+    text-align: center; /* 文字居中對齊 */
+    line-height: var(--btn-line-height); /* 行高 */
+    letter-spacing: var(--btn-letter-spacing); /* 字母間距 */
+    text-indent: var(--btn-letter-spacing); /* 文字縮排，配合字母間距使用 */
+    font-family: var(--btn-font-family); /* 字體家族 */
+    background-color: var(--btn-bg); /* 背景顏色 */
+    border: var(--btn-border-width, 0) solid var(--btn-border-color, transparent); /* 邊框樣式 */
+    box-shadow: var(--btn-box-shadow); /* 陰影效果 */
 
     /* 懸停狀態樣式 - 排除 .no-focus 類別的按鈕 */
-    &:hover:not(.no-focus) {
-        color: var(--btn-hover-color);                    /* 懸停時文字顏色 */
-        background-color: var(--btn-hover-bg);            /* 懸停時背景顏色 */
-        border-color: var(--btn-hover-border-color);      /* 懸停時邊框顏色 */
+    &:hover:not(.no-focus),
+    &.hover {
+        color: var(--btn-hover-color); /* 懸停時文字顏色 */
+        background-color: var(--btn-hover-bg); /* 懸停時背景顏色 */
+        border-color: var(--btn-hover-border-color); /* 懸停時邊框顏色 */
         /* 更新圖標顏色以匹配懸停狀態 */
         .fa-Icons.customStyle {
-            --fill: var(--btn-hover-color);               /* 圖標填充顏色 */
-            --stroke: var(--btn-hover-color);             /* 圖標描邊顏色 */
+            --fill: var(--btn-hover-color); /* 圖標填充顏色 */
+            --stroke: var(--btn-hover-color); /* 圖標描邊顏色 */
         }
     }
-    
-    /* 聚焦/激活狀態樣式 - 包含多種觸發條件 */
+
+    /* 聚焦狀態樣式 - 鍵盤聚焦和手動聚焦 */
     &:focus:not(.no-focus),      /* 鍵盤聚焦 */
-    &:active:not(.no-focus),     /* 點擊激活 */
-    &:focus-within:not(.no-focus), /* 內部元素聚焦 */
-    &.active {                   /* 手動添加的激活類別 */
-        color: var(--btn-focus-color);                    /* 聚焦時文字顏色 */
-        background-color: var(--btn-focus-bg);            /* 聚焦時背景顏色 */
-        border-color: var(--btn-focus-border-color);      /* 聚焦時邊框顏色 */
-        box-shadow: var(--btn-focus-box-shadow);          /* 聚焦時陰影效果 */
+    &.focus {
+        /* 手動添加的聚焦類別 */
+        color: var(--btn-focus-color); /* 聚焦時文字顏色 */
+        background-color: var(--btn-focus-bg); /* 聚焦時背景顏色 */
+        border-color: var(--btn-focus-border-color); /* 聚焦時邊框顏色 */
+        box-shadow: var(--btn-focus-box-shadow); /* 聚焦時陰影效果 */
+        outline: var(--btn-focus-outline); /* 聚焦時外框 */
+        outline-offset: var(--btn-focus-outline-offset); /* 聚焦外框偏移 */
         /* 更新圖標顏色以匹配聚焦狀態 */
         .fa-Icons.customStyle {
-            --fill: var(--btn-focus-color);               /* 圖標填充顏色 */
-            --stroke: var(--btn-focus-color);             /* 圖標描邊顏色 */
+            --fill: var(--btn-focus-color); /* 圖標填充顏色 */
+            --stroke: var(--btn-focus-color); /* 圖標描邊顏色 */
         }
     }
-    
+
+    /* 按壓狀態樣式 - 點擊激活和內部元素聚焦 (Pressed Status) */
+    &:active:not(.no-focus),     /* 點擊激活 */
+    &:focus-within:not(.no-focus), /* 內部元素聚焦 */
+    &.active {
+        /* 手動添加的激活類別 */
+        color: var(--btn-focus-within-color); /* 按壓時文字顏色 */
+        background-color: var(--btn-focus-within-bg); /* 按壓時背景顏色 */
+        border-color: var(--btn-focus-within-border-color); /* 按壓時邊框顏色 */
+        box-shadow: var(--btn-focus-box-shadow); /* 按壓時陰影效果 */
+        outline: none; /* 按壓時移除外框 */
+        outline-offset: 0; /* 按壓時移除外框偏移 */
+        /* 更新圖標顏色以匹配按壓狀態 */
+        .fa-Icons.customStyle {
+            --fill: var(--btn-focus-within-color); /* 圖標填充顏色 */
+            --stroke: var(--btn-focus-within-color); /* 圖標描邊顏色 */
+        }
+    }
+
     /* 禁用狀態樣式 - 支援 HTML disabled 屬性和 CSS 類別 */
     &:disabled,
     &.disabled {
-        color: var(--btn-disabled-color);                 /* 禁用時文字顏色 */
-        background-color: var(--btn-disabled-bg);         /* 禁用時背景顏色 */
-        border-color: var(--btn-disabled-border-color);   /* 禁用時邊框顏色 */
-        opacity: var(--btn-disabled-opacity);             /* 禁用時透明度 */
-        pointer-events: none;                             /* 禁用滑鼠事件 */
+        color: var(--btn-disabled-color); /* 禁用時文字顏色 */
+        background-color: var(--btn-disabled-bg); /* 禁用時背景顏色 */
+        border-color: var(--btn-disabled-border-color); /* 禁用時邊框顏色 */
+        opacity: var(--btn-disabled-opacity); /* 禁用時透明度 */
+        pointer-events: none; /* 禁用滑鼠事件 */
         /* 更新圖標顏色以匹配禁用狀態 */
         .fa-Icons.customStyle {
-            --fill: var(--btn-disabled-color);            /* 圖標填充顏色 */
-            --stroke: var(--btn-disabled-color);          /* 圖標描邊顏色 */
+            --fill: var(--btn-disabled-color); /* 圖標填充顏色 */
+            --stroke: var(--btn-disabled-color); /* 圖標描邊顏色 */
         }
+    }
+
+    /* 按鈕尺寸變體 - 基於 Figma 設計規範 */
+    &.btn-xs {
+        --btn-padding-x: 12px; /* 超小按鈕水平內邊距 */
+        --btn-padding-y: 3px; /* 超小按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-14, 14px); /* 超小按鈕字體大小 */
+        --btn-line-height: var(--line-height-14-sh, 18px); /* 14px 字體對應 18px 行高 */
+        --btn-letter-spacing: 0.16px; /* 超小按鈕字母間距 */
+        --btn-min-height: 24px; /* 超小按鈕最小高度 */
+        --btn-min-width: auto; /* 超小按鈕無最小寬度限制 */
+        --btn-border-radius: 6px; /* 超小按鈕圓角 */
+        --btn-gap: 4px; /* 超小按鈕內元素間距 */
+    }
+
+    &.btn-sm {
+        --btn-padding-x: 12px; /* 小按鈕水平內邊距 */
+        --btn-padding-y: 6px; /* 小按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-14, 14px); /* 小按鈕字體大小 */
+        --btn-line-height: var(--line-height-14-sh, 18px); /* 14px 字體對應 18px 行高 */
+        --btn-letter-spacing: 0.16px; /* 小按鈕字母間距 */
+        --btn-min-height: 32px; /* 小按鈕最小高度 */
+        --btn-min-width: auto; /* 小按鈕無最小寬度限制 */
+        --btn-border-radius: 8px; /* 小按鈕圓角 */
+        --btn-gap: 10px; /* 小按鈕內元素間距 */
+    }
+
+    &.btn-md {
+        --btn-padding-x: 12px; /* 中等按鈕水平內邊距 */
+        --btn-padding-y: 9px; /* 中等按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-14, 14px); /* 中等按鈕字體大小 */
+        --btn-line-height: var(--line-height-14-sh, 18px); /* 14px 字體對應 18px 行高 */
+        --btn-letter-spacing: 0.16px; /* 中等按鈕字母間距 */
+        --btn-min-height: 36px; /* 中等按鈕最小高度 */
+        --btn-border-radius: 8px; /* 中等按鈕圓角 */
+        --btn-gap: 8px; /* 中等按鈕內元素間距 */
+    }
+
+    &.btn-lg {
+        --btn-padding-x: 16px; /* 大按鈕水平內邊距 */
+        --btn-padding-y: 8px; /* 大按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-18, 18px); /* 大按鈕字體大小 */
+        --btn-line-height: var(--line-height-18-sh, 24px); /* 18px 字體對應 24px 行高 */
+        --btn-min-height: 40px; /* 大按鈕最小高度 */
+        --btn-border-radius: 8px; /* 大按鈕圓角 */
+        --btn-gap: 8px; /* 大按鈕內元素間距 */
+    }
+
+    &.btn-xl {
+        --btn-padding-x: 16px; /* 超大按鈕水平內邊距 */
+        --btn-padding-y: 8px; /* 超大按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-18, 18px); /* 超大按鈕字體大小 */
+        --btn-line-height: var(--line-height-18-sh, 24px); /* 18px 字體對應 24px 行高 */
+        --btn-min-height: 56px; /* 超大按鈕最小高度 */
+        --btn-border-radius: 12px; /* 超大按鈕圓角 */
+        --btn-gap: 8px; /* 超大按鈕內元素間距 */
     }
 
     /* 按鈕修飾類別 */
     &.btn-block {
-        @apply w-full;                                    /* 全寬按鈕 (UnoCSS) */
+        @apply w-full; /* 全寬按鈕 (UnoCSS) */
     }
-    
+
     &.btn-round {
-        border-radius: var(--btn-border-radius);          /* 圓角按鈕 */
+        border-radius: var(--btn-border-radius); /* 圓角按鈕 */
     }
-    
-    /* 按鈕尺寸變體 */
-    &.btn-xs {
-        --btn-padding-x: ;   /* */
-        --btn-padding-y: ;   /* */
-        --btn-font-size: ;   /* */
+
+    &.btn-rounded {
+        --btn-border-radius: 999px; /* 圓角按鈕 */
     }
-    &.btn-sm {
-        --btn-padding-x: ;    /* */
-        --btn-padding-y: ;    /* */
-        --btn-font-size: ;    /* */
-    }
-    &.btn-lg {
-        --btn-padding-x: ;   /* */
-        --btn-padding-y: ;   /* */
-        --btn-font-size: ;   /* */
-    }
-    &.btn-xl {
-        --btn-padding-x: ;   /* */
-        --btn-padding-y: ;   /* */
-        --btn-font-size: ;   /* */
-    }
-    
+
     /* 按鈕內圖標樣式 */
     .fa-Icons {
         /* 圖標尺寸屬性 */
-        --width: var(--btn-font-size);                   /* 圖標寬度跟隨字體大小 */
-        --height: var(--btn-font-size);                  /* 圖標高度跟隨字體大小 */
+        --width: var(--btn-font-size); /* 圖標寬度跟隨字體大小 */
+        --height: var(--btn-font-size); /* 圖標高度跟隨字體大小 */
         /* 應用過渡動畫 */
         transition-property: var(--icon-transition-property);
         transition-duration: var(--icon-transition-duration);
         transition-timing-function: var(--icon-transition-timing-function);
-        
+
         /* 自定義樣式圖標 */
         &.customStyle {
-            --fill: var(--btn-color);                    /* 圖標填充顏色跟隨按鈕文字顏色 */
-            --stroke: var(--btn-color);                  /* 圖標描邊顏色跟隨按鈕文字顏色 */
+            --fill: var(--btn-color); /* 圖標填充顏色跟隨按鈕文字顏色 */
+            --stroke: var(--btn-color); /* 圖標描邊顏色跟隨按鈕文字顏色 */
         }
     }
 }
@@ -152,21 +234,55 @@
 @each $key, $colors in $theme {
     /* 生成對應的 CSS 類別和屬性選擇器 */
     .btn-#{$key},                    /* 類別選擇器，如 .btn-blue */
-    [data-variant='#{$key}'] {       /* 屬性選擇器，如 [data-variant='blue'] */
+    [data-variant='#{$key}'] {
+        /* 屬性選擇器，如 [data-variant='blue'] */
         /* 使用 button-variant mixin 應用完整的按鈕樣式 */
         @include button-variant(
-            map-get($colors, 'background'),         /* 預設背景顏色 */
-            map-get($colors, 'border'),             /* 預設邊框顏色 */
-            map-get($colors, 'color'),              /* 預設文字顏色 */
-            map-get($colors, 'hover-background'),   /* 懸停背景顏色 */
-            map-get($colors, 'hover-border'),       /* 懸停邊框顏色 */
-            map-get($colors, 'hover-color'),        /* 懸停文字顏色 */
-            map-get($colors, 'focus-background'),   /* 聚焦背景顏色 */
-            map-get($colors, 'focus-border'),       /* 聚焦邊框顏色 */
-            map-get($colors, 'focus-color'),        /* 聚焦文字顏色 */
-            map-get($colors, 'disabled-background'), /* 禁用背景顏色 */
-            map-get($colors, 'disabled-border'),    /* 禁用邊框顏色 */
-            map-get($colors, 'disabled-color')      /* 禁用文字顏色 */
+            map-get($colors, 'background'),
+            /* 預設背景顏色 */ map-get($colors, 'border'),
+            /* 預設邊框顏色 */ map-get($colors, 'color'),
+            /* 預設文字顏色 */ map-get($colors, 'hover-background'),
+            /* 懸停背景顏色 */ map-get($colors, 'hover-border'),
+            /* 懸停邊框顏色 */ map-get($colors, 'hover-color'),
+            /* 懸停文字顏色 */ map-get($colors, 'focus-background'),
+            /* 聚焦背景顏色 */ map-get($colors, 'focus-border'),
+            /* 聚焦邊框顏色 */ map-get($colors, 'focus-color'),
+            /* 聚焦文字顏色 */ map-get($colors, 'focus-within-background'),
+            /* 按壓背景顏色 */ map-get($colors, 'focus-within-border'),
+            /* 按壓邊框顏色 */ map-get($colors, 'focus-within-color'),
+            /* 按壓文字顏色 */ map-get($colors, 'disabled-background'),
+            /* 禁用背景顏色 */ map-get($colors, 'disabled-border'),
+            /* 禁用邊框顏色 */ map-get($colors, 'disabled-color'),
+            /* 禁用文字顏色 */ map-get($colors, 'min-width'),
+            /* 最小寬度 (可選) */ map-get($colors, 'border-width'),
+            /* 邊框寬度 (可選) */ map-get($colors, 'focus-outline-color') /* 聚焦外框顏色 (可選) */
         );
+
+        /* Outline 按鈕特殊處理：調整各尺寸的 padding-y 以補償 2px 邊框 */
+        @if map-get($colors, 'padding-y-xl') {
+            &.btn-xl {
+                --btn-padding-y: #{map-get($colors, 'padding-y-xl')};
+            }
+        }
+        @if map-get($colors, 'padding-y-lg') {
+            &.btn-lg {
+                --btn-padding-y: #{map-get($colors, 'padding-y-lg')};
+            }
+        }
+        @if map-get($colors, 'padding-y-md') {
+            &.btn-md {
+                --btn-padding-y: #{map-get($colors, 'padding-y-md')};
+            }
+        }
+        @if map-get($colors, 'padding-y-sm') {
+            &.btn-sm {
+                --btn-padding-y: #{map-get($colors, 'padding-y-sm')};
+            }
+        }
+        @if map-get($colors, 'padding-y-xs') {
+            &.btn-xs {
+                --btn-padding-y: #{map-get($colors, 'padding-y-xs')};
+            }
+        }
     }
 }

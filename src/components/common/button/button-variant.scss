@@ -11,25 +11,24 @@
  * 適用於主要操作按鈕，具有明顯的視覺重點
  */
 $blue: (
-    /* 預設狀態 */
-    'background': '',           /* 預設背景顏色 - 實心藍色 */
-    'border': '',              /* 預設邊框顏色 - 與背景同色 */
-    'color': '',               /* 預設文字顏色 - 通常為白色 */
-    
-    /* 懸停狀態 (hover) */
-    'hover-background': '',     /* 懸停時背景顏色 - 通常為較深的藍色 */
-    'hover-border': '',        /* 懸停時邊框顏色 - 與懸停背景同色 */
-    'hover-color': '',         /* 懸停時文字顏色 - 保持白色 */
-    
-    /* 聚焦狀態 (focus/active) */
-    'focus-background': '',     /* 聚焦時背景顏色 - 與懸停色相同或略有差異 */
-    'focus-border': '',        /* 聚焦時邊框顏色 - 可能有聚焦環效果 */
-    'focus-color': '',         /* 聚焦時文字顏色 - 保持白色 */
-    
-    /* 禁用狀態 (disabled) */
-    'disabled-background': '',  /* 禁用時背景顏色 - 通常為灰色 */
-    'disabled-border': '',     /* 禁用時邊框顏色 - 與禁用背景同色 */
-    'disabled-color': '',      /* 禁用時文字顏色 - 通常為較淡的灰色 */
+    /* 預設狀態 - Primary Solid Button */ 'background': var(--color-blue-500, #006ce1),
+    /* 預設背景顏色 - 藍色 500 */ 'border': transparent,
+    /* 預設邊框顏色 - 無邊框 */ 'color': var(--color-white, #ffffff),
+    /* 預設文字顏色 - 白色 */ 'focus-outline-color': var(--color-blue-500, #006ce1),
+    /* 聚焦外框顏色 - 藍色 */ /* 懸停狀態 (hover) */ 'hover-background': var(--color-blue-600, #0051a8),
+    /* 懸停時背景顏色 - 藍色 600 */ 'hover-border': transparent,
+    /* 懸停時邊框顏色 - 無邊框 */ 'hover-color': var(--color-white, #ffffff),
+    /* 懸停時文字顏色 - 保持白色 */ /* 聚焦狀態 (focus) */ 'focus-background': var(--color-blue-500, #006ce1),
+    /* 聚焦時背景顏色 - 保持原本藍色 */ 'focus-border': transparent,
+    /* 聚焦時邊框顏色 - 無邊框 */ 'focus-color': var(--color-white, #ffffff),
+    /* 聚焦時文字顏色 - 保持白色 */ /* 按壓狀態 (focus-within/active - Pressed) */ 'focus-within-background':
+        var(--color-blue-600, #0051a8),
+    /* 按壓時背景顏色 - 深藍色 */ 'focus-within-border': transparent,
+    /* 按壓時邊框顏色 - 無邊框 */ 'focus-within-color': var(--color-white, #ffffff),
+    /* 按壓時文字顏色 - 保持白色 */ /* 禁用狀態 (disabled) */ 'disabled-background': var(--color-gray-300, #b3b3b3),
+    /* 禁用時背景顏色 - 灰色 300 */ 'disabled-border': transparent,
+    /* 禁用時邊框顏色 - 無邊框 */ 'disabled-color': var(--color-white, #ffffff),
+    /* 禁用時文字顏色 - 保持白色 */
 );
 
 /* ==================== 藍色外框按鈕主題 ==================== */
@@ -38,25 +37,145 @@ $blue: (
  * 適用於次要操作按鈕，視覺重點較低但仍保持品牌色彩
  */
 $blue-outline: (
-    /* 預設狀態 */
-    'background': '',           /* 預設背景顏色 - 透明或白色 */
-    'border': '',              /* 預設邊框顏色 - 藍色邊框 */
-    'color': '',               /* 預設文字顏色 - 藍色文字 */
-    
-    /* 懸停狀態 (hover) */
-    'hover-background': '',     /* 懸停時背景顏色 - 通常填充為藍色 */
-    'hover-border': '',        /* 懸停時邊框顏色 - 保持藍色或變深 */
-    'hover-color': '',         /* 懸停時文字顏色 - 變為白色 */
-    
-    /* 聚焦狀態 (focus/active) */
-    'focus-background': '',     /* 聚焦時背景顏色 - 與懸停效果相同 */
-    'focus-border': '',        /* 聚焦時邊框顏色 - 可能有聚焦環 */
-    'focus-color': '',         /* 聚焦時文字顏色 - 白色 */
-    
-    /* 禁用狀態 (disabled) */
-    'disabled-background': '',  /* 禁用時背景顏色 - 保持透明 */
-    'disabled-border': '',     /* 禁用時邊框顏色 - 灰色邊框 */
-    'disabled-color': '',      /* 禁用時文字顏色 - 灰色文字 */
+    /* 預設狀態 - Primary Border Button */ 'background': transparent,
+    /* 預設背景顏色 - 透明 */ 'border': var(--color-blue-500, #006ce1),
+    /* 預設邊框顏色 - 藍色邊框 */ 'color': var(--color-blue-500, #006ce1),
+    /* 預設文字顏色 - 藍色文字 */ 'border-width': 2px,
+    /* 邊框寬度 - 2px */ 'focus-outline-color': var(--color-blue-500, #006ce1),
+    /* 聚焦外框顏色 - 藍色 */ /* Outline 按鈕因 2px 邊框需調整 padding-y 以保持相同高度 */ 'padding-y-xl': 14px,
+    /* XL 尺寸垂直內邊距調整 (原 16px - 2px) */ 'padding-y-lg': 6px,
+    /* LG 尺寸垂直內邊距調整 (原 8px - 2px) */ 'padding-y-md': 7px,
+    /* MD 尺寸垂直內邊距調整 (原 9px - 2px) */ 'padding-y-sm': 4px,
+    /* SM 尺寸垂直內邊距調整 (原 6px - 2px) */ 'padding-y-xs': 1px,
+
+    /* XS 尺寸垂直內邊距調整 (原 3px - 2px) */ /* 懸停狀態 (hover) */ 'hover-background': var(--color-blue-500, #006ce1),
+    /* 懸停時背景顏色 - 填充為藍色 */ 'hover-border': var(--color-blue-500, #006ce1),
+    /* 懸停時邊框顏色 - 保持藍色 */ 'hover-color': var(--color-white, #ffffff),
+    /* 懸停時文字顏色 - 變為白色 */ /* 聚焦狀態 (focus) */ 'focus-background': var(--color-blue-500, #006ce1),
+    /* 聚焦時背景顏色 - 填充為藍色 */ 'focus-border': var(--color-blue-500, #006ce1),
+    /* 聚焦時邊框顏色 - 藍色邊框 */ 'focus-color': var(--color-white, #ffffff),
+    /* 聚焦時文字顏色 - 白色 */ /* 按壓狀態 (focus-within/active - Pressed) */ 'focus-within-background':
+        var(--color-blue-600, #0051a8),
+    /* 按壓時背景顏色 - 深藍色 */ 'focus-within-border': var(--color-blue-600, #0051a8),
+    /* 按壓時邊框顏色 - 深藍色邊框 */ 'focus-within-color': var(--color-white, #ffffff),
+    /* 按壓時文字顏色 - 保持白色 */ /* 禁用狀態 (disabled) */ 'disabled-background': transparent,
+    /* 禁用時背景顏色 - 保持透明 */ 'disabled-border': var(--color-gray-300, #b3b3b3),
+    /* 禁用時邊框顏色 - 灰色邊框 */ 'disabled-color': var(--color-gray-300, #b3b3b3),
+    /* 禁用時文字顏色 - 灰色文字 */
+);
+
+/* ==================== 中性色按鈕主題 ==================== */
+/**
+ * $neutral - 中性色實心按鈕配色方案
+ * 適用於次要操作按鈕，使用灰色系配色
+ */
+$neutral: (
+    /* 預設狀態 - Neutral Solid Button */ 'background': var(--color-gray-900, #181818),
+    /* 預設背景顏色 - 灰色 900 */ 'border': transparent,
+    /* 預設邊框顏色 - 無邊框 */ 'color': var(--color-white, #ffffff),
+    /* 預設文字顏色 - 白色 */ 'focus-outline-color': var(--color-gray-900, #181818),
+    /* 聚焦外框顏色 - 灰色 */ /* 懸停狀態 (hover) */ 'hover-background': var(--color-gray-800, #262626),
+    /* 懸停時背景顏色 - 灰色 800 */ 'hover-border': transparent,
+    /* 懸停時邊框顏色 - 無邊框 */ 'hover-color': var(--color-white, #ffffff),
+    /* 懸停時文字顏色 - 保持白色 */ /* 聚焦狀態 (focus) */ 'focus-background': var(--color-gray-900, #181818),
+    /* 聚焦時背景顏色 - 保持原本灰色 */ 'focus-border': transparent,
+    /* 聚焦時邊框顏色 - 無邊框 */ 'focus-color': var(--color-white, #ffffff),
+    /* 聚焦時文字顏色 - 保持白色 */ /* 按壓狀態 (focus-within/active - Pressed) */ 'focus-within-background':
+        var(--color-gray-800, #262626),
+    /* 按壓時背景顏色 - 深灰色 */ 'focus-within-border': transparent,
+    /* 按壓時邊框顏色 - 無邊框 */ 'focus-within-color': var(--color-white, #ffffff),
+    /* 按壓時文字顏色 - 保持白色 */ /* 禁用狀態 (disabled) */ 'disabled-background': var(--color-gray-300, #b3b3b3),
+    /* 禁用時背景顏色 - 灰色 300 */ 'disabled-border': transparent,
+    /* 禁用時邊框顏色 - 無邊框 */ 'disabled-color': var(--color-white, #ffffff),
+    /* 禁用時文字顏色 - 保持白色 */
+);
+
+/* ==================== 中性色外框按鈕主題 ==================== */
+/**
+ * $neutral-outline - 中性色外框按鈕配色方案
+ * 適用於次要操作按鈕，視覺重點較低，使用灰色系邊框
+ */
+$neutral-outline: (
+    /* 預設狀態 - Neutral Border Button */ 'background': transparent,
+    /* 預設背景顏色 - 透明 */ 'border': var(--color-gray-900, #181818),
+    /* 預設邊框顏色 - 灰色邊框 */ 'color': var(--color-gray-900, #181818),
+    /* 預設文字顏色 - 灰色文字 */ 'border-width': 2px,
+    /* 邊框寬度 - 2px */ 'focus-outline-color': var(--color-gray-900, #181818),
+    /* 聚焦外框顏色 - 灰色 */ /* Outline 按鈕因 2px 邊框需調整 padding-y 以保持相同高度 */ 'padding-y-xl': 14px,
+    /* XL 尺寸垂直內邊距調整 (原 16px - 2px) */ 'padding-y-lg': 6px,
+    /* LG 尺寸垂直內邊距調整 (原 8px - 2px) */ 'padding-y-md': 7px,
+    /* MD 尺寸垂直內邊距調整 (原 9px - 2px) */ 'padding-y-sm': 4px,
+    /* SM 尺寸垂直內邊距調整 (原 6px - 2px) */ 'padding-y-xs': 1px,
+
+    /* XS 尺寸垂直內邊距調整 (原 3px - 2px) */ /* 懸停狀態 (hover) */ 'hover-background': var(--color-gray-900, #181818),
+    /* 懸停時背景顏色 - 填充為灰色 */ 'hover-border': var(--color-gray-900, #181818),
+    /* 懸停時邊框顏色 - 保持灰色 */ 'hover-color': var(--color-white, #ffffff),
+    /* 懸停時文字顏色 - 變為白色 */ /* 聚焦狀態 (focus) */ 'focus-background': var(--color-gray-900, #181818),
+    /* 聚焦時背景顏色 - 填充為灰色 */ 'focus-border': var(--color-gray-900, #181818),
+    /* 聚焦時邊框顏色 - 灰色邊框 */ 'focus-color': var(--color-white, #ffffff),
+    /* 聚焦時文字顏色 - 白色 */ /* 按壓狀態 (focus-within/active - Pressed) */ 'focus-within-background':
+        var(--color-gray-800, #262626),
+    /* 按壓時背景顏色 - 深灰色 */ 'focus-within-border': var(--color-gray-800, #262626),
+    /* 按壓時邊框顏色 - 深灰色邊框 */ 'focus-within-color': var(--color-white, #ffffff),
+    /* 按壓時文字顏色 - 保持白色 */ /* 禁用狀態 (disabled) */ 'disabled-background': transparent,
+    /* 禁用時背景顏色 - 保持透明 */ 'disabled-border': var(--color-gray-300, #b3b3b3),
+    /* 禁用時邊框顏色 - 灰色邊框 */ 'disabled-color': var(--color-gray-300, #b3b3b3),
+    /* 禁用時文字顏色 - 灰色文字 */
+);
+
+/* ==================== Blue Ghost 按鈕主題 ==================== */
+/**
+ * $blue-ghost - 藍色 Ghost 按鈕配色方案
+ * 適用於輕量級操作，背景透明，狀態與 blue 按鈕相同
+ */
+$blue-ghost: (
+    /* 預設狀態 - Blue Ghost Button */ 'background': transparent,
+    /* 預設背景顏色 - 透明 */ 'border': transparent,
+    /* 預設邊框顏色 - 透明 */ 'color': var(--color-blue-500, #006ce1),
+    /* 預設文字顏色 - 藍色文字 */ 'min-width': auto,
+    /* Ghost 按鈕無最小寬度限制 */ 'focus-outline-color': var(--color-blue-500, #006ce1),
+    /* 聚焦外框顏色 - 藍色 */ /* 懸停狀態 (hover) - 與 blue 按鈕相同 */ 'hover-background': var(--color-blue-500, #006ce1),
+    /* 懸停時背景顏色 - 藍色 600 */ 'hover-border': transparent,
+    /* 懸停時邊框顏色 - 無邊框 */ 'hover-color': var(--color-white, #ffffff),
+    /* 懸停時文字顏色 - 保持白色 */ /* 聚焦狀態 (focus) - 與 blue 按鈕相同 */ 'focus-background': var(--color-blue-500, #006ce1),
+    /* 聚焦時背景顏色 - 保持原本藍色 */ 'focus-border': transparent,
+    /* 聚焦時邊框顏色 - 無邊框 */ 'focus-color': var(--color-white, #ffffff),
+    /* 聚焦時文字顏色 - 保持白色 */ /* 按壓狀態 (focus-within/active - Pressed) - 與 blue 按鈕相同 */ 'focus-within-background':
+        var(--color-blue-600, #0051a8),
+    /* 按壓時背景顏色 - 深藍色 */ 'focus-within-border': transparent,
+    /* 按壓時邊框顏色 - 無邊框 */ 'focus-within-color': var(--color-white, #ffffff),
+    /* 按壓時文字顏色 - 保持白色 */ /* 禁用狀態 (disabled) */ 'disabled-background': transparent,
+    /* 禁用時背景顏色 - 保持透明 */ 'disabled-border': transparent,
+    /* 禁用時邊框顏色 - 保持透明 */ 'disabled-color': var(--color-gray-300, #b3b3b3),
+    /* 禁用時文字顏色 - 灰色文字 */
+);
+
+/* ==================== Neutral Ghost 按鈕主題 ==================== */
+/**
+ * $neutral-ghost - 中性色 Ghost 按鈕配色方案
+ * 適用於輕量級操作，背景透明，狀態與 neutral 按鈕相同
+ */
+$neutral-ghost: (
+    /* 預設狀態 - Neutral Ghost Button */ 'background': transparent,
+    /* 預設背景顏色 - 透明 */ 'border': transparent,
+    /* 預設邊框顏色 - 透明 */ 'color': var(--color-gray-900, #181818),
+    /* 預設文字顏色 - 灰色文字 */ 'min-width': auto,
+    /* Ghost 按鈕無最小寬度限制 */ 'focus-outline-color': var(--color-gray-900, #181818),
+    /* 聚焦外框顏色 - 灰色 */ /* 懸停狀態 (hover) - 與 neutral 按鈕相同 */ 'hover-background': var(--color-gray-800, #262626),
+    /* 懸停時背景顏色 - 灰色 800 */ 'hover-border': transparent,
+    /* 懸停時邊框顏色 - 無邊框 */ 'hover-color': var(--color-white, #ffffff),
+    /* 懸停時文字顏色 - 保持白色 */ /* 聚焦狀態 (focus) - 與 neutral 按鈕相同 */ 'focus-background':
+        var(--color-gray-900, #181818),
+    /* 聚焦時背景顏色 - 保持原本灰色 */ 'focus-border': transparent,
+    /* 聚焦時邊框顏色 - 無邊框 */ 'focus-color': var(--color-white, #ffffff),
+    /* 聚焦時文字顏色 - 保持白色 */ /* 按壓狀態 (focus-within/active - Pressed) - 與 neutral 按鈕相同 */ 'focus-within-background':
+        var(--color-gray-800, #262626),
+    /* 按壓時背景顏色 - 深灰色 */ 'focus-within-border': transparent,
+    /* 按壓時邊框顏色 - 無邊框 */ 'focus-within-color': var(--color-white, #ffffff),
+    /* 按壓時文字顏色 - 保持白色 */ /* 禁用狀態 (disabled) */ 'disabled-background': transparent,
+    /* 禁用時背景顏色 - 保持透明 */ 'disabled-border': transparent,
+    /* 禁用時邊框顏色 - 保持透明 */ 'disabled-color': var(--color-gray-300, #b3b3b3),
+    /* 禁用時文字顏色 - 灰色文字 */
 );
 
 /* ==================== 主題映射表 ==================== */
@@ -65,17 +184,22 @@ $blue-outline: (
  * 
  * 將主題名稱與對應的配色方案進行映射
  * 這個映射表會被 button.scss 中的 @each 循環使用
- * 自動生成對應的 CSS 類別：.btn-blue, .btn-blue-outline
- * 以及屬性選擇器：[data-variant="blue"], [data-variant="blue-outline"]
+ * 自動生成對應的 CSS 類別和屬性選擇器
  */
 $theme: (
-    'blue': $blue,                    /* 藍色實心按鈕主題 */
-    'blue-outline': $blue-outline,    /* 藍色外框按鈕主題 */
-    
-    /* 
+    'blue': $blue,
+    /* 藍色實心按鈕主題 (Primary Solid) */ 'blue-outline': $blue-outline,
+    /* 藍色外框按鈕主題 (Primary Border) */ 'neutral': $neutral,
+    /* 中性色實心按鈕主題 (Neutral Solid) */ 'neutral-outline': $neutral-outline,
+    /* 中性色外框按鈕主題 (Neutral Border) */ 'blue-ghost': $blue-ghost,
+    /* 藍色 Ghost 按鈕主題 (Blue Transparent) */ 'neutral-ghost': $neutral-ghost,
+
+    /* 中性色 Ghost 按鈕主題 (Neutral Transparent) */
+        /* 
      * 可以在此處添加更多主題：
-     * 'red': $red,
-     * 'green': $green,
-     * 'custom': $custom,
+     * 'success': $success,     // 成功狀態按鈕 (綠色)
+     * 'warning': $warning,     // 警告狀態按鈕 (黃色)
+     * 'danger': $danger,       // 危險狀態按鈕 (紅色)
+     * 'info': $info,           // 資訊狀態按鈕 (藍色)
      */
 );

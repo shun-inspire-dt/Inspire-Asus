@@ -8,6 +8,39 @@ import { ext } from '@js/helpers/env';
 import Icons, { type Props as IconsProps, icons } from '@components/common/icons/icons.astro';
 /** Style */
 import './button.scss';
+/**
+ * 按鈕組件的屬性介面定義
+ *
+ * @property {string} IDName - 按鈕元素的 ID 屬性
+ * @property {any} className - 按鈕元素的 CSS 類別屬性
+ * @property {'a'|'button'|'div'} Tag - 按鈕元素的標籤名稱
+ * @property {boolean} disabled - 按鈕是否禁用
+ * @property {variant} variant - 按鈕變體樣式
+ * @property {'button'|'reset'|'submit'|'menu'} type - 按鈕類型
+ * @property {'xs'|'sm'|'md'|'lg'|'xl'} size - 按鈕尺寸
+ * @property {string} title - 按鈕元素的標題屬性
+ * @property {attribute} attribute - 按鈕元素的屬性物件
+ * @property {{[key: string]: string}} style - 按鈕元素的樣式物件
+ * @property {boolean} block - 按鈕是否顯示為區塊級元素
+ * @property {boolean} button - 按鈕是否顯示為按鈕元素
+ * @property {boolean} round - 按鈕是否顯示為圓角按鈕
+ * @property {boolean} rounded - 按鈕是否顯示為完全圓角按鈕
+ * @property {string} role - 按鈕元素的角色屬性
+ * @property {string} link - 按鈕元素的連結屬性
+ * @property {boolean} extend - 按鈕是否擴展其父組件
+ * @property {string} target - 按鈕元素的目標屬性
+ * @property {boolean} noFocus - 按鈕是否接收焦點
+ * @property {IconsProps['icon']} icon - 按鈕元素的圖標物件
+ * @property {'left'|'right'} iconPosition - 圖標位置
+ * @property {IconsProps['width']} iconWidth - 圖標寬度
+ * @property {IconsProps['height']} iconHeight - 圖標高度
+ * @property {IconsProps['fill']} iconFill - 圖標填充顏色
+ * @property {IconsProps['strokeWidth']} iconStrokeWidth - 圖標描邊寬度
+ * @property {IconsProps['strokeColor']} iconStrokeColor - 圖標描邊顏色
+ * @property {attribute} IconAttribute - 圖標元素的屬性物件
+ * @property {{[key: string]: string}} IconStyle - 圖標元素的樣式物件
+ * @property {IconsProps['custom']} CustomIconColor - 圖標的自定義顏色
+ */
 export interface Props {
     IDName?: string;
     className?: any;
@@ -15,13 +48,14 @@ export interface Props {
     disabled?: boolean;
     variant?: variant;
     type?: 'button' | 'reset' | 'submit' | 'menu';
-    size?: 'sm' | 'md' | 'lg' | 'xl';
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     title?: string;
     attribute?: attribute;
     style?: { [key: string]: string };
     block?: boolean;
     button?: boolean;
     round?: boolean;
+    rounded?: boolean;
     role?: HTMLAttributes<'button'>['role'];
     link?: string;
     extend?: boolean;
@@ -51,6 +85,7 @@ const {
     block,
     button = true,
     round = true,
+    rounded = false,
     role,
     link,
     extend,
@@ -76,7 +111,18 @@ const href = link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}
     id={IDName}
     type={Tag === 'button' ? type : undefined}
     class:list={[
-        { btn: button, 'btn-sm': size === 'sm', 'btn-lg': size === 'lg', 'btn-block': block, 'btn-round': round,'no-focus': noFocus },
+        { 
+            btn: button, 
+            'btn-xs': size === 'xs',
+            'btn-sm': size === 'sm', 
+            'btn-md': size === 'md',
+            'btn-lg': size === 'lg',
+            'btn-xl': size === 'xl',
+            'btn-block': block, 
+            'btn-round': round,
+            'btn-rounded': rounded,
+            'no-focus': noFocus,
+        },
         className
     ]}
     title={title}
