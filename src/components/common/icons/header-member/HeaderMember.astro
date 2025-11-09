@@ -6,14 +6,26 @@ export interface Props {
   logIn?: 'False' | 'True';
   status?: 'normal' | 'hover';
   colorMode?: 'light' | 'Dark';
-  class?: any;
+  className?: any;
+  color?: string;
+  width?: string | number;
+  Tag?: 'button' | 'a' | 'div' | 'span';
+  attribute?: attribute;
+  aria?: aria;
+  style?: { [key: string]: string };
 }
 
 const { 
   logIn = 'False', 
   status = 'normal', 
   colorMode = 'light',
-  class: className = ''
+  className = '',
+  color,
+  width,
+  Tag = 'span',
+  attribute = {},
+  aria = {},
+  style = {},
 } = Astro.props;
 
 // 根據 props 決定使用哪個 SVG 和樣式
@@ -24,11 +36,17 @@ const getVariantClass = () => {
   const statusClass = status === 'hover' ? 'header-member--hover' : 'header-member--normal';
   const colorClass = colorMode === 'Dark' ? 'header-member--dark' : 'header-member--light';
   
-  return `${baseClass} ${loginClass} ${statusClass} ${colorClass}`;
+  
+  return [baseClass, loginClass, statusClass, colorClass, className];
+};
+const iconStyle = {
+    ...(width ? { '--icon-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...(color ? { '--icon-color': color.charAt(0) === '#' ? color : `var(--color-${color})` } : {}),
+    ...style
 };
 ---
 
-<span class={`${getVariantClass()} ${className}`}>
+<Tag class:list={getVariantClass()} {...attribute} {...aria} style={iconStyle}>
   {isActive ? (
     <!-- Active member icon with green dot -->
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,4 +84,4 @@ const getVariantClass = () => {
       />
     </svg>
   )}
-</span>
+</Tag>

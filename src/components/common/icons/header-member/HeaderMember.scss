@@ -1,78 +1,73 @@
 .header-member {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
+    --icon-color: var(--color-gray-900, #181818);
+    --icon-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size, 1.125rem);
+    height: var(--icon-size, 1.125rem);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: var(--icon-color);
 
-  svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
+    svg {
+        width: auto;
+        height: auto;
+        display: block;
 
-  // Light mode colors
-  &--light {
-    &.header-member--inactive {
-      &.header-member--normal {
-        color: var(--color-gray-700, #4d4d4d);
-      }
-      
-      &.header-member--hover {
-        color: var(--color-gray-900, #181818);
-      }
+        path {
+            transition: all 0.2s ease-in-out;
+        }
     }
 
-    &.header-member--active {
-      &.header-member--normal {
-        color: var(--color-gray-700, #4d4d4d);
-      }
-      
-      &.header-member--hover {
-        color: var(--color-gray-900, #181818);
-      }
+    // Light mode colors
+    &--light {
+        &.header-member--inactive {
+            &.header-member--normal {
+                --icon-color: var(--color-gray-700, #4d4d4d);
+            }
+
+            &.header-member--hover {
+                --icon-color: var(--color-gray-900, #181818);
+            }
+        }
+
+        &.header-member--active {
+            &.header-member--normal {
+                --icon-color: var(--color-gray-700, #4d4d4d);
+            }
+
+            &.header-member--hover {
+                --icon-color: var(--color-gray-900, #181818);
+            }
+        }
     }
-  }
 
-  // Dark mode colors
-  &--dark {
-    &.header-member--inactive {
-      &.header-member--normal {
-        color: var(--color-white, #ffffff);
-      }
-      
-      &.header-member--hover {
-        color: var(--color-gray-300, #b3b3b3);
-      }
+    // Dark mode colors
+    &--dark {
+        &.header-member--inactive {
+            &.header-member--normal {
+                --icon-color: var(--color-white, #ffffff);
+            }
+
+            &.header-member--hover {
+                --icon-color: var(--color-gray-300, #b3b3b3);
+            }
+        }
+
+        &.header-member--active {
+            &.header-member--normal {
+                --icon-color: var(--color-white, #ffffff);
+            }
+
+            &.header-member--hover {
+                --icon-color: var(--color-gray-300, #b3b3b3);
+            }
+        }
     }
 
-    &.header-member--active {
-      &.header-member--normal {
-        color: var(--color-white, #ffffff);
-      }
-      
-      &.header-member--hover {
-        color: var(--color-gray-300, #b3b3b3);
-      }
+    // Green dot for active state
+    &__dot {
+        fill: var(--color-green-600, #1a821c);
     }
-  }
-
-  // Green dot for active state
-  &__dot {
-    fill: var(--color-green-600, #1a821c);
-  }
-
-  // Hover effects
-  // &:hover {
-  //   transform: scale(1.05);
-  // }
-
-  // Focus states for accessibility
-  &:focus-visible {
-    outline: 2px solid var(--color-green-600, #1a821c);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
 }
