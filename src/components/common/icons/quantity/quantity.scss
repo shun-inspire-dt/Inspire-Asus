@@ -1,0 +1,21 @@
+.quantity-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    min-height: 16px;
+    padding: 2px 4px;
+    background-color: var(--color-blue-500, #006ce1);
+    border-radius: 20px;
+    box-sizing: border-box;
+    /** Font */
+    font-family: var(--font-family-roboto);
+    font-size: var(--fs-12);
+    font-weight: var(--font-weight-400);
+    line-height: 0;
+    color: var(--color-white, #ffffff);
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: var(--letter-spacing);
+    font-variation-settings: 'wdth' 100;
+}
