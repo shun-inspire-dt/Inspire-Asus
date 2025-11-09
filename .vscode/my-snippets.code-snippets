@@ -68,10 +68,16 @@
         "body": ["/** Picture */", "import Picture from '@components/common/images/picture.astro';"],
         "description": "Astro import my Picture components"
     },
-    "Astro import my Link components": {
+    "Astro import Arrow Link components": {
         "scope": "astro,typescript,javascript",
         "prefix": "astro:i-link",
-        "body": ["/** Link */", "import ALink from '@components/common/button/link.astro';"],
+        "body": ["/** Link */", "import ALink from '@components/common/link/link.astro';"],
+        "description": "Astro import Arrow Link components"
+    },
+    "Astro import my Link components": {
+        "scope": "astro,typescript,javascript",
+        "prefix": "astro:i-href",
+        "body": ["/** Link */", "import A from '@components/common/link/a.astro';"],
         "description": "Astro import my Link components"
     },
     "Astro import my Toggle Link components": {
@@ -125,31 +131,31 @@
     "Astro import my Input components": {
         "scope": "astro,typescript,javascript",
         "prefix": "astro:i-form:input",
-        "body": ["/** Input */", "import Input from '@components/common/form/input.astro';"],
+        "body": ["/** Input */", "import Input from '@components/common/form/input/input.astro';"],
         "description": "Astro import my Input components"
     },
     "Astro import my Password Input components": {
         "scope": "astro,typescript,javascript",
         "prefix": "astro:i-form:inputpassword",
-        "body": ["/** Password Input */", "import InputPassword from '@components/common/form/inputPassword.astro';"],
+        "body": ["/** Password Input */", "import InputPassword from '@components/common/form/input/passwordInput.astro';"],
         "description": "Astro import my Password Input components"
     },
     "Astro import my Checkbox components": {
         "scope": "astro,typescript,javascript",
         "prefix": "astro:i-form:checkbox",
-        "body": ["/** Checkbox */", "import Checkbox from '@components/common/form/checkbox.astro';"],
+        "body": ["/** Checkbox */", "import Checkbox from '@components/common/form/checkboxs/checkbox.astro';"],
         "description": "Astro import my Checkbox components"
     },
     "Astro import my ChoiceButton components": {
         "scope": "astro,typescript,javascript",
         "prefix": "astro:i-form:choicebutton",
-        "body": ["/** ChoiceButton */", "import ChoiceButton from '@components/common/form/choiceButton.astro';"],
+        "body": ["/** ChoiceButton */", "import ChoiceButton from '@components/common/form/checkboxs/choiceButton.astro';"],
         "description": "Astro import my ChoiceButton components"
     },
     "Astro import my Radio components": {
         "scope": "astro,typescript,javascript",
         "prefix": "astro:i-form:radio",
-        "body": ["/** Radio */", "import Radio from '@components/common/form/radio.astro';"],
+        "body": ["/** Radio */", "import Radio from '@components/common/form/checkboxs/radio.astro';"],
         "description": "Astro import my Radio components"
     },
     "Astro import my Textarea components": {
@@ -235,10 +241,16 @@
         "body": ["<Picture", "    img={\"\"}", "    width={}", "    height={}", "    alt={\"\"}", "/>"],
         "description": "Astro Picture template"
     },
-    "Astro Link template": {
+    "Astro Arrow Link template": {
         "scope": "astro,typescriptreact",
         "prefix": "astro:c-link",
         "body": ["<ALink link={''} title={''}></ALink>"],
+        "description": "Astro Arrow Link template"
+    },
+    "Astro Link template": {
+        "scope": "astro,typescriptreact",
+        "prefix": "astro:c-href",
+        "body": ["<A link={''} title={''}></A>"],
         "description": "Astro Link template"
     },
     "Astro Button template": {
