@@ -1,67 +1,134 @@
+/**
+ * Header Navigation Styles
+ * 網站頭部導航樣式
+ * 
+ * 功能說明：
+ * - 定義桌面版水平導航列表的視覺樣式
+ * - 使用 CSS 自定義屬性實現主題化設計
+ * - 支援 hover 和 active 狀態的視覺回饋
+ * - 響應式設計，在行動裝置上隱藏
+ */
+
 #headerNav {
-    --headerNav-offset-padding-right: 0rem;
-    --headerNav-padding-x: 0.75rem;
-    --headerNav-padding-y: 0rem;
-    --headerNav-justify-content: center;
-    --headerNav-gap: 0rem;
-    --headerNav-color: var(--color-blue);
-    --headerNav-sub-color: var(--color-gold);
-    --headerNav-font-size: var(--fontSize-base);
-    --headerNav-sub-font-size: var(--fontSize-xs);
-    --headerNav-hover-color: var(--color-blue-dark);
-    --headerNav-sub-hover-color: var(--color-gold-dark);
-    --headerNav-active-color: var(--color-blue-dark);
-    --headerNav-sub-active-color: var(--color-gold-dark);
-    --headerNav-font-weight: 700;
-    --headerNav-sub-font-weight: 400;
-    --headerNav-font-family: 'Noto Serif TC', sans-serif;
-    --headerNav-sub-font-family: 'Noto Sans TC', sans-serif;
-    --headerNav-font-line-height: var(--line-height);
-    --headerNav-font-sub-line-height: var(--line-height);
-    --headerNav-font-letter-spacing: 0.4375rem;
-    --headerNav-sub-font-letter-spacing: 0.1875rem;
-    --headerNav-link-height: auto;
-    --headerNav-link-gap: 0rem;
-    --headerNav-link-background-color: transparent;
-    --headerNav-hover-link-background-color: transparent;
-    --headerNav-active-link-background-color: transparent;
-    --headerNav-link-icon-color: var(--color-gold);
-    --headerNav-link-icon-font-size: var(--fontSize-xs);
-    --headerNav-hover-link-icon-color: var(--color-secondary);
-    --headerNav-border-x-width: 0.0625rem;
-    --headerNav-border-x-color: var(--color-gold);
-    --headerNav-bottom-border-width: 0;
-    --headerNav-bottom-border-height: 0;
-    --headerNav-bottom-line-color: transparent;
-    --headerNav-active-bottom-line-color: transparent;
-    --headerNav-bottom-border-bottom-position: 0;
+    /* === Layout Variables - 版面配置變數 === */
+    --headerNav-offset-padding-right: 0; /* 導航右側偏移內距 */
+    --headerNav-padding-x: 0; /* 導航項目水平內距 */
+    --headerNav-padding-y: 0; /* 導航項目垂直內距 */
+    --headerNav-height: 100%; /* 導航項目高度 */
+    --headerNav-display: none; /* 導航項目佈局方式 */
+    --headerNav-align-items: center; /* 導航項目垂直對齊方式 */
+    --headerNav-justify-content: flex-start; /* 導航項目水平對齊方式 */
+    --headerNav-gap: 2rem; /* 導航項目間距 */
+
+    /* === Typography Variables - 文字樣式變數 === */
+    --headerNav-color: var(--color-gray-900, #181818); /* 主標題文字顏色 */
+    --headerNav-sub-color: var(--color-gray-900, #181818); /* 副標題文字顏色 */
+    --headerNav-font-size: var(--fs-base, 1rem); /* 主標題字體大小 */
+    --headerNav-sub-font-size: var(--fs-base, 1rem); /* 副標題字體大小 */
+    --headerNav-font-weight: var(--font-weight-400, 400); /* 主標題字體粗細 */
+    --headerNav-sub-font-weight: var(--font-weight-400, 400); /* 副標題字體粗細 */
+    --headerNav-font-family: var(--font-family-tt-norms-pro-normal, TTNormsProNormal, Roboto, sans-serif); /* 主標題字體家族 */
+    --headerNav-sub-font-family: var(
+        --font-family-tt-norms-pro-normal,
+        TTNormsProNormal,
+        Roboto,
+        sans-serif
+    ); /* 副標題字體家族 */
+    --headerNav-font-line-height: var(--line-height-16, 1.5rem); /* 主標題行高 */
+    --headerNav-font-sub-line-height: var(--line-height-16, 1.5rem); /* 副標題行高 */
+    --headerNav-font-letter-spacing: var(--letter-spacing, 0); /* 主標題字母間距 */
+    --headerNav-sub-font-letter-spacing: var(--letter-spacing, 0); /* 副標題字母間距 */
+
+    /* === Hover State Variables - 懸停狀態變數 === */
+    --headerNav-hover-color: var(--color-gray-900, #181818); /* 懸停時主標題顏色 */
+    --headerNav-sub-hover-color: var(--color-gray-900, #181818); /* 懸停時副標題顏色 */
+    --headerNav-hover-link-background-color: var(--color-white, #fff); /* 懸停時背景顏色 */
+    --headerNav-hover-link-icon-color: var(--color-white, #fff); /* 懸停時圖示顏色 */
+
+    /* === Active State Variables - 活動狀態變數 === */
+    --headerNav-active-color: var(--color-gray-900, #181818); /* 活動狀態主標題顏色 */
+    --headerNav-sub-active-color: var(--color-gray-900, #181818); /* 活動狀態副標題顏色 */
+    --headerNav-active-link-background-color: var(--color-white, #fff); /* 活動狀態背景顏色 */
+    --headerNav-active-bottom-line-color: var(--color-gray-900, #181818); /* 活動狀態底線顏色 */
+
+    /* === Link Style Variables - 連結樣式變數 === */
+    --headerNav-item-display: none;
+
+    /* === Link Style Variables - 連結樣式變數 === */
+    --headerNav-link-height: 100%; /* 連結高度 */
+    --headerNav-link-gap: 0; /* 連結內元素間距 */
+    --headerNav-link-background-color: transparent; /* 連結背景顏色 */
+    --headerNav-link-icon-color: transparent; /* 圖示顏色 */
+    --headerNav-link-icon-font-size: 0; /* 圖示大小 */
+    --headerNav-link-transition-property: all; /* 連結轉場屬性 */
+    --headerNav-link-transition-timing-function: ease-in-out; /* 連結轉場方式 */
+    --headerNav-link-transition-duration: 0.2s; /* 連結轉場時間 */
+
+    /* === Border Variables - 邊框變數 === */
+    --headerNav-border-x-width: 0; /* 左右邊框寬度 */
+    --headerNav-border-x-color: transparent; /* 左右邊框顏色 */
+    --headerNav-bottom-border-width: 100%; /* 底部邊框寬度 */
+    --headerNav-bottom-border-height: 0.125rem; /* 底部邊框高度 */
+    --headerNav-bottom-line-color: transparent; /* 底部線條顏色 */
+    --headerNav-bottom-border-bottom-position: 0; /* 底部邊框位置 */
+    --headerNav-bottom-border-bottom-transition-property: color, background-color, border-color, text-decoration-color, fill,
+        stroke; /* 底部邊框轉場屬性 */
+    --headerNav-bottom-border-bottom-transition-timing-function: ease-in-out; /* 底部邊框轉場方式 */
+    --headerNav-bottom-border-bottom-transition-duration: 0.2s; /* 底部邊框轉場時間 */
+
     @screen xl {
-        --headerNav-padding-x: 1.25rem;
-        --headerNav-sub-font-size: var(--fontSize-xs);
-    }
-    @screen 2xl {
-        --headerNav-padding-x: 2.5rem;
-        --headerNav-font-size: var(--fontSize-subtitle);
-        --headerNav-sub-font-size: var(--fontSize-sm);
+        --headerNav-display: flex;
+        --headerNav-item-display: block;
     }
 
-    @apply grow;
-
+    /* === Navigation Container - 導航容器 === */
     nav {
-        @apply h-full flex items-center;
+        /* 導航列表基礎佈局 */
+        height: var(--headerNav-height);
+        display: var(--headerNav-display);
+        align-items: var(--headerNav-align-items);
         justify-content: var(--headerNav-justify-content);
-        gap: var(--headerNav-gap);
         padding-right: var(--headerNav-offset-padding-right);
 
+        /* === Navigation Item - 導航項目 === */
         .headerNavItem {
-            @apply hidden cursor-pointer
-            lg:block;
+            /** */
+            $item: &;
+            /* 響應式顯示：小螢幕隱藏，大螢幕顯示 */
+            @apply relative cursor-pointer;
+            display: var(--headerNav-item-display);
+            height: var(--headerNav-link-height);
+            padding-right: var(--headerNav-gap);
 
+            /* 懸停時添加底部線條 */
+            &:hover > a::after {
+                background-color: var(--headerNav-active-bottom-line-color);
+            }
+            /* 第一個導航項目添加左邊框 */
             &:first-child > a {
                 border-left: var(--headerNav-border-x-width) solid var(--headerNav-border-x-color);
             }
+            &:last-child {
+                padding-right: 0;
+            }
+            /** */
+            &[data-mega-menu-trigger]:hover::after {
+                content: '';
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                height: calc(100vh - var(--header-height));
+                z-index: 10;
+                background-color: var(--backdrop-color);
+                opacity: var(--backdrop-opacity);
+                pointer-events: none;
+            }
+
+            /* === Navigation Link - 導航連結樣式 === */
             & > a {
-                @apply flex flex-col-reverse items-center justify-center relative transition-all duration-300 ease-out;
+                /* 連結基礎佈局：垂直排列，副標題在上，主標題在下 */
+                @apply flex flex-col-reverse items-center justify-center relative;
                 height: var(--headerNav-link-height);
                 padding-left: var(--headerNav-padding-x);
                 padding-right: var(--headerNav-padding-x);
@@ -70,7 +137,15 @@
                 background-color: var(--headerNav-link-background-color);
                 border-right: var(--headerNav-border-x-width) solid var(--headerNav-border-x-color);
                 gap: var(--headerNav-link-gap);
-                
+
+                /** === Transition for child elements === */
+                :where(p, span, svg) {
+                    transition-property: var(--headerNav-link-transition-property);
+                    transition-timing-function: var(--headerNav-link-transition-timing-function);
+                    transition-duration: var(--headerNav-link-transition-duration);
+                }
+
+                /* === Main Title Styles - 主標題樣式 === */
                 p {
                     color: var(--headerNav-color);
                     font-size: var(--headerNav-font-size);
@@ -80,6 +155,8 @@
                     letter-spacing: var(--headerNav-font-letter-spacing);
                     text-indent: var(--headerNav-font-letter-spacing);
                 }
+
+                /* === Subtitle Styles - 副標題樣式 === */
                 span {
                     color: var(--headerNav-sub-color);
                     font-size: var(--headerNav-sub-font-size);
@@ -89,41 +166,56 @@
                     letter-spacing: var(--headerNav-sub-font-letter-spacing);
                     text-indent: var(--headerNav-sub-font-letter-spacing);
                 }
+
+                /* === Hover State - 懸停狀態 === */
                 &:hover {
                     background-color: var(--headerNav-hover-link-background-color);
+
+                    /* 懸停時主標題顏色變化 */
                     p {
                         color: var(--headerNav-hover-color);
                     }
+
+                    /* 懸停時副標題顏色變化 */
                     span {
                         color: var(--headerNav-sub-hover-color);
                     }
 
-                    /** icon */
+                    /* 懸停時圖示顏色變化 */
                     & > .fa-Icons {
                         --fill: var(--headerNav-hover-link-icon-color);
                     }
                 }
+
+                /* === Bottom Border Indicator - 底部指示線 === */
                 &::after {
-                    @apply content-empty absolute left-1/2 -translate-x-1/2 z-2 transition-colors duration-300 ease-out;
+                    /* 底部指示線：居中定位的裝飾線條 */
+                    @apply content-empty absolute left-1/2 -translate-x-1/2 z-2;
                     bottom: var(--headerNav-bottom-border-bottom-position);
                     width: var(--headerNav-bottom-border-width);
                     height: var(--headerNav-bottom-border-height);
-
-                    &:hover {
-                        background-color: var(--headerNav-active-bottom-line-color);
-                    }
+                    background-color: var(--headerNav-bottom-line-color);
+                    transition-property: var(--headerNav-bottom-border-bottom-transition-property);
+                    transition-timing-function: var(--headerNav-bottom-border-bottom-transition-timing-function);
+                    transition-duration: var(--headerNav-bottom-border-bottom-transition-duration);
                 }
+
+                /* === Active State - 活動狀態 === */
                 &.active {
                     background-color: var(--headerNav-active-link-background-color);
+
+                    /* 活動狀態主標題顏色 */
                     p {
                         color: var(--headerNav-active-color);
                     }
+
+                    /* 活動狀態副標題顏色 */
                     span {
                         color: var(--headerNav-sub-active-color);
                     }
                 }
 
-                /** icon */
+                /* === Icon Styles - 圖示樣式 === */
                 & > .fa-Icons {
                     --width: var(--headerNav-link-icon-font-size);
                     --height: var(--headerNav-link-icon-font-size);

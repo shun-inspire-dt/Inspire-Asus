@@ -11,4 +11,6 @@ export interface Props {
 const { IDName = 'headerTop', className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}></div>
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+    <slot />
+</div>

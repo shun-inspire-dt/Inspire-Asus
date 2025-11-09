@@ -1,0 +1,80 @@
+.menu-links {
+     /* === Link Style Variables - 連結樣式變數 === */
+    --max-width: 9rem; /* 連結最大寬度 */
+    --padding-x: 0; /* 連結水平內距 */
+    --padding-y: 0.625rem; /* 連結垂直內距 */
+    --font-size: var(--fs-16, 16px); /* 連結字體大小 */
+    --font-weight: 400; /* 連結字體粗細 */
+    --line-height: var(--line-height-16); /* 連結行高 */
+    --letter-spacing: 0; /* 連結字母間距 */
+    --text-align: left; /* 連結文字對齊 */
+    --color: var(--color-gray-600); /* 連結文字顏色 */
+    --background-color: transparent; /* 連結背景顏色 */
+    --border-width: 0; /* 連結邊框寬度 */
+    --border-color: transparent; /* 連結邊框顏色 */
+    --text-decoration-line: underline; /* 連結文字下劃線 */
+    --text-decoration-thickness: 0.0625rem; /* 連結文字下劃線粗細 */
+    --text-decoration-color: var(--megaMenu-hover-link-color); /* 連結文字下劃線顏色 */
+    --text-underline-offset: var(--underline-offset); /* 連結文字下劃線偏移 */
+
+    /* === Link Transition Variables - 連結過渡變數 === */
+    --transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
+    --transition-timing-function: ease-in-out; /* 連結過渡動畫 */
+    --transition-duration: 200ms; /* 連結過渡時間 */
+
+    /* === Link Interaction Variables - 連結互動變數 === */
+    --hover-background-color: transparent; /* 懸停時連結背景顏色 */
+    --active-background-color: transparent; /* 活動狀態連結背景顏色 */
+    --hover-color: var(--color-blue-500, #006ce1); /* 懸停時連結文字顏色 */
+
+    @apply flex flex-col gap-0.5rem flex-1 xl:flex-none;
+
+    .menu-link-title {
+        @apply h-2.5rem xl:h-auto pb-0.5rem border-b border-gray-200 body-02 text-gray-900;
+    }
+
+    .menu-link-list {
+        @apply flex flex-col md:flex-row items-start md:gap-2.5rem;
+    }
+
+    .menu-link-ul {
+        @apply flex flex-col;
+    }
+
+    a {
+        /* 連結基礎樣式：全寬、顏色過渡 */
+        max-width: var(--max-width);
+        padding: var(--padding-y) var(--padding-x);
+        font-size: var(--font-size);
+        font-weight: var(--font-weight);
+        line-height: var(--line-height);
+        letter-spacing: var(--letter-spacing);
+        color: var(--color);
+        text-align: var(--text-align);
+        background-color: var(--background-color);
+        border-top: var(--border-width) solid var(--border-color);
+        transition-property: var(--transition-property);
+        transition-timing-function: var(--transition-timing-function);
+        transition-duration: var(--transition-duration);
+
+        /* 最後一個連結移除底部邊框 */
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        /* 連結懸停狀態 */
+        &:hover, &:active, &.active {
+            color: var(--hover-color);
+            background-color: var(--hover-background-color);
+            text-decoration-line: var(--text-decoration-line);
+            text-decoration-thickness: var(--text-decoration-thickness);
+            text-decoration-color: var(--text-decoration-color);
+            text-underline-offset: var(--text-underline-offset);
+        }
+        &.active {
+            color: var(--active-color);
+            background-color: var(--active-background-color);
+        }
+    }
+}

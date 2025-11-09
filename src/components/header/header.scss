@@ -5,15 +5,34 @@ header {
     --header-left: 0;
     --header-translate-x: 0;
     --header-z-index: 1047;
-    --header-padding-x: 5px;
+    --header-padding-x: 0rem;
     --header-padding-y: 0rem;
-    --header-flex-direction: row;
-    --header-align-items: stretch;
-    --header-justify-content: flex-start;
-    --header-background-color: rgba(255, 255, 255, 0.95);
+    --header-display: block;
+    --header-background-color: var(--color-white, #fff);
     --header-border-bottom-width: 0.0625rem;
-    --header-border-bottom-color: var(--color-gold-3);
-    --headerBody-align-items: center;
-    --headerBody-justify-content: flex-start;
-    --header-menu-button-width: 5rem;
+    --header-border-bottom-color: var(--color-gray-200, #cccccc);
+    --header-body-display: flex;
+    --header-body-flex-direction: row;
+    --header-body-align-items: center;
+    --header-body-justify-content: flex-start;
+
+    position: var(--header-position, fixed);
+    display: var(--header-display, block);
+    width: var(--header-width, 100%);
+    top: var(--header-top, 0);
+    left: var(--header-left, 0);
+    transform: translateX(var(--header-translate-x, 0));
+    z-index: var(--header-z-index, 1047);
+    padding: var(--header-padding-y, 0rem) var(--header-padding-x, 0rem);
+    background-color: var(--header-background-color);
+    border-bottom: var(--header-border-bottom-width) solid var(--header-border-bottom-color);
+    
+    #header-body {
+        height: var(--header-height, 3rem);
+        display: var(--header-body-display, flex);
+        flex-direction: var(--header-body-flex-direction, row);
+        align-items: var(--header-body-align-items, center);
+        justify-content: var(--header-body-justify-content, flex-start);
+        @apply container;
+    }
 }

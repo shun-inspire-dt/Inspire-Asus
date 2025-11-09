@@ -1,2 +1,12 @@
 #headerLogo {
+    @apply h-full xl:max-w-[11.875rem] flex items-center;
+    & > svg {
+        width: 100%;
+        &:first-child {
+            @apply hidden xl:block;
+        }
+        &:last-child {
+            @apply block xl:hidden;
+        }
+    }
 }

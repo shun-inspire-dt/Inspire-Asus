@@ -1,6 +1,28 @@
 ---
-/** Style */
+/**
+ * Mobile Offcanvas Trigger Button Component
+ * 手機版側邊選單觸發按鈕組件
+ * 
+ * 功能說明：
+ * - 提供手機版導航選單的開關按鈕
+ * - 使用 Bootstrap Offcanvas 組件進行互動
+ * - 支援動畫效果的漢堡選單圖示
+ * - 自動監聽 Offcanvas 狀態並更新按鈕樣式
+ * - 響應式設計，通常在小螢幕顯示
+ */
+
+/** Styles - 樣式檔案 */
 import './triggerButton.scss';
+
+/**
+ * Component Props Interface
+ * 組件屬性介面定義
+ * 
+ * @property {string} [IDName] - 組件 ID 名稱，預設為 'headerOffcanvas'
+ * @property {any} [className] - 自定義 CSS 類別
+ * @property {attribute} [attribute] - HTML 屬性物件
+ * @property {{[key: string]: string}} [style] - 內聯樣式物件
+ */
 export interface Props {
     IDName?: string;
     className?: any;
@@ -8,9 +30,19 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName = 'headerOffcanvas', className, style, attribute = {} } = Astro.props as Props;
+/**
+ * Props Destructuring with Default Values
+ * 屬性解構並設定預設值
+ */
+const { 
+    IDName = 'headerOffcanvas', 
+    className, 
+    style, 
+    attribute = {} 
+} = Astro.props as Props;
 ---
 
+<!-- Mobile Menu Trigger Button - 手機版選單觸發按鈕 -->
 <button
     id={`${IDName}TriggerButton`}
     type="button"
@@ -22,18 +54,33 @@ const { IDName = 'headerOffcanvas', className, style, attribute = {} } = Astro.p
     title="header Offcanvas Trigger Button"
     {...attribute}
 >
-    <span class="line"></span>
+    {/* 漢堡選單圖示：三條橫線 */}
     <span class="line"></span>
     <span class="line"></span>
 </button>
 
 <script>
+    /**
+     * Offcanvas State Management
+     * 側邊選單狀態管理
+     * 
+     * 功能說明：
+     * - 監聽 Bootstrap Offcanvas 的顯示/隱藏事件
+     * - 自動為觸發按鈕添加/移除 active 類別
+     * - 實現漢堡選單圖示的動畫效果
+     */
+    
+    // 取得 Offcanvas 元素和觸發按鈕
     const offcanvas = document.getElementById('headerOffcanvas') as HTMLElement;
     const button = document.getElementById('headerOffcanvasTriggerButton') as HTMLButtonElement;
+    
+    // 監聽 Offcanvas 顯示事件
     offcanvas.addEventListener('show.bs.offcanvas', () => {
-        button.classList.add('active');
+        button.classList.add('active');  // 添加 active 類別，觸發按鈕動畫
     });
+    
+    // 監聽 Offcanvas 隱藏事件
     offcanvas.addEventListener('hide.bs.offcanvas', () => {
-        button.classList.remove('active');
+        button.classList.remove('active');  // 移除 active 類別，恢復按鈕狀態
     });
 </script>

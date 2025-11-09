@@ -3,13 +3,26 @@
 import { NavsData } from '@js/data/navs';
 /** Main Components */
 import Navs from './nav.astro';
-import Offcanvas from './offcanvas/offcanvas.astro';
+/** Main Components - 主要組件 */
+import TriggerButton from './offcanvas/triggerButton.astro';
 import Logo from './logo.astro';
 /** Top & Bottom */
-import Right from './headerTop.astro';
-// import Bottom from './headerBottom.astro';
+import Left from './headerTop.astro';
+import Right from './headerBottom.astro';
+/** Common Component */
+/** Offcanvas */
+import Offcanvas from '@components/header/offcanvas/offcanvas.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Link */
+import A from '@components/common/link/a.astro';
+/** Icon Button */
+import IconSearch from '@components/common/icons/search/search.astro';
+import IconHeaderInquery from '@components/common/icons/header-inquery/HeaderInquery.astro';
+import IconHeaderMember from '@components/common/icons/header-member/HeaderMember.astro';
 /** Style */
 import './header.scss';
+import './linkList.scss';
 
 export interface Props {
     IDName?: string;
@@ -22,4 +35,62 @@ const { IDName = 'header', className, style, attribute = {} } = Astro.props as P
 ---
 
 <!-- Header -->
-<header id={IDName} class:list={['header', className]} style={style} {...attribute}></header>
+<header id={IDName} class:list={['header', className]} style={style} {...attribute}>
+    <div id="header-body">
+        <Left>
+            <Logo />
+            <Navs type="megaMenu" data={NavsData} />
+        </Left>
+        <Right>
+            <Button variant="blue-outline" size="sm" title="成為ISV夥伴" rounded className="header-control-button"
+                >成為ISV夥伴</Button
+            >
+            <IconSearch Tag="button" attribute={{ type: 'button', title: 'search' }} className="header-control" />
+            <IconHeaderInquery
+                haveItems="header"
+                colorMode="true"
+                Tag="button"
+                attribute={{ type: 'button', title: 'inquery' }}
+                className="header-control"
+            />
+            <div class=":uno-header-control-member: inline-flex relative">
+                <IconHeaderMember
+                    logIn="True"
+                    Tag="button"
+                    attribute={{
+                        type: 'button',
+                        title: 'member',
+                        'data-bs-toggle': 'dropdown',
+                        'aria-expanded': 'false',
+                        'data-bs-offset': '0,4'
+                    }}
+                    className="header-control"
+                />
+                <ul
+                    class=":uno-header-dropdown: min-w-14.5rem py-2.5rem px-2rem absolute !inset-[0px_0px_auto_auto] bg-white rounded-xl [box-shadow:0px_2px_8px_rgba(0,0,0,0.1)] dropdown-menu"
+                >
+                    <div class="menu-links">
+                        <span class="menu-link-title">
+                            用戶選單
+                        </span>
+                        <div class="menu-link-list">
+                            <div class="menu-link-ul">
+                                {
+                                    ['基本資料', '訊息中心(10)', '我的諮詢夾(10)', '我的收藏清單(10)', '登出'].map((z) => (
+                                        <A link="#" title={z} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <TriggerButton />
+        </Right>
+    </div>
+</header>
+<Offcanvas data={NavsData} />
+
+<script>
+    import { useBsDropDown } from '@js/components/common/collapse/useBsDropDown';
+</script>

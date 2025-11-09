@@ -1,4 +1,9 @@
 ---
+/** Common Component */
+import ImageDesktop from '@components/common/logo/svg-astro/Business-Horizontal-Light.astro';
+import ImageMobile from '@components/common/logo/svg-astro/Business-Vertical-Light.astro';
+/** Link */
+import A from '@components/common/link/a.astro';
 /** Style */
 import './logo.scss';
 export interface Props {
@@ -11,5 +16,7 @@ export interface Props {
 const { IDName = 'headerLogo', className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
-</div>
+<A IDName={IDName} className={className} style={style} {...attribute} link="/" title={import.meta.env.PUBLIC_META_TITLE}>
+    <ImageDesktop />
+    <ImageMobile />
+</A>

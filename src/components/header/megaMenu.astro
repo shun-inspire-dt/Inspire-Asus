@@ -1,0 +1,67 @@
+---
+/** Type Definitions - 型別定義 */
+import type { NavsDataChild } from '@js/data/navs';
+/** Common Components - 通用組件 */
+import MyMegaMenu, { type Props as MyMegaMenuProps } from '@components/common/megaMenu/megaMenu.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Link */
+import A from '@components/common/link/a.astro';
+
+export interface Props extends MyMegaMenuProps {
+    data?: NavsDataChild;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    data = [],
+    position = 'left',
+    type = 'dropdown',
+    transition = true
+} = Astro.props as Props;
+---
+
+<MyMegaMenu
+    IDName={IDName}
+    className={className}
+    style={style}
+    attribute={attribute}
+    data={data}
+    position={position}
+    type={type}
+    transition={transition}
+>
+    {
+        data.map((x, i) => (
+            <Fragment>
+                <div class=":uno-mega-menu-item: max-w-17.5rem flex flex-col gap-1.5rem flex-none">
+                    <div class=":uno-mega-menu-head: flex flex-col gap-1rem">
+                        <strong class=":uno-mega-menu-title: tt-md-24 text-gray-900">{x.title}</strong>
+                        <span class=":uno-mega-menu-text: body-02 text-gray-600">{x.subTitle}</span>
+                    </div>
+                    <ALink link={x.link} title={x.linkText} showArrow />
+                </div>
+                {x.children &&
+                    x.children.map((y, j) => (
+                        <div class="menu-links">
+                            <span class="menu-link-title">
+                                {y.title}
+                            </span>
+                            <div class="menu-link-list">
+                                {y.links.map((z, k) => (
+                                    <div class="menu-link-ul">
+                                        {z.map((u, v) => (
+                                            <A link={u.link} title={u.linkText} />
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+            </Fragment>
+        ))
+    }
+</MyMegaMenu>

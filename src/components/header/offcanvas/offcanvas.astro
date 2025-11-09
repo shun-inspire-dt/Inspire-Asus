@@ -1,22 +1,40 @@
 ---
-/** data */
+/**
+ * Header Mobile Offcanvas Component
+ * 網站頭部手機版側邊選單組件
+ *
+ * 功能說明：
+ * - 提供手機版的側邊滑出導航選單
+ * - 支援多層級選單結構（最多三層）
+ * - 使用 Bootstrap Collapse 實現子選單展開/收合
+ * - 整合觸發按鈕和選單內容
+ * - 響應式設計，僅在小螢幕顯示
+ * - 自動處理選單項目的點擊關閉邏輯
+ */
+
+/** Type Definitions - 型別定義 */
 import type { NavsData } from '@js/data/navs';
-import { privacy } from '@js/data/privacy';
-/** Common Components */
-/** Offcanvas */
+
+/** Common Components - 通用組件 */
+/** Offcanvas Base Component - Offcanvas 基礎組件 */
 import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
-import Search from '@components/common/form/search.astro';
-/** Main Components */
-import TriggerButton from '@components/header/offcanvas/triggerButton.astro';
-/** Button */
-import Button from '@components/common/button/button.astro';
-/** Link */
-import ALink from '@components/common/button/link.astro';
-/** Icons */
-import Icons from '@components/common/icons/icons.astro';
-/** Style */
+/** Link Component - 連結組件 */
+import A from '@components/common/link/a.astro';
+/** Collapse Component - 折疊組件 */
+import Collapse from '@components/common/collapse/collapse.astro';
+/** Styles - 樣式檔案 */
 import './offcanvas.scss';
 
+/**
+ * Component Props Interface
+ * 組件屬性介面定義
+ *
+ * @property {string} [IDName] - 組件 ID 名稱，預設為 'headerOffcanvasContainer'
+ * @property {any} [className] - 自定義 CSS 類別
+ * @property {NavsData} [data] - 導航資料陣列
+ * @property {attribute} [attribute] - HTML 屬性物件
+ * @property {{[key: string]: string}} [style] - 內聯樣式物件
+ */
 export interface Props {
     IDName?: string;
     className?: any;
@@ -25,130 +43,48 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName = 'headerOffcanvasContainer', className, style, attribute = {}, data = [] } = Astro.props as Props;
+/**
+ * Props Destructuring with Default Values
+ * 屬性解構並設定預設值
+ */
+const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
-    <TriggerButton />
-    <MyOffcanvas IDName="header" postion="end">
-        <Fragment slot="header">
-            <Search searchIDName="HeaderOffcanvaInput" placeholder={'搜尋產品'} inputTitle={'搜尋產品'} />
-            <Button type={'button'} className="offcanvas-close-button" iconWidth={20} iconHeight={20} attribute={{ 'data-bs-dismiss': 'offcanvas', 'aria-label': 'Close' }}></Button>
-        </Fragment>
-        <ul>
-            {
-                data.map((x, i) => (
-                    <li class="headerNavItem">
-                        <ALink
-                            className="headerNavLink"
-                            link={x.children ? '#' : x.link}
-                            title={x.title}
-                            attribute={
-                                x.children
-                                    ? {
-                                          'data-bs-toggle': 'collapse',
-                                          'data-bs-target': `#OffcanvasLink-0${i + 1}`,
-                                          'aria-expanded': 'false',
-                                          'aria-controls': `OffcanvasLink-0${i + 1}`,
-                                          ...x.attribute
-                                      }
-                                    : { ...x.attribute }
-                            }
-                        >
-                            <div class="headerNavLinkTitle">
-                                <p>{x.title}</p>
-                                <span>{x.subTitle}</span>
-                            </div>
-                            {x.children && (
-                                <div class="headerNavLinkIcon">
-                                    {/* <Icons
-                                        icon={'icon-add'}
-                                        custom
-                                        attribute={{
-                                            'data-collapse-icon': 'show'
-                                        }}
-                                    />
-                                    <Icons
-                                        icon={'icon-reduce'}
-                                        custom
-                                        attribute={{
-                                            'data-collapse-icon': 'hide'
-                                        }}
-                                    /> */}
-                                </div>
-                            )}
-                        </ALink>
-                        {x.children && (
-                            <div id={`OffcanvasLink-0${i + 1}`} class="collapse">
-                                <div>
-                                    {x.children?.map((y, j) => (
-                                        <div>
-                                            <ALink
-                                                link={y.children ? '' : y.link}
-                                                className={y.className}
-                                                title={y.title}
-                                                attribute={
-                                                    y.children
-                                                        ? {
-                                                              'data-bs-toggle': 'collapse',
-                                                              'data-bs-target': `#OffcanvasLink-0${i + 1}-0${j + 1}`,
-                                                              'aria-expanded': 'false',
-                                                              'aria-controls': `OffcanvasLink-0${i + 1}-0${j + 1}`,
-                                                              ...y.attribute
-                                                          }
-                                                        : { ...y.attribute }
-                                                }
-                                            >
-                                                {y.title}
-                                                {y.children && (
-                                                    <div class="headerNavLinkIcon">
-                                                        {/* <Icons
-                                                            icon={'icon-arrow-down'}
-                                                            custom
-                                                            fill="red"
-                                                            width={15}
-                                                            height={15}
-                                                            attribute={{
-                                                                'data-collapse-arrow': ''
-                                                            }}
-                                                            style={{ '--collapse-arrow-rotate': '180deg' }}
-                                                        /> */}
-                                                    </div>
-                                                )}
-                                            </ALink>
-                                            {y.children && (
-                                                <div id={`OffcanvasLink-0${i + 1}-0${j + 1}`} class="collapse">
-                                                    <div>
-                                                        {y.children?.map((z) => (
-                                                            <ALink link={z.link} className={z.className} attribute={z.attribute} title={z.title}>
-                                                                {z.title}
-                                                            </ALink>
+{/** Offcanvas Container - 側邊選單容器 */}
+{/* 側邊選單主體：從右側滑出 */}
+<MyOffcanvas IDName={IDName} postion="end" hideHeader className={className} attribute={attribute} style={style}>
+    {
+        data.map((x) => (
+            <Fragment>
+                {Boolean(x.children && x.children.length > 0) ? (
+                    <Collapse title={x.title}>
+                        <div class=":uno-header-offcanvas-link-container: py-1rem bg-neutral-100">
+                            <div class=":uno-header-offcanvas-link-content: container flex items-stretch gap-2rem">
+                                {x.children
+                                    ?.flatMap((y) => y.children)
+                                    .map((y) => (
+                                        <div class="menu-links">
+                                            <span class="menu-link-title">
+                                                {y?.title}
+                                            </span>
+                                            <div class="menu-link-list">
+                                                {y?.links.map((z) => (
+                                                    <div class="menu-link-ul">
+                                                        {z?.map((u) => (
+                                                            <A link={u.link} title={u.linkText} />
                                                         ))}
                                                     </div>
-                                                </div>
-                                            )}
+                                                ))}
+                                            </div>
                                         </div>
                                     ))}
-                                </div>
                             </div>
-                        )}
-                    </li>
-                ))
-            }
-        </ul>
-    </MyOffcanvas>
-</div>
-
-<script>
-    import { useBsCollapse } from '@js/components/common/collapse/useBsCollapse';
-    import { Offcanvas } from 'bootstrap';
-
-    const offcanvas = new Offcanvas(document.getElementById('headerOffcanvas') as HTMLElement);
-    const closeLinks = document.querySelectorAll('#headerOffcanvas [data-dismiss="offcanvas"]') as NodeListOf<HTMLButtonElement>;
-
-    closeLinks.forEach((x) => {
-        x.addEventListener('click', () => {
-            if (offcanvas) offcanvas.hide();
-        });
-    });
-</script>
+                        </div>
+                    </Collapse>
+                ) : (
+                    <A link={x.link} className=":uno-header-offcanvas-link: container flex items-center py-0.75rem text-gray-900 font-tt-normal text-base lh-125 font-normal" title={x.title} />
+                )}
+            </Fragment>
+        ))
+    }
+</MyOffcanvas>

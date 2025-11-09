@@ -1,17 +1,44 @@
 ---
-/** type */
+/**
+ * Header Navigation Component
+ * 網站頭部主導航列表組件
+ *
+ * 功能說明：
+ * - 渲染網站主要導航選單
+ * - 支援多層級選單結構（透過 MegaMenu 組件）
+ * - 支援兩種下拉選單模式：dropdown 和 megaMenu
+ * - 響應式設計，在桌面版顯示水平導航
+ */
+
+/** Type Definitions - 型別定義 */
 import type { NavsData } from '@js/data/navs';
-/** Common Components */
-import MegaMenu from '@components/common/megaMenu/megaMenu.astro';
-/** Link */
-import ALink from '@components/common/button/link.astro';
-/** Icons */
+
+/** Common Components - 通用組件 */
+import MegaMenu from './megaMenu.astro';
+
+/** Link Component - 連結組件 */
+import ALink from '@components/common/link/a.astro';
+
+/** Icons Component - 圖示組件 */
 import Icons from '@components/common/icons/icons.astro';
-/** Main Components */
+
+/** Main Components - 主要組件 */
 import Logo from './logo.astro';
-/** Style */
+
+/** Styles - 樣式檔案 */
 import './nav.scss';
 
+/**
+ * Component Props Interface
+ * 組件屬性介面定義
+ *
+ * @property {string} [IDName] - 組件 ID 名稱，預設為 'headerNav'
+ * @property {any} [className] - 自定義 CSS 類別
+ * @property {NavsData} [data] - 導航資料陣列
+ * @property {attribute} [attribute] - HTML 屬性物件
+ * @property {{[key: string]: string}} [style] - 內聯樣式物件
+ * @property {'megaMenu' | 'dropdown'} [type] - 下拉選單類型：'megaMenu' 為大型選單，'dropdown' 為一般下拉選單
+ */
 export interface Props {
     IDName?: string;
     className?: any;
@@ -21,40 +48,43 @@ export interface Props {
     type?: 'megaMenu' | 'dropdown';
 }
 
+/**
+ * Props Destructuring with Default Values
+ * 屬性解構並設定預設值
+ */
 const { IDName = 'headerNav', className, style, attribute = {}, data = [], type = 'dropdown' } = Astro.props as Props;
 ---
 
+<!-- Navigation Container - 導航容器 -->
 <div id={IDName} class:list={[className]} style={style} {...attribute}>
     <nav>
         {
+            /**
+             * 遍歷導航資料陣列，渲染每個導航項目
+             * 如果有子選單，添加 mega menu trigger 屬性
+             * */
             data.map((x, i) => (
                 <div
                     class="headerNavItem"
                     {...(x.hasOwnProperty('children') ? { 'data-mega-menu-trigger': '', 'data-mega-menu-type': type } : {})}
                 >
+                    {/* 主導航連結 - 包含主標題和副標題 */}
                     <ALink link={x.link} className="headerNavLink">
                         <p>{x.title}</p>
                         <span>{x.subTitle}</span>
                     </ALink>
+
+                    {/* 如果有子選單，渲染 MegaMenu 組件 */}
                     {x.hasOwnProperty('children') && (
                         <MegaMenu
                             position="center"
+                            type={type}
                             attribute={{
+                                /* 第一個選單項目添加特殊標記 */
                                 'data-first': i === 0 ? '' : undefined
                             }}
-                        >
-                            {x.children?.map((y) => (
-                                <ALink
-                                    IDName={y.id}
-                                    link={y.link}
-                                    className={y.className}
-                                    title={y.title}
-                                    attribute={y.attribute}
-                                >
-                                    {y.title}
-                                </ALink>
-                            ))}
-                        </MegaMenu>
+                            data={x.children}
+                        />
                     )}
                 </div>
             ))

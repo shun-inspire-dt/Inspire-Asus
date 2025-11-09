@@ -1,2 +1,12 @@
 #headerBottom {
+    @apply flex items-center justify-end gap-1rem xl:gap-1.25rem ml-a;
+
+    button.header-control-button {
+        @apply lt-xl:hidden;
+    }
+    .header-control {
+        &:hover, &:active, &.active, &[aria-expanded="true"] {
+            --icon-color: var(--color-blue-500, #006ce1);
+        }
+    }
 }

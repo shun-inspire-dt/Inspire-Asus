@@ -1,47 +1,94 @@
-#headerOffcanvasTriggerButton {
-    // --headerOffcanvas-trigger-button-size: ;
-    // --headerOffcanvas-trigger-button-padding-x: ;
-    // --headerOffcanvas-trigger-button-padding-y: ;
-    // --headerOffcanvas-trigger-button-line-width: ;
-    // --headerOffcanvas-trigger-button-line-height: ;
-    // --headerOffcanvas-trigger-button-line-color: ;
-    // --headerOffcanvas-trigger-button-line-gap: ;
-    // --headerOffcanvas-trigger-button-line-border-radius: ;
-    // --headerOffcanvas-trigger-button-line-active-offset: ;
-    // --headerOffcanvas-trigger-button-line-active-negative-offset: ;
+/**
+ * Mobile Offcanvas Trigger Button Styles
+ * 手機版側邊選單觸發按鈕樣式
+ * 
+ * 功能說明：
+ * - 定義漢堡選單按鈕的視覺樣式
+ * - 實現平滑的動畫過渡效果
+ * - 支援 active 狀態的 X 形變換
+ * - 使用 CSS 自定義屬性實現主題化設計
+ * - 提供完全可自定義的按鈕外觀
+ */
 
-    @apply flex flex-col items-start justify-center relative;
+#headerOffcanvasTriggerButton {
+    /* === Button Layout Variables - 按鈕版面變數 === */
+    --headerOffcanvas-trigger-button-display: flex; /* 按鈕顯示方式 */
+    --headerOffcanvas-trigger-button-flex-direction: column; /* 按鈕排列方向 */
+    --headerOffcanvas-trigger-button-justify-content: center; /* 按鈕垂直對齊方式 */
+    --headerOffcanvas-trigger-button-align-items: center; /* 按鈕水平對齊方式 */
+    --headerOffcanvas-trigger-button-size: 1.125rem; /* 按鈕整體尺寸 */
+    --headerOffcanvas-trigger-button-padding-x: 0; /* 按鈕水平內距 */
+    --headerOffcanvas-trigger-button-padding-y: 0; /* 按鈕垂直內距 */
+    --headerOffcanvas-trigger-button-position: relative; /* 按鈕位置 */
+
+    /* === Line Style Variables - 線條樣式變數 === */
+    --headerOffcanvas-trigger-button-line-width: 0.875rem; /* 線條寬度 */
+    --headerOffcanvas-trigger-button-line-height: 0.075rem; /* 線條高度（粗細） */
+    --headerOffcanvas-trigger-button-line-color: var(--color-gray-700, #4d4d4d); /* 線條顏色 */
+    --headerOffcanvas-trigger-button-line-gap: 0rem; /* 線條間距 */
+    --headerOffcanvas-trigger-button-line-border-radius: 0.3125rem; /* 線條圓角 */
+
+    /* === Animation Variables - 動畫變數 === */
+    --headerOffcanvas-trigger-button-line-active-offset: 0.2125rem; /* 活動狀態正向偏移量 */
+
+    /* === Animation Variables - 動畫變數 === */
+    --headerOffcanvas-trigger-button-line-transition-property: transform, width;
+    --headerOffcanvas-trigger-button-line-transition-duration: 200ms;
+    --headerOffcanvas-trigger-button-line-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+    @screen xl {
+        --headerOffcanvas-trigger-button-display: none;
+    }
+
+    /* === Button Base Styles - 按鈕基礎樣式 === */
+    /* 按鈕佈局：垂直排列、靠左對齊、居中 */
+    position: var(--headerOffcanvas-trigger-button-position);
+    display: var(--headerOffcanvas-trigger-button-display);
+    flex-direction: var(--headerOffcanvas-trigger-button-flex-direction);
+    justify-content: var(--headerOffcanvas-trigger-button-justify-content);
+    align-items: var(--headerOffcanvas-trigger-button-align-items);
     width: var(--headerOffcanvas-trigger-button-size);
     height: var(--headerOffcanvas-trigger-button-size);
     padding: var(--headerOffcanvas-trigger-button-padding-y) var(--headerOffcanvas-trigger-button-padding-x);
 
+    /* === Line Styles - 線條樣式 === */
     span {
-        @apply transition-all duration-500;
+        /* 線條基礎樣式：平滑過渡動畫 */
         width: var(--headerOffcanvas-trigger-button-line-width);
         height: var(--headerOffcanvas-trigger-button-line-height);
+        position: absolute;
+        top: 50%;
+        left: 50%;
         background-color: var(--headerOffcanvas-trigger-button-line-color);
         margin-top: var(--headerOffcanvas-trigger-button-line-gap);
         border-radius: var(--headerOffcanvas-trigger-button-line-border-radius);
-        transform-origin: center center;
+        transform-origin: center center; /* 變形中心點設為中央 */
+        transition-property: var(--headerOffcanvas-trigger-button-line-transition-property);
+        transition-duration: var(--headerOffcanvas-trigger-button-line-transition-duration);
+        transition-timing-function: var(--headerOffcanvas-trigger-button-line-transition-timing-function);
+        
+        /* 第一條線：移除上邊距 */
+        &:first-child {
+            transform: translateY(calc(-50% + var(--headerOffcanvas-trigger-button-line-active-offset))) translateX(-50%);
+        }
+        
+        /* 第二條線：可自定義寬度 */
+        &:nth-child(2) {
+            transform: translateY(calc(-50% - var(--headerOffcanvas-trigger-button-line-active-offset))) translateX(-50%);
+        }
+    }
 
-        &:first-child {
-            // --headerOffcanvas-trigger-button-line-gap: ;
-        }
-        &:nth-child(2) {
-            // --headerOffcanvas-trigger-button-line-width: ;
-        }
-    }
+    /* === Active State Animation - 活動狀態動畫 === */
     &.active span {
+        --headerOffcanvas-trigger-button-line-width: 1.125rem;
+        /* 第一條線：向下移動並順時針旋轉 45 度 */
         &:first-child {
-            transform: translateY(var(--headerOffcanvas-trigger-button-line-active-offset)) rotate(45deg);
+            transform: translateY(-50%) translateX(-50%) rotate(45deg);
         }
+
+        /* 第三條線：向上移動並逆時針旋轉 45 度 */
         &:last-child {
-            transform: translateY(var(--headerOffcanvas-trigger-button-line-active-negative-offset)) rotate(-45deg);
+            transform: translateY(-50%) translateX(-50%) rotate(-45deg);
         }
-        &:nth-child(2) {
-            @apply opacity-0;
-        }
-    }
-    &::after {
     }
 }

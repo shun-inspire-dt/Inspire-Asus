@@ -13,4 +13,5 @@ const { IDName = 'headerBottom', className, style, attribute = {} } = Astro.prop
 ---
 
 <div id={IDName} class:list={[className]} style={style} {...attribute}>
+    <slot />
 </div>
