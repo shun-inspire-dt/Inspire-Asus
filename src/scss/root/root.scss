@@ -338,7 +338,10 @@ body {
 }
 
 main {
-    margin-top: var(--header-height);
+    position: relative;
+    &.margin-top {
+        margin-top: var(--header-height);
+    }
 }
 
 .backdrop {
