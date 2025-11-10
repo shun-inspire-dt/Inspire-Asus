@@ -1,4 +1,4 @@
-export const bannerImage = (text: string) =>  `/assets/images/pages/${text}-sm.png`
+export const bannerImage = (text: string) =>  `/assets/images/pages/${text}-sm`
 /**
  * 響應式圖片斷點設定，依照不同螢幕尺寸載入對應圖片
  * 支援多種像素密度 (1x, 1.5x, 2x) 提供更清晰的顯示效果

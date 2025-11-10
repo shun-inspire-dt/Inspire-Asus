@@ -10,23 +10,33 @@ export interface Props {
     style?: { [key: string]: string };
     title?: string;
     img: string;
+    mode?: 'light' | 'dark';
 }
 
-const {
-    IDName,
-    className,
-    style,
-    title,
-    img,
-    attribute = {},
-} = Astro.props as Props;
+const { IDName, className, style, title, img, mode = 'light', attribute = {} } = Astro.props as Props;
 const imgBreakpoints = bannerImages(img);
 const image = bannerImage(img);
 ---
 
-<div id={IDName} class:list={[className, ":uno-section-banner: relative"]} style={style} {...attribute}>
-    <Picture img={image} className=":uno-section-banner-image: w-full h-30rem object-cover object-center-bottom" alt={title} breakpoints={imgBreakpoints} type="png" noWebp />
-    <div class=":uno-section-banner-head: container absolute top-4.5rem md:top-[calc((100%+var(--header-height))/2)] md:-translate-y-1/2 left-0 right-0 text-center md:text-left">
-        <h2 class=":uno-section-banner-title: font-tt-normal text-30 md:text-36 xl:text-44 lh-120 text-gray-900 font-medium">{title}</h2>
+<div id={IDName} class:list={[className, ':uno-section-banner: relative']} style={style} {...attribute}>
+    <Picture
+        img={image}
+        className=":uno-section-banner-image: w-full h-30rem object-cover object-center-bottom"
+        alt={title}
+        breakpoints={imgBreakpoints}
+        type="png"
+        noWebp
+    />
+    <div
+        class=":uno-section-banner-head: container-fluid absolute top-4.5rem md:top-[calc((100%+var(--header-height))/2)] md:-translate-y-1/2 left-0 right-0 text-gray-900 text-center md:text-left"
+    >
+        <h2
+            class:list={[
+                ':uno-section-banner-title: font-tt-normal text-30 md:text-36 xl:text-44 lh-120 font-medium',
+                mode === 'dark' && ':uno-section-banner-title-dark: text-white'
+            ]}
+        >
+            {title}
+        </h2>
     </div>
 </div>
