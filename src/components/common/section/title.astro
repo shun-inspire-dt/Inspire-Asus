@@ -1,0 +1,24 @@
+---
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title: string;
+    Tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+}
+
+const { IDName, className, style, attribute = {}, Tag = 'h1', title = 'Title' } = Astro.props as Props;
+---
+
+<Tag
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-section-title: flex items-center justify-center pb-3rem text-gray-900 font-tt-normal text-30 md:text-36 xl:text-44 lh-120 font-medium text-center'
+    ]}
+    style={style}
+    {...attribute}
+>
+    {title}
+</Tag>
