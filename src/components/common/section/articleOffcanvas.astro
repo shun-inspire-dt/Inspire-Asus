@@ -1,0 +1,67 @@
+---
+/** Common Components - 通用組件 */
+/** Offcanvas Base Component - Offcanvas 基礎組件 */
+import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Filter */
+import Filter from '../collapse/filter.astro';
+/** Style */
+import './articleOffcanvas.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    category?: category;
+}
+
+const { IDName = 'sectionArticle', className, style, attribute = {}, category } = Astro.props as Props;
+---
+
+<MyOffcanvas
+    IDName={IDName}
+    postion="bottom"
+    hideHeader
+    className={['section-article-offcanvas', className]}
+    attribute={attribute}
+    style={style}
+>
+    <form action="" class=":uno-article-offcanvas-form: w-full h-full flex flex-col">
+        <div class="w-full flex items-baseline justify-between flex-none shrink-0 py-0.625rem px-1rem bg-white border-b border-gray-200">
+            <strong class="font-roboto text-20 lh-125 font-medium">篩選結果</strong>
+            <ALink title={'清除全部'}>清除全部</ALink>
+        </div>
+        <div class="w-full flex-1 grow py-0.5rem px-1rem h-6.9375rem bg-white overflow-auto scrollbar">
+            {
+                category?.map((item, index) => (
+                    <Filter
+                        title={item.title}
+                        show={item.show}
+                        more={item.more}
+                        data={item.children}
+                        style={{
+                            ...(index === 0 ? { '--collapse-border-width': '0' } : {})
+                        }}
+                    />
+                ))
+            }
+        </div>
+        <div
+            class="w-full flex items-center justify-center gap-1rem flex-none shrink-0 p-1rem bg-white border-t border-gray-200 [&>button]:flex-1"
+        >
+            <Button
+                type={'reset'}
+                size="sm"
+                variant="blue-outline"
+                title={'取消'}
+                block
+                attribute={{ 'data-bs-dismiss': 'offcanvas' }}>取消</Button
+            >
+            <Button type={'submit'} size="sm" variant="blue" title={'提交'} block>提交</Button>
+        </div>
+    </form>
+</MyOffcanvas>

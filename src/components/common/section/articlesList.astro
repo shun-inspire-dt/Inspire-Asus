@@ -1,0 +1,84 @@
+---
+/** Common Component */
+import Title from '@components/common/section/title.astro';
+import Sort from '@components/common/sort/sort.astro';
+import Category from '../collapse/category.astro';
+import SortSelector from '../sort/sortSelector.astro';
+import ArticleOffcanvas from '@components/common/section/articleOffcanvas.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+import ShowMore from './showMore.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    total?: number;
+    sortDate?: select;
+    category?: category;
+    mode?: 'gray' | 'white';
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title = '',
+    total = 0,
+    sortDate = [],
+    category = [],
+    mode = 'gray'
+} = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-section-articles-list: sect-p-sm md:sect-p-md xl:sect-p-lg bg-[var(--section-bg-color)]',
+        { ':uno-section-articles-dark-list: [--section-bg-color:var(--color-gray-50)]': mode === 'gray' },
+        { ':uno-section-articles-light-list: [--section-bg-color:var(--color-white)]': mode === 'white' }
+    ]}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-section-articles-list-inner: container-fluid">
+        <Title title={title} />
+        <div class="flex md:hidden items-end gap-0.5rem mb-1.5rem">
+            <div class="grow">
+                <SortSelector data={sortDate} />
+            </div>
+            <Button
+                variant="blue"
+                size="sm"
+                title="篩選"
+                attribute={{
+                    'data-bs-toggle': 'offcanvas',
+                    'data-bs-target': `#${IDName}ArticleOffcanvas`,
+                    'aria-controls': `${IDName}ArticleOffcanvas`
+                }}
+            >
+                篩選
+            </Button>
+        </div>
+        <div class="space-y-1.5rem">
+            <Sort total={total} data={sortDate} />
+            <div class="flex flex-col md:flex-row md:gap-1.25rem">
+                <Category
+                    className=":uno-article-category: hidden md:block flex-none w-11.0625rem lg:w-19.6875rem"
+                    data={category}
+                />
+                <div class="space-y-2rem">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-1.25rem">
+                        <slot />
+                    </div>
+                    <ShowMore />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ArticleOffcanvas IDName={`${IDName}Article`} category={category} />
