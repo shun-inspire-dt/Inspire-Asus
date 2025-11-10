@@ -1,4 +1,4 @@
-@use "../../common/button/button-variant.scss" as button;
+@use "./button-variant.scss" as button;
 
 @mixin toggleButton {
     // --btn-gap: ;
@@ -37,6 +37,6 @@
         border-color: var(--btn-hover-border-color);
     }
 }
-.ToggleButton {
+.toggle-button {
     @include toggleButton;
 }

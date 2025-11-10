@@ -2,7 +2,7 @@
 /** Type */
 import 'astro/astro-jsx';
 /** Link */
-import ALink from '@components/common/button/link.astro';
+import ALink from '@components/common/link/a.astro';
 /** Style */
 import './button.scss';
 import './toggleButton.scss';
@@ -42,7 +42,7 @@ const {
 
 <ALink
     IDName={IDName}
-    className={[className as Class, 'ToggleButton', active ? 'active' : '']}
+    className={[className as Class, 'toggle-button', active ? 'active' : '']}
     link={link}
     extend={extend}
     target={target}
