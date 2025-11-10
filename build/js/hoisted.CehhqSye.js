@@ -1,1 +1,0 @@
-import"./hoisted.A6hbJgjK.js";import"./hoisted.B6GLgx2v.js";const a=document.querySelectorAll('[aria-label="play-back"]');a.forEach(t=>{t.addEventListener("click",()=>{t.classList.toggle("active")})});
