@@ -59,7 +59,7 @@ const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro
                 {Boolean(x.children && x.children.length > 0) ? (
                     <Collapse title={x.title}>
                         <div class=":uno-header-offcanvas-link-container: py-1rem bg-neutral-100">
-                            <div class=":uno-header-offcanvas-link-content: container flex items-stretch gap-2rem">
+                            <div class=":uno-header-offcanvas-link-content: container-fluid flex items-stretch gap-2rem">
                                 {x.children
                                     ?.flatMap((y) => y.children)
                                     .map((y) => (
@@ -82,7 +82,7 @@ const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro
                         </div>
                     </Collapse>
                 ) : (
-                    <A link={x.link} className=":uno-header-offcanvas-link: container flex items-center py-0.75rem text-gray-900 font-tt-normal text-base lh-125 font-normal" title={x.title} />
+                    <A link={x.link} className=":uno-header-offcanvas-link: container-fluid flex items-center py-0.75rem text-gray-900 font-tt-normal text-base lh-125 font-normal" title={x.title} />
                 )}
             </Fragment>
         ))

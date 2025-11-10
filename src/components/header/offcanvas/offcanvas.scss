@@ -49,7 +49,7 @@
         --collapse-border-width: 0rem; /* collapes 項目邊框寬度 */
         --collapse-border-color: transparent; /* collapes 項目邊框顏色 */
         button {
-            @apply container font-tt-normal text-base lh-125;
+            @apply container-fluid font-tt-normal text-base lh-125;
         }
     }
 }

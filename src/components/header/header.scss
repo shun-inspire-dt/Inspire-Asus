@@ -33,6 +33,6 @@ header {
         flex-direction: var(--header-body-flex-direction, row);
         align-items: var(--header-body-align-items, center);
         justify-content: var(--header-body-justify-content, flex-start);
-        @apply container;
+        @apply container-fluid;
     }
 }
