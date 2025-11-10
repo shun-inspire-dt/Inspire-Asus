@@ -47,7 +47,8 @@ const inputId = `filter-input-${Math.random().toString(36).substr(2, 9)}`;
                         title="更多"
                         size="sm"
                         attribute={{
-                            'data-toggle': 'filter'
+                            'data-toggle': 'toggle',
+                            'data-target': 'filter-collapse'
                         }}
                     >
                         更多
@@ -59,7 +60,7 @@ const inputId = `filter-input-${Math.random().toString(36).substr(2, 9)}`;
 </Collapse>
 
 <script>
-    const filterBtn = document.querySelectorAll('[data-toggle="filter"]') as NodeListOf<HTMLButtonElement>;
+    const filterBtn = document.querySelectorAll('[data-toggle="toggle"][data-target="filter-collapse"]') as NodeListOf<HTMLButtonElement>;
     filterBtn.forEach((item) => {
         item.addEventListener('click', () => {
             const btnParent = item?.parentElement as HTMLElement;
