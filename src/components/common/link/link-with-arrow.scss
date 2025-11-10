@@ -269,7 +269,7 @@
     /* === 字體變體 === */
 
     /* Roboto 字體 */
-    &.font-roboto .link-text {
+    &.font__roboto .link-text {
         font-family: var(--font-family-roboto, 'Roboto', sans-serif);
 
         &.weight-regular {
@@ -286,7 +286,7 @@
     }
 
     /* TT Norms Pro 字體 */
-    &.font-tt .link-text {
+    &.font__tt .link-text {
         &.weight-regular {
             font-family: var(--font-family-tt-norms-pro-normal, 'TTNormsProNormal', 'Roboto', sans-serif);
             font-weight: var(--font-weight-450, 450);
