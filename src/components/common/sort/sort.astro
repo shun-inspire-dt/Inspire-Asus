@@ -16,7 +16,7 @@ const { IDName, className, style, attribute = {}, total, data } = Astro.props as
 
 <div id={IDName} class:list={[className, ":uno-sort: flex items-center justify-between gap-0.5rem"]} style={style} {...attribute}>
     <span class=":uno-sort-result: body-02-sh text-gray-900">篩選結果: {total} 結果</span>
-    <div class=":uno-sort-selector-container: lt-sm:hidden">
+    <div class=":uno-sort-selector-container: lt-md:hidden">
         <SortSelector data={data} />
     </div>
 </div>

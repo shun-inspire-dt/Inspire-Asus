@@ -11,9 +11,27 @@ export interface Props {
 }
 
 const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+const componentId = IDName || `sort-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div id={IDName} class:list={[className, ':uno-sort-selector: flex flex-col sm:flex-row sm:items-center gap-0.5rem sm:gap-0.625rem body-01-sh']} style={style} {...attribute}>
-    <span class=":uno-sort-selector-label: flex-none">排序：</span>
-    <Select status="sort" size="sm" data={data} style={{ minWidth: '9.5rem' }} />
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-sort-selector: flex flex-col sm:flex-row sm:items-center gap-0.5rem sm:gap-0.625rem body-01-sh'
+    ]}
+    style={style}
+    {...attribute}
+>
+    <label class=":uno-sort-selector-label: flex-none" for={componentId}>排序：</label>
+    <Select
+        id={componentId}
+        status="sort"
+        className=":uno-sort-selector-select: grow"
+        size="sm"
+        name='sort'
+        data={data}
+        selectAttribute={{ 'data-sort': '' }}
+        style={{ minWidth: '9.5rem' }}
+    />
 </div>
