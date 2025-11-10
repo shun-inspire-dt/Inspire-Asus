@@ -24,13 +24,13 @@ export type NavsData = {
 export const NavsData: NavsData = [
     {
         title: '解決方案',
-        link: '/solutions',
+        link: '/solution',
         children: [
             {
                 title: '解決方案',
                 subTitle: '選擇 ASUS Business，不只是選擇技術，更是選擇可靠的合作夥伴。我們以創新、穩定與安全為核心，助力企業持續成長。',
                 linkText: '探索解決方案',
-                link: '/solutions',
+                link: '/solution',
                 children: [
                     {
                         title: '依產業', links: [
@@ -84,6 +84,6 @@ export const NavsData: NavsData = [
     },
     {
         title: '關於我們',
-        link: '/contactus'
+        link: '/aboutus'
     },
 ];
