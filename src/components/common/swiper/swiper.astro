@@ -4,13 +4,14 @@ import './swiper.scss';
 export interface Props {
     IDName?: string;
     className?: any;
+    swiperClassName?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
     pagination?: 'inside' | 'outside' | null;
     navigation?: 'inside' | 'outside' | null;
 }
 
-const { IDName, className, style, attribute = {}, pagination, navigation } = Astro.props as Props;
+const { IDName, className, swiperClassName, style, attribute = {}, pagination, navigation } = Astro.props as Props;
 ---
 
 <div
@@ -28,7 +29,7 @@ const { IDName, className, style, attribute = {}, pagination, navigation } = Ast
         )
     }
     {pagination && pagination === 'outside' && <div class="swiper-pagination" />}
-    <div id={IDName ? `${IDName}Swiper` : undefined} class="swiper">
+    <div id={IDName ? `${IDName}Swiper` : undefined} class:list={['swiper', swiperClassName]}>
         {pagination && pagination === 'inside' && <div class="swiper-pagination" />}
         {
             navigation && navigation === 'inside' && (
@@ -41,6 +42,6 @@ const { IDName, className, style, attribute = {}, pagination, navigation } = Ast
         <div class="swiper-wrapper">
             <slot />
         </div>
+        <slot name="outside" />
     </div>
-    <slot name="outside" />
 </div>
