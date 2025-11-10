@@ -21,6 +21,7 @@ export const data: category = [
     {
         title: '產業類別',
         show: true,
+        more: true,
         children: child1,
     },
     {
