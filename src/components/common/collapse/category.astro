@@ -17,6 +17,6 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
 <div id={IDName} class:list={[className, ":uno-category: [&>div:last-child]:pb-0"]} style={style} {...attribute}>
     <Notice />
     {data?.map((item) => (
-        <Filter title={item.title} show={item.show} data={item.children} />
+        <Filter title={item.title} show={item.show} more={item.more} data={item.children} />
     ))}
 </div>

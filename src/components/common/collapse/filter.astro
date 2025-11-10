@@ -1,6 +1,7 @@
 ---
 /** Common Component */
 import Collapse from './collapse.astro';
+import Button from '@components/common/button/button.astro';
 import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
 
 /** Props */
@@ -11,23 +12,67 @@ export interface Props {
     style?: { [key: string]: string };
     title?: string;
     show?: boolean;
+    more?: boolean;
     data?: filter;
 }
 
-const { IDName, className, style, attribute = {}, title, show, data = [] } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, title, show, more, data = [] } = Astro.props as Props;
 const componentId = IDName || `filter-${Math.random().toString(36).substr(2, 9)}`;
 const inputId = `filter-input-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <Collapse IDName={componentId} className={className} style={style} attribute={attribute} title={title} show={show}>
-    <div class=":uno-filter-content: flex flex-col gap-0.75rem [&>.form-check]:w-full">
-            {data?.map((item, index) => (
+    <div
+        class=":uno-filter-content: flex flex-col gap-0.75rem pb-[var(--filter-padding-b)] [&>.form-check]:w-full [--filter-padding-b:0.75rem]"
+    >
+        {
+            data?.map((item, index) => (
                 <Checkbox
                     id={`${inputId}-${index}`}
                     label={item.label}
                     value={item.value}
                     checked={item.checked}
+                    disabled={item.disabled}
+                    style={{
+                        ...(more && index > 4 ? { display: 'none' } : {})
+                    }}
                 />
-            ))}
-        </div>
+            ))
+        }
+        {
+            more && (
+                <div>
+                    <Button
+                        variant="blue-outline"
+                        title="更多"
+                        size="sm"
+                        attribute={{
+                            'data-toggle': 'filter'
+                        }}
+                    >
+                        更多
+                    </Button>
+                </div>
+            )
+        }
+    </div>
 </Collapse>
+
+<script>
+    const filterBtn = document.querySelectorAll('[data-toggle="filter"]') as NodeListOf<HTMLButtonElement>;
+    filterBtn.forEach((item) => {
+        item.addEventListener('click', () => {
+            const btnParent = item?.parentElement as HTMLElement;
+            const parent = btnParent?.parentElement as HTMLElement;
+            if (parent) {
+                const checboxes = parent.querySelectorAll('.form-check') as NodeListOf<HTMLInputElement>;
+                checboxes.forEach((checkbox) => {
+                    if (checkbox.style.display === 'none') {
+                        checkbox.style.display = 'flex';
+                        btnParent.style.display = 'none';
+                    }
+                });
+            }
+        });
+    });
+</script>
