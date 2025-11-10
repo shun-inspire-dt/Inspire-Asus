@@ -1,0 +1,36 @@
+---
+/** Data */
+import { data as data01 } from '@components/pages/aboutus/data01';
+import { data as data02 } from '@components/pages/aboutus/data02';
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Banner from '@components/common/banner/banner.astro';
+import Nav from '@components/common/section/nav.astro';
+/** Main Components */
+import Section01 from '@components/pages//aboutus/section01.astro';
+import Section02 from '@components/pages//aboutus/section02.astro';
+import Section03 from '@components/pages//aboutus/section03.astro';
+/** Style */
+import '@scss/pages//aboutus.scss';
+
+const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<Layouts IDName="Aboutus">
+    <Banner img="aboutus-banner" title="關於我們" />
+    <Nav
+        IDName={navId}
+        data={[
+            { title: '跨產業合作生態', link: '#section01' },
+            { title: '競爭優勢', link: '#section02' }
+        ]}
+    />
+    <div data-bs-spy="scroll" data-bs-root-margin="0px 0px 0px" data-bs-target={`#${navId}`} data-bs-smooth-scroll="true">
+        <Section01 IDName="section01" data={data01} />
+        <Section02 IDName="section02" data={data02} />
+        <Section03 IDName="section03" />
+    </div>
+</Layouts>

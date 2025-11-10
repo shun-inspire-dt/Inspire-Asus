@@ -1,0 +1,34 @@
+---
+/** Data */
+import { data } from '@components/pages/ivy/filter';
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Banner from '@components/common/banner/banner.astro';
+import Follower from '@components/common/follower/follower.astro';
+/** Main Components */
+import ArticlesList from '@components/common/section/articlesList.astro';
+import Card from '@components/pages/news/card.astro';
+/** Style */
+import '@scss/pages/ivy.scss';
+---
+
+<Layouts IDName="Ivy">
+    <Banner img="ivy-banner" title="合作夥伴" />
+    <ArticlesList
+        IDName="IvyList"
+        title="合作夥伴"
+        total={10}
+        sortDate={[
+            { text: '新上市', value: '0' },
+            { text: '合作夥伴', value: '1' }
+        ]}
+        category={data}
+        mode="white"
+    >
+        {Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} showLabel={false} />)}
+    </ArticlesList>
+    <Follower />
+</Layouts>

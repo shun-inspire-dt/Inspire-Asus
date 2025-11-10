@@ -26,6 +26,8 @@ export interface Props {
     showLabel?: boolean;
     showBreif?: boolean;
     showLogo?: boolean;
+    showBottomBorder?: boolean;
+    last?: boolean;
 }
 
 const {
@@ -45,6 +47,8 @@ const {
     showLabel = true,
     showBreif = true,
     showLogo = true,
+    showBottomBorder = true,
+    last = false,
     // 響應式圖片斷點設定，依照不同螢幕尺寸載入對應圖片
     // 支援多種像素密度 (1x, 1.5x, 2x) 提供更清晰的顯示效果
     imgBreakpoints = [
@@ -89,13 +93,17 @@ const cardStyle = {
     link={link}
     className={[
         className,
-        ':uno-collection-har-card: max-w-[var(--card-width,100%)] lt-lg:max-w-17.5rem flex flex-col lg:flex-row items-start gap-1.25rem overflow-hidden group'
+        ':uno-collection-har-card: max-w-[var(--card-width,100%)] lt-lg:max-w-17.5rem flex flex-col lg:flex-row items-start gap-1.25rem overflow-hidden group',
+        { ':uno-collection-har-card-bottom-border: lg:pb-2rem lg:border-b-1px lg:border-gray-200': showBottomBorder && !last },
+        { ':uno-collection-har-card-last: lg:pb-0 lg:border-b-0': last && showBottomBorder }
     ]}
     style={cardStyle}
     attribute={attribute}
     title={title}
 >
-    <div class=":uno-collection-har-card-image-container: w-full lg:w-12.5rem flex-none aspect-7/4 lg:aspect-square relative rounded-xl overflow-hidden">
+    <div
+        class=":uno-collection-har-card-image-container: w-full lg:w-12.5rem flex-none aspect-7/4 lg:aspect-square relative rounded-xl overflow-hidden"
+    >
         <Picture
             className=":uno-collection-har-card-image: size-full absolute inset-0 object-center object-cover origin-center"
             img={img}

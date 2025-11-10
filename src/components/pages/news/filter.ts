@@ -10,11 +10,10 @@ export const child1: filter = [
 ];
 
 export const child2: filter = [
-    { label: '北部地區(1)', value: '北部地區', checked: false },
-    { label: '中部地區(1)', value: '中部地區', checked: false },
-    { label: '南部地區(1)', value: '南部地區', checked: false },
-    { label: '東部地區(10)', value: '東部地區', checked: false },
-    { label: '離島地區(100)', value: '離島地區', checked: false },
+    { label: 'AWS (1)', value: 'AWS', checked: false },
+    { label: 'GCP (1)', value: 'GCP', checked: false },
+    { label: '雲端運算 (1)', value: '雲端運算', checked: false },
+    { label: 'AI發展 (1)', value: 'AI發展', checked: false },
 ];
 
 export const data: category = [
@@ -25,7 +24,7 @@ export const data: category = [
         children: child1,
     },
     {
-        title: '服務地區',
+        title: '主題類別',
         show: true,
         children: child2,
     },

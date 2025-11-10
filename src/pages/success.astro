@@ -1,0 +1,35 @@
+---
+/** Data */
+import { data } from '@components/pages/success/filter';
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Banner from '@components/common/banner/banner.astro';
+import Follower from '@components/common/follower/follower.astro';
+/** Main Components */
+import Articles from '@components/pages/success/articles.astro';
+import ArticlesList from '@components/common/section/articlesList.astro';
+import Card from '@components/pages/news/card.astro';
+/** Style */
+import '@scss/pages/success.scss';
+---
+
+<Layouts IDName="Success" footerShowBorderTop>
+    <Banner img="success-banner" title="成功案例" mode="dark" />
+    <Articles />
+    <ArticlesList
+        IDName="SuccessList"
+        title="成功案例"
+        total={10}
+        sortDate={[
+            { text: '新上市', value: '0' },
+            { text: '新案例', value: '1' }
+        ]}
+        category={data}
+    >
+        {Array.from({ length: 10 }).map((_, index) => <Card showBreif={false} />)}
+    </ArticlesList>
+    <Follower />
+</Layouts>

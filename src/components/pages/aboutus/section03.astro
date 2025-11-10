@@ -1,0 +1,34 @@
+---
+/** Common Component */
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './section03.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-aboutus-section-03: container-fluid flex flex-col items-center justify-center sect-p-sub-md-t md:sect-p-sub-lg-t lg:sect-p-sub-xl-t'
+    ]}
+    style={style}
+    {...attribute}
+>
+<div class=":uno-aboutus-section-03-body: w-full max-w-33.9375rem flex flex-col items-center justify-center gap-3rem mx-a">
+        <div class=":uno-aboutus-section-03-head: flex flex-col items-center justify-center gap-1.5rem">
+            <h3 class=":uno-aboutus-section-03-title: text-blue-500 tt-md-36 lg:tt-md-44 text-center">ASUS MarketPlace</h3>
+            <p class=":uno-aboutus-section-03-brief: text-gray-900 body-03 text-center">加入 ASUS MarketPlace，連結資源、拓展市場，創造企業新價值。</p>
+        </div>
+        <Button Tag="a" variant="blue" link="/ivy" title="成為 ISV 夥伴" block>成為 ISV 夥伴</Button>
+    </div>
+</div>

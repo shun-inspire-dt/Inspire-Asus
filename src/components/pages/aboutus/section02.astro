@@ -1,0 +1,43 @@
+---
+/** Type */
+import type { dataType } from './data01';
+/** Common Component */
+import Card2 from './card2.astro';
+/** Style */
+import './section02.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data?: dataType;
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[className, ':uno-aboutus-section-02: container-fluid sect-p-md-t md:sect-p-lg-t lg:sect-p-xl-t']}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-aboutus-section-02-body: flex flex-col items-center justify-center gap-2rem md:gap-3rem lg:gap-4rem">
+        <h2
+            class=":uno-aboutus-section-title: text-gray-900 font-tt-normal text-30 md:text-36 xl:text-44 lh-120 font-medium text-center"
+        >
+            競爭優勢
+        </h2>
+        <div class=":uno-aboutus-section-02-grid: grid grid-cols-1 lg:grid-cols-3 gap-1.25rem">
+            {data?.map((item) => (
+                <Card2
+                    title={item.title}
+                    text={item.text}
+                    img={item.img}
+                    imgBreakpoints={item.imgBreakpoints}
+                />
+            ))}
+        </div>
+    </div>
+</div>

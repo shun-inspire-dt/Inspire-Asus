@@ -1,0 +1,50 @@
+---
+/** Type */
+import type { dataType } from './data01';
+/** Common Component */
+import Card from './card.astro';
+import Card2 from './card2.astro';
+/** Style */
+import './section01.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data?: dataType;
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[className, ':uno-aboutus-section-01: container-fluid sect-p-sm-t md:sect-p-md-t lg:sect-p-lg-t']}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-aboutus-section-01-body: flex flex-col items-center justify-center gap-3rem md:gap-4rem">
+        <div class=":uno-aboutus-section-head: flex flex-col items-center justify-center gap-1rem md:gap-2rem">
+            <h1
+                class=":uno-aboutus-section-title: text-gray-900 font-tt-normal text-30 md:text-36 xl:text-44 lh-120 font-medium text-center"
+            >
+                跨產業合作生態
+            </h1>
+            <p class=":uno-aboutus-section-01-brief: max-w-47.25rem text-gray-900 body-03 text-center">
+                華碩共好生態圈平台的成立，不只是提供產品與技術，更是希望透過各類專家團隊的協同合作，提供企業創新、穩定與安全的數位轉型解決方案或服務，陪伴企業共同成長。
+            </p>
+        </div>
+        <div class=":uno-aboutus-section-01-grid: lg:space-y-4rem">
+            {data?.map((item, index) => (
+                <Card
+                    title={item.title}
+                    text={item.text}
+                    img={item.img}
+                    imgBreakpoints={item.imgBreakpoints}
+                    direction={index % 2 === 0 ? 'row' : 'row-reverse'}
+                />
+            ))}
+        </div>
+    </div>
+</div>

@@ -9,24 +9,11 @@ export const child1: filter = [
     { label: '顧問服務產業(1)', value: '顧問服務產業', checked: false },
 ];
 
-export const child2: filter = [
-    { label: '北部地區(1)', value: '北部地區', checked: false },
-    { label: '中部地區(1)', value: '中部地區', checked: false },
-    { label: '南部地區(1)', value: '南部地區', checked: false },
-    { label: '東部地區(10)', value: '東部地區', checked: false },
-    { label: '離島地區(100)', value: '離島地區', checked: false },
-];
-
 export const data: category = [
     {
         title: '產業類別',
         show: true,
         more: true,
         children: child1,
-    },
-    {
-        title: '服務地區',
-        show: true,
-        children: child2,
-    },
+    }
 ];

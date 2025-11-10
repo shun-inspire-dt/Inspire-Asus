@@ -1,0 +1,37 @@
+---
+/** Data */
+import { data } from '@components/pages/news/filter';
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Banner from '@components/common/banner/banner.astro';
+import Follower from '@components/common/follower/follower.astro';
+/** Main Components */
+import Articles from '@components/pages/news/articles.astro';
+import ArticlesList from '@components/common/section/articlesList.astro';
+import Card from '@components/pages/news/card.astro';
+/** Style */
+import '@scss/pages/news.scss';
+---
+
+<Layouts IDName="News" footerShowBorderTop>
+    <Banner img="news-banner" title="最新消息" />
+    <Articles />
+    <ArticlesList
+        IDName="NewsList"
+        title="最新消息"
+        total={10}
+        sortDate={[
+            { text: '推薦文章', value: '0' },
+            { text: '最新消息', value: '1' },
+        ]}
+        category={data}
+    >
+        {
+            Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} />)
+        }
+    </ArticlesList>
+    <Follower />
+</Layouts>

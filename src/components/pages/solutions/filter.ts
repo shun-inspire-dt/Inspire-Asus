@@ -10,11 +10,11 @@ export const child1: filter = [
 ];
 
 export const child2: filter = [
-    { label: '北部地區(1)', value: '北部地區', checked: false },
-    { label: '中部地區(1)', value: '中部地區', checked: false },
-    { label: '南部地區(1)', value: '南部地區', checked: false },
-    { label: '東部地區(10)', value: '東部地區', checked: false },
-    { label: '離島地區(100)', value: '離島地區', checked: false },
+    { label: '微型（1-10人）', value: '微型', checked: false },
+    { label: '小型（10-49人）', value: '小型', checked: false },
+    { label: '中型（50-199人）', value: '中型', checked: false },
+    { label: '大型（200 人-500人）', value: '大型', checked: false },
+    { label: '巨型（500人以上）', value: '巨型', checked: false },
 ];
 
 export const data: category = [
