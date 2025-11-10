@@ -9,7 +9,7 @@ type breadcrumb = {
 }[];
 type variant = 'blue' | 'blue-outline' | 'neutral' | 'neutral-outline' | 'blue-ghost' | 'neutral-ghost';
 type select = { text: string | number; value: string | number; attribute?: attribute }[];
-type filter = { label: string; value: string; disabled?: boolean; checked?: boolean }[];
+type filter = { label: string; value: string; name?: string; disabled?: boolean; checked?: boolean }[];
 type category = { id?: string, title: string, show?: boolean, more?: boolean, children: filter }[];
 
 const type = [
