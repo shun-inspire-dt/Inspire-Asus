@@ -117,8 +117,6 @@ interface SelectPlaceholderAPI {
 
         // 初始化狀態
         updatePlaceholderState();
-
-        console.log(`Select placeholder initialized for: ${select.id || 'unnamed select'}`);
     }
 
     /**
@@ -131,7 +129,6 @@ interface SelectPlaceholderAPI {
         selects.forEach((select) => setupSelectPlaceholder(select));
 
         initialized = true;
-        console.log(`Initialized ${selects.length} select elements for placeholder management`);
     }
 
     /**

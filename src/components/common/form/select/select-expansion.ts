@@ -108,8 +108,6 @@ interface SelectExpansionAPI {
                 select.classList.remove(EXPANSION_CSS_CLASSES.EXPANDED);
             }, 100);
         });
-
-        console.log(`Select expansion initialized for: ${select.id || 'unnamed select'}`);
     }
 
     /**
@@ -122,7 +120,6 @@ interface SelectExpansionAPI {
         selects.forEach((select) => setupSelectExpansion(select));
 
         initialized = true;
-        console.log(`Initialized ${selects.length} select elements for expansion tracking`);
     }
 
     /**

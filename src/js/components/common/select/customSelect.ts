@@ -33,21 +33,39 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
     const containers = __containers__ || (document.getElementsByClassName('custom-select') as HTMLCollectionOf<HTMLElement>);
 
     [...containers].forEach((container) => {
-        /** Clear */
-        clearSelect(container);
-
         select = container?.getElementsByTagName('select')[0] as HTMLSelectElement;
         optionAmount = select.length as number;
         const isLinkSelect = container.hasAttribute('data-select-link');
         
-        /*  這是 select 的 input */
-        DIV_A = document.createElement('DIV') as HTMLDivElement;
-        DIV_A.setAttribute('class', 'select-selected select-selected-placeholder');
-        DIV_A.innerHTML = select.options[select.selectedIndex].innerHTML;
-        container.appendChild(DIV_A);
-        /* 這是 select 的 下拉選單 */
-        DIV_B = document.createElement('DIV') as HTMLDivElement;
-        DIV_B.setAttribute('class', 'select-items select-hide');
+        // 檢查是否已有預先寫好的 HTML 結構
+        let existingSelected = container.querySelector('.select-selected') as HTMLDivElement;
+        let existingItems = container.querySelector('.select-items') as HTMLDivElement;
+        
+        if (existingSelected && existingItems) {
+            // 使用現有的 HTML 結構
+            DIV_A = existingSelected;
+            DIV_B = existingItems;
+            
+            // 更新顯示內容
+            DIV_A.innerHTML = select.options[select.selectedIndex].innerHTML;
+            
+            // 清空現有選項，重新生成
+            DIV_B.innerHTML = '';
+        } else {
+            // 清除可能存在的舊結構
+            clearSelect(container);
+            
+            // 動態創建新結構
+            /*  這是 select 的 input */
+            DIV_A = document.createElement('DIV') as HTMLDivElement;
+            DIV_A.setAttribute('class', 'select-selected select-selected-placeholder');
+            DIV_A.innerHTML = select.options[select.selectedIndex].innerHTML;
+            container.appendChild(DIV_A);
+            
+            /* 這是 select 的 下拉選單 */
+            DIV_B = document.createElement('DIV') as HTMLDivElement;
+            DIV_B.setAttribute('class', 'select-items select-hide');
+        }
         for (optionIndex = 1; optionIndex < optionAmount; optionIndex++) {
             /* 這是 select 的 下拉選單 底下 建立 option */
             if (isLinkSelect) {
@@ -79,6 +97,9 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
                         select.selectedIndex = optionIndex;
                         selectParent.innerHTML = this.innerHTML;
 
+                        // 觸發 change 事件，讓 URL 同步功能可以正常運作
+                        select.dispatchEvent(new Event('change', { bubbles: true }));
+
                         selectOption = ItemsParent.getElementsByClassName('same-as-selected') as HTMLCollectionOf<HTMLElement>;
                         selectOptionAmount = selectOption.length;
 
@@ -98,7 +119,11 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
             });
             DIV_B.appendChild(DIV_C);
         }
-        container.appendChild(DIV_B);
+        
+        // 只有在動態創建時才需要將 DIV_B 添加到容器
+        if (!existingItems) {
+            container.appendChild(DIV_B);
+        }
 
         DIV_A.addEventListener('click', function (e) {
             /* when the select box is clicked, close any other select boxes, and open/close the current select box: */
@@ -108,6 +133,34 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
             const nextSibling = this.nextSibling as HTMLElement;
             nextSibling.classList.toggle('select-hide');
             this.classList.toggle('select-arrow-active');
+        });
+
+        // 監聽原生 select 的 change 事件，同步更新自定義 select 顯示
+        select.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const customSelectDisplay = container.querySelector('.select-selected') as HTMLElement;
+            
+            if (customSelectDisplay && selectedOption) {
+                // 更新顯示文字
+                customSelectDisplay.innerHTML = selectedOption.innerHTML;
+                
+                // 移除 placeholder 樣式（如果有選擇值）
+                if (this.value) {
+                    customSelectDisplay.classList.remove('select-selected-placeholder');
+                } else {
+                    customSelectDisplay.classList.add('select-selected-placeholder');
+                }
+                
+                // 更新選項的 same-as-selected 狀態
+                const allOptions = container.querySelectorAll('.select-items > *');
+                allOptions.forEach((option, index) => {
+                    option.classList.remove('same-as-selected');
+                    // index + 1 因為自定義選項從第二個開始（跳過 placeholder）
+                    if (index + 1 === this.selectedIndex) {
+                        option.classList.add('same-as-selected');
+                    }
+                });
+            }
         });
     });
 };

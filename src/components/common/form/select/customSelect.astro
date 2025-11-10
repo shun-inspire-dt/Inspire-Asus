@@ -9,6 +9,7 @@ export interface Props extends SelectProps {
     selectStyle?: { [key: string]: string };
     selectAttribute?: attribute;
     custom?: boolean;
+    prebuiltStructure?: boolean;
 }
 
 const {
@@ -34,7 +35,8 @@ const {
     selectAttribute = {},
     style = {},
     selectStyle = {},
-    custom = true
+    custom = true,
+    prebuiltStructure = false
 } = Astro.props as Props;
 ---
 
@@ -60,6 +62,12 @@ const {
         attribute={selectAttribute}
         style={selectStyle}
     />
+    {prebuiltStructure && (
+        <>
+            <div class="select-selected select-selected-placeholder"></div>
+            <div class="select-items select-hide"></div>
+        </>
+    )}
 </div>
 
 <script>
