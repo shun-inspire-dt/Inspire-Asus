@@ -1,0 +1,24 @@
+---
+/** Common Component */
+import PaginationArrow from '../icons/arrows/paginationArrow.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ':uno-show-more: flex items-center justify-center']} style={style} {...attribute}>
+    <button
+        type="button"
+        title="Show More"
+        class:list={[':uno-show-more-button: h-2rem flex items-center justify-center gap-0.5rem text-blue-500 body-02-sh [&.active>svg]:rotate-180']}
+        >
+        Show More
+        <PaginationArrow size="12" direction='down' color="blue-500" />
+    </button>
+</div>
