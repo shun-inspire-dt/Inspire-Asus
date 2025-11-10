@@ -23,27 +23,27 @@ export interface Props {
 const { IDName = 'footer', className, style, attribute = {}, pages = [], showBorderTop = false } = Astro.props as Props;
 ---
 
-<footer id={IDName} class:list={['footer bg-gray-50 text-gray-600', className]} style={style} {...attribute}>
-    <div class="footer-top container relative">
-        {showBorderTop && <div class="absolute top-0 left-0 right-0 w-full h-1px bg-gray-200" />}
-        <div class="flex flex-col gap-0.25rem md:gap-1.25rem xl:gap-2rem pt-1.25rem md:pb-1.25rem xl:py-2rem">
-            <div class="flex items-center gap-0.5rem">
+<footer id={IDName} class:list={[':uno-footer: bg-gray-50 text-gray-600', className]} style={style} {...attribute}>
+    <div class=":uno-footer-top: container-fluid relative">
+        {showBorderTop && <div class=":uno-footer-top-border: absolute top-0 left-0 right-0 w-full h-1px bg-gray-200" />}
+        <div class=":uno-footer-top-body: flex flex-col gap-0.25rem md:gap-1.25rem xl:gap-2rem pt-1.25rem md:pb-1.25rem xl:py-2rem">
+            <div class=":uno-footer-top-body-top: flex items-center gap-0.5rem">
                 <Logo />
-                <div class="flex items-baseline">
+                <div class=":uno-footer-breadcrumb: flex items-baseline">
                     {pages.map((page) => <A className="label-02 lh-138.5%">/ {page}&nbsp;</A>)}
                 </div>
             </div>
-            <div class="hidden md:flex md:items-stretch md:justify-between xl:justify-start xl:gap-9.5rem">
+            <div class=":uno-footer-links: hidden md:flex md:items-stretch md:justify-between xl:justify-start xl:gap-9.5rem">
                 {
                     data.map((item, i) => (
-                        <div class="flex flex-col gap-1rem flex-1 xl:flex-none">
-                            <strong class="label-03 text-gray-900 tracking-2%">{item.title}</strong>
-                            <div class="flex flex-col xl:flex-row xl:justify-between gap-0.75rem xl:gap-4rem 1440:gap-6.25rem">
+                        <div class=":uno-footer-links-item: flex flex-col gap-1rem flex-1 xl:flex-none">
+                            <strong class=":uno-footer-links-title: label-03 text-gray-900 tracking-2%">{item.title}</strong>
+                            <div class=":uno-footer-links-body: flex flex-col xl:flex-row xl:justify-between gap-0.75rem xl:gap-4rem 1440:gap-6.25rem">
                                 {item.links.map((x) => (
-                                    <div class="flex flex-col gap-0.75rem">
+                                    <div class=":uno-footer-links-body-item: flex flex-col gap-0.75rem">
                                         {x.map((y) => (
                                             <A
-                                                className="label-02 mb-0.375rem last:mb-0"
+                                                className=":uno-footer-links-body-item-link: label-02 mb-0.375rem last:mb-0"
                                                 link={y.link}
                                                 title={y.linkText}
                                                 extend={y.external}
@@ -56,20 +56,20 @@ const { IDName = 'footer', className, style, attribute = {}, pages = [], showBor
                     ))
                 }
             </div>
-            <div class="md:hidden">
+            <div class=":uno-footer-mobile: md:hidden">
                 {
                     data.map((item, i) => (
                         <Collapse
                             title={item.title}
-                            buttonClassName="!text-sm !lh-125"
+                            buttonClassName=":uno-footer-mobile-title: !text-sm !lh-125"
                             style={{ ...(i === 0 ? { '--collapse-border-width': '0' } : {}) }}
                         >
-                            <div class="flex flex-col gap-0.75rem pb-0.75rem">
+                            <div class=":uno-footer-mobile-body: flex flex-col gap-0.75rem pb-0.75rem">
                                 {item.links.map((x) => (
-                                    <div class="flex flex-col gap-0.375rem">
+                                    <div class=":uno-footer-mobile-body-item: flex flex-col gap-0.375rem">
                                         {x.map((y) => (
                                             <A
-                                                className="label-02 mb-0.375rem last:mb-0"
+                                                className=":uno-footer-mobile-body-item-link: label-02 mb-0.375rem last:mb-0"
                                                 link={y.link}
                                                 title={y.linkText}
                                                 extend={y.external}
@@ -84,15 +84,15 @@ const { IDName = 'footer', className, style, attribute = {}, pages = [], showBor
             </div>
         </div>
     </div>
-    <div class="footer-bottom container">
-        <div class="flex flex-col md:flex-row gap-1rem md:gap-1.5rem md:justify-between py-1rem border-t border-gray-200">
-            <span class="label-02">© 2025 ASUSTeK Computer Inc. All rights reserved.</span>
-            <div class="flex items-center gap-0.75rem lh-13">
-                <A className="label-02">Cookie 設定</A>
-                <div class="bar"></div>
-                <A className="label-02">隱私權保護政策</A>
-                <div class="bar"></div>
-                <A className="label-02">使用者條款</A>
+    <div class=":uno-footer-bottom: container">
+        <div class=":uno-footer-bottom-body: flex flex-col md:flex-row gap-1rem md:gap-1.5rem md:justify-between py-1rem border-t border-gray-200">
+            <span class=":uno-footer-copyright: label-02">© 2025 ASUSTeK Computer Inc. All rights reserved.</span>
+            <div class=":uno-footer-bottom-body-links: flex items-center gap-0.75rem lh-13">
+                <A className=":uno-footer-bottom-body-links-item: label-02">Cookie 設定</A>
+                <div class=":uno-footer-bottom-body-links-bar: bar"></div>
+                <A className=":uno-footer-bottom-body-links-item: label-02">隱私權保護政策</A>
+                <div class=":uno-footer-bottom-body-links-bar: bar"></div>
+                <A className=":uno-footer-bottom-body-links-item: label-02">使用者條款</A>
             </div>
         </div>
     </div>
