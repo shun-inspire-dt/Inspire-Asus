@@ -28,8 +28,8 @@
 export const data = [
     {
         page: {
-            path: 'index',
-            components: ['banner', 'nav', 'section01', 'section02', 'section03', 'section04', 'section05']
+            path: '/aboutus',
+            components: ['nav', 'section01', 'section02', 'section03'],
         }
     }
 ];
