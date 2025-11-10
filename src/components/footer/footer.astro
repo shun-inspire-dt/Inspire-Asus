@@ -1,7 +1,13 @@
 ---
 /** data */
+import { data } from './data';
 /** Common Components */
+/** Link */
+import A from '@components/common/link/a.astro';
+/** Collapse */
+import Collapse from '@components/common/collapse/collapse.astro';
 /** Main Components */
+import Logo from './logo.astro';
 /** Style */
 import './footer.scss';
 
@@ -10,11 +16,84 @@ export interface Props {
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
+    pages?: string[];
+    showBorderTop?: boolean;
 }
 
-const { IDName = 'footer', className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'footer', className, style, attribute = {}, pages = [], showBorderTop = false } = Astro.props as Props;
 ---
 
-<footer id={IDName} class:list={['footer', className]} style={style} {...attribute}>
-    
+<footer id={IDName} class:list={['footer bg-gray-50 text-gray-600', className]} style={style} {...attribute}>
+    <div class="footer-top container relative">
+        {showBorderTop && <div class="absolute top-0 left-0 right-0 w-full h-1px bg-gray-200" />}
+        <div class="flex flex-col gap-0.25rem md:gap-1.25rem xl:gap-2rem pt-1.25rem md:pb-1.25rem xl:py-2rem">
+            <div class="flex items-center gap-0.5rem">
+                <Logo />
+                <div class="flex items-baseline">
+                    {pages.map((page) => <A className="label-02 lh-138.5%">/ {page}&nbsp;</A>)}
+                </div>
+            </div>
+            <div class="hidden md:flex md:items-stretch md:justify-between xl:justify-start xl:gap-9.5rem">
+                {
+                    data.map((item, i) => (
+                        <div class="flex flex-col gap-1rem flex-1 xl:flex-none">
+                            <strong class="label-03 text-gray-900 tracking-2%">{item.title}</strong>
+                            <div class="flex flex-col xl:flex-row xl:justify-between gap-0.75rem xl:gap-4rem 1440:gap-6.25rem">
+                                {item.links.map((x) => (
+                                    <div class="flex flex-col gap-0.75rem">
+                                        {x.map((y) => (
+                                            <A
+                                                className="label-02 mb-0.375rem last:mb-0"
+                                                link={y.link}
+                                                title={y.linkText}
+                                                extend={y.external}
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+            <div class="md:hidden">
+                {
+                    data.map((item, i) => (
+                        <Collapse
+                            title={item.title}
+                            buttonClassName="!text-sm !lh-125"
+                            style={{ ...(i === 0 ? { '--collapse-border-width': '0' } : {}) }}
+                        >
+                            <div class="flex flex-col gap-0.75rem pb-0.75rem">
+                                {item.links.map((x) => (
+                                    <div class="flex flex-col gap-0.375rem">
+                                        {x.map((y) => (
+                                            <A
+                                                className="label-02 mb-0.375rem last:mb-0"
+                                                link={y.link}
+                                                title={y.linkText}
+                                                extend={y.external}
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        </Collapse>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom container">
+        <div class="flex flex-col md:flex-row gap-1rem md:gap-1.5rem md:justify-between py-1rem border-t border-gray-200">
+            <span class="label-02">© 2025 ASUSTeK Computer Inc. All rights reserved.</span>
+            <div class="flex items-center gap-0.75rem lh-13">
+                <A className="label-02">Cookie 設定</A>
+                <div class="bar"></div>
+                <A className="label-02">隱私權保護政策</A>
+                <div class="bar"></div>
+                <A className="label-02">使用者條款</A>
+            </div>
+        </div>
+    </div>
 </footer>
