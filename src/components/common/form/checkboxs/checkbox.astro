@@ -109,24 +109,26 @@ const validAttribute = {
 
 {/** 複選框容器 - 支援標準和圓角樣式 */}
 <div class:list={['form-check', { 'rounded-check': rounded, 'indeterminate-check': indeterminate, 'form-check-right': alignment === 'right' }, className]} style={style}>
-    {/** 複選框輸入元素 */}
-    <input
-        id={id}
-        class="form-check-input"
-        type="checkbox"
-        value={value}
-        name={name}
-        disabled={disabled}
-        required={required}
-        checked={checked}
-        autocomplete="off"
-        {...readonly ? { onclick: 'return false;' } : {}}
-        data-set-required={setRequired}
-        {...attribute}
-        {...aria}
-        aria-label={title}
-        {...validAttribute}
-    />
+    <div class="form-check-input-container">
+        {/** 複選框輸入元素 */}
+        <input
+            id={id}
+            class="form-check-input"
+            type="checkbox"
+            value={value}
+            name={name}
+            disabled={disabled}
+            required={required}
+            checked={checked}
+            autocomplete="off"
+            {...readonly ? { onclick: 'return false;' } : {}}
+            data-set-required={setRequired}
+            {...attribute}
+            {...aria}
+            aria-label={title}
+            {...validAttribute}
+        />
+    </div>
     {/** 標籤文字 - 支援插槽內容或 label 屬性 */}
     <label class="form-check-label" for={id}>
         <slot>{label}</slot>

@@ -6,7 +6,7 @@
 .form-check {
     --checkbox-flex: flex;
     --checkbox-flex-direction: row;
-    --checkbox-align-items: center;
+    --checkbox-align-items: flex-start;
     --checkbox-justify-content: flex-start;
 
     /* 容器尺寸變數 */
@@ -55,8 +55,15 @@
     flex-direction: var(--checkbox-flex-direction);
     align-items: var(--checkbox-align-items);
     justify-content: var(--checkbox-justify-content);
-    height: var(--checkbox-height);
+    min-height: var(--checkbox-height);
     gap: var(--checkbox-gap);
+
+    &-input-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--checkbox-line-height);
+    }
 
     &.form-check-right {
         --checkbox-flex-direction: row-reverse;
