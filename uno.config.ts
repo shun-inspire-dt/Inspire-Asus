@@ -115,7 +115,7 @@ export default defineConfig({
         'sect-p-sub-sm-b': 'pt-32px pb-48px',
 
         // 自定義 container 規則
-        'container': 'w-full mx-auto px-4 sm:max-w-[87.5%] sm:px-0',
+        'container-fluid': 'w-full mx-auto px-4 sm:max-w-[87.5%] sm:px-0',
         'underline-offset-3': 'underline-offset-[var(--underline-offset)]',
         'bar': 'w-0.0625rem h-1lh bg-gray-200',
         'bar-sm': 'w-0.0625rem h-1lh py-0.0625rem bg-gray-200',
