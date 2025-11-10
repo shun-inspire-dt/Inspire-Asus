@@ -116,41 +116,52 @@ export default defineConfig({
 
         // 自定義 container 規則
         'container': 'w-full mx-auto px-4 sm:max-w-[87.5%] sm:px-0',
-        'underline-offset-3': 'underline-offset-[var(--underline-offset)]'
+        'underline-offset-3': 'underline-offset-[var(--underline-offset)]',
+        'bar': 'w-0.0625rem h-1lh bg-gray-200',
+        'bar-sm': 'w-0.0625rem h-1lh py-0.0625rem bg-gray-200',
+        'bar-c': 'h-full'
     },
     rules: [
         ['padding-tablet', { 'padding-left': 'var(--screen-tablet-padding-x)', 'padding-right': 'var(--screen-tablet-padding-x)' }]
     ],
     theme: {
+        breakpoints: {
+            sm: '640px',
+            md: '768px',
+            lg: '1024px',
+            xl: '1280px',
+            '1440': '1440px',
+            '2xl': '1536px'
+        },
         colors: {
             // 黑色系列
             black: {
                 DEFAULT: 'var(--color-black)',
-                '/6': 'var(--color-black-6)',
-                '/16': 'var(--color-black-16)',
-                '/40': 'var(--color-black-40)',
-                '/50': 'var(--color-black-50)',
-                '/68': 'var(--color-black-68)',
-                '/70': 'var(--color-black-70)',
-                '/80': 'var(--color-black-80)',
-                '/85': 'var(--color-black-85)'
+                '6': 'var(--color-black-6)',
+                '16': 'var(--color-black-16)',
+                '40': 'var(--color-black-40)',
+                '50': 'var(--color-black-50)',
+                '68': 'var(--color-black-68)',
+                '70': 'var(--color-black-70)',
+                '80': 'var(--color-black-80)',
+                '85': 'var(--color-black-85)'
             },
             // 深色系列
             dark: {
                 DEFAULT: 'var(--color-dark)',
-                '/80': 'var(--color-dark-80)'
+                '80': 'var(--color-dark-80)'
             },
             // 白色系列
             white: {
                 DEFAULT: 'var(--color-white)',
-                '/0': 'var(--color-white-0)',
-                '/10': 'var(--color-white-10)',
-                '/20': 'var(--color-white-20)',
-                '/40': 'var(--color-white-40)',
-                '/50': 'var(--color-white-50)',
-                '/60': 'var(--color-white-60)',
-                '/70': 'var(--color-white-70)',
-                '/90': 'var(--color-white-90)'
+                '0': 'var(--color-white-0)',
+                '10': 'var(--color-white-10)',
+                '20': 'var(--color-white-20)',
+                '40': 'var(--color-white-40)',
+                '50': 'var(--color-white-50)',
+                '60': 'var(--color-white-60)',
+                '70': 'var(--color-white-70)',
+                '90': 'var(--color-white-90)'
             },
             // Slate 顏色系列
             slate: {
