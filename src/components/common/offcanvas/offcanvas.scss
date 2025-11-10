@@ -29,11 +29,12 @@
     --bs-offcanvas-padding-y: 0;
     --bs-offcanvas-box-shadow: none;
     /** Offcanvas Body */
-    --offcanvas-body-display: ;
-    --offcanvas-body-flex-direction: ;
-    --offcanvas-body-align-items: t
-    --offcanvas-body-justify-content: ;
-    --offcanvas-body-gap: ;
+    --offcanvas-top: var(--header-height);
+    --offcanvas-body-display: flex;
+    --offcanvas-body-flex-direction: column;
+    --offcanvas-body-align-items: flex-start;
+    --offcanvas-body-justify-content: flex-start;
+    --offcanvas-body-gap: 0rem;
 
     height: var(--bs-offcanvas-height);
     box-shadow: var(--bs-offcanvas-box-shadow);
@@ -52,6 +53,17 @@
 }
 .offcanvas-sm {
     --bs-offcanvas-width: var(--bs-offcanvas-width-sm);
+}
+.offcanvas.offcanvas-start,
+.offcanvas.offcanvas-end,
+.offcanvas.offcanvas-top {
+    top: var(--header-height) !important;
+}
+.offcanvas.offcanvas-top {
+    --offcanvas-top: 0;
+}
+.offcanvas.offcanvas-bottom {
+    --offcanvas-top: auto;
 }
 .offcanvas-close-button {
     @apply bg-cover bg-center bg-no-repeat;
