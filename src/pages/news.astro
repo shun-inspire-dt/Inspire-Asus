@@ -12,6 +12,7 @@ import Follower from '@components/common/follower/follower.astro';
 import Articles from '@components/pages/news/articles.astro';
 import ArticlesList from '@components/common/section/articlesList.astro';
 import Card from '@components/pages/news/card.astro';
+import Script from '@components/pages/news/script.astro';
 /** Style */
 import '@scss/pages/news.scss';
 ---
@@ -25,13 +26,12 @@ import '@scss/pages/news.scss';
         total={10}
         sortDate={[
             { text: '推薦文章', value: '0' },
-            { text: '最新消息', value: '1' },
+            { text: '最新消息', value: '1' }
         ]}
         category={data}
     >
-        {
-            Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} />)
-        }
+        {Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} />)}
     </ArticlesList>
     <Follower />
 </Layouts>
+<Script />

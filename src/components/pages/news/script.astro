@@ -1,0 +1,273 @@
+<script is:inline>
+/**
+ * URL Query String 同步管理器
+ * 處理 data-filter 的 checkboxes 和 data-sort 的 select 與 URL 的同步
+ */
+(function() {
+    'use strict';
+
+    // URL 參數管理工具
+    const URLManager = {
+        /**
+         * 獲取當前 URL 的所有查詢參數
+         */
+        getParams() {
+            const params = new URLSearchParams(window.location.search);
+            const result = {};
+            for (const [key, value] of params) {
+                // 檢查是否為逗號分隔的多值
+                if (value.includes(',')) {
+                    result[key] = value.split(',').map(v => v.trim()).filter(v => v);
+                } else {
+                    result[key] = value;
+                }
+            }
+            return result;
+        },
+
+        /**
+         * 更新 URL 參數
+         * @param {string} name - 參數名稱
+         * @param {string|string[]} value - 參數值
+         */
+        updateParam(name, value) {
+            const url = new URL(window.location);
+            
+            if (Array.isArray(value) && value.length > 0) {
+                // 多個值用逗號分隔
+                url.searchParams.set(name, value.join(','));
+            } else if (value) {
+                // 單個值
+                url.searchParams.set(name, value);
+            } else {
+                // 空值則刪除參數
+                url.searchParams.delete(name);
+            }
+            
+            // 更新 URL 但不重載頁面
+            window.history.replaceState({}, '', url);
+        },
+
+        /**
+         * 添加 URL 參數值
+         * @param {string} name - 參數名稱
+         * @param {string} value - 要添加的值
+         */
+        addParamValue(name, value) {
+            const currentParam = new URLSearchParams(window.location.search).get(name);
+            let values = [];
+            
+            if (currentParam) {
+                values = currentParam.includes(',') 
+                    ? currentParam.split(',').map(v => v.trim()).filter(v => v)
+                    : [currentParam];
+            }
+            
+            if (!values.includes(value)) {
+                values.push(value);
+                this.updateParam(name, values);
+            }
+        },
+
+        /**
+         * 移除 URL 參數中的特定值
+         * @param {string} name - 參數名稱
+         * @param {string} value - 要移除的值
+         */
+        removeParamValue(name, value) {
+            const currentParam = new URLSearchParams(window.location.search).get(name);
+            
+            if (!currentParam) return;
+            
+            let values = currentParam.includes(',') 
+                ? currentParam.split(',').map(v => v.trim()).filter(v => v)
+                : [currentParam];
+            
+            values = values.filter(v => v !== value);
+            
+            if (values.length > 0) {
+                this.updateParam(name, values);
+            } else {
+                this.updateParam(name, null);
+            }
+        }
+    };
+
+    // Checkbox 管理器
+    const CheckboxManager = {
+        /**
+         * 初始化所有 checkbox 的事件監聽
+         */
+        init() {
+            const filterContainers = document.querySelectorAll('[data-filter]');
+            
+            filterContainers.forEach(container => {
+                const checkboxes = container.querySelectorAll('input[type="checkbox"][name]');
+                
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', this.handleChange.bind(this));
+                });
+            });
+        },
+
+        /**
+         * 處理 checkbox 變更事件
+         * @param {Event} event - 變更事件
+         */
+        handleChange(event) {
+            const checkbox = event.target;
+            const name = checkbox.name;
+            const value = checkbox.value;
+            
+            if (checkbox.checked) {
+                // 添加到 URL 參數
+                URLManager.addParamValue(name, value);
+            } else {
+                // 從 URL 參數中移除
+                URLManager.removeParamValue(name, value);
+            }
+        },
+
+        /**
+         * 根據 URL 參數恢復 checkbox 狀態
+         */
+        restoreState() {
+            const params = URLManager.getParams();
+            
+            Object.keys(params).forEach(name => {
+                const values = Array.isArray(params[name]) ? params[name] : [params[name]];
+                
+                values.forEach(value => {
+                    const checkbox = document.querySelector(`input[type="checkbox"][name="${name}"][value="${value}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                        // 觸發 change 事件以確保其他相關邏輯執行
+                        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                });
+            });
+        }
+    };
+
+    // Select 管理器
+    const SelectManager = {
+        /**
+         * 初始化所有 select 的事件監聽
+         */
+        init() {
+            const selects = document.querySelectorAll('select[data-sort][name]');
+            
+            selects.forEach(select => {
+                select.addEventListener('change', this.handleChange.bind(this));
+            });
+        },
+
+        /**
+         * 處理 select 變更事件
+         * @param {Event} event - 變更事件
+         */
+        handleChange(event) {
+            const select = event.target;
+            const name = select.name;
+            const value = select.value;
+            
+            if (value) {
+                URLManager.updateParam(name, value);
+            } else {
+                URLManager.updateParam(name, null);
+            }
+        },
+
+        /**
+         * 根據 URL 參數恢復 select 狀態
+         */
+        restoreState() {
+            const params = URLManager.getParams();
+            
+            Object.keys(params).forEach(name => {
+                const value = Array.isArray(params[name]) ? params[name][0] : params[name];
+                const selects = document.querySelectorAll(`select[data-sort][name="${name}"]`);
+                
+                selects.forEach(select => {
+                    if (select && value) {
+                        // 找到對應的選項索引
+                        let targetIndex = -1;
+                        for (let i = 0; i < select.options.length; i++) {
+                            if (select.options[i].value === value) {
+                                targetIndex = i;
+                                break;
+                            }
+                        }
+                        
+                        if (targetIndex !== -1) {
+                            // 使用 selectedIndex 設置選中項
+                            select.selectedIndex = targetIndex;
+                            // 觸發 change 事件
+                            select.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    }
+                });
+            });
+        }
+    };
+
+    // 主初始化函數
+    function initialize() {
+        // 初始化事件監聽器
+        CheckboxManager.init();
+        SelectManager.init();
+        
+        // 恢復頁面狀態
+        CheckboxManager.restoreState();
+        SelectManager.restoreState();
+    }
+
+    // 等待 DOM 完全載入後初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+        initialize();
+    }
+
+    // 監聽動態內容變化（如果有 AJAX 載入的內容）
+    const observer = new MutationObserver(function(mutations) {
+        let shouldReinit = false;
+        
+        mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+                if (node.nodeType === 1) { // Element node
+                    const hasFilter = node.querySelector && node.querySelector('[data-filter]');
+                    const hasSort = node.querySelector && node.querySelector('[data-sort]');
+                    
+                    if (hasFilter || hasSort) {
+                        shouldReinit = true;
+                    }
+                }
+            });
+        });
+        
+        if (shouldReinit) {
+            // 重新初始化新添加的元素
+            setTimeout(() => {
+                CheckboxManager.init();
+                SelectManager.init();
+            }, 100);
+        }
+    });
+
+    // 開始觀察 DOM 變化
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // 暴露到全域供其他腳本使用（可選）
+    window.FilterSortManager = {
+        URLManager,
+        CheckboxManager,
+        SelectManager,
+        initialize
+    };
+
+})();
+</script>

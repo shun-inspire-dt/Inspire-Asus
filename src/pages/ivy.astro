@@ -11,6 +11,7 @@ import Follower from '@components/common/follower/follower.astro';
 /** Main Components */
 import ArticlesList from '@components/common/section/articlesList.astro';
 import Card from '@components/pages/news/card.astro';
+import Script from '@components/pages/news/script.astro';
 /** Style */
 import '@scss/pages/ivy.scss';
 ---
@@ -30,5 +31,6 @@ import '@scss/pages/ivy.scss';
     >
         {Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} showLabel={false} />)}
     </ArticlesList>
-    <Follower />
+    <Follower />    
 </Layouts>
+<Script />
