@@ -1,0 +1,17 @@
+---
+/** Style */
+import "./loading.scss";
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ":uno-section-loading: flex items-center justify-center py-2rem"]} style={style} {...attribute}>
+    <div class="loader"></div>
+</div>

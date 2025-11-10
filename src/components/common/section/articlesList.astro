@@ -8,6 +8,7 @@ import ArticleOffcanvas from '@components/common/section/articleOffcanvas.astro'
 /** Button */
 import Button from '@components/common/button/button.astro';
 import ShowMore from './showMore.astro';
+import Loading from './loading.astro';
 
 export interface Props {
     IDName?: string;
@@ -47,8 +48,8 @@ const {
 >
     <div class=":uno-section-articles-list-inner: container-fluid">
         <Title title={title} />
-        <div class="flex md:hidden items-end gap-0.5rem mb-1.5rem">
-            <div class="grow">
+        <div class=":uno-article-mobile-category: flex md:hidden items-end gap-0.5rem mb-1.5rem">
+            <div class=":uno-article-mobile-sort-selector: grow">
                 <SortSelector data={sortDate} />
             </div>
             <Button
@@ -64,18 +65,19 @@ const {
                 篩選
             </Button>
         </div>
-        <div class="space-y-1.5rem">
+        <div class=":uno-article-list-container: space-y-1.5rem">
             <Sort total={total} data={sortDate} />
-            <div class="flex flex-col md:flex-row md:gap-1.25rem">
+            <div class=":uno-article-list-content: flex flex-col md:flex-row md:gap-1.25rem">
                 <Category
                     className=":uno-article-category: hidden md:block flex-none w-11.0625rem lg:w-19.6875rem"
                     data={category}
                 />
-                <div class="space-y-2rem">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-1.25rem">
+                <div class=":uno-article-list-grid-container: space-y-2rem">
+                    <div class=":uno-article-list-grid: grid grid-cols-1 lg:grid-cols-2 gap-1.25rem">
                         <slot />
                     </div>
                     <ShowMore />
+                    <Loading />
                 </div>
             </div>
         </div>

@@ -31,11 +31,11 @@ const { IDName = 'sectionArticle', className, style, attribute = {}, category } 
     style={style}
 >
     <form action="" class=":uno-article-offcanvas-form: w-full h-full flex flex-col">
-        <div class="w-full flex items-baseline justify-between flex-none shrink-0 py-0.625rem px-1rem bg-white border-b border-gray-200">
-            <strong class="font-roboto text-20 lh-125 font-medium">篩選結果</strong>
+        <div class=":uno-article-offcanvas-form-header: w-full flex items-baseline justify-between flex-none shrink-0 py-0.625rem px-1rem bg-white border-b border-gray-200">
+            <strong class=":uno-article-offcanvas-form-header-title: font-roboto text-20 lh-125 font-medium">篩選結果</strong>
             <ALink title={'清除全部'}>清除全部</ALink>
         </div>
-        <div class="w-full flex-1 grow py-0.5rem px-1rem h-6.9375rem bg-white overflow-auto scrollbar">
+        <div class=":uno-article-offcanvas-form-body: w-full flex-1 grow py-0.5rem px-1rem h-6.9375rem bg-white overflow-auto scrollbar" data-filter>
             {
                 category?.map((item, index) => (
                     <Filter
@@ -51,7 +51,7 @@ const { IDName = 'sectionArticle', className, style, attribute = {}, category } 
             }
         </div>
         <div
-            class="w-full flex items-center justify-center gap-1rem flex-none shrink-0 p-1rem bg-white border-t border-gray-200 [&>button]:flex-1"
+            class=":uno-article-offcanvas-form-footer: w-full flex items-center justify-center gap-1rem flex-none shrink-0 p-1rem bg-white border-t border-gray-200 [&>button]:flex-1"
         >
             <Button
                 type={'reset'}
