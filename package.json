@@ -30,7 +30,7 @@
         "@unocss/transformer-directives": "^66.5.4",
         "@unocss/transformer-variant-group": "^66.5.4",
         "air-datepicker": "^3.5.3",
-        "astro": "^5.15.3",
+        "astro": "^4.16.19",
         "bootstrap": "^5.3.3",
         "dotenv": "^17.2.3",
         "jest": "^30.2.0",
