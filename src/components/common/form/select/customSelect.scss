@@ -65,8 +65,10 @@
     --custom-select-item-background-color: var(--color-white, #ffffff); /* 選項背景顏色 */
     --custom-select-item-border-width: 0; /* 選項邊框寬度 */
     --custom-select-item-border-color: transparent; /* 選項邊框顏色 */
-    --custom-select-active-item-background-color: var(--color-blue-500, #006ce1); /* 選中/懸停選項背景顏色 */
-    --custom-select-active-item-color: var(--color-white, #ffffff); /* 選中/懸停選項文字顏色 */
+    --custom-select-hover-item-background-color: var(--color-white, #ffffff); /* 懸停選項背景顏色 */
+    --custom-select-hover-item-color: var(--color-blue-500, #006ce1); /* 懸停選項文字顏色 */
+    --custom-select-active-item-background-color: var(--color-blue-500, #006ce1); /* 選中選項背景顏色 */
+    --custom-select-active-item-color: var(--color-white, #ffffff); /* 選中選項文字顏色 */
     --custom-select-item-zindex: 1000; /* 選項容器層級 */
 
     /* === 單個選項 Transition Variables === */
@@ -206,9 +208,16 @@
 
     /*
      * 選項互動狀態
-     * 懸停和選中狀態的樣式
+     * 懸停狀態的樣式
      */
-    .select-items :where(div, a):hover,                    /* 滑鼠懸停狀態 */
+    .select-items :where(div, a):hover {
+        color: var(--custom-select-hover-item-color);
+        background-color: var(--custom-select-hover-item-background-color);
+    }
+    /*
+    * 選項互動狀態
+    * 選中狀態的樣式
+    */
     .select-items :where(div, a).same-as-selected {
         /* 當前選中的選項 */
         color: var(--custom-select-active-item-color);
