@@ -5,19 +5,19 @@
 .control-input {
     /* === 基礎樣式變數 === */
 
-    --input-padding-x: 16px; /* 水平內邊距 */
-    --input-padding-y: 7px; /* 垂直內邊距 */
-    --input-font-size: var(--fs-16, 16px); /* 字體大小 */
-    --input-line-height: var(--line-height-16-sh, 22px); /* 行高 */
-    --input-letter-spacing: 0px; /* 字元間距 */
+    --input-padding-x: 1rem; /* 水平內邊距 */
+    --input-padding-y: 0.4375rem; /* 垂直內邊距 */
+    --input-font-size: var(--fs-16, 1rem); /* 字體大小 */
+    --input-line-height: var(--line-height-16-sh, 1.375rem); /* 行高 */
+    --input-letter-spacing: 0rem; /* 字元間距 */
 
     /** 基礎設定 */
     --input-color: var(--color-gray-900, #181818); /* 輸入值文字顏色 */
     --input-placeholder-color: var(--color-gray-600, #666666); /* 佔位符文字顏色 */
     --input-background-color: var(--color-white, #ffffff); /* 背景顏色 */
     --input-border-color: var(--color-gray-500, #818181); /* 邊框顏色 */
-    --input-border-width: 1px; /* 邊框寬度 */
-    --input-border-radius: 8px; /* 邊框圓角 */
+    --input-border-width: 0.0625rem; /* 邊框寬度 */
+    --input-border-radius: 0.5rem; /* 邊框圓角 */
     --input-font-family: var(--font-family-roboto, 'Roboto', sans-serif); /* 字體家族 */
     --input-font-weight: 400; /* 字體粗細 */
     --input-text-align: left; /* 文字對齊 */
@@ -34,9 +34,9 @@
     --input-transition: none; /* 平滑過渡效果 */
 
     /** Focus outline 相關屬性 */
-    --input-outline-width: 0px; /* 焦點外框寬度 */
+    --input-outline-width: 0rem; /* 焦點外框寬度 */
     --input-outline-color: transparent; /* 焦點外框顏色 */
-    --input-outline-offset: 0px; /* 焦點外框偏移 */
+    --input-outline-offset: 0rem; /* 焦點外框偏移 */
 
     /* === 基礎樣式套用 === */
 
@@ -67,7 +67,7 @@
     &:focus:not(.status-error),
     &.has-focus,
     &.status-selected {
-        --input-border-width: 1px; /* 焦點邊框寬度 */
+        --input-border-width: 0.125rem; /* 焦點邊框寬度 */
         border-color: var(--input-focus-border-color); /* 焦點邊框顏色 */
 
         /* Focus outline 相關屬性 */
@@ -100,44 +100,44 @@
 
     /* === 尺寸變體 === */
 
-    /** XL 尺寸 (56px) */
+    /** XL 尺寸 (3.5rem) */
     &.size-xl {
-        --input-padding-x: 16px; /* 水平內邊距 */
-        --input-padding-y: 8px; /* 垂直內邊距 */
-        --input-font-size: var(--fs-20, 20px); /* 字體大小 */
-        --input-line-height: var(--line-height-20-sh, 26px); /* 行高 */
-        --input-letter-spacing: 0px; /* 字元間距 */
-        height: 56px;
+        --input-padding-x: 1rem; /* 水平內邊距 */
+        --input-padding-y: 0.5rem; /* 垂直內邊距 */
+        --input-font-size: var(--fs-20, 1.25rem); /* 字體大小 */
+        --input-line-height: var(--line-height-20-sh, 1.625rem); /* 行高 */
+        --input-letter-spacing: 0rem; /* 字元間距 */
+        height: 3.5rem;
     }
 
-    /** LG 尺寸 (48px) */
+    /** LG 尺寸 (3rem) */
     &.size-lg {
-        --input-padding-x: 16px; /* 水平內邊距 */
-        --input-padding-y: 11px; /* 垂直內邊距 */
-        --input-font-size: var(--fs-18, 18px); /* 字體大小 */
-        --input-line-height: var(--line-height-18-sh, 24px); /* 行高 */
-        --input-letter-spacing: 0px; /* 字元間距 */
-        height: 48px;
+        --input-padding-x: 1rem; /* 水平內邊距 */
+        --input-padding-y: 0.6875rem; /* 垂直內邊距 */
+        --input-font-size: var(--fs-18, 1.125rem); /* 字體大小 */
+        --input-line-height: var(--line-height-18-sh, 1.5rem); /* 行高 */
+        --input-letter-spacing: 0rem; /* 字元間距 */
+        height: 3rem;
     }
 
-    /** MD 尺寸 (40px) */
+    /** MD 尺寸 (2.5rem) */
     &.size-md {
-        --input-padding-x: 16px; /* 水平內邊距 */
-        --input-padding-y: 7px; /* 垂直內邊距 */
-        --input-font-size: var(--fs-16, 16px); /* 字體大小 */
-        --input-line-height: var(--line-height-16-sh, 22px); /* 行高 */
-        --input-letter-spacing: 0px; /* 字元間距 */
-        height: 40px;
+        --input-padding-x: 1rem; /* 水平內邊距 */
+        --input-padding-y: 0.4375rem; /* 垂直內邊距 */
+        --input-font-size: var(--fs-16, 1rem); /* 字體大小 */
+        --input-line-height: var(--line-height-16-sh, 1.375rem); /* 行高 */
+        --input-letter-spacing: 0rem; /* 字元間距 */
+        height: 2.5rem;
     }
 
-    /** SM 尺寸 (36px) */
+    /** SM 尺寸 (2.25rem) */
     &.size-sm {
-        --input-padding-x: 16px; /* 水平內邊距 */
-        --input-padding-y: 4px; /* 垂直內邊距 */
-        --input-font-size: var(--fs-14, 14px); /* 字體大小 */
-        --input-line-height: var(--line-height-14-sh, 18px); /* 行高 */
-        --input-letter-spacing: 0.16px; /* 字元間距 */
-        height: 36px;
+        --input-padding-x: 1rem; /* 水平內邊距 */
+        --input-padding-y: 0.25rem; /* 垂直內邊距 */
+        --input-font-size: var(--fs-14, 0.875rem); /* 字體大小 */
+        --input-line-height: var(--line-height-14-sh, 1.125rem); /* 行高 */
+        --input-letter-spacing: 0.01rem; /* 字元間距 */
+        height: 2.25rem;
     }
 
     /* === 圖標支援 === */
@@ -145,11 +145,11 @@
     /** 有圖標時調整右側內邊距 */
     &.has-pwd-show-icon,
     &.has-pwd-hide-icon {
-        padding-right: 40px; /* 為圖標預留空間 */
+        padding-right: 2.5rem; /* 為圖標預留空間 */
     }
     &.has-close-icon,
     &.has-search-icon {
-        padding-right: 32px; /* 為圖標預留空間 */
+        padding-right: 2rem; /* 為圖標預留空間 */
     }
 
     /* === 特殊樣式類別 === */

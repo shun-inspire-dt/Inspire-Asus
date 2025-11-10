@@ -1,5 +1,5 @@
 @use '../../../../scss/mixin/scrollbar.scss' as scrollbar;
-@import '../input.scss';
+@import '../input/input.scss';
 
 /**
  * 自定義選擇器組件 (custom-select)
@@ -10,62 +10,73 @@
  */
 .custom-select {
     /* === 選擇器本體樣式變數 === */
-    --custom-select-padding-x: ; /* 水平內邊距 */
-    --custom-select-padding-y: ; /* 垂直內邊距 */
-    --custom-select-color: ; /* 文字顏色 */
-    --custom-select-disabled-color: ; /* 禁用狀態文字顏色 */
-    --custom-select-font-size: ; /* 字體大小 */
-    --custom-select-font-weight: ; /* 字體粗細 */
-    --custom-select-placeholder-color: ; /* 佔位符文字顏色 */
-    --custom-select-line-height: ; /* 行高 */
-    --custom-select-letter-spacing: ; /* 字母間距 */
-    --custom-select-background-color: ; /* 背景顏色 */
-    --custom-select-disabled-background-color: ; /* 禁用狀態背景顏色 */
-    --custom-select-border-width: ; /* 邊框寬度 */
-    --custom-select-border-color: ; /* 邊框顏色 */
-    --custom-select-border-radius: ; /* 邊框圓角 */
+    --custom-select-padding-x: 1rem; /* 水平內邊距 */
+    --custom-select-padding-y: 0.4375rem; /* 垂直內邊距 */
+    --custom-select-color: var(--color-gray-900, #181818); /* 文字顏色 */
+    --custom-select-disabled-color: var(--color-gray-300, #b3b3b3); /* 禁用狀態文字顏色 */
+    --custom-select-font-size: var(--fs-16, 1rem); /* 字體大小 */
+    --custom-select-font-weight: var(--font-weight-400, 400); /* 字體粗細 */
+    --custom-select-font-family: var(--font-family-roboto, 'Roboto', sans-serif); /* 字型 */
+    --custom-select-placeholder-color: var(--color-gray-600, #666666); /* 佔位符文字顏色 */
+    --custom-select-line-height: var(--line-height-16-sh, 1.375rem); /* 行高 */
+    --custom-select-letter-spacing: 0rem; /* 字元間距 */
+    --custom-select-text-align: center; /* 文字對齊方式 */
+    --custom-select-border-width: var(--input-border-width, 0.0625rem); /* 邊框寬度 */
+    --custom-select-border-radius: 0.5rem; /* 邊框圓角 */
+
+    /** === 狀態變數 === */
+    --custom-select-background-color: var(--color-white, #ffffff); /* 背景顏色 */
+    --custom-select-disabled-background-color: var(--color-gray-300-10, rgba(179, 179, 179, 0.1)); /* 禁用狀態背景顏色 */
+    --custom-select-disabled-border-color: var(--color-gray-300, #b3b3b3); /* 禁用邊框顏色 */
+    --custom-select-error-border-color: var(--color-red-300, #b42d18); /* 錯誤邊框顏色 */
+    --custom-select-selected-border-color: var(--color-blue-500, #006ce1); /* 選中邊框顏色 */
+    --custom-select-focus-border-color: var(--color-blue-500, #006ce1); /* 焦點邊框顏色 */
+    --custom-select-border-color: var(--color-gray-500, #818181); /* 邊框顏色 */
+
+    /** Focus outline 相關屬性 */
+    --custom-select-outline-width: 0rem; /* 焦點外框寬度 */
+    --custom-select-outline-color: transparent; /* 焦點外框顏色 */
+    --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
 
     /* === 下拉箭頭圖標變數 === */
-    --custom-select-background-image: ; /* 箭頭圖標 */
-    --custom-select-background-position-right: ; /* 箭頭距離右邊的距離 */
-    --custom-select-background-size: ; /* 箭頭尺寸 */
+    --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 箭頭圖標 */
+    --custom-select-background-position-right: 16px; /* 箭頭距離右邊的距離 */
+    --custom-select-background-size: 1.25rem; /* 箭頭尺寸 */
 
     /* === 下拉選項容器變數 === */
-    --custom-select-items-border-width: ; /* 選項容器邊框寬度 */
-    --custom-select-items-border-color: ; /* 選項容器邊框顏色 */
-    --custom-select-item-top: ; /* 選項容器頂部位置 */
-    --custom-select-item-height: ; /* 選項容器最大高度 */
+    --custom-select-items-border-width: 0.0625rem; /* 選項容器邊框寬度 */
+    --custom-select-items-border-top-width: 0.0625rem; /* 選項容器頂部邊框寬度 */
+    --custom-select-items-border-color: var(--color-gray-500, #818181); /* 選項容器邊框顏色 */
+    --custom-select-items-border-radius: 0.5rem; /* 選項容器邊框圓角 */
+    --custom-select-items-padding-y: 0.5rem; /* 選項容器垂直內邊距 */
+    --custom-select-items-padding-x: 0rem; /* 選項容器水平內邊距 */
+    --custom-select-items-box-shadow: 0rem 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+    --custom-select-item-top: calc(100% + 0.3125rem); /* 選項容器頂部位置 */
+    --custom-select-item-height: 15.625rem; /* 選項容器最大高度 */
+
+    /* === 選項容器 Transition Variables === */
+    --custom-select-transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
+    --custom-select-transition-timing-function: ease-in-out; /* 連結過渡動畫 */
+    --custom-select-transition-duration: 200ms; /* 連結過渡時間 */
 
     /* === 單個選項樣式變數 === */
-    --custom-select-item-padding-y: ; /* 選項垂直內邊距 */
-    --custom-select-item-padding-x: ; /* 選項水平內邊距 */
-    --custom-select-item-background-color: ; /* 選項背景顏色 */
-    --custom-select-item-border-width: ; /* 選項邊框寬度 */
-    --custom-select-item-border-color: ; /* 選項邊框顏色 */
-    --custom-select-active-item-background-color: ; /* 選中/懸停選項背景顏色 */
-    --custom-select-active-item-color: ; /* 選中/懸停選項文字顏色 */
-    --custom-select-item-zindex: ; /* 選項容器層級 */
+    --custom-select-item-padding-y: 0.3125rem; /* 選項垂直內邊距 */
+    --custom-select-item-padding-x: 1rem; /* 選項水平內邊距 */
+    --custom-select-item-background-color: var(--color-white, #ffffff); /* 選項背景顏色 */
+    --custom-select-item-border-width: 0; /* 選項邊框寬度 */
+    --custom-select-item-border-color: transparent; /* 選項邊框顏色 */
+    --custom-select-active-item-background-color: var(--color-blue-500, #006ce1); /* 選中/懸停選項背景顏色 */
+    --custom-select-active-item-color: var(--color-white, #ffffff); /* 選中/懸停選項文字顏色 */
+    --custom-select-item-zindex: 1000; /* 選項容器層級 */
+
+    /* === 單個選項 Transition Variables === */
+    --custom-select-item-transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill,
+        stroke; /* 連結過渡屬性 */
+    --custom-select-item-transition-timing-function: ease-in-out; /* 連結過渡動畫 */
+    --custom-select-item-transition-duration: 200ms; /* 連結過渡時間 */
 
     /* 設定為相對定位，作為下拉選項的定位參考 */
     @apply relative;
-
-    /* 
-     * 隱藏的原生 select 元素
-     * 保留用於表單提交和無障礙功能，但在視覺上完全隱藏
-     */
-    select {
-        /* 將原生 select 隱藏但保持可訪問性 */
-        @apply absolute top-full left-1/2 -translate-x-1/2 p-0 w-0.0625rem h-0.0625rem overflow-hidden pointer-events-none select-none;
-
-        /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
-        &:disabled {
-            & + .select-selected {
-                @apply pointer-events-none select-none;
-                color: var(--custom-select-disabled-color);
-                background-color: var(--custom-select-disabled-background-color);
-            }
-        }
-    }
 
     /*
      * 選擇器顯示區域 (select-selected)
@@ -77,6 +88,8 @@
         @apply focus-within:outline-none;
 
         /* 基礎樣式：使用 CSS 變數控制外觀 */
+        display: flex;
+        align-items: center;
         padding: var(--custom-select-padding-y) var(--custom-select-padding-x);
         color: var(--custom-select-color);
         font-size: var(--custom-select-font-size);
@@ -108,32 +121,20 @@
         }
 
         /* 展開狀態：箭頭旋轉 180 度 */
-        &.select-arrow-active:after {
-            @apply rotate-180deg;
+        &.select-arrow-active {
+            &:after {
+                @apply rotate-180deg;
+            }
         }
-    }
+        /** 焦點狀態 */
+        &:focus,
+        &.select-arrow-active {
+            --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
+            border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
 
-    /*
-     * 下拉選項項目 (select-items > div)
-     * 每個可選擇的選項樣式
-     * 包含懸停效果和選中狀態
-     */
-    .select-items > div {
-        /* 基礎互動樣式：顏色過渡、指標和禁止選取 */
-        @apply transition-colors duration-300 ease-out cursor-pointer select-none;
-
-        /* 選項內容樣式：使用與選擇器相同的字體設定 */
-        padding: var(--custom-select-item-padding-y) var(--custom-select-item-padding-x);
-        border-bottom: var(--custom-select-item-border-width) solid var(--custom-select-item-border-color);
-        color: var(--custom-select-color);
-        font-size: var(--custom-select-font-size);
-        font-weight: var(--custom-select-font-weight);
-        line-height: var(--custom-select-line-height);
-        letter-spacing: var(--custom-select-letter-spacing);
-
-        /* 最後一個選項：移除底部邊框 */
-        &:last-child {
-            border-bottom: none;
+            /* Focus outline 相關屬性 */
+            outline: var(--custom-select-outline-width) solid var(--custom-select-outline-color); /* 焦點外框 */
+            outline-offset: var(--custom-select-outline-offset); /* 焦點外框偏移 */
         }
     }
 
@@ -144,20 +145,55 @@
      */
     .select-items {
         /* 絕對定位：相對於 .custom-select 容器定位 */
-        @apply absolute inset-x-0 overflow-auto origin-center transition-colors duration-300 ease-out;
+        @apply absolute inset-x-0 overflow-auto origin-center;
 
+        padding: var(--custom-select-items-padding-y) var(--custom-select-items-padding-x);
         /* 容器位置和尺寸 */
         top: var(--custom-select-item-top); /* 距離選擇器頂部的位置 */
         max-height: var(--custom-select-item-height); /* 最大高度，超出時顯示滾動條 */
         background-color: var(--custom-select-item-background-color);
         z-index: var(--custom-select-item-zindex); /* 確保顯示在其他元素之上 */
 
-        /* 邊框設定：與選擇器連接，頂部無邊框 */
+        /* 邊框設定：與選擇器連接，頂部無邊框，添加陰影 */
         border: var(--custom-select-items-border-width) solid var(--custom-select-items-border-color);
-        border-top: none; /* 移除頂部邊框，與選擇器無縫連接 */
+        border-top-width: var(--custom-select-items-border-top-width); /* 移除頂部邊框，與選擇器無縫連接 */
+        border-radius: var(--custom-select-items-border-radius); /* 邊框圓角 */
+        box-shadow: var(--custom-select-items-box-shadow); /* 添加陰影 */
+        /** 選項容器過渡效果 */
+        transition-property: var(--custom-select-transition-property);
+        transition-timing-function: var(--custom-select-transition-timing-function);
+        transition-duration: var(--custom-select-transition-duration);
 
         /* 自定義滾動條樣式 */
         @include scrollbar.scrollbar;
+    }
+
+    /*
+     * 下拉選項項目 (select-items > div | select-items > a)
+     * 每個可選擇的選項樣式
+     * 包含懸停效果和選中狀態
+     */
+    .select-items > :where(div, a) {
+        /* 選項內容樣式：使用與選擇器相同的字體設定 */
+        display: block;
+        padding: var(--custom-select-item-padding-y) var(--custom-select-item-padding-x);
+        border-bottom: var(--custom-select-item-border-width) solid var(--custom-select-item-border-color);
+        color: var(--custom-select-color);
+        font-size: var(--custom-select-font-size);
+        font-weight: var(--custom-select-font-weight);
+        font-family: var(--custom-select-font-family);
+        line-height: var(--custom-select-line-height);
+        letter-spacing: var(--custom-select-letter-spacing);
+        text-align: var(--custom-select-text-align);
+        transition-property: var(--custom-select-item-transition-property);
+        transition-timing-function: var(--custom-select-item-transition-timing-function);
+        transition-duration: var(--custom-select-item-transition-duration);
+        cursor: pointer;
+
+        /* 最後一個選項：移除底部邊框 */
+        &:last-child {
+            border-bottom: none;
+        }
     }
 
     /*
@@ -172,10 +208,126 @@
      * 選項互動狀態
      * 懸停和選中狀態的樣式
      */
-    .select-items div:hover,                    /* 滑鼠懸停狀態 */
-    .select-items div.same-as-selected {
+    .select-items :where(div, a):hover,                    /* 滑鼠懸停狀態 */
+    .select-items :where(div, a).same-as-selected {
         /* 當前選中的選項 */
         color: var(--custom-select-active-item-color);
         background-color: var(--custom-select-active-item-background-color);
+    }
+
+    /* 
+     * 隱藏的原生 select 元素
+     * 保留用於表單提交和無障礙功能，但在視覺上完全隱藏
+     */
+    select {
+        /* 將原生 select 隱藏但保持可訪問性 */
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        border: 0rem solid transparent;
+        background-color: transparent;
+        overflow: hidden;
+        pointer-events: none;
+        user-select: none;
+
+        /** 焦點狀態 */
+        &:focus:not(.status-error),
+        &.has-focus,
+        &.status-selected {
+            & ~ .select-selected {
+                --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
+                border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
+
+                /* Focus outline 相關屬性 */
+                outline: var(--custom-select-outline-width) solid var(--custom-select-outline-color); /* 焦點外框 */
+                outline-offset: var(--custom-select-outline-offset); /* 焦點外框偏移 */
+            }
+        }
+
+        /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
+        &:disabled,
+        &.status-disabled {
+            & ~ .select-selected {
+                color: var(--custom-select-disabled-color);
+                background-color: var(--custom-select-disabled-background-color);
+                border-color: var(--custom-select-disabled-border-color);
+                pointer-events: none;
+                user-select: none;
+            }
+        }
+
+        &.status-active,
+        &.status-placeholder-active {
+            & ~ .select-selected {
+                --custom-select-border-color: var(--color-blue-500, #006ce1);
+                --custom-select-border-width: 2px;
+                --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+            }
+        }
+
+        /** 錯誤狀態 */
+        &.status-error {
+            & ~ .select-selected {
+                border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
+            }
+        }
+
+        &.status-sort {
+            & ~ .select-selected {
+                --custom-select-color: var(--color-blue-500, #006ce1);
+                --custom-select-placeholder-color: var(--color-blue-500, #006ce1);
+                --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23006ce1" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+            }
+        }
+
+        /* === 尺寸變體 === */
+
+        /** XL 尺寸 (3.5rem) */
+        &.size-xl ~ .select-selected {
+            --custom-select-padding-x: 1rem; /* 水平內邊距 */
+            --custom-select-padding-y: 0.5rem; /* 垂直內邊距 */
+            --custom-select-font-size: var(--fs-20, 1.25rem); /* 字體大小 */
+            --custom-select-line-height: var(--line-height-20-sh, 1.625rem); /* 行高 */
+            --custom-select-letter-spacing: 0rem; /* 字元間距 */
+            --custom-select-background-size: 1.25rem;
+            height: 3.5rem;
+        }
+
+        /** LG 尺寸 (3rem) */
+        &.size-lg ~ .select-selected {
+            --custom-select-padding-x: 1rem; /* 水平內邊距 */
+            --custom-select-padding-y: 0.6875rem; /* 垂直內邊距 */
+            --custom-select-font-size: var(--fs-18, 1.125rem); /* 字體大小 */
+            --custom-select-line-height: var(--line-height-18-sh, 1.5rem); /* 行高 */
+            --custom-select-letter-spacing: 0rem; /* 字元間距 */
+            --custom-select-background-size: 1.125rem;
+            height: 3rem;
+        }
+
+        /** MD 尺寸 (2.5rem) */
+        &.size-md ~ .select-selected {
+            --custom-select-padding-x: 1rem; /* 水平內邊距 */
+            --custom-select-padding-y: 0.4375rem; /* 垂直內邊距 */
+            --custom-select-font-size: var(--fs-16, 1rem); /* 字體大小 */
+            --custom-select-line-height: var(--line-height-16-sh, 1.375rem); /* 行高 */
+            --custom-select-letter-spacing: 0rem; /* 字元間距 */
+            --custom-select-background-size: 1rem;
+            height: 2.5rem;
+        }
+
+        /** SM 尺寸 (2.25rem) */
+        &.size-sm ~ .select-selected {
+            --custom-select-padding-x: 1rem; /* 水平內邊距 */
+            --custom-select-padding-y: 0.25rem; /* 垂直內邊距 */
+            --custom-select-font-size: var(--fs-14, 0.875rem); /* 字體大小 */
+            --custom-select-line-height: var(--line-height-14-sh, 1.125rem); /* 行高 */
+            --custom-select-letter-spacing: 0.01rem; /* 字元間距 */
+            --custom-select-background-size: 0.875rem;
+            height: 2.25rem;
+        }
     }
 }

@@ -17,8 +17,8 @@
 .control-select {
     /* CSS 變數定義 - 背景圖標相關 */
     --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-    --select-background-position-right: 16px;
-    --select-background-size: 20px;
+    --select-background-position-right: 1rem;
+    --select-background-size: 1.25rem;
 
     /* 移除瀏覽器預設的下拉箭頭樣式 */
     @apply appearance-none;
@@ -39,25 +39,25 @@
 
     /* 尺寸變體 */
     &.size-xl {
-        --select-background-size: 20px;
+        --select-background-size: 1.25rem;
     }
 
     &.size-lg {
-        --select-background-size: 18px;
+        --select-background-size: 1.125rem;
     }
 
     &.size-md {
-        --select-background-size: 16px;
+        --select-background-size: 1rem;
     }
 
     &.size-sm {
-        --select-background-size: 14px;
+        --select-background-size: 0.875rem;
     }
 
     &.status-active,
     &.status-placeholder-active {
         border-color: var(--color-blue-500, #006ce1);
-        border-width: 2px;
+        border-width: 0.125rem;
         --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
     }
 

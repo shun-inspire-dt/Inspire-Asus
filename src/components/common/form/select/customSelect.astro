@@ -1,57 +1,55 @@
 ---
 /** Common Components */
-import Select from '@components/common/form/select/select.astro';
+import Select, { type Props as SelectProps } from '@components/common/form/select/select.astro';
+/** Style */
+import './customSelect.scss';
 
-export interface Props {
-    id?: string;
-    data?: { text: string | number; value: string | number }[];
-    className?: string;
+export interface Props extends SelectProps {
     selectClassName?: any;
-    name?: string;
-    value?: string | number;
-    placeholder?: string;
-    required?: boolean;
-    disabled?: boolean;
+    selectStyle?: { [key: string]: string };
+    selectAttribute?: attribute;
     custom?: boolean;
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    customValidText?: string;
-    customInvalidText?: string;
-    onchange?: string;
-    attribute?: attribute;
 }
 
 const {
     id,
     data = [],
     className,
-    selectClassName = '',
+    selectClassName,
     required,
     disabled,
-    custom = true,
     name,
     value,
     placeholder = '請選擇',
-    validClass = 'form',
+    title,
+    size = 'md',
+    status,
+    validClass,
     validType,
     validLabel,
     customValidText,
     customInvalidText,
     onchange,
-    attribute = {}
+    attribute = {},
+    selectAttribute = {},
+    style = {},
+    selectStyle = {},
+    custom = true
 } = Astro.props as Props;
 ---
 
-<div class:list={[{ 'custom-select': custom }, className]}>
+<div class:list={[{ 'custom-select': custom }, className]} {...attribute} style={style}>
     <Select
         id={id}
         data={data}
-        className={`${selectClassName} ${custom ? 'custom-origin-select' : ''}`}
+        className={[{ 'custom-origin-select': custom }, selectClassName]}
         required={required}
         disabled={disabled}
         name={name}
         value={value}
+        title={title}
+        size={size}
+        status={status}
         placeholder={placeholder}
         validClass={validClass}
         validType={validType}
@@ -59,7 +57,8 @@ const {
         customValidText={customValidText}
         customInvalidText={customInvalidText}
         onchange={onchange}
-        attribute={attribute}
+        attribute={selectAttribute}
+        style={selectStyle}
     />
 </div>
 

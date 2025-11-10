@@ -115,11 +115,6 @@ const selectClasses = [
 ].filter(Boolean);
 ---
 
-<!-- 
-    原生 HTML Select 元素
-    使用動態生成的 CSS 類別進行樣式化
-    支援多種尺寸、狀態、表單驗證和無障礙功能
--->
 <select
     id={id}
     class:list={selectClasses}
@@ -133,26 +128,12 @@ const selectClasses = [
     {...attribute}
     {...validAttribute}
 >
-    <!-- 
-        佔位符選項插槽
-        允許自定義佔位符選項的內容和行為
-    -->
     <slot name="index">
-        <!-- 
-            預設佔位符選項
-            - 值為空字串
-            - 當有選中值時禁用
-            - 當沒有選中值時自動選中
-        -->
         <option class="control-select-placeholder" value="" disabled={!!value} {...!value ? { selected: '' } : {}}>
             {placeholder}
         </option>
     </slot>
 
-    <!-- 
-        選項內容插槽
-        允許自定義選項列表，或使用 data 屬性自動生成
-    -->
     <slot>
         {
             /*
