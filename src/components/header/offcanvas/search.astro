@@ -1,0 +1,61 @@
+---
+/** Common Components - 通用組件 */
+/** Offcanvas Base Component - Offcanvas 基礎組件 */
+import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
+import InputWrapper from '@components/common/form/input/inputWrapper.astro';
+import Input from '@components/common/form/input/input.astro';
+/** Link Component - 連結組件 */
+import Link from '@components/common/link/link.astro';
+/** Styles - 樣式檔案 */
+import './search.scss';
+
+/**
+ * Component Props Interface
+ * 組件屬性介面定義
+ *
+ * @property {string} [IDName] - 組件 ID 名稱，預設為 'headerOffcanvasContainer'
+ * @property {any} [className] - 自定義 CSS 類別
+ * @property {NavsData} [data] - 導航資料陣列
+ * @property {attribute} [attribute] - HTML 屬性物件
+ * @property {{[key: string]: string}} [style] - 內聯樣式物件
+ */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+/**
+ * Props Destructuring with Default Values
+ * 屬性解構並設定預設值
+ */
+const { IDName = 'headerSearch', className, style, attribute = {} } = Astro.props as Props;
+---
+
+{/** Offcanvas Container - 側邊選單容器 */}
+{/* 側邊選單主體：從右側滑出 */}
+<MyOffcanvas IDName={IDName} postion="top" hideHeader className={className} attribute={attribute} style={style}>
+    <form class="size-full flex items-center justify-center md:pt-[var(--header-height)] bg-white md:rounded-b-xl">
+        <div class="w-full lg:w-1/2 flex items-center justify-center gap-0.75rem px-1rem md:px-6.25% lg:px-0">
+            <InputWrapper size="lg" name='products' placeholder="搜尋 ASUS.com/business" searchIcon />
+            <Link title={'關閉'} className="!md:hidden" attribute={{'data-bs-dismiss': 'offcanvas', 'aria-label': 'Close'}}>關閉</Link>
+        </div>
+    </form>
+</MyOffcanvas>
+
+<script>
+    const offcanvas = document.querySelector('#headerSearchOffcanvas') as HTMLElement;
+    let button: HTMLElement;
+    offcanvas.addEventListener('show.bs.offcanvas', (e) => {
+        // @ts-ignore
+        button = e.relatedTarget as HTMLElement;
+        button.setAttribute('data-bs-expended', 'true');
+        button.classList.add('active');
+    });
+    offcanvas.addEventListener('hide.bs.offcanvas', () => {
+        if (!button) return;
+        button.setAttribute('data-bs-expended', 'false');
+        button.classList.remove('active');
+    });
+</script>

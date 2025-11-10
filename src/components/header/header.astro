@@ -12,6 +12,7 @@ import Right from './headerBottom.astro';
 /** Common Component */
 /** Offcanvas */
 import Offcanvas from '@components/header/offcanvas/offcanvas.astro';
+import SearchOffcanvas from '@components/header/offcanvas/search.astro';
 /** Button */
 import Button from '@components/common/button/button.astro';
 /** Link */
@@ -45,7 +46,18 @@ const { IDName = 'header', className, style, attribute = {} } = Astro.props as P
             <Button variant="blue-outline" size="sm" title="成為ISV夥伴" rounded className="header-control-button"
                 >成為ISV夥伴</Button
             >
-            <IconSearch Tag="button" attribute={{ type: 'button', title: 'search' }} className="header-control" />
+            <IconSearch
+                Tag="button"
+                attribute={{
+                    type: 'button',
+                    title: 'search',
+                    'data-bs-toggle': 'offcanvas',
+                    'data-bs-target': '#headerSearchOffcanvas',
+                    'data-bs-expended': 'false',
+                    'aria-controls': 'headerSearchOffcanvas'
+                }}
+                className="header-control"
+            />
             <IconHeaderInquery
                 haveItems="header"
                 colorMode="true"
@@ -70,9 +82,7 @@ const { IDName = 'header', className, style, attribute = {} } = Astro.props as P
                     class=":uno-header-dropdown: min-w-14.5rem py-2rem px-2.5rem absolute !inset-[0px_0px_auto_auto] bg-white rounded-xl [box-shadow:0px_2px_8px_rgba(0,0,0,0.1)] dropdown-menu"
                 >
                     <div class="menu-links">
-                        <span class="menu-link-title">
-                            用戶選單
-                        </span>
+                        <span class="menu-link-title"> 用戶選單 </span>
                         <div class="menu-link-list">
                             <div class="menu-link-ul">
                                 {
@@ -90,6 +100,7 @@ const { IDName = 'header', className, style, attribute = {} } = Astro.props as P
     </div>
 </header>
 <Offcanvas data={NavsData} />
+<SearchOffcanvas />
 
 <script>
     import { useBsDropDown } from '@js/components/common/collapse/useBsDropDown';
