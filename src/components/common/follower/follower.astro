@@ -12,5 +12,40 @@ export interface Props {
 const { IDName = 'Follower', className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className, 'Follower']} style={style} {...attribute}>
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-follower: w-3.75rem md:w-4.75rem xl:w-5.75rem h-full pb-1rem pr-1rem md:pr-2rem absolute top-0 right-0 z-1038 pointer-events-none'
+    ]}
+    style={style}
+    {...attribute}
+>
+    <button
+        type="button"
+        title="Go Top"
+        class=":uno-follower-button: size-2.75rem md:size-3.75rem flex items-center justify-center pb-0.25rem sticky top-[calc(100%-2.75rem-1rem)] md:top-[calc(100%-3.75rem-1rem)] right-0 bg-black-40 rounded-full pointer-events-auto [&>svg:last-child]:md:hidden [&>svg:first-child]:lt-md:hidden"
+    >
+        <svg width="25" height="15" viewBox="0 0 25 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M23.0879 12.4816L12.4813 1.875L1.87469 12.4816"
+                stroke="white"
+                stroke-width="3.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+        </svg>
+        <svg width="19" height="11" viewBox="0 0 19 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M16.9316 9.15317L9.15347 1.375L1.37529 9.15317"
+                stroke="white"
+                stroke-width="2.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+        </svg>
+    </button>
 </div>
+
+<script>
+    import { GoTop } from '@js/components/common/goTop';
+    GoTop('#Follower');
+</script>
