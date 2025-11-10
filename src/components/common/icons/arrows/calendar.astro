@@ -12,10 +12,10 @@ export interface Props {
     color?: string;
 }
 
-const { IDName, className, style, attribute = {}, Tag = 'span', width = '24', color } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, Tag = 'span', width, color } = Astro.props as Props;
 
 const cardStyle = {
-    '--icon-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString(),
+    ...(width ? { '--icon-size': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
     ...(color ? { '--icon-color': color.charAt(0) === '#' ? color : `var(--color-${color})` } : {}),
     ...style
 };
