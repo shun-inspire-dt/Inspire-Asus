@@ -1,0 +1,1 @@
+import{m as e}from"./swiper.6mHsy0Fh.js";e("#newsCollectionSwiper",{slidesPerView:"auto",spaceBetween:20,navigation:{nextEl:"[data-swiper-button-next]",prevEl:"[data-swiper-button-prev]"},observeParents:!0,observer:!0,observeSlideChildren:!0,breakpoints:{1024:{direction:"vertical",spaceBetween:32,allowTouchMove:!1,simulateTouch:!1,freeMode:!0},0:{direction:"horizontal"}}});
