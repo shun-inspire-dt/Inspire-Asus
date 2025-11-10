@@ -2,6 +2,7 @@
 export interface Props {
     id?: string;
     className?: any;
+    pictureClassName?: any;
     width?: number | string | null;
     height?: number | string | null;
     img?: string;
@@ -33,6 +34,7 @@ export interface Props {
 const {
     id,
     className = '',
+    pictureClassName = '',
     width = null,
     height = null,
     img = '',
@@ -49,7 +51,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<picture>
+<picture class:list={[pictureClassName]}>
     {
         breakpoints &&
             breakpoints?.map((x) => (
