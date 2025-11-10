@@ -40,6 +40,7 @@ newConfig.integrations = [
         ]
     }),
     (await import('astro-compress')).default({
+        Image: false,
         HTML: false,
         path: ['build']
     }),
