@@ -89,10 +89,12 @@ const componentId = id || `input-wrapper-${Math.random().toString(36).substr(2, 
 const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<!-- 
+{
+    /*
     輸入框容器，包含輸入框和圖標
     使用相對定位來容納絕對定位的圖標
--->
+*/
+}
 <div id={id || componentId} class:list={['input-wrapper', className]} {...attribute} style={style}>
     <Input
         id={inputID}
@@ -127,7 +129,16 @@ const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
     <!-- 圖標容器 - 使用絕對定位，Y 軸置中，X 軸距離右側 16px -->
     {
         (pwdShowIcon || pwdHideIcon || closeIcon || searchIcon) && (
-            <div class="input-icons">
+            <div
+                class:list={[
+                    'input-icons',
+                    {
+                        'has-search-icon': searchIcon,
+                        'has-hide-show-icon': pwdShowIcon || pwdHideIcon,
+                        'has-cross-icon': closeIcon
+                    }
+                ]}
+            >
                 {pwdShowIcon && (
                     <HideShowIcon
                         state="show"
@@ -144,20 +155,8 @@ const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
                         aria={{ 'aria-label': '隱藏密碼' }}
                     />
                 )}
-                {closeIcon && (
-                    <CrossIcon
-                        Tag="button"
-                        attribute={{ type: 'button' }}
-                        aria={{ 'aria-label': '清除輸入' }}
-                    />
-                )}
-                {searchIcon && (
-                    <SearchIcon
-                        Tag="button"
-                        attribute={{ type: 'button' }}
-                        aria={{ 'aria-label': '搜尋' }}
-                    />
-                )}
+                {closeIcon && <CrossIcon Tag="button" attribute={{ type: 'button' }} aria={{ 'aria-label': '清除輸入' }} />}
+                {searchIcon && <SearchIcon Tag="button" attribute={{ type: 'submit' }} aria={{ 'aria-label': '搜尋' }} />}
             </div>
         )
     }
