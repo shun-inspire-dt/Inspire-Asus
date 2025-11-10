@@ -120,9 +120,11 @@ export interface Props {
     IDName?: string;
     bodyClassName?: any;
     className?: any;
+    minMarginHeader?: boolean;
+    footerShowBorderTop?: boolean;
 }
 
-const { IDName, className, bodyClassName } = Astro.props as Props;
+const { IDName, className, bodyClassName, footerShowBorderTop = false, minMarginHeader = false } = Astro.props as Props;
 ---
 
 <html lang="zh-TW">
@@ -193,10 +195,10 @@ const { IDName, className, bodyClassName } = Astro.props as Props;
     <body class:list={bodyClassName}>
         <!-- <Toast /> -->
         <Header />
-        <main id={IDName} class:list={[className]} data-name={IDName}>
+        <main id={IDName} class:list={[className, { 'margin-top': minMarginHeader }]} data-name={IDName}>
             <slot />
         </main>
-        <Footer />
+        <Footer showBorderTop={footerShowBorderTop} />
         <Script />
         <slot name="script" />
     </body>
