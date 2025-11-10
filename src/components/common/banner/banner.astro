@@ -1,0 +1,32 @@
+---
+import { bannerImage, bannerImages } from './banner';
+/** Common Component */
+/** Picture */
+import Picture, { type Props as PictureProps } from '@components/common/images/picture.astro';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    img: string;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    title,
+    img,
+    attribute = {},
+} = Astro.props as Props;
+const imgBreakpoints = bannerImages(img);
+const image = bannerImage(img);
+---
+
+<div id={IDName} class:list={[className, ":uno-section-banner: relative"]} style={style} {...attribute}>
+    <Picture img={image} className=":uno-section-banner-image: w-full h-30rem object-cover object-center-bottom" alt={title} breakpoints={imgBreakpoints} type="png" noWebp />
+    <div class=":uno-section-banner-head: container absolute top-4.5rem md:top-[calc((100%+var(--header-height))/2)] md:-translate-y-1/2 left-0 right-0 text-center md:text-left">
+        <h2 class=":uno-section-banner-title: font-tt-normal text-30 md:text-36 xl:text-44 lh-120 text-gray-900 font-medium">{title}</h2>
+    </div>
+</div>
