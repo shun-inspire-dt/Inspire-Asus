@@ -38,6 +38,8 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
 
         select = container?.getElementsByTagName('select')[0] as HTMLSelectElement;
         optionAmount = select.length as number;
+        const isLinkSelect = container.hasAttribute('data-select-link');
+        
         /*  這是 select 的 input */
         DIV_A = document.createElement('DIV') as HTMLDivElement;
         DIV_A.setAttribute('class', 'select-selected select-selected-placeholder');
@@ -48,7 +50,16 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
         DIV_B.setAttribute('class', 'select-items select-hide');
         for (optionIndex = 1; optionIndex < optionAmount; optionIndex++) {
             /* 這是 select 的 下拉選單 底下 建立 option */
-            DIV_C = document.createElement('DIV');
+            if (isLinkSelect) {
+                DIV_C = document.createElement('A') as HTMLAnchorElement;
+                const optionValue = select.options[optionIndex].value;
+                if (optionValue) {
+                    (DIV_C as HTMLAnchorElement).href = optionValue;
+                }
+            } else {
+                DIV_C = document.createElement('DIV');
+            }
+            
             DIV_C.innerHTML = select.options[optionIndex].innerHTML;
             DIV_C.addEventListener('click', function () {
                 /* when an item is clicked, update the original select box, and the selected item: */
@@ -79,7 +90,11 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
                         break;
                     }
                 }
-                selectParent.click();
+                
+                // 如果是連結選擇器，不要關閉下拉選單，讓連結正常跳轉
+                if (!isLinkSelect) {
+                    selectParent.click();
+                }
             });
             DIV_B.appendChild(DIV_C);
         }
