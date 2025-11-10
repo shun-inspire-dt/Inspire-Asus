@@ -30,6 +30,7 @@ const inputId = `filter-input-${Math.random().toString(36).substr(2, 9)}`;
                 <Checkbox
                     id={`${inputId}-${index}`}
                     label={item.label}
+                    name={item.name}
                     value={item.value}
                     checked={item.checked}
                     disabled={item.disabled}

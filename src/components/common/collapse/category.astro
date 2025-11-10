@@ -20,51 +20,65 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
     <div data-filter>
         {data?.map((item) => <Filter title={item.title} show={item.show} more={item.more} data={item.children} />)}
     </div>
-    <Button variant="blue" className=":uno-category-back-button: sticky top-72px mt-2.5rem z-10" size="lg" title="返回篩選" block attribute={{ 'data-toggle': 'back', 'data-target': '[data-filter]' }} style={{ visibility: 'hidden' }}>
+    <Button
+        variant="blue"
+        className=":uno-category-back-button: !sticky top-72px mt-2.5rem z-10"
+        size="lg"
+        title="返回篩選"
+        block
+        attribute={{ 'data-toggle': 'back', 'data-target': '[data-filter]' }}
+        style={{ visibility: 'hidden' }}
+    >
         返回篩選
     </Button>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const filterContainer = document.querySelector('[data-filter]') as HTMLElement;
-        const backButton = document.querySelector('[data-toggle="back"]') as HTMLButtonElement;
-        
-        if (!filterContainer || !backButton) return;
+        const filterContainers = document.querySelectorAll('[data-filter]') as NodeListOf<HTMLElement>;
 
-        // 創建 Intersection Observer 來監測 data-filter 是否在視窗內
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        // data-filter 在視窗內，隱藏按鈕
-                        backButton.style.visibility = 'hidden';
-                    } else {
-                        // data-filter 滑出視窗，顯示按鈕
-                        backButton.style.visibility = 'visible';
-                    }
+        filterContainers.forEach((container) => {
+            const backButton = container.parentElement?.querySelector('[data-toggle="back"]') as HTMLButtonElement;
+
+            if (!container || !backButton) return;
+
+            // 創建 Intersection Observer 來監測 data-filter 是否在視窗內
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            // data-filter 在視窗內，隱藏按鈕
+                            backButton.style.visibility = 'hidden';
+                        } else {
+                            // data-filter 滑出視窗，顯示按鈕
+                            backButton.style.visibility = 'visible';
+                        }
+                    });
+                },
+                {
+                    // 設定觸發點：當元素完全離開視窗時，考慮 header 48px 的偏移
+                    threshold: 0,
+                    rootMargin: '-48px 0px 0px 0px'
+                }
+            );
+
+            // 開始觀察 data-filter 元素
+            observer.observe(container);
+
+            // 按鈕點擊事件：平滑滾動回到 data-filter
+            backButton.addEventListener('click', () => {
+                const container = backButton.parentElement?.querySelector('[data-filter]') as HTMLElement;
+                // 檢查 container 是否存在
+                if (!container) return;
+                const rect = container.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const elementPosition = rect.top + scrollTop;
+                const offsetPosition = elementPosition - 48 - 20; // 減去 header 高度
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
                 });
-            },
-            {
-                // 設定觸發點：當元素完全離開視窗時，考慮 header 48px 的偏移
-                threshold: 0,
-                rootMargin: '-48px 0px 0px 0px'
-            }
-        );
-
-        // 開始觀察 data-filter 元素
-        observer.observe(filterContainer);
-
-        // 按鈕點擊事件：平滑滾動回到 data-filter
-        backButton.addEventListener('click', () => {
-            const rect = filterContainer.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const elementPosition = rect.top + scrollTop;
-            const offsetPosition = elementPosition - 48 - 20; // 減去 header 高度
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
             });
         });
     });
