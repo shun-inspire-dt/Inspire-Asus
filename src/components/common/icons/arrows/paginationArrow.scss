@@ -1,9 +1,11 @@
 .pagination-arrow {
+    --icon-color: var(--color-gray-900, #181818);
+    --icon-size: 0.75rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--fs-12, 12px);
-    height: var(--fs-12, 12px);
+    width: var(--icon-size);
+    height: var(--icon-size);
     transition: transform 0.2s ease-in-out;
 
     svg {
@@ -12,29 +14,25 @@
         display: block;
 
         path {
-            stroke: var(--icon-color, #181818);
+            stroke: var(--icon-color);
         }
     }
 
     // 尺寸變體
     &--12 {
-        width: var(--fs-12, 12px);
-        height: var(--fs-12, 12px);
+        --icon-size: 0.75rem;
     }
 
     &--16 {
-        width: var(--fs-16, 16px);
-        height: var(--fs-16, 16px);
+        --icon-size: 1rem;
     }
 
     &--24 {
-        width: var(--fs-24, 24px);
-        height: var(--fs-24, 24px);
+        --icon-size: 1.5rem;
     }
 
     &--40 {
-        width: var(--fs-40, 40px);
-        height: var(--fs-40, 40px);
+        --icon-size: 2.5rem;
     }
 
     // 無障礙設定

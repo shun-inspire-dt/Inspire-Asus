@@ -21,12 +21,15 @@ import paginationArrowUp_40 from './svg-astro/Pagination-Arrow-up-40.astro';
 
 export interface Props {
     size?: '12' | '16' | '24' | '40';
-    direction?: 'up' | 'down';
-    class?: any;
+    direction?: 'up' | 'down' | 'left' | 'right';
+    color?: string;
+    width?: string | number;
+    className?: any;
+    style?: { [key: string]: string };
     [key: string]: any;
 }
 
-const { size = '12', direction = 'down', class: className = '', ...rest } = Astro.props;
+const { size = '12', direction = 'down', color, width, className, style, ...rest } = Astro.props;
 
 const classes = ['pagination-arrow', `pagination-arrow--${size}`, `pagination-arrow--${direction}`, className]
     .filter(Boolean)
@@ -57,8 +60,14 @@ const getSvgComponent = () => {
 };
 
 const SvgComponent = getSvgComponent();
+
+const iconStyle = {
+    ...(width ? { '--icon-width': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...(color ? { '--icon-color': color.charAt(0) === '#' ? color : `var(--color-${color})` } : {}),
+    ...style
+};
 ---
 
-<span class={classes} data-pagination-arrow data-size={size} data-direction={direction} {...rest}>
+<span class={classes} data-pagination-arrow data-size={size} data-direction={direction} style={iconStyle} {...rest}>
     <SvgComponent />
 </span>
