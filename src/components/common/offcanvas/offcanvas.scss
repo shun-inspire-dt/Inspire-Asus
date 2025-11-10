@@ -55,8 +55,7 @@
     --bs-offcanvas-width: var(--bs-offcanvas-width-sm);
 }
 .offcanvas.offcanvas-start,
-.offcanvas.offcanvas-end,
-.offcanvas.offcanvas-top {
+.offcanvas.offcanvas-end {
     top: var(--header-height) !important;
 }
 .offcanvas.offcanvas-top {
