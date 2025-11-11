@@ -1,1 +1,0 @@
-const data = [{"type":"add","path":"../src/scss/pages//aboutus.scss","templateFile":"./templates/scss.hbs","abortOnFail":false,"data":{"IDName":"#Aboutus {}"}}]

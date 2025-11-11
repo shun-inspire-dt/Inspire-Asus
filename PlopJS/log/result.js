@@ -1,1 +1,0 @@
-const data = [{"path":"/aboutus","url":"../src/pages//aboutus.astro","css":"/aboutus.scss","components":["../src/components/pages//aboutus/nav.astro","../src/components/pages//aboutus/section01.astro","../src/components/pages//aboutus/section02.astro","../src/components/pages//aboutus/section03.astro"]}]
