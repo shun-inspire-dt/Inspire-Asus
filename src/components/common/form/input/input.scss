@@ -64,9 +64,9 @@
     }
 
     /** 焦點狀態 */
-    &:focus:not(.status-error),
+    &:focus:not(.status_error),
     &.has-focus,
-    &.status-selected {
+    &.status_selected {
         --input-border-width: 0.125rem; /* 焦點邊框寬度 */
         border-color: var(--input-focus-border-color); /* 焦點邊框顏色 */
 
@@ -77,7 +77,7 @@
 
     /** 禁用狀態樣式 */
     &:disabled,
-    &.status-disabled {
+    &.status_disabled {
         color: var(--input-disabled-color); /* 禁用時的文字顏色 */
         background-color: var(--input-disabled-background-color); /* 禁用時的背景顏色 */
         border-color: var(--input-disabled-border-color); /* 禁用時的邊框顏色 */
@@ -94,14 +94,14 @@
     }
 
     /** 錯誤狀態 */
-    &.status-error {
+    &.status_error {
         border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
     }
 
     /* === 尺寸變體 === */
 
     /** XL 尺寸 (3.5rem) */
-    &.size-xl {
+    &.size_xl {
         --input-padding-x: 1rem; /* 水平內邊距 */
         --input-padding-y: 0.5rem; /* 垂直內邊距 */
         --input-font-size: var(--fs-20, 1.25rem); /* 字體大小 */
@@ -111,7 +111,7 @@
     }
 
     /** LG 尺寸 (3rem) */
-    &.size-lg {
+    &.size_lg {
         --input-padding-x: 1rem; /* 水平內邊距 */
         --input-padding-y: 0.6875rem; /* 垂直內邊距 */
         --input-font-size: var(--fs-18, 1.125rem); /* 字體大小 */
@@ -121,7 +121,7 @@
     }
 
     /** MD 尺寸 (2.5rem) */
-    &.size-md {
+    &.size_md {
         --input-padding-x: 1rem; /* 水平內邊距 */
         --input-padding-y: 0.4375rem; /* 垂直內邊距 */
         --input-font-size: var(--fs-16, 1rem); /* 字體大小 */
@@ -131,7 +131,7 @@
     }
 
     /** SM 尺寸 (2.25rem) */
-    &.size-sm {
+    &.size_sm {
         --input-padding-x: 1rem; /* 水平內邊距 */
         --input-padding-y: 0.25rem; /* 垂直內邊距 */
         --input-font-size: var(--fs-14, 0.875rem); /* 字體大小 */
