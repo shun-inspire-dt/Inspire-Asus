@@ -126,20 +126,20 @@
 }
 
 /* ===== 字體家族變體 ===== */
-.collapse-arrow--font-roboto {
+.collapse-arrow--font_roboto {
     .collapse-arrow__text {
         font-family: var(--collapse-arrow-font-family-roboto);
     }
 }
 
-.collapse-arrow--font-tt {
+.collapse-arrow--font_tt {
     .collapse-arrow__text {
         font-family: var(--collapse-arrow-font-family-tt);
     }
 }
 
 /* ===== 尺寸變體 ===== */
-.collapse-arrow--size-12 {
+.collapse-arrow--size_12 {
     gap: var(--collapse-arrow-gap-12);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-12);
@@ -152,7 +152,7 @@
     }
 }
 
-.collapse-arrow--size-13 {
+.collapse-arrow--size_13 {
     gap: var(--collapse-arrow-gap-13);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-13);
@@ -165,7 +165,7 @@
     }
 }
 
-.collapse-arrow--size-14 {
+.collapse-arrow--size_14 {
     gap: var(--collapse-arrow-gap-14);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-14);
@@ -178,7 +178,7 @@
     }
 }
 
-.collapse-arrow--size-16 {
+.collapse-arrow--size_16 {
     gap: var(--collapse-arrow-gap-16);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-16);
@@ -191,7 +191,7 @@
     }
 }
 
-.collapse-arrow--size-18 {
+.collapse-arrow--size_18 {
     gap: var(--collapse-arrow-gap-18);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-18);
@@ -204,7 +204,7 @@
     }
 }
 
-.collapse-arrow--size-20 {
+.collapse-arrow--size_20 {
     gap: var(--collapse-arrow-gap-20);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-20);
@@ -217,7 +217,7 @@
     }
 }
 
-.collapse-arrow--size-24 {
+.collapse-arrow--size_24 {
     gap: var(--collapse-arrow-gap-24);
     .collapse-arrow__text {
         font-size: var(--collapse-arrow-font-size-24);
@@ -231,19 +231,19 @@
 }
 
 /* ===== 字重變體 ===== */
-.collapse-arrow--weight-regular {
+.collapse-arrow--weight_regular {
     .collapse-arrow__text {
         font-weight: var(--collapse-arrow-font-weight-regular);
     }
 }
 
-.collapse-arrow--weight-medium {
+.collapse-arrow--weight_medium {
     .collapse-arrow__text {
         font-weight: var(--collapse-arrow-font-weight-medium);
     }
 }
 
-.collapse-arrow--weight-bold {
+.collapse-arrow--weight_bold {
     .collapse-arrow__text {
         font-weight: var(--collapse-arrow-font-weight-bold);
     }

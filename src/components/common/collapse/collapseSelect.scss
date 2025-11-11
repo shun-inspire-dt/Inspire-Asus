@@ -151,20 +151,20 @@
 }
 
 /* ===== 字體家族變體 ===== */
-.collapse-select--font-roboto {
+.collapse-select--font_roboto {
     .collapse-select__label {
         font-family: var(--collapse-select-font-family-roboto);
     }
 }
 
-.collapse-select--font-tt {
+.collapse-select--font_tt {
     .collapse-select__label {
         font-family: var(--collapse-select-font-family-tt);
     }
 }
 
 /* ===== 尺寸變體 ===== */
-.collapse-select--size-12 {
+.collapse-select--size_12 {
     gap: var(--collapse-select-gap-12);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-12);
@@ -177,7 +177,7 @@
     }
 }
 
-.collapse-select--size-13 {
+.collapse-select--size_13 {
     gap: var(--collapse-select-gap-13);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-13);
@@ -190,7 +190,7 @@
     }
 }
 
-.collapse-select--size-14 {
+.collapse-select--size_14 {
     gap: var(--collapse-select-gap-14);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-14);
@@ -203,7 +203,7 @@
     }
 }
 
-.collapse-select--size-16 {
+.collapse-select--size_16 {
     gap: var(--collapse-select-gap-16);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-16);
@@ -216,7 +216,7 @@
     }
 }
 
-.collapse-select--size-18 {
+.collapse-select--size_18 {
     gap: var(--collapse-select-gap-18);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-18);
@@ -229,7 +229,7 @@
     }
 }
 
-.collapse-select--size-20 {
+.collapse-select--size_20 {
     gap: var(--collapse-select-gap-20);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-20);
@@ -242,7 +242,7 @@
     }
 }
 
-.collapse-select--size-24 {
+.collapse-select--size_24 {
     gap: var(--collapse-select-gap-24);
     .collapse-select__label {
         font-size: var(--collapse-select-font-size-24);
@@ -256,19 +256,19 @@
 }
 
 /* ===== 字重變體 ===== */
-.collapse-select--weight-regular {
+.collapse-select--weight_regular {
     .collapse-select__label {
         font-weight: var(--collapse-select-font-weight-regular);
     }
 }
 
-.collapse-select--weight-medium {
+.collapse-select--weight_medium {
     .collapse-select__label {
         font-weight: var(--collapse-select-font-weight-medium);
     }
 }
 
-.collapse-select--weight-bold {
+.collapse-select--weight_bold {
     .collapse-select__label {
         font-weight: var(--collapse-select-font-weight-bold);
     }
