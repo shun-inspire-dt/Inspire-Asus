@@ -5,8 +5,8 @@ import Picture, { type Props as PictureProps } from '@components/common/images/p
 /** Link */
 import ALink from '@components/common/link/link.astro';
 import A from '@components/common/link/a.astro';
-/** Calendar */
-import Calendar from '@components/common/icons/arrows/calendar.astro';
+/** Date */
+import Date from '@components/common/article/date.astro';
 
 export interface Props {
     IDName?: string;
@@ -87,7 +87,10 @@ const cardStyle = {
 <A
     IDName={IDName}
     link={link}
-    className={[className, ':uno-collection-card: w-[var(--card-width,100%)] min-h-30rem md:min-h-34.5rem lg:min-h-40rem flex items-end relative rounded-xl overflow-hidden group']}
+    className={[
+        className,
+        ':uno-collection-card: w-[var(--card-width,100%)] min-h-30rem md:min-h-34.5rem lg:min-h-40rem flex items-end relative rounded-xl overflow-hidden group'
+    ]}
     style={cardStyle}
     attribute={attribute}
     title={title}
@@ -102,16 +105,16 @@ const cardStyle = {
         noWebp
     />
     <div class=":uno-collection-card-body: w-full relative z-2">
-        <div class=":uno-collection-card-overlay: absolute inset-x-0 bottom-0 w-full h-[min(160%,25rem)] z-0 bg-[linear-gradient(180deg,rgba(27,27,27,0)_0%,rgba(27,27,27,0.95)_40%)] z-2 pointer-events-none"></div>
+        <div
+            class=":uno-collection-card-overlay: absolute inset-x-0 bottom-0 w-full h-[min(160%,25rem)] z-0 bg-[linear-gradient(180deg,rgba(27,27,27,0)_0%,rgba(27,27,27,0.95)_40%)] z-2 pointer-events-none"
+        >
+        </div>
         <div class=":uno-collection-card-content: flex flex-col pb-2rem px-2rem relative rounded-b-xl z-3">
             {
                 showDate && (
-                    <div class=":uno-collection-card-date: flex items-center gap-0.25rem mb-0.75rem">
-                        <Calendar color="white" />
-                        <span class=":uno-collection-card-date-text: text-white font-roboto text-base leading-16-sh font-normal">
-                            {date}
-                        </span>
-                    </div>
+                    <Date className=":uno-collection-card-date: mb-0.75rem" mode="dark">
+                        {date}
+                    </Date>
                 )
             }
             <div class=":uno-collection-card-head: flex flex-col">
@@ -147,7 +150,14 @@ const cardStyle = {
                         </div>
                     )
                 }
-                <ALink link={link} className=":uno-collection-card-link: mt-1rem" title={'了解更多'} size="16" showArrow Tag="span" />
+                <ALink
+                    link={link}
+                    className=":uno-collection-card-link: mt-1rem"
+                    title={'了解更多'}
+                    size="16"
+                    showArrow
+                    Tag="span"
+                />
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@ import Picture, { type Props as PictureProps } from '@components/common/images/p
 import ALink from '@components/common/link/link.astro';
 import A from '@components/common/link/a.astro';
 /** Calendar */
-import Calendar from '@components/common/icons/arrows/calendar.astro';
+import Date from '@components/common/article/date.astro';
 
 export interface Props {
     IDName?: string;
@@ -87,7 +87,10 @@ const cardStyle = {
 <A
     IDName={IDName}
     link={link}
-    className={[className, ':uno-news-card: max-w-[var(--card-width,100%)] block border border-gray-500 rounded-xl overflow-hidden group']}
+    className={[
+        className,
+        ':uno-news-card: max-w-[var(--card-width,100%)] block border border-gray-500 rounded-xl overflow-hidden group'
+    ]}
     style={cardStyle}
     attribute={attribute}
     title={title}
@@ -104,16 +107,7 @@ const cardStyle = {
         />
     </div>
     <div class=":uno-news-card-content: flex flex-col p-1.5rem bg-white rounded-b-xl">
-        {
-            showDate && (
-                <div class=":uno-news-card-date: flex items-center gap-0.25rem mb-0.75rem">
-                    <Calendar />
-                    <span class=":uno-news-card-date-text: text-gray-700 font-roboto text-base leading-16-sh font-normal">
-                        {date}
-                    </span>
-                </div>
-            )
-        }
+        {showDate && <Date className=":uno-news-card-date: mb-0.75rem">{date}</Date>}
         <div class=":uno-news-card-head: flex flex-col">
             {
                 title && (

@@ -1,0 +1,34 @@
+---
+/** Common Component */
+/** Calendar */
+import Calendar from '@components/common/icons/arrows/calendar.astro';
+/** Style */
+import './date.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    date?: string;
+    mode?: 'light' | 'dark';
+    fontSize?: string;
+    width?: string | number;
+    color?: string;
+}
+
+const { IDName, className, style, attribute = {}, date, fontSize, width, color, mode = 'light' } = Astro.props as Props;
+const cardStyle = {
+    ...(width ? { '--icon-size': (!isNaN(width as number) ? `${parseFloat(width as string) / 16}rem` : width).toString() } : {}),
+    ...(color ? { '--icon-color': color.charAt(0) === '#' ? color : `var(--color-${color})` } : {}),
+    ...(fontSize ? { '--icon-font-size': fontSize } : {}),
+    ...style
+};
+---
+
+<div id={IDName} class:list={['date-card', { 'date-card--dark': mode === 'dark' }, className]} style={cardStyle} {...attribute}>
+    <Calendar />
+    <span class="date-card-text">
+        <slot>{date}</slot>
+    </span>
+</div>

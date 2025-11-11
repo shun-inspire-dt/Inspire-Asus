@@ -1,0 +1,22 @@
+.date-card {
+    --icon-font-size: var(--fs-16, 1rem);
+    --icon-color: var(--color-gray-700, #666666);
+
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    &-text {
+        color: var(--icon-color);
+        font-size: var(--icon-font-size);
+        font-weight: 400;
+        line-height: 1.6rem;
+    }
+    
+    &--dark {
+        --icon-color: var(--color-white, #ffffff);
+        .calendar-icon {
+            --icon-color: var(--color-white, #ffffff);
+        }
+    }
+}

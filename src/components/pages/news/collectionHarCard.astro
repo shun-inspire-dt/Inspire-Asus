@@ -5,8 +5,8 @@ import Picture, { type Props as PictureProps } from '@components/common/images/p
 /** Link */
 import ALink from '@components/common/link/link.astro';
 import A from '@components/common/link/a.astro';
-/** Calendar */
-import Calendar from '@components/common/icons/arrows/calendar.astro';
+/** Date */
+import Date from '@components/common/article/date.astro';
 
 export interface Props {
     IDName?: string;
@@ -115,16 +115,7 @@ const cardStyle = {
         />
     </div>
     <div class=":uno-collection-har-card-content: flex flex-col lg:pb-1.25rem lg:pr-2rem">
-        {
-            showDate && (
-                <div class=":uno-collection-har-card-date: flex items-center gap-0.25rem mb-0.75rem">
-                    <Calendar />
-                    <span class=":uno-collection-har-card-date-text: text-gray-700 font-roboto text-base leading-16-sh font-normal">
-                        {date}
-                    </span>
-                </div>
-            )
-        }
+        {showDate && <Date className=":uno-collection-har-card-date: mb-0.75rem">{date}</Date>}
         <div class=":uno-collection-har-card-head: flex flex-col">
             {
                 title && (
