@@ -36,10 +36,10 @@ const { IDName = 'headerSearch', className, style, attribute = {} } = Astro.prop
 {/** Offcanvas Container - 側邊選單容器 */}
 {/* 側邊選單主體：從右側滑出 */}
 <MyOffcanvas IDName={IDName} postion="top" hideHeader className={className} attribute={attribute} style={style}>
-    <form class="size-full flex items-center justify-center md:pt-[var(--header-height)] bg-white md:rounded-b-xl">
-        <div class="w-full lg:w-1/2 flex items-center justify-center gap-0.75rem px-1rem md:px-6.25% lg:px-0">
+    <form class=":uno-header-search-from: size-full flex items-center justify-center md:pt-[var(--header-height)] bg-white md:rounded-b-xl">
+        <div class=":uno-header-search-from-body: w-full lg:w-1/2 flex items-center justify-center gap-0.75rem px-1rem md:px-6.25% lg:px-0">
             <InputWrapper size="lg" name='products' placeholder="搜尋 ASUS.com/business" searchIcon />
-            <Link title={'關閉'} className="!md:hidden" attribute={{'data-bs-dismiss': 'offcanvas', 'aria-label': 'Close'}}>關閉</Link>
+            <Link title={'關閉'} className=":uno-header-search-from-body-close: !md:hidden" attribute={{'data-bs-dismiss': 'offcanvas', 'aria-label': 'Close'}}>關閉</Link>
         </div>
     </form>
 </MyOffcanvas>
