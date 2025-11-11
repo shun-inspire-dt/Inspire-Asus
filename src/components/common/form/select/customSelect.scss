@@ -244,9 +244,9 @@
         user-select: none;
 
         /** 焦點狀態 */
-        &:focus:not(.status-error),
+        &:focus:not(.status_error),
         &.has-focus,
-        &.status-selected {
+        &.status_selected {
             & ~ .select-selected {
                 --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                 border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
@@ -259,7 +259,7 @@
 
         /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
         &:disabled,
-        &.status-disabled {
+        &.status_disabled {
             & ~ .select-selected {
                 color: var(--custom-select-disabled-color);
                 background-color: var(--custom-select-disabled-background-color);
@@ -269,8 +269,8 @@
             }
         }
 
-        &.status-active,
-        &.status-placeholder-active {
+        &.status_active,
+        &.status_placeholder-active {
             & ~ .select-selected {
                 --custom-select-border-color: var(--color-blue-500, #006ce1);
                 --custom-select-border-width: 2px;
@@ -279,13 +279,13 @@
         }
 
         /** 錯誤狀態 */
-        &.status-error {
+        &.status_error {
             & ~ .select-selected {
                 border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
             }
         }
 
-        &.status-sort {
+        &.status_sort {
             & ~ .select-selected {
                 --custom-select-color: var(--color-blue-500, #006ce1);
                 --custom-select-placeholder-color: var(--color-blue-500, #006ce1);
@@ -296,7 +296,7 @@
         /* === 尺寸變體 === */
 
         /** XL 尺寸 (3.5rem) */
-        &.size-xl ~ .select-selected {
+        &.size_xl ~ .select-selected {
             --custom-select-padding-x: 1rem; /* 水平內邊距 */
             --custom-select-padding-y: 0.5rem; /* 垂直內邊距 */
             --custom-select-font-size: var(--fs-20, 1.25rem); /* 字體大小 */
@@ -307,7 +307,7 @@
         }
 
         /** LG 尺寸 (3rem) */
-        &.size-lg ~ .select-selected {
+        &.size_lg ~ .select-selected {
             --custom-select-padding-x: 1rem; /* 水平內邊距 */
             --custom-select-padding-y: 0.6875rem; /* 垂直內邊距 */
             --custom-select-font-size: var(--fs-18, 1.125rem); /* 字體大小 */
@@ -318,7 +318,7 @@
         }
 
         /** MD 尺寸 (2.5rem) */
-        &.size-md ~ .select-selected {
+        &.size_md ~ .select-selected {
             --custom-select-padding-x: 1rem; /* 水平內邊距 */
             --custom-select-padding-y: 0.4375rem; /* 垂直內邊距 */
             --custom-select-font-size: var(--fs-16, 1rem); /* 字體大小 */
@@ -329,7 +329,7 @@
         }
 
         /** SM 尺寸 (2.25rem) */
-        &.size-sm ~ .select-selected {
+        &.size_sm ~ .select-selected {
             --custom-select-padding-x: 1rem; /* 水平內邊距 */
             --custom-select-padding-y: 0.25rem; /* 垂直內邊距 */
             --custom-select-font-size: var(--fs-14, 0.875rem); /* 字體大小 */
