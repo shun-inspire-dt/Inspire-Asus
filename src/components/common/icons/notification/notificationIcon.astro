@@ -17,7 +17,7 @@ const { IDName, className, size = '16', status = 'solid', style, attribute = {} 
  * 動態生成 CSS 類別
  * 根據尺寸和狀態屬性組合樣式類別
  */
-const selectClasses = ['notification-icon', { [`size_${size}`]: size }, { [`status-${status}`]: status }, className].filter(
+const selectClasses = ['notification-icon', { [`size_${size}`]: size }, { [`status_${status}`]: status }, className].filter(
     Boolean
 );
 ---
