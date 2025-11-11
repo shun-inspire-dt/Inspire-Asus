@@ -90,7 +90,7 @@ const href = link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}
 const linkClasses = [
     'link-with-arrow',
     `size_${size}`,
-    `font__${font}`,
+    `font_${font}`,
     showArrow ? '' : 'no-arrow',
     webFontInstalled ? 'web-font' : 'svg-arrow',
     { btn: button },
@@ -126,7 +126,7 @@ const ArrowComponent = arrowComponents[size as keyof typeof arrowComponents] || 
     {...attribute}
     style={style}
 >
-    <span class:list={['link-text', `weight-${weight}`]}>
+    <span class:list={['link-text', `weight_${weight}`]}>
         {html ? <Fragment set:html={html} /> : <slot>{title}</slot>}
     </span>
     {showArrow && (
