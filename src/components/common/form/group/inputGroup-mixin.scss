@@ -23,19 +23,19 @@
         /* === 尺寸變體 === */
 
         /** XL 尺寸 (56px) */
-        &.size-xl {
+        &.size_xl {
             --form-input-group-label-padding-top: calc(8px + (var(--line-height-20-sh) - var(--fs-20)) / 2);
         }
         /** LG 尺寸 (48px) */
-        &.size-lg {
+        &.size_lg {
             --form-input-group-label-padding-top: calc(11px + (var(--line-height-18-sh) - var(--fs-18)) / 2);
         }
         /** MD 尺寸 (40px) */
-        &.size-md {
+        &.size_md {
             --form-input-group-label-padding-top: calc(7px + (var(--line-height-16-sh) - var(--fs-16)) / 2);
         }
         /** SM 尺寸 (36px) */
-        &.size-sm {
+        &.size_sm {
             --form-input-group-label-padding-top: calc(4px + (var(--line-height-14-sh) - var(--fs-14)) / 2);
         }
     }
