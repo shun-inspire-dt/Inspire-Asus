@@ -28,3 +28,4 @@ test.*
 __backup__
 docs/
 *.log
+PlopJS/
