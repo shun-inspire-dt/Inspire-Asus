@@ -98,7 +98,15 @@ const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
 <div id={id || componentId} class:list={['input-wrapper', className]} {...attribute} style={style}>
     <Input
         id={inputID}
-        className={inputClassName}
+        className={{
+            inputClassName,
+            ...{
+                'has-search-icon': searchIcon,
+                'has-pwd-show-icon': pwdShowIcon,
+                'has-pwd-hide-icon': pwdHideIcon,
+                'has-cross-icon': closeIcon
+            }
+        }}
         type={type}
         name={name}
         value={value}
@@ -126,19 +134,9 @@ const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
         attribute={inputAttribute}
         style={inputStyle}
     />
-    <!-- 圖標容器 - 使用絕對定位，Y 軸置中，X 軸距離右側 16px -->
     {
         (pwdShowIcon || pwdHideIcon || closeIcon || searchIcon) && (
-            <div
-                class:list={[
-                    'input-icons',
-                    {
-                        'has-search-icon': searchIcon,
-                        'has-hide-show-icon': pwdShowIcon || pwdHideIcon,
-                        'has-cross-icon': closeIcon
-                    }
-                ]}
-            >
+            <div class="input-icons">
                 {pwdShowIcon && (
                     <HideShowIcon
                         state="show"
