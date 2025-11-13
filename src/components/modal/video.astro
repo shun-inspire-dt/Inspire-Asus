@@ -1,0 +1,32 @@
+---
+/** Common Component */
+/** Modal */
+import Modal from '@components/common/modal/modal.astro';
+/** Style */
+import './video.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'Video', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<Modal id={IDName} sizes="xl" Modalclass={className} center hideFooter attribute={attribute}>
+    <iframe
+        id="youtube-player"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/3vDjjvBYOLM?si=zo0wzAeuYuy8O7BT&enablejsapi=1"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+</Modal>
+
+<script>
+    import { Modal } from 'bootstrap';
+</script>

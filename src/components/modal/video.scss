@@ -1,0 +1,58 @@
+#VideoModal {
+    /** Modal 容器設定 */
+    --bs-modal-width: 25.625rem; /* Modal 的寬度 */
+    /** Modal 外觀設定 */
+    --bs-modal-bg: transparent; /* Modal 背景顏色 */
+    --bs-modal-border-color: transparent; /* Modal 邊框顏色 */
+    /** Modal 標題列設定 */
+    --bs-modal-header-border-color: transparent; /* 標題列邊框顏色 */
+    /** Modal 底部設定 */
+    --bs-modal-footer-bg: transparent; /* 底部背景顏色 */
+    --bs-modal-footer-border-color: transparent; /* 底部邊框顏色 */
+    /** Modal 關閉按鈕自訂設定 */
+    --modal-close-size: 2rem; /* 關閉按鈕尺寸 */
+    --modal-close-padding: 0; /* 關閉按鈕內邊距 */
+    --modal-close-top: -2.75rem; /* 關閉按鈕上方位置 */
+    --modal-close-right: 0; /* 關閉按鈕右方位置 */
+    --modal-close-background-image: url('data:image/svg+xml,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M25 7L7 25M7 7L25 25" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>'); /* 關閉按鈕背景圖片 */
+
+    @screen md {
+        --bs-modal-width: var(--bs-modal-width-lg); /* Modal 的寬度 */
+    }
+    @screen xl {
+        --bs-modal-width: var(--bs-modal-width-xl); /* Modal 的寬度 */
+        /** Modal 關閉按鈕自訂設定 */
+        --modal-close-top: 0rem; /* 關閉按鈕上方位置 */
+        --modal-close-right: -2.75rem; /* 關閉按鈕右方位置 */
+    }
+
+    /** Modal 尺寸變體 */
+    .modal-xl {
+        --bs-modal-width: calc(100% - 2.5rem); /* 超大尺寸 Modal 寬度 */
+        @screen xl {
+            --bs-modal-width: 60.125rem; /* 超大尺寸 Modal 寬度 */
+        }
+    }
+    .modal-lg {
+        --bs-modal-width: calc(100% - 2.5rem); /* 大尺寸 Modal 寬度 */
+        @screen lg {
+            --bs-modal-width: 45.5rem; /* 大尺寸 Modal 寬度 */
+        }
+    }
+    .modal-sm {
+        --bs-modal-width: calc(100% - 2.5rem); /* 小尺寸 Modal 寬度 */
+        @screen sm {
+            --bs-modal-width: 20rem; /* 小尺寸 Modal 寬度 */
+        }
+    }
+
+    .modal-body {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
+}
