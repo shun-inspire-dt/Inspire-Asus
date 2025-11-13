@@ -1,0 +1,18 @@
+---
+/** Style */
+import './badge.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    Tag?: 'div' | 'span' | 'a';
+}
+
+const { IDName, className, style, attribute = {}, Tag = 'span' } = Astro.props as Props;
+---
+
+<Tag id={IDName} class:list={[className, 'badge']} style={style} {...attribute}>
+    <slot />
+</Tag>
