@@ -59,6 +59,10 @@ const { IDName, className, style, attribute = {}, title = 'Title', count = 1, ty
                 </div>
             </Fragment>
         </Swiper>
+        <!-- 
+            記得在 1 的後面加上 ... (<span class="pagination__ellipsis" aria-hidden="true" style="display: none;">...</span>)
+            與最後一頁的前面加上 ... (<span class="pagination__ellipsis" aria-hidden="true" style="display: none;">...</span>)
+        -->
         <Pagination
             IDName={`${IDName}-pagination`}
             className="section-relative-pagination"
