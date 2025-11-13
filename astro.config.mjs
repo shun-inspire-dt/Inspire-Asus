@@ -39,9 +39,6 @@ export const integrations = [UnoCSS(unoCssConfig)];
 
 export const config = {
     integrations,
-    server: {
-        open: '/'
-    },
     devToolbar: {
         enabled: false
     },
