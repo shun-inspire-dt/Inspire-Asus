@@ -25,8 +25,8 @@
     --headerNav-sub-color: var(--color-gray-900, #181818); /* 副標題文字顏色 */
     --headerNav-font-size: var(--fs-base, 1rem); /* 主標題字體大小 */
     --headerNav-sub-font-size: var(--fs-base, 1rem); /* 副標題字體大小 */
-    --headerNav-font-weight: var(--font-weight-400, 400); /* 主標題字體粗細 */
-    --headerNav-sub-font-weight: var(--font-weight-400, 400); /* 副標題字體粗細 */
+    --headerNav-font-weight: 400; /* 主標題字體粗細 */
+    --headerNav-sub-font-weight: 400; /* 副標題字體粗細 */
     --headerNav-font-family: var(--font-family-tt-norms-pro-normal, TTNormsProNormal, Roboto, sans-serif); /* 主標題字體家族 */
     --headerNav-sub-font-family: var(
         --font-family-tt-norms-pro-normal,
