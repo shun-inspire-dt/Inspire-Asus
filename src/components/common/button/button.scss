@@ -5,28 +5,28 @@
 /* 按鈕基礎樣式類別 */
 .btn {
     /* CSS 自定義屬性 (CSS Variables) - 可被外部覆蓋的樣式變數 */
-    --btn-min-height: 40px; /* 按鈕最小高度 */
-    --btn-min-width: 80px; /* 按鈕最小寬度 */
-    --btn-padding-x: 16px; /* 按鈕水平內邊距 */
-    --btn-padding-y: 8px; /* 按鈕垂直內邊距 */
-    --btn-gap: 8px; /* 按鈕內元素間距 (如圖標與文字) */
+    --btn-min-height: 2.5rem; /* 按鈕最小高度 */
+    --btn-min-width: 5rem; /* 按鈕最小寬度 */
+    --btn-padding-x: 1rem; /* 按鈕水平內邊距 */
+    --btn-padding-y: 0.5rem; /* 按鈕垂直內邊距 */
+    --btn-gap: 0.5rem; /* 按鈕內元素間距 (如圖標與文字) */
     --btn-font-family: var(--font-family-roboto, 'Roboto', sans-serif); /* 按鈕字體家族 */
-    --btn-font-size: 16px; /* 按鈕字體大小 */
+    --btn-font-size: 1rem; /* 按鈕字體大小 */
     --btn-font-weight: 400; /* 按鈕字體粗細 */
-    --btn-line-height: var(--line-height-16-sh, 22px); /* 按鈕行高 - 預設 16px 字體對應 22px 行高 */
+    --btn-line-height: var(--line-height-16-sh, 1.375rem); /* 按鈕行高 - 預設 1rem 字體對應 1.375rem 行高 */
     --btn-letter-spacing: 0; /* 按鈕字母間距 */
     --btn-color: var(--color-gray-900, #181818); /* 按鈕文字顏色 */
     --btn-bg: var(--color-white, #ffffff); /* 按鈕背景顏色 */
     --btn-border-width: 0; /* 按鈕邊框寬度 - 預設無邊框 */
     --btn-border-color: transparent; /* 按鈕邊框顏色 - 預設透明 */
-    --btn-border-radius: 8px; /* 按鈕圓角 */
+    --btn-border-radius: 0.5rem; /* 按鈕圓角 */
     --btn-box-shadow: none; /* 按鈕陰影 */
     --btn-disabled-opacity: 1; /* 禁用狀態透明度 */
     --btn-focus-box-shadow: none; /* 聚焦狀態陰影 */
 
     /* Focus outline 相關屬性 */
-    --btn-focus-outline: 2px solid var(--color-blue-500, #006ce1); /* 聚焦外框 */
-    --btn-focus-outline-offset: 2px; /* 聚焦外框偏移 */
+    --btn-focus-outline: 0.125rem solid var(--color-blue-500, #006ce1); /* 聚焦外框 */
+    --btn-focus-outline-offset: 0.125rem; /* 聚焦外框偏移 */
 
     /* 狀態顏色變數 */
     --btn-hover-color: var(--btn-color); /* 懸停文字顏色 */
@@ -144,58 +144,58 @@
 
     /* 按鈕尺寸變體 - 基於 Figma 設計規範 */
     &.btn-xs {
-        --btn-padding-x: 12px; /* 超小按鈕水平內邊距 */
-        --btn-padding-y: 3px; /* 超小按鈕垂直內邊距 */
-        --btn-font-size: var(--fs-14, 14px); /* 超小按鈕字體大小 */
-        --btn-line-height: var(--line-height-14-sh, 18px); /* 14px 字體對應 18px 行高 */
-        --btn-letter-spacing: 0.16px; /* 超小按鈕字母間距 */
-        --btn-min-height: 24px; /* 超小按鈕最小高度 */
+        --btn-padding-x: 0.75rem; /* 超小按鈕水平內邊距 */
+        --btn-padding-y: 0.1875rem; /* 超小按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-14, 0.875rem); /* 超小按鈕字體大小 */
+        --btn-line-height: var(--line-height-14-sh, 1.125rem); /* 0.875rem 字體對應 1.125rem 行高 */
+        --btn-letter-spacing: 0.01rem; /* 超小按鈕字母間距 */
+        --btn-min-height: 1.5rem; /* 超小按鈕最小高度 */
         --btn-min-width: auto; /* 超小按鈕無最小寬度限制 */
-        --btn-border-radius: 6px; /* 超小按鈕圓角 */
-        --btn-gap: 4px; /* 超小按鈕內元素間距 */
+        --btn-border-radius: 0.375rem; /* 超小按鈕圓角 */
+        --btn-gap: 0.25rem; /* 超小按鈕內元素間距 */
     }
 
     &.btn-sm {
-        --btn-padding-x: 12px; /* 小按鈕水平內邊距 */
-        --btn-padding-y: 6px; /* 小按鈕垂直內邊距 */
-        --btn-font-size: var(--fs-14, 14px); /* 小按鈕字體大小 */
-        --btn-line-height: var(--line-height-14-sh, 18px); /* 14px 字體對應 18px 行高 */
-        --btn-letter-spacing: 0.16px; /* 小按鈕字母間距 */
-        --btn-min-height: 32px; /* 小按鈕最小高度 */
+        --btn-padding-x: 0.75rem; /* 小按鈕水平內邊距 */
+        --btn-padding-y: 0.375rem; /* 小按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-14, 0.875rem); /* 小按鈕字體大小 */
+        --btn-line-height: var(--line-height-14-sh, 1.125rem); /* 0.875rem 字體對應 1.125rem 行高 */
+        --btn-letter-spacing: 0.01rem; /* 小按鈕字母間距 */
+        --btn-min-height: 2rem; /* 小按鈕最小高度 */
         --btn-min-width: auto; /* 小按鈕無最小寬度限制 */
-        --btn-border-radius: 8px; /* 小按鈕圓角 */
-        --btn-gap: 10px; /* 小按鈕內元素間距 */
+        --btn-border-radius: 0.5rem; /* 小按鈕圓角 */
+        --btn-gap: 0.625rem; /* 小按鈕內元素間距 */
     }
 
     &.btn-md {
-        --btn-padding-x: 12px; /* 中等按鈕水平內邊距 */
-        --btn-padding-y: 9px; /* 中等按鈕垂直內邊距 */
-        --btn-font-size: var(--fs-14, 14px); /* 中等按鈕字體大小 */
-        --btn-line-height: var(--line-height-14-sh, 18px); /* 14px 字體對應 18px 行高 */
-        --btn-letter-spacing: 0.16px; /* 中等按鈕字母間距 */
-        --btn-min-height: 36px; /* 中等按鈕最小高度 */
-        --btn-border-radius: 8px; /* 中等按鈕圓角 */
-        --btn-gap: 8px; /* 中等按鈕內元素間距 */
+        --btn-padding-x: 0.75rem; /* 中等按鈕水平內邊距 */
+        --btn-padding-y: 0.5625rem; /* 中等按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-14, 0.875rem); /* 中等按鈕字體大小 */
+        --btn-line-height: var(--line-height-14-sh, 1.125rem); /* 0.875rem 字體對應 1.125rem 行高 */
+        --btn-letter-spacing: 0.01rem; /* 中等按鈕字母間距 */
+        --btn-min-height: 2.25rem; /* 中等按鈕最小高度 */
+        --btn-border-radius: 0.5rem; /* 中等按鈕圓角 */
+        --btn-gap: 0.5rem; /* 中等按鈕內元素間距 */
     }
 
     &.btn-lg {
-        --btn-padding-x: 16px; /* 大按鈕水平內邊距 */
-        --btn-padding-y: 8px; /* 大按鈕垂直內邊距 */
-        --btn-font-size: var(--fs-18, 18px); /* 大按鈕字體大小 */
-        --btn-line-height: var(--line-height-18-sh, 24px); /* 18px 字體對應 24px 行高 */
-        --btn-min-height: 40px; /* 大按鈕最小高度 */
-        --btn-border-radius: 8px; /* 大按鈕圓角 */
-        --btn-gap: 8px; /* 大按鈕內元素間距 */
+        --btn-padding-x: 1rem; /* 大按鈕水平內邊距 */
+        --btn-padding-y: 0.5rem; /* 大按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-18, 1.125rem); /* 大按鈕字體大小 */
+        --btn-line-height: var(--line-height-18-sh, 1.5rem); /* 1.125rem 字體對應 1.5rem 行高 */
+        --btn-min-height: 2.5rem; /* 大按鈕最小高度 */
+        --btn-border-radius: 0.5rem; /* 大按鈕圓角 */
+        --btn-gap: 0.5rem; /* 大按鈕內元素間距 */
     }
 
     &.btn-xl {
-        --btn-padding-x: 16px; /* 超大按鈕水平內邊距 */
-        --btn-padding-y: 8px; /* 超大按鈕垂直內邊距 */
-        --btn-font-size: var(--fs-18, 18px); /* 超大按鈕字體大小 */
-        --btn-line-height: var(--line-height-18-sh, 24px); /* 18px 字體對應 24px 行高 */
-        --btn-min-height: 56px; /* 超大按鈕最小高度 */
-        --btn-border-radius: 12px; /* 超大按鈕圓角 */
-        --btn-gap: 8px; /* 超大按鈕內元素間距 */
+        --btn-padding-x: 1rem; /* 超大按鈕水平內邊距 */
+        --btn-padding-y: 0.5rem; /* 超大按鈕垂直內邊距 */
+        --btn-font-size: var(--fs-18, 1.125rem); /* 超大按鈕字體大小 */
+        --btn-line-height: var(--line-height-18-sh, 1.5rem); /* 1.125rem 字體對應 1.5rem 行高 */
+        --btn-min-height: 3.5rem; /* 超大按鈕最小高度 */
+        --btn-border-radius: 0.75rem; /* 超大按鈕圓角 */
+        --btn-gap: 0.5rem; /* 超大按鈕內元素間距 */
     }
 
     /* 按鈕修飾類別 */
@@ -208,7 +208,7 @@
     }
 
     &.btn-rounded {
-        --btn-border-radius: 999px; /* 圓角按鈕 */
+        --btn-border-radius: 62.4375rem; /* 圓角按鈕 */
     }
 
     /* 按鈕內圖標樣式 */
@@ -258,7 +258,7 @@
             /* 邊框寬度 (可選) */ map-get($colors, 'focus-outline-color') /* 聚焦外框顏色 (可選) */
         );
 
-        /* Outline 按鈕特殊處理：調整各尺寸的 padding-y 以補償 2px 邊框 */
+        /* Outline 按鈕特殊處理：調整各尺寸的 padding-y 以補償 0.125rem 邊框 */
         @if map-get($colors, 'padding-y-xl') {
             &.btn-xl {
                 --btn-padding-y: #{map-get($colors, 'padding-y-xl')};
