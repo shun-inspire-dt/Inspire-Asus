@@ -93,26 +93,26 @@ export default defineConfig({
         'heading-04-sh': 'font-roboto text-20 leading-20 tracking-0 font-medium',
 
         // spacing 系列
-        'sect-p-xl': 'pt-120px pb-120px',
-        'sect-p-lg': 'pt-80px pb-80px',
-        'sect-p-md': 'pt-64px pb-64px',
-        'sect-p-sm': 'pt-48px pb-48px',
-        'sect-p-xl-t': 'pt-120px',
-        'sect-p-lg-t': 'pt-80px',
-        'sect-p-md-t': 'pt-64px',
-        'sect-p-sm-t': 'pt-48px',
-        'sect-p-xl-b': 'pb-120px',
-        'sect-p-lg-b': 'pb-80px',
-        'sect-p-md-b': 'pb-64px',
-        'sect-p-sm-b': 'pb-48px',
-        'sect-p-sub-xl-t': 'pt-120px pb-80px',
-        'sect-p-sub-xl-b': 'pt-80px pb-120px',
-        'sect-p-sub-lg-t': 'pt-80px pb-64px',
-        'sect-p-sub-lg-b': 'pt-64px pb-80px',
-        'sect-p-sub-md-t': 'pt-64px pb-48px',
-        'sect-p-sub-md-b': 'pt-48px pb-64px',
-        'sect-p-sub-sm-t': 'pt-48px pb-32px',
-        'sect-p-sub-sm-b': 'pt-32px pb-48px',
+        'sect-p-xl': 'pt-7.5rem pb-7.5rem',
+        'sect-p-lg': 'pt-5rem pb-5rem',
+        'sect-p-md': 'pt-4rem pb-4rem',
+        'sect-p-sm': 'pt-3rem pb-3rem',
+        'sect-p-xl-t': 'pt-7.5rem',
+        'sect-p-lg-t': 'pt-5rem',
+        'sect-p-md-t': 'pt-4rem',
+        'sect-p-sm-t': 'pt-3rem',
+        'sect-p-xl-b': 'pb-7.5rem',
+        'sect-p-lg-b': 'pb-5rem',
+        'sect-p-md-b': 'pb-4rem',
+        'sect-p-sm-b': 'pb-3rem',
+        'sect-p-sub-xl-t': 'pt-7.5rem pb-5rem',
+        'sect-p-sub-xl-b': 'pt-5rem pb-7.5rem',
+        'sect-p-sub-lg-t': 'pt-5rem pb-4rem',
+        'sect-p-sub-lg-b': 'pt-4rem pb-5rem',
+        'sect-p-sub-md-t': 'pt-4rem pb-3rem',
+        'sect-p-sub-md-b': 'pt-3rem pb-4rem',
+        'sect-p-sub-sm-t': 'pt-3rem pb-2rem',
+        'sect-p-sub-sm-b': 'pt-2rem pb-3rem',
 
         // 自定義 container 規則
         'container-fluid': 'w-full sm:w-[87.5%] max-w-1260px mx-auto px-4 sm:px-0',
@@ -122,7 +122,10 @@ export default defineConfig({
         'bar-c': 'h-full'
     },
     rules: [
-        ['padding-tablet', { 'padding-left': 'var(--screen-tablet-padding-x)', 'padding-right': 'var(--screen-tablet-padding-x)' }]
+        ['padding-tablet', { 'padding-left': 'var(--screen-tablet-padding-x)', 'padding-right': 'var(--screen-tablet-padding-x)' }],
+        // 自定義 text-size 規則
+        [/^text-(\d+)$/, ([, size]) => ({ 'font-size': `var(--fs-${size})` })],
+        [/^text-(xs|sm|base|subtitle|h[1-6]|display-(?:sm|lg))$/, ([, size]) => ({ 'font-size': `var(--fs-${size})` })]
     ],
     theme: {
         breakpoints: {
@@ -308,35 +311,6 @@ export default defineConfig({
                 'dark-accent-bg': 'var(--badge-dark-accent-bg)'
             }
         },
-        fontSize: {
-            // 基礎字體大小
-            '12': 'var(--fs-12)',
-            '13': 'var(--fs-13)',
-            '14': 'var(--fs-14)',
-            '16': 'var(--fs-16)',
-            '18': 'var(--fs-18)',
-            '20': 'var(--fs-20)',
-            '24': 'var(--fs-24)',
-            '30': 'var(--fs-30)',
-            '36': 'var(--fs-36)',
-            '44': 'var(--fs-44)',
-            '52': 'var(--fs-52)',
-            '64': 'var(--fs-64)',
-            '72': 'var(--fs-72)',
-            // 語義化字體大小
-            xs: 'var(--fs-xs)',
-            sm: 'var(--fs-sm)',
-            base: 'var(--fs-base)',
-            subtitle: 'var(--fs-subtitle)',
-            h6: 'var(--fs-h6)',
-            h5: 'var(--fs-h5)',
-            h4: 'var(--fs-h4)',
-            h3: 'var(--fs-h3)',
-            h2: 'var(--fs-h2)',
-            h1: 'var(--fs-h1)',
-            'display-sm': 'var(--fs-display-sm)',
-            'display-lg': 'var(--fs-display-lg)'
-        },
         lineHeight: {
             // 基礎行高
             '12': 'var(--line-height-12)',
@@ -369,16 +343,45 @@ export default defineConfig({
             // 預設行高
             DEFAULT: 'var(--line-height)'
         },
+        fontSize: {
+            // 基礎字體大小
+            '12': 'var(--fs-12)',
+            '13': 'var(--fs-13)',
+            '14': 'var(--fs-14)',
+            '16': 'var(--fs-16)',
+            '18': 'var(--fs-18)',
+            '20': 'var(--fs-20)',
+            '24': 'var(--fs-24)',
+            '30': 'var(--fs-30)',
+            '36': 'var(--fs-36)',
+            '44': 'var(--fs-44)',
+            '52': 'var(--fs-52)',
+            '64': 'var(--fs-64)',
+            '72': 'var(--fs-72)',
+            // 語義化字體大小
+            xs: 'var(--fs-xs)',
+            sm: 'var(--fs-sm)',
+            base: 'var(--fs-base)',
+            subtitle: 'var(--fs-subtitle)',
+            h6: 'var(--fs-h6)',
+            h5: 'var(--fs-h5)',
+            h4: 'var(--fs-h4)',
+            h3: 'var(--fs-h3)',
+            h2: 'var(--fs-h2)',
+            h1: 'var(--fs-h1)',
+            'display-sm': 'var(--fs-display-sm)',
+            'display-lg': 'var(--fs-display-lg)'
+        },
         fontWeight: {
-            '400': 'var(--font-weight-400)',
-            '450': 'var(--font-weight-450)',
-            '500': 'var(--font-weight-500)',
-            '600': 'var(--font-weight-600)',
-            '700': 'var(--font-weight-700)',
-            normal: 'var(--font-weight-400)',
-            medium: 'var(--font-weight-500)',
-            semibold: 'var(--font-weight-600)',
-            bold: 'var(--font-weight-700)'
+            '400': '400',
+            '450': '450',
+            '500': '500',
+            '600': '600',
+            '700': '700',
+            normal: '400',
+            medium: '500',
+            semibold: '600',
+            bold: '700'
         },
         fontFamily: {
             // 字體家族
