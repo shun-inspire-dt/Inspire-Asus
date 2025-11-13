@@ -6,12 +6,13 @@ export interface Props {
     className?: any;
     swiperClassName?: any;
     attribute?: attribute;
+    swiperAttribute?: attribute;
     style?: { [key: string]: string };
     pagination?: 'inside' | 'outside' | null;
     navigation?: 'inside' | 'outside' | null;
 }
 
-const { IDName, className, swiperClassName, style, attribute = {}, pagination, navigation } = Astro.props as Props;
+const { IDName, className, swiperClassName, style, attribute = {}, pagination, navigation, swiperAttribute = {} } = Astro.props as Props;
 ---
 
 <div
@@ -20,6 +21,7 @@ const { IDName, className, swiperClassName, style, attribute = {}, pagination, n
     style={style}
     {...attribute}
 >
+    <slot name="outspace-left" />
     {
         navigation && navigation === 'outside' && (
             <div class="swiper-buttons">
@@ -29,7 +31,7 @@ const { IDName, className, swiperClassName, style, attribute = {}, pagination, n
         )
     }
     {pagination && pagination === 'outside' && <div class="swiper-pagination" />}
-    <div id={IDName ? `${IDName}Swiper` : undefined} class:list={['swiper', swiperClassName]}>
+    <div id={IDName ? `${IDName}Swiper` : undefined} class:list={['swiper', swiperClassName]} {...swiperAttribute}>
         {pagination && pagination === 'inside' && <div class="swiper-pagination" />}
         {
             navigation && navigation === 'inside' && (
@@ -44,4 +46,5 @@ const { IDName, className, swiperClassName, style, attribute = {}, pagination, n
         </div>
         <slot name="outside" />
     </div>
+    <slot name="outspace" />
 </div>
