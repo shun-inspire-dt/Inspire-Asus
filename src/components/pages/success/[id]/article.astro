@@ -1,0 +1,29 @@
+---
+/** Common Component */
+import Content from './content.html?raw';
+/** Common Component */
+import MyArticle from '@components/common/article/article.astro';
+/** Style */
+import './article.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MyArticle
+    title="華碩 AI 商用筆電，賦能台北法國實驗教育機構LIFT，開創學生永續學習力"
+    date="2025/11/12"
+    buttonText="回成功案例總覽頁"
+    buttonLink="/success"
+    html={Content}
+    IDName={IDName}
+    className={[':uno-success-article: sect-p-sm-t md:sect-p-md-t lg:sect-p-lg-t', className]}
+    style={style}
+    attribute={attribute}
+/>

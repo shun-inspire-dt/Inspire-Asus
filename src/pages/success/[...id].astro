@@ -1,0 +1,26 @@
+---
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Script from '@components/common/article/relative.js.astro';
+/** Main Components */
+import Article from '@components/pages/success/[id]/article.astro';
+import Relative from '@components/pages/success/[id]/relative.astro';
+/** Style */
+import '@scss/pages/success/[...id].scss';
+
+export async function getStaticPaths() {
+    return Array.from({ length: 10 }).map((_, index) => ({ params: { id: index } }));
+}
+const { id } = Astro.params;
+
+export const prerender = true;
+---
+
+<Layouts IDName="SuccessDetail">
+    <Article />
+    <Relative />
+</Layouts>
+<Script />
