@@ -1,0 +1,42 @@
+---
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Script from '@components/common/article/relative.js.astro';
+import Nav from '@components/common/section/nav.astro';
+/** Main Components */
+import Info from '@components/pages/ivy/[id]/info.astro';
+import Follower from '@components/pages/ivy/[id]/follower.astro';
+import Article from '@components/pages/ivy/[id]/article.astro';
+import Relative from '@components/pages/ivy/[id]/relative.astro';
+/** Style */
+import '@scss/pages/ivy/[...id].scss';
+
+export async function getStaticPaths() {
+    return Array.from({ length: 10 }).map((_, index) => ({ params: { id: index } }));
+}
+const { id } = Astro.params;
+
+export const prerender = true;
+
+const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<Layouts IDName="IvyDetail" minMarginHeader>
+    <Nav
+        IDName={navId}
+        data={[
+            { title: '公司介紹', link: '#IvyInformation' },
+            { title: '解決方案', link: '#IvyArticle' },
+            { title: '最新消息', link: '#IvyRelativeSwiperContainer' },
+        ]}
+    />
+    <div data-bs-spy="scroll" data-bs-root-margin="0px 0px 0px" data-bs-target={`#${navId}`} data-bs-smooth-scroll="true">
+        <Info />
+        <Article />
+        <Relative />
+    </div>
+</Layouts>
+<Script />

@@ -1,0 +1,93 @@
+---
+/** Common Component */
+import Title from '@components/common/section/title.astro';
+/** Swiper */
+import Swiper from '@components/common/swiper/swiper.astro';
+/** Card */
+import Card from './card.astro';
+/** Arrow */
+import NavigatiorArrow from '@components/common/icons/arrows/navigatiorArrow.astro';
+/** Style */
+import './info.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'IvyInformation', className, style, attribute = {} } = Astro.props as Props;
+const data = [
+    {
+        img: '/assets/images/pages/ivy-demo-1',
+        alt: 'ivy-demo-1',
+        text: 'Discover the advantages of Complete Hierarchies over Salesforce account hierarchies.',
+        type: 'video' as 'img' | 'video'
+    },
+    {
+        img: '/assets/images/pages/ivy-demo-1',
+        alt: 'ivy-demo-1',
+        text: 'Discover the advantages of Complete Hierarchies over Salesforce account hierarchies.',
+        type: 'img' as 'img' | 'video'
+    },
+    {
+        img: '/assets/images/pages/ivy-demo-1',
+        alt: 'ivy-demo-1',
+        text: 'Discover the advantages of Complete Hierarchies over Salesforce account hierarchies.',
+        type: 'img' as 'img' | 'video'
+    },
+    {
+        img: '/assets/images/pages/ivy-demo-1',
+        alt: 'ivy-demo-1',
+        text: 'Discover the advantages of Complete Hierarchies over Salesforce account hierarchies.',
+        type: 'img' as 'img' | 'video'
+    }
+];
+---
+
+<div
+    id={IDName}
+    class:list={[className, ':uno-ivy-section-info: sect-p-sub-md-b md:sect-p-sub-md-t xl:sect-p-lg-t xl:sect-p-sm-b']}
+    style={style}
+    {...attribute}
+>
+    <Title title="欣創數位科技有限公司" />
+    <Swiper IDName={IDName} className=":uno-ivy-swiper-container: pl-1rem md:pl-6.25% relative" swiperClassName=":uno-ivy-swiper: !pr-1rem !md:pr-6.25%">
+        {
+            data.map((item, index) => (
+                <div class="swiper-slide :uno-ivy-swiper-slide: !w-18.5rem md:!w-500px">
+                    <Card img={item.img} alt={item.alt} text={item.text} type={item.type} />
+                </div>
+            ))
+        }
+        <Fragment slot="outside">
+            <div
+                class=":uno-ivy-section-next-button: size-3.5rem md:size-4.25rem xl:size-88px flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-0 z-10 [&.swiper-button-disabled]:hidden"
+                data-swiper-button-next
+            >
+                <NavigatiorArrow direction="right" />
+            </div>
+            <div
+                class=":uno-ivy-section-prev-button: size-3.5rem md:size-4.25rem xl:size-88px flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-0 z-10 [&.swiper-button-disabled]:hidden"
+                data-swiper-button-prev
+            >
+                <NavigatiorArrow direction="left" />
+            </div>
+        </Fragment>
+    </Swiper>
+</div>
+
+<script>
+    import { mySwiper } from '@js/components/common/swiper/swiper';
+
+    mySwiper('#IvyInformationSwiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        autoHeight: true,
+        navigation: {
+            nextEl: '[data-swiper-button-next]',
+            prevEl: '[data-swiper-button-prev]'
+        }
+    });
+</script>

@@ -1,0 +1,27 @@
+---
+/** Common Component */
+import Content from '../../success/[id]/content.html?raw';
+/** Common Component */
+import MyArticle from '@components/common/article/article.astro';
+/** Style */
+import './article.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = "IvyArticle", className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MyArticle
+    buttonText="回合作夥伴總覽"
+    buttonLink="/ivy"
+    html={Content}
+    IDName={IDName}
+    className={[':uno-ivy-article: sect-p-sm-b md:sect-p-md-b lg:sect-p-lg-b', className]}
+    style={style}
+    attribute={attribute}
+/>

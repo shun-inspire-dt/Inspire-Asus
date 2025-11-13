@@ -29,7 +29,7 @@ import '@scss/pages/ivy.scss';
         category={data}
         mode="white"
     >
-        {Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} showLabel={false} />)}
+        {Array.from({ length: 10 }).map((_, index) => <Card link={`/ivy/${index}`} showLogo={false} showLabel={false} />)}
     </ArticlesList>
     <Follower />    
 </Layouts>

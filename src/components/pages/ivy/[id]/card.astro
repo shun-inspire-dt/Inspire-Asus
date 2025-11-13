@@ -1,0 +1,62 @@
+---
+/** Common Component */
+/** Picture */
+import Picture from '@components/common/images/picture.astro';
+/** PlayBack */
+import PlayBack from '@components/common/playBack/playBack.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    type?: 'img' | 'video';
+    img?: string;
+    alt?: string;
+    text?: string;
+}
+
+const { IDName, className, style, attribute = {}, type = 'img', img, alt, text } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-ivy-card: w-18.5rem min-h-26.375rem md:w-31.25rem flex flex-col justify-center items-center relative border border-gray-500 rounded-xl overflow-hidden'
+    ]}
+    style={style}
+    {...attribute}
+>
+    {
+        img && (
+            <div class="size-full flex-none">
+                <Picture
+                    width={500}
+                    height={422}
+                    img={img}
+                    alt={alt}
+                    className={[
+                        ':uno-ivy-card-img: size-full object-cover object-center rounded-t-xl overflow-hidden',
+                        { 'md:aspect-[500/422] rounded-b-xl': type === 'video' }
+                    ]}
+                    noWebp
+                />
+            </div>
+        )
+    }
+    {
+        type === 'video' && (
+            <div class=":uno-ivy-card-video: size-full flex items-center justify-center absolute top-0 left-0">
+                <PlayBack size="48" />
+            </div>
+        )
+    }
+    {
+        Boolean(type === 'img' && text) && (
+            <div class=":uno-ivy-card-text: flex flex-col justify-center items-center grow p-1.5rem pt-1rem bg-white rounded-b-xl text-gray-900 tt-md-16">
+                {text}
+            </div>
+        )
+    }
+</div>
