@@ -5,6 +5,8 @@ import Swiper from '@components/common/swiper/swiper.astro';
 /** Picture */
 import Picture from '@components/common/images/picture.astro';
 import PaginationArrow from '@components/common/icons/arrows/paginationArrow.astro';
+/** PlayBack */
+import PlayBack from '@components/common/playBack/playBack.astro';
 /** Main Component */
 import Head from './head.astro';
 /** Style */
@@ -26,8 +28,24 @@ const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, ima
 <div id={IDName} class:list={[className]} style={style} {...attribute}>
     <Swiper IDName="ProductsMain">
         {
-            images.map((x) => (
-                <div class="swiper-slide">
+            images.map((x, i) => (
+                <div class="swiper-slide" data-toggle="video">
+                    {
+                        i === 5 && (
+                            <div class=":uno-solutions-card-video: size-full flex items-center justify-center absolute top-0 left-0">
+                                <PlayBack
+                                    size="48"
+                                    attribute={{
+                                        title,
+                                        'data-toggle': 'video',
+                                        'data-bs-toggle': 'modal',
+                                        'data-bs-target': '#VideoModal',
+                                        'data-auto': 'false'
+                                    }}
+                                />
+                            </div>
+                        )
+                    }
                     <Picture img={x} width={610} height={610} type="png" alt={title} noWebp />
                 </div>
             ))
@@ -35,8 +53,24 @@ const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, ima
     </Swiper>
     <Swiper IDName="ProductsThumb">
         {
-            images.map((x) => (
+            images.map((x, i) => (
                 <div class="swiper-slide">
+                    {
+                        i === 5 && (
+                            <div class=":uno-solutions-card-video: size-full flex items-center justify-center absolute top-0 left-0">
+                                <PlayBack
+                                    size="32"
+                                    attribute={{
+                                        title,
+                                        'data-toggle': 'video',
+                                        'data-bs-toggle': 'modal',
+                                        'data-bs-target': '#VideoModal',
+                                        'data-auto': 'false'
+                                    }}
+                                />
+                            </div>
+                        )
+                    }
                     <Picture img={x} width={80} height={80} type="png" alt={title} noWebp />
                 </div>
             ))
@@ -63,8 +97,7 @@ const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, ima
 
     const mainSwiper = document.querySelector('#ProductsMainSwiperContainer .swiper') as HTMLElement;
     const thumbSwipers = document.querySelector('#ProductsThumbSwiperContainer .swiper') as HTMLElement;
-    const checked = (swiper: Swiper) => {
-        const index = swiper.clickedIndex;
+    const checked = (swiper: Swiper, index: number) => {
         const slides = swiper.slides;
         const target = swiper.slides[index];
         slides.forEach((x) => x.classList.remove('active'));
@@ -80,18 +113,10 @@ const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, ima
     const MyThumbSwipers = mySwiper(thumbSwipers, {
         modules: [FreeMode],
         slidesPerView: 'auto',
-        direction: 'horizontal',
         spaceBetween: 4,
         speed: 1000,
-        observeParents: true,
-        observeSlideChildren: true,
-        observer: true,
-        watchOverflow: false,
         allowTouchMove: true,
-        freeMode: {
-            enabled: true,
-            sticky: true
-        },
+        freeMode: true,
         navigation: {
             nextEl: '#ProductsThumbSwiperContainer button[data-direction="next"]',
             prevEl: '#ProductsThumbSwiperContainer button[data-direction="prev"]'
@@ -102,7 +127,10 @@ const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, ima
                 firstSlide.classList.add('active');
             },
             click(swiper) {
-                checked(swiper);
+                checked(swiper, swiper.clickedIndex);
+            },
+            slideChange(swiper) {
+                checked(swiper, swiper.realIndex);
             }
         }
     });

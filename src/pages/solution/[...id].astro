@@ -5,6 +5,7 @@ import Layouts from '@layouts/layouts.astro';
 
 /** Common Components */
 import Script from '@components/common/article/relative.js.astro';
+import Video from '@components/modal/video.astro';
 /** Main Components */
 import Top from '@components/pages/solutions/[id]/top.astro';
 import Feature from '@components/pages/solutions/[id]/feature.astro';
@@ -32,6 +33,8 @@ export const prerender = true;
 <Follower />
 <Script />
 <Toast />
+<Video />
+
 <script is:inline>
     const specInputs = document.querySelectorAll('input[type="checkbox"][name="product-config"]');
     specInputs.forEach((input) => {
@@ -71,5 +74,51 @@ export const prerender = true;
     });
     toast.addEventListener('hide.toast', () => {
         toastBootstrap.hide();
+    });
+</script>
+<script is:inline>
+    // 載入 YouTube IFrame API
+    if (!window.YT) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    let player;
+    let triggerButton;
+    
+    // YouTube API 準備完成後的回調函數
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('youtube-player', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    };
+
+    function onPlayerReady(event) {
+        // 播放器準備完成
+    }
+
+    const modal = document.getElementById('VideoModal');
+    
+    modal.addEventListener('show.bs.modal', (e) => {
+        triggerButton = e.relatedTarget;
+        if (triggerButton && !triggerButton.classList.contains('active')) {
+            triggerButton.classList.add('active');
+        }
+    });
+    
+    modal.addEventListener('hidden.bs.modal', (e) => {
+        if (triggerButton && triggerButton.classList.contains('active')) {
+            triggerButton.classList.remove('active');
+        }
+        triggerButton = null;
+        
+        // 使用 YouTube API 暫停影片
+        if (player && typeof player.pauseVideo === 'function') {
+            player.pauseVideo();
+        }
     });
 </script>
