@@ -1,0 +1,28 @@
+---
+/** Common Component */
+/** Link */
+import A from '@components/common/link/a.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    items?: { name: string; href?: string }[];
+}
+
+const { IDName, className, style, attribute = {}, items } = Astro.props as Props;
+---
+
+<ul id={IDName} class:list={[":uno-article-breadcrumb: flex items-baseline flex-wrap gap-0.5rem text-gray-600 font-roboto text-base lh-120 font-normal",className]} style={style} {...attribute}>
+    {
+        items?.map((item, index) => (
+            <>
+                <A link={item.href} title={item.name} className=":uno-article-breadcrumb-item: hover:text-blue-500 hover:underline hover:underline-offset-[var(--underline-offset)] transition-colors duration-200 ease-in-out">
+                    {item.name}
+                </A>
+                {index < items.length - 1 && <span>·</span>}
+            </>
+        ))
+    }
+</ul>
