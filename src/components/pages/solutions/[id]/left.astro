@@ -1,0 +1,148 @@
+---
+/** Common Component */
+/** Swiper */
+import Swiper from '@components/common/swiper/swiper.astro';
+/** Picture */
+import Picture from '@components/common/images/picture.astro';
+import PaginationArrow from '@components/common/icons/arrows/paginationArrow.astro';
+/** Main Component */
+import Head from './head.astro';
+/** Style */
+import './left.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title: string;
+    images: string[];
+}
+
+const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, images } = Astro.props as Props;
+---
+
+<Head className=":uno-solutions-left-head: md:hidden" />
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+    <Swiper IDName="ProductsMain">
+        {
+            images.map((x) => (
+                <div class="swiper-slide">
+                    <Picture img={x} width={610} height={610} type="png" alt={title} noWebp />
+                </div>
+            ))
+        }
+    </Swiper>
+    <Swiper IDName="ProductsThumb">
+        {
+            images.map((x) => (
+                <div class="swiper-slide">
+                    <Picture img={x} width={80} height={80} type="png" alt={title} noWebp />
+                </div>
+            ))
+        }
+        <Fragment slot="outspace-left">
+            <button type="button" data-direction="prev">
+                <PaginationArrow direction="left" size="16" />
+            </button>
+        </Fragment>
+        <Fragment slot="outspace">
+            <button type="button" data-direction="next">
+                <PaginationArrow direction="right" size="16" />
+            </button>
+        </Fragment>
+    </Swiper>
+</div>
+
+<script>
+    /** Type */
+    import Swiper from 'swiper';
+    /** Modules */
+    import { mySwiper } from '@js/components/common/swiper/swiper';
+    import { FreeMode } from 'swiper/modules';
+
+    const mainSwiper = document.querySelector('#ProductsMainSwiperContainer .swiper') as HTMLElement;
+    const thumbSwipers = document.querySelector('#ProductsThumbSwiperContainer .swiper') as HTMLElement;
+    const checked = (swiper: Swiper) => {
+        const index = swiper.clickedIndex;
+        const slides = swiper.slides;
+        const target = swiper.slides[index];
+        slides.forEach((x) => x.classList.remove('active'));
+        if (target) target.classList.add('active');
+        mainSwiper.dispatchEvent(
+            new CustomEvent('slideTo', {
+                detail: {
+                    index
+                }
+            })
+        );
+    };
+    const MyThumbSwipers = mySwiper(thumbSwipers, {
+        modules: [FreeMode],
+        slidesPerView: 'auto',
+        direction: 'horizontal',
+        spaceBetween: 4,
+        speed: 1000,
+        observeParents: true,
+        observeSlideChildren: true,
+        observer: true,
+        watchOverflow: false,
+        allowTouchMove: true,
+        freeMode: {
+            enabled: true,
+            sticky: true
+        },
+        navigation: {
+            nextEl: '#ProductsThumbSwiperContainer button[data-direction="next"]',
+            prevEl: '#ProductsThumbSwiperContainer button[data-direction="prev"]'
+        },
+        on: {
+            init(swiper) {
+                const firstSlide = swiper.slides[0];
+                firstSlide.classList.add('active');
+            },
+            click(swiper) {
+                checked(swiper);
+            }
+        }
+    });
+
+    const MyMainSwiper = mySwiper(mainSwiper, {
+        speed: 1000,
+        spaceBetween: 2,
+        on: {
+            slideChange(swiper) {
+                thumbSwipers.dispatchEvent(
+                    new CustomEvent('slideTo', {
+                        detail: {
+                            index: swiper.realIndex
+                        }
+                    })
+                );
+            }
+        }
+    });
+
+    MyThumbSwipers?.el.addEventListener('slideTo', (e) => {
+        const event = e as CustomEvent;
+        const { index = MyMainSwiper?.realIndex } = event.detail;
+        const slides = MyThumbSwipers?.slides;
+        const target = MyThumbSwipers?.slides?.[index];
+
+        if (index !== undefined && index !== null && !isNaN(index) && Boolean(target)) {
+            slides.forEach((x) => x.classList.remove('active'));
+            if (target) target.classList.add('active');
+            MyThumbSwipers.slideTo(index, 1500);
+        }
+    });
+
+    MyMainSwiper?.el.addEventListener('slideTo', (e) => {
+        const event = e as CustomEvent;
+        const { index = MyThumbSwipers?.realIndex } = event.detail;
+        const target = MyMainSwiper?.slides?.[index];
+
+        if (index !== undefined && index !== null && !isNaN(index) && Boolean(target)) {
+            MyMainSwiper.slideTo(index, 1500);
+        }
+    });
+</script>

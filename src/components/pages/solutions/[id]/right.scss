@@ -1,0 +1,11 @@
+#SolutionsRight {
+    [data-collapse] {
+        @apply w-full pt-0.5rem pb-0 md:py-1.5rem md:border-b md:border-b-gray-200;
+        button {
+            @apply md:hidden;
+            & + div > * {
+                @apply mb-1rem last:mb-0 font-roboto text-14 xl:text-18 lh-150;
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+---
+/** Common Component */
+import MyRelative from '@components/common/article/relative.astro';
+import NewsCard from '@components/pages/news/card.astro';
+import SolutionsCard from '@components/pages/solutions/card.astro';
+/** Style */
+import './relative.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+    <MyRelative
+        IDName="SolutionsRelative"
+        title="相關解決方案"
+        className=":uno-solutions-section-relative: bg-white"
+        type={2}
+        count={12}
+    >
+        <SolutionsCard link="/solutions/0" showPlayBack={false} />
+    </MyRelative>
+    <MyRelative
+        IDName="SuccessRelative"
+        title="成功案例"
+        className=":uno-success-section-relative: bg-[linear-gradient(104.68deg,#F5F5F5_0%,#ECF5FF_100%)]"
+        type={3}
+        count={12}
+    >
+        <NewsCard link="/success/0" showBreif={false} />
+    </MyRelative>
+</div>

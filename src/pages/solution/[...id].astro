@@ -1,0 +1,75 @@
+---
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Script from '@components/common/article/relative.js.astro';
+/** Main Components */
+import Top from '@components/pages/solutions/[id]/top.astro';
+import Feature from '@components/pages/solutions/[id]/feature.astro';
+import Relative from '@components/pages/solutions/[id]/relative.astro';
+import Follower from '@components/pages/solutions/[id]/follower.astro';
+import Toast from '@components/pages/solutions/[id]/toast.astro';
+import Back from '@components/pages/solutions/[id]/back.astro';
+/** Style */
+import '@scss/pages/solutions/[...id].scss';
+
+export async function getStaticPaths() {
+    return Array.from({ length: 10 }).map((_, index) => ({ params: { id: index } }));
+}
+const { id } = Astro.params;
+
+export const prerender = true;
+---
+
+<Layouts IDName="SolutionsDetail" minMarginHeader>
+    <Top />
+    <Feature />
+    <Relative />
+    <Back />
+</Layouts>
+<Follower />
+<Script />
+<Toast />
+<script is:inline>
+    const specInputs = document.querySelectorAll('input[type="checkbox"][name="product-config"]');
+    specInputs.forEach((input) => {
+        input.addEventListener('change', () => {
+            const value = input.value;
+            const option = input.getAttribute('data-option');
+            const follower = document.querySelector('#SolutionsFollower');
+            const field = follower?.querySelector('input[type="hidden"][data-option]');
+            if (field) {
+                field.value = value;
+                const span = field?.nextElementSibling;
+                if (span) span.textContent = option;
+            }
+        });
+    });
+</script>
+<script is:inline>
+    const toastTriggerForm = document.querySelector('#SolutionsFollower form');
+    const toast = document.querySelector('#addToCartToast');
+    document.addEventListener('DOMContentLoaded', () => {
+        if (toastTriggerForm) {
+            toastTriggerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                /** TODO: */
+                if (toast) toast.dispatchEvent(new CustomEvent('call.toast'));
+            });
+        }
+    });
+</script>
+<script>
+    import { Toast } from 'bootstrap';
+
+    const toast = document.querySelector('#addToCartToast') as HTMLElement;
+    const toastBootstrap = new Toast(toast!);
+    toast.addEventListener('call.toast', () => {
+        toastBootstrap.show();
+    });
+    toast.addEventListener('hide.toast', () => {
+        toastBootstrap.hide();
+    });
+</script>

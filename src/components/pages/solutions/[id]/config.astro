@@ -1,0 +1,43 @@
+---
+/** Common Component */
+import ProductConfig from '@components/pages/product/productConfig.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[className, ':uno-solutions-config: w-full space-y-1rem md:space-y-1.5rem py-1.25rem md:pt-1.5rem md:pb-0']}
+    style={style}
+    data-choice-button="radio"
+    {...attribute}
+>
+    <label for="FromProductConfig-61FromChoiceButton" class=":uno-solutions-config-label: inline-block text-subtitle font-roboto lh-18 font-medium text-gray-900">
+        方案
+    </label>
+    <div class=":uno-solutions-config-list: space-y-0.75rem">
+        <ProductConfig
+            title="基礎版"
+            price="$10,000 / 月"
+            showColorSelector={false}
+            showOptionHint={false}
+            showPriceDescription={false}
+            value="1"
+        />
+        <ProductConfig
+            title="進階版"
+            price="$11,000 / 月"
+            showColorSelector={false}
+            showOptionHint={false}
+            showPriceDescription={false}
+            value="2"
+        />
+    </div>
+</div>

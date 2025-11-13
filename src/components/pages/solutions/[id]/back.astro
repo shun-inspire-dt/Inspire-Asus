@@ -1,0 +1,26 @@
+---
+/** Common Component */
+/** Button */
+import Button from '@components/common/button/button.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-solutions-back: flex items-center justify-center sect-p-sm-b md:sect-p-md-b xl:sect-p-lg-b bg-[linear-gradient(104.68deg,#F5F5F5_0%,#ECF5FF_100%)]'
+    ]}
+    style={style}
+    {...attribute}
+>
+    <Button Tag="a" link="/solutions" title="回到解決方案總覽頁" variant="blue">回到解決方案總覽頁</Button>
+</div>

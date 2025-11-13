@@ -1,0 +1,61 @@
+.product-config {
+    @apply w-full flex flex-col gap-0.5rem p-1rem bg-white border border-gray-500 rounded-lg;
+
+    &-header {
+        @apply w-full flex items-start justify-between;
+    }
+    &-title {
+        @apply flex items-center justify-between gap-8px heading-02-sh text-gray-900;
+    }
+    &-color-selector {
+        @apply w-1rem h-1lh flex items-center;
+    }
+    &-color-selector-circle {
+        @apply inline size-1rem rounded-999 bg-#53565A;
+    }
+    &-price-tag {
+        @apply flex flex-col items-center gap-4px text-right select-none;
+    }
+    &-price {
+        @apply body-02-sh text-gray-900;
+    }
+    &-price-description {
+        @apply label-02 text-orange-600;
+    }
+    &-option-hint {
+        @apply w-full label-01 text-gray-600 text-left;
+    }
+}
+
+.product-config-choice {
+    &:disabled + .btn-choice-label > [role='button'] {
+        @apply border-gray-100 pointer-events-none;
+
+        .product-config {
+            &-title {
+                @apply text-gray-300;
+            }
+            &-color-selector-circle {
+                @apply opacity-30;
+            }
+            &-price {
+                @apply text-gray-300;
+            }
+            &-price-description {
+                @apply text-orange-400;
+            }
+            &-option-hint {
+                @apply text-gray-200;
+            }
+        }
+    }
+    &:focus-within + .btn-choice-label > [role='button'] {
+        @apply border-gray-200 outline outline-2px outline-blue-500 outline-offset-2px;
+    }
+    &:checked:focus-within + .btn-choice-label > [role='button'] {
+        @apply border-blue-500;
+    }
+    &:checked + .btn-choice-label > [role='button'] {
+        @apply border-0.125rem border-blue-500;
+    }
+}

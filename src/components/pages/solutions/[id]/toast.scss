@@ -1,0 +1,21 @@
+#addToCartToast {
+    --bs-toast-zindex: 1090;
+    --bs-toast-padding-x: 1.5rem;
+    --bs-toast-padding-y: 0.75rem;
+    --bs-toast-spacing: 1.25rem;
+    --bs-toast-max-width: auto;
+    --bs-toast-font-size: var(--fs-18);
+    --bs-toast-color: var(--color-white, #fff);
+    --bs-toast-bg: var(--color-black-85, rgba(0, 0, 0, 0.85));
+    --bs-toast-border-width: 0px;
+    --bs-toast-border-color: transparent;
+    --bs-toast-border-radius: 0.5rem;
+    --bs-toast-box-shadow: none;
+    --bs-toast-header-color: transparent;
+    --bs-toast-header-bg: transparent;
+    --bs-toast-header-border-color: transparent;
+
+    .toast-body {
+        padding: var(--bs-toast-padding-y) var(--bs-toast-padding-x);
+    }
+}

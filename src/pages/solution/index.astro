@@ -29,7 +29,7 @@ import '@scss/pages/solution.scss';
         category={data}
         mode="white"
     >
-        {Array.from({ length: 10 }).map((_, index) => <Card showPlayBack={index % 2 === 0} />)}
+        {Array.from({ length: 10 }).map((_, index) => <Card link={`/solution/${index}`} showPlayBack={index % 2 === 0} />)}
     </ArticlesList>
     <Follower />
 </Layouts>

@@ -1,0 +1,40 @@
+#ProductsSwipers {
+    .swiper {
+        width: 100%;
+        .swiper-slide {
+            cursor: pointer;
+        }
+    }
+
+    #ProductsThumbSwiperContainer {
+        @apply relative flex items-center gap-0.25rem mt-1.25rem md:mt-1rem xl:mt-2rem;
+        .swiper {
+            @apply mx-0;
+            @apply transition-all duration-200 ease-in-out;
+            .swiper-slide {
+                @apply size-3.375rem md:size-5rem aspect-square;
+                @apply transition-colors duration-200 ease-in-out;
+                
+                &.active {
+                    img {
+                        @apply border border-gray-900;
+                        @apply transition-colors duration-200 ease-in-out;
+                    }
+                }
+                img {
+                    @apply size-full rounded-0.25rem object-cover object-center;
+                    @apply rounded-0.25rem border border-transparent;
+                }
+            }
+        }
+        button[data-direction="prev"], button[data-direction="next"] {
+            @apply size-1rem;
+            @apply flex items-center justify-center;
+            @apply transition-colors duration-200 ease-in-out;
+
+            &.swiper-button-disabled {
+                visibility: hidden;
+            }
+        }
+    }
+}

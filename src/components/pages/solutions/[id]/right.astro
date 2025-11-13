@@ -1,0 +1,35 @@
+---
+/** Common Component */
+
+import Collapse from '@components/common/collapse/collapse.astro';
+/** Main Component */
+import Head from './head.astro';
+import Config from './config.astro';
+/** Style */
+import './right.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = "SolutionsRight", className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ':uno-solutions-right:']} style={style} {...attribute}>
+    <Head />
+    <div class=":uno-solutions-right-content: flex flex-col md:flex-col-reverse">
+        <Config />
+        <Collapse title='產品資訊' show>
+            <p>用新創數位的尖端 AI 驅動系統，徹底改造您的供應鏈，革新傳統的電話與電子郵件溝通方式。透過 Aether 平台 無縫連接並下單，大幅降低成本與人力投入，讓您能專注於拓展核心業務。</p>
+            <p>新創數位科技有限公司 專注於開發智慧化的供應鏈管理解決方案，提供完整工具組，優化採購流程的每一個環節。我們的 AI 系統運用先進演算法與機器學習，從需求預測到訂單履行，全面提升效率、降低成本並簡化操作。有了新創數位，您可以告別繁瑣的人工流程，擁抱更智慧、更靈活、能隨需求而動的供應鏈。</p>
+            <p>我們的系統可與您現有的基礎設施無縫整合，提供即時的庫存狀態、訂單進度與供應商表現的可視化數據。透過新創數位的智慧採購解決方案，您能以數據為基礎做出決策，最大化供應鏈效率，取得競爭優勢。親身體驗 預測分析、自動化流程與智慧洞察 帶來的實際成果。我們的 AI 系統幫助您預測需求波動、識別潛在風險並提前應對，打造具韌性、快速回應的供應鏈。</p>
+            <p>使用新創數位完整的供應鏈管理工具套件，釋放效率與盈利的新高度。從供應商關係管理到庫存優化，我們的系統提供端到端的可視化與控制力。簡化溝通、任務自動化、消除瓶頸，讓寶貴資源專注於戰略計畫。有了新創數位，您能將供應鏈從「成本中心」轉化為「競爭優勢」。</p>
+            <p>我們以 創新 與 客戶滿意 為核心差異化。我們與客戶緊密合作，深入了解其獨特需求與挑戰，並量身打造解決方案。我們的專業團隊提供持續的支援與指導，確保順利導入並達到最佳效能。選擇新創數位，體驗智慧供應鏈管理為您的企業帶來的不同。</p>
+            <p>立即聯繫我們，了解新創數位如何革新您的供應鏈，推動企業的永續成長。讓我們幫助您釋放供應鏈的全部潛能，透過 AI 驅動的解決方案，共同打造更智慧、更高效、更具韌性的供應鏈，助您在瞬息萬變的市場中持續成功。</p>
+            <p>新創數位科技有限公司 —— 您值得信賴的智慧供應鏈管理合作夥伴。</p>
+        </Collapse>
+    </div>
+</div>

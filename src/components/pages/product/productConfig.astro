@@ -1,6 +1,8 @@
 ---
 /** Common Component */
-import ChoiceButton from '@components/common/form/checkboxs/choiceButton.astro';
+import ChoiceButton, { type Props as ChoiceButtonProps } from '@components/common/form/checkboxs/choiceButton.astro';
+/** Style */
+import './productConfig.scss';
 
 export interface Props {
     IDName?: string;
@@ -16,6 +18,7 @@ export interface Props {
     showPriceDescription?: boolean;
     showOptionHint?: boolean;
     disabled?: boolean;
+    value?: ChoiceButtonProps['value'];
 }
 
 const {
@@ -31,30 +34,29 @@ const {
     showPriceTag = true,
     showPriceDescription = true,
     showOptionHint = true,
-    disabled
+    disabled,
+    value
 } = Astro.props as Props;
 
 const id = `FromProductConfig-${Math.floor(Math.random() * 1000)}`;
 ---
 
-<ChoiceButton id={IDName || id} type="checkbox" name="product-config" disabled={disabled}>
-    <button
-        type="button"
-        class:list={[
-            className,
-            { disabled },
-            `:uno-product-config: w-full flex flex-col gap-0.5rem p-1rem bg-white border border-gray-500 rounded-lg disabled:border-gray-100 disabled:pointer-events-none disabled:cursor-not-allowed [&.active]:border-0.125rem [&.active]:border-blue-500 focus-within:border-gray-200 focus-within:outline focus-within:outline-2px focus-within:outline-blue-500 focus-within:outline-offset-2px [&.active:focus-within]:border-blue-500 group`
-        ]}
-        style={style}
-        {...attribute}
-        disabled={disabled}
-    >
-        <div class=":uno-product-config-header: w-full flex items-start justify-between">
-            <div class=":uno-product-config-title: flex items-center justify-between gap-8px heading-02-sh text-gray-900 group-disabled:text-gray-300">
+<ChoiceButton
+    id={IDName || id}
+    type="checkbox"
+    name="product-config"
+    inputClassName="product-config-choice"
+    disabled={disabled}
+    value={value}
+    attribute={{ 'data-option': `${title} ${price}` }}
+>
+    <span class:list={[className, { disabled }, `product-config group`]} style={style} role="button" {...attribute}>
+        <div class="product-config-header">
+            <div class="product-config-title">
                 {
                     showColorSelector && (
-                        <span class=":uno-product-config-color-selector: w-1rem h-1lh flex items-center">
-                            <span class=":uno-product-config-color-selector-circle: inline size-1rem rounded-999 bg-#53565A group-disabled:opacity-30" />
+                        <span class="product-config-color-selector">
+                            <span class="product-config-color-selector-circle" />
                         </span>
                     )
                 }
@@ -62,15 +64,13 @@ const id = `FromProductConfig-${Math.floor(Math.random() * 1000)}`;
             </div>
             {
                 showPriceTag && (
-                    <div class=":uno-product-config-price-tag: flex flex-col items-center gap-4px text-right">
-                        <span class=":uno-product-config-price: body-02-sh text-gray-900 group-disabled:text-gray-300">{price}</span>
-                        {showPriceDescription && (
-                            <span class=":uno-product-config-price-description: label-02 text-orange-600 group-disabled:text-orange-400">{priceDescription}</span>
-                        )}
+                    <div class="product-config-price-tag">
+                        <span class="product-config-price">{price}</span>
+                        {showPriceDescription && <span class="product-config-price-description">{priceDescription}</span>}
                     </div>
                 )
             }
         </div>
-        {showOptionHint && <p class=":uno-product-config-option-hint: w-full label-01 text-gray-600 text-left group-disabled:text-gray-200">{optionHint}</p>}
-    </button>
+        {showOptionHint && <p class="product-config-option-hint">{optionHint}</p>}
+    </span>
 </ChoiceButton>

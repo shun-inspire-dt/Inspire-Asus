@@ -1,0 +1,41 @@
+---
+/** Common Component */
+import Title from '@components/common/section/title.astro';
+/** Style */
+import './feature.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'solutions-feature', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-solutions-feature: sect-p-sm md:sect-p-md xl:sect-p-lg bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat'
+    ]}
+    style={{ '--bg-image': `url("/assets/images/pages/feature-BG.png")`, ...style }}
+    {...attribute}
+>
+    <Title title="方案特色" />
+    <div class=":uno-solutions-feature-container: container-fluid">
+        <div class=":uno-solutions-feature-card-grid: grid grid-cols-1 xl:grid-cols-3 gap-5">
+            {
+                Array.from({ length: 6 }).map((_, index) => (
+                    <div class=":uno-solutions-feature-card: flex flex-col gap-4 p-10 bg-white rounded-xl">
+                        <b class=":uno-solutions-feature-card-title: font-tt-medium text-24 lh-120 font-medium">特色標題</b>
+                        <span class=":uno-solutions-feature-card-text: font-tt-normal text-18 lh-140 font-normal line-clamp-6 xl:line-clamp-3">
+                            特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容特色標題內容
+                        </span>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>
