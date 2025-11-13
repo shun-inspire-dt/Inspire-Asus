@@ -6,6 +6,7 @@ import Layouts from '@layouts/layouts.astro';
 /** Common Components */
 import Script from '@components/common/article/relative.js.astro';
 import Nav from '@components/common/section/nav.astro';
+import Video from '@components/modal/video.astro';
 /** Main Components */
 import Info from '@components/pages/ivy/[id]/info.astro';
 import Follower from '@components/pages/ivy/[id]/follower.astro';
@@ -40,3 +41,52 @@ const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
     </div>
 </Layouts>
 <Script />
+<Video />
+
+<script is:inline>
+    // 載入 YouTube IFrame API
+    if (!window.YT) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    let player;
+    let triggerButton;
+    
+    // YouTube API 準備完成後的回調函數
+    window.onYouTubeIframeAPIReady = function() {
+        player = new YT.Player('youtube-player', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    };
+
+    function onPlayerReady(event) {
+        // 播放器準備完成
+    }
+
+    const modal = document.getElementById('VideoModal');
+    
+    modal.addEventListener('show.bs.modal', (e) => {
+        triggerButton = e.relatedTarget;
+        if (triggerButton && !triggerButton.classList.contains('active')) {
+            triggerButton.classList.add('active');
+        }
+    });
+    
+    modal.addEventListener('hidden.bs.modal', (e) => {
+        if (triggerButton && triggerButton.classList.contains('active')) {
+            triggerButton.classList.remove('active');
+        }
+        triggerButton = null;
+        
+        // 使用 YouTube API 暫停影片
+        if (player && typeof player.pauseVideo === 'function') {
+            player.pauseVideo();
+        }
+    });
+</script>
+

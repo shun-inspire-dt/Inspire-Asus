@@ -14,9 +14,10 @@ export interface Props {
     img?: string;
     alt?: string;
     text?: string;
+    title?: string;
 }
 
-const { IDName, className, style, attribute = {}, type = 'img', img, alt, text } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, type = 'img', img, alt, text, title } = Astro.props as Props;
 ---
 
 <div
@@ -30,31 +31,38 @@ const { IDName, className, style, attribute = {}, type = 'img', img, alt, text }
 >
     {
         img && (
-            <div class="size-full flex-none">
-                <Picture
-                    width={500}
-                    height={422}
-                    img={img}
-                    alt={alt}
-                    className={[
-                        ':uno-ivy-card-img: size-full object-cover object-center rounded-t-xl overflow-hidden',
-                        { 'md:aspect-[500/422] rounded-b-xl': type === 'video' }
-                    ]}
-                    noWebp
-                />
-            </div>
+            <img
+                class:list={[
+                    ':uno-ivy-card-img: size-full grow object-cover object-center rounded-t-xl overflow-hidden',
+                    { ':uno-ivy-card-img-video: rounded-b-xl': type === 'video' }
+                ]}
+                src={img}
+                alt={alt}
+                title={alt}
+                loading="lazy"
+                decoding="async"
+            />
         )
     }
     {
         type === 'video' && (
             <div class=":uno-ivy-card-video: size-full flex items-center justify-center absolute top-0 left-0">
-                <PlayBack size="48" />
+                <PlayBack
+                    size="48"
+                    attribute={{
+                        title,
+                        'data-toggle': 'video',
+                        'data-bs-toggle': 'modal',
+                        'data-bs-target': '#VideoModal',
+                        'data-auto': 'false'
+                    }}
+                />
             </div>
         )
     }
     {
         Boolean(type === 'img' && text) && (
-            <div class=":uno-ivy-card-text: flex flex-col justify-center items-center grow p-1.5rem pt-1rem bg-white rounded-b-xl text-gray-900 tt-md-16">
+            <div class=":uno-ivy-card-text: flex flex-col justify-center items-center flex-none p-1.5rem pt-1rem bg-white rounded-b-xl text-gray-900 tt-md-16">
                 {text}
             </div>
         )
