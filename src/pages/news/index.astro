@@ -30,7 +30,7 @@ import '@scss/pages/news.scss';
         ]}
         category={data}
     >
-        {Array.from({ length: 10 }).map((_, index) => <Card showLogo={false} />)}
+        {Array.from({ length: 10 }).map((_, index) => <Card link={`/news/${index}`} showLogo={false} />)}
     </ArticlesList>
     <Follower />
 </Layouts>

@@ -1,0 +1,30 @@
+---
+/** Common Component */
+import Content from './content.html?raw';
+/** Common Component */
+import MyArticle from '@components/common/article/article.astro';
+/** Style */
+import './article.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MyArticle
+    title="ASUS ExpertBook B5 商用筆電、ASUS ExpertCenter D900 Mini Tower 商用桌機接力上市"
+    date="2025/11/12"
+    breadcrumb={[{ name: 'IDC市場報告' }, { name: '商用電腦' }, { name: '市占率' }, { name: '商業報告' }]}
+    buttonText="回最新消息總覽頁"
+    buttonLink="/news"
+    html={Content}
+    IDName={IDName}
+    className={[":uno-my-news-article: sect-p-sm md:sect-p-md lg:sect-p-lg", className]}
+    style={style}
+    attribute={attribute}
+/>

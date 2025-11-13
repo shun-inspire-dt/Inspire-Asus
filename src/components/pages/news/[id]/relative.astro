@@ -1,0 +1,28 @@
+---
+/** Common Component */
+import MyRelative from '@components/common/article/relative.astro';
+import Card from '@components/pages/news/card.astro';
+/** Style */
+import './relative.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+}
+
+const { IDName = 'NewsRelative', className, style, attribute = {}, title = '相關消息' } = Astro.props as Props;
+---
+
+<MyRelative
+    title={title}
+    className={[':uno-news-section-relative: bg-[linear-gradient(104.68deg,#F5F5F5_0%,#ECF5FF_100%)]', className]}
+    IDName={IDName}
+    style={style}
+    attribute={attribute}
+    count={12}
+>
+    <Card link="/news/0" showLogo={false} showBreif={false} />
+</MyRelative>
