@@ -1,0 +1,5 @@
+@use '../../../scss/mixin/articles.scss' as articles;
+
+.article {
+    @include articles.article;
+}

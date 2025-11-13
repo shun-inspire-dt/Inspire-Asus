@@ -1,0 +1,65 @@
+---
+/** Common Component */
+import Date from './date.astro';
+import Breadcrumb, { type Props as BreadcrumbProps } from './breadcrumb.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './article.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    date?: string;
+    breadcrumb?: BreadcrumbProps['items'];
+    html?: string;
+    buttonText?: string;
+    buttonLink?: string;
+}
+
+const { IDName, className, style, attribute = {}, title, date, breadcrumb, html, buttonText, buttonLink } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[className, ':uno-my-article: w-full max-w-52.5rem mx-a px-1rem md:px-0rem']}
+    style={style}
+    {...attribute}
+>
+    {
+        Boolean(title || date || breadcrumb) && (
+            <div class=":uno-my-article-head: mb-2rem">
+                {date && (
+                    <div class=":uno-my-article-date: mb-1.25rem">
+                        <Date date={date} />
+                    </div>
+                )}
+                {title && (
+                    <h1 class=":uno-my-article-title: text-gray-900 font-tt-medium lh-120 text-30 md:text-36 xl:text-44 font-medium text-left">
+                        {title}
+                    </h1>
+                )}
+                {breadcrumb && (
+                    <div class=":uno-my-article-breadcrumb: mt-1.25rem">
+                        <Breadcrumb items={breadcrumb} />
+                    </div>
+                )}
+            </div>
+        )
+    }
+    <div class=":uno-my-article-body:">
+        <article class="article" set:html={html} />
+    </div>
+    {
+        buttonText && buttonLink && (
+            <div class=":uno-my-article-button: flex justify-center mt-2rem">
+                <Button Tag="a" variant="blue" size="lg" link={buttonLink} title={buttonText}>
+                    {buttonText}
+                </Button>
+            </div>
+        )
+    }
+</div>
