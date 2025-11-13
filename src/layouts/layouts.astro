@@ -99,8 +99,16 @@ const appleTouchIcon = [
         href: `${site}/assets/meta/apple-icon-180x180.png`
     }
 ];
-const GoogleFont =
-    'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap';
+const customFont = {
+    css: `${Astro.url.origin}/assets/fonts/fonts.css`,
+    fonts: [
+        'TTNormsProNormal_normal_normal.woff2',
+        'TTNormsProNormal_normal_normal.woff',
+        'TTNormsProMedium_normal_normal.woff2',
+        'TTNormsProMedium_normal_normal.woff'
+    ],
+    type: 'woff2'
+};
 /** footer */
 import Footer from '@components/footer/footer.astro';
 /** header */
@@ -158,7 +166,7 @@ const { IDName, className, bodyClassName, footerShowBorderTop = false, minMargin
                 content: 'all'
             }}
             font={{
-                google: GoogleFont
+                custom: customFont
             }}
             schemas={[
                 {
