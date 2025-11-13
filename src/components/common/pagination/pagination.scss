@@ -8,13 +8,15 @@
     --pagination-display: flex; /* 容器顯示模式 */
     --pagination-align-items: center; /* 垂直對齊 */
     --pagination-justify-content: center; /* 水平對齊 */
-    --pagination-gap: 0px; /* 元素間距 */
+    --pagination-flex-wrap: wrap; /* 是否換行 */
+    --pagination-gap-x: 0px; /* x 軸元素間距 */
+    --pagination-gap-y: 0.75rem; /* y 軸元素間距 */
     --pagination-padding: 0px; /* 容器內邊距 */
 
     /* 項目尺寸變數 */
-    --pagination-item-width: 44px; /* 頁碼項目寬度 */
+    --pagination-item-width: 2.25rem; /* 頁碼項目寬度 */
     --pagination-item-height: 20px; /* 頁碼項目高度 */
-    --pagination-item-min-width: 44px; /* 頁碼項目最小寬度 */
+    --pagination-item-min-width: 2.25rem; /* 頁碼項目最小寬度 */
 
     /* 箭頭尺寸變數 */
     --pagination-arrow-size: 16px; /* 箭頭圖示尺寸 */
@@ -23,8 +25,8 @@
     --pagination-font-family: var(--font-family-roboto); /* 字體家族 */
     --pagination-font-size: var(--fs-16); /* 字體大小 */
     --pagination-line-height: var(--line-height-130); /* 行高 */
-    --pagination-font-weight-normal: var(--font-weight-400); /* 一般字重 */
-    --pagination-font-weight-active: var(--font-weight-500); /* 活躍字重 */
+    --pagination-font-weight-normal: 400; /* 一般字重 */
+    --pagination-font-weight-active: 500; /* 活躍字重 */
 
     /* Light 主題顏色變數 */
     --pagination-color: var(--color-gray-600); /* 一般文字顏色 - #666666 */
@@ -37,7 +39,8 @@
     display: var(--pagination-display);
     align-items: var(--pagination-align-items);
     justify-content: var(--pagination-justify-content);
-    gap: var(--pagination-gap);
+    flex-wrap: var(--pagination-flex-wrap);
+    gap: var(--pagination-gap-y) var(--pagination-gap-x);
     padding: var(--pagination-padding);
 
     /* 頁碼項目樣式 */
@@ -66,7 +69,7 @@
         transition: all 0.2s ease-in-out;
 
         /* 懸停效果 - 添加底線和顏色變化 */
-        &:hover {
+        &:hover:not(:focus) {
             color: var(--color-gray-900); /* 懸停時文字顏色 - #181818 */
             text-decoration: underline;
             text-underline-offset: var(--underline-offset);
@@ -76,8 +79,10 @@
         /* 聚焦效果 - 顏色變化和藍色框框 */
         &:focus {
             outline: none; /* 移除預設 outline */
-            color: var(--color-gray-600); /* 聚焦時文字顏色 - #666666 */
-
+            
+            &:not(.pagination__item--active) {
+                color: var(--color-gray-600); /* 聚焦時文字顏色 - #666666 */
+            }
             /* 藍色聚焦框框 - 24x24px, 2px 邊框, 置中 */
             &::after {
                 content: '';
