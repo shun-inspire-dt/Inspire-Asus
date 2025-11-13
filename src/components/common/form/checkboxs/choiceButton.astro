@@ -79,21 +79,6 @@ const validAttribute = {
 </div>
 
 <script>
-    const buttons = document.querySelectorAll('.form-choice-button') as NodeListOf<HTMLElement>;
-    [...buttons].forEach((button) => {
-        const btn = button.querySelector('.btn-choice-label button') as HTMLButtonElement;
-        if (btn) {
-            btn.addEventListener('click', () => {
-                const input = button.querySelector('input') as HTMLInputElement;
-                input.checked = !input.checked;
-
-                const status = input.checked;
-                btn.classList.toggle('active', status);
-                if (!status) btn.blur();
-            });
-        }
-    });
-
     const containers = document.querySelectorAll('[data-choice-button="radio"]') as NodeListOf<HTMLElement>;
     [...containers].forEach((x) => {
         const checkboxs = x?.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
