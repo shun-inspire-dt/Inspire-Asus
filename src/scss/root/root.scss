@@ -167,17 +167,6 @@
     --color-apple: #000000;
     --color-instgram: linear-gradient(45deg, rgba(253, 179, 81, 1) 0%, rgba(193, 39, 149, 1) 46.35%, rgba(88, 65, 211, 1) 100%);
 
-    /* === Badge 顏色 === */
-    --badge-light-outline: rgba(0, 0, 0, 0.1622);
-    --badge-dark-standard-bg: rgba(255, 255, 255, 0.0419);
-    --badge-dark-outline: rgba(255, 255, 255, 0.093);
-    --badge-danger-bg: #fde7e9;
-    --badge-danger-stroke: #c42b1c;
-    --badge-danger-text: #c42b1c;
-    --badge-dark-danger-stroke: #ff99a4;
-    --badge-dark-danger-bg: #442726;
-    --badge-dark-accent-bg: #60cdff;
-
     /* === 螢幕尺寸相關 === */
     --screen-desktop-padding-x: 90px;
     --screen-tablet-padding-x: 48px;
@@ -271,13 +260,6 @@
     --font-style-italic: 'Italic';
     --font-style-sb-italic: 'SemiBold Italic';
 
-    /* === 字體粗細 === */
-    --font-weight-400: '400';
-    --font-weight-450: 'Normal';
-    --font-weight-500: '500';
-    --font-weight-600: '600';
-    --font-weight-700: '700';
-
     /* === 字體家族 === */
     --font-family-tt-norms-pro-normal: TTNormsProNormal, Roboto, sans-serif;
     --font-family-tt-norms-pro-medium: TTNormsProMedium, Roboto, sans-serif;
@@ -341,26 +323,5 @@ main {
     position: relative;
     &.margin-top {
         margin-top: var(--header-height);
-    }
-}
-
-.backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1040;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--backdrop-color);
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    pointer-events: none;
-
-    &.show {
-        opacity: var(--backdrop-opacity);
-    }
-
-    &.fade {
-        opacity: 0;
     }
 }
