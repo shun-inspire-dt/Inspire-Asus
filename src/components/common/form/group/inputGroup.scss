@@ -28,7 +28,7 @@
     --form-input-group-label-gap: 0px; /* 標籤內部元素間距 */
     --form-input-group-label-color: var(--color-gray-900); /* 標籤文字顏色 */
     --form-input-group-label-font-size: var(--fs-16); /* 標籤字體大小 */
-    --form-input-group-label-font-weight: var(--font-weight-400); /* 標籤字體粗細 */
+    --form-input-group-label-font-weight: 400; /* 標籤字體粗細 */
     --form-input-group-label-line-height: var(--line-height-16-sh); /* 標籤行高 */
     --form-input-group-label-letter-spacing: var(--letter-spacing); /* 標籤字母間距 */
     --form-input-group-label-font-family: var(--font-family-roboto); /* 標籤字體家族 */
@@ -45,7 +45,7 @@
 
     /* CSS 變數定義 - 副標題（helperText） */
     --form-input-group-sub-title-font-size: var(--fs-14); /* 副標題字體大小 */
-    --form-input-group-sub-title-font-weight: var(--font-weight-400); /* 副標題字體粗細 */
+    --form-input-group-sub-title-font-weight: 400; /* 副標題字體粗細 */
     --form-input-group-sub-title-line-height: var(--line-height-14-sh); /* 副標題行高 */
     --form-input-group-sub-title-letter-spacing: 0.16px; /* 副標題字母間距 */
     --form-input-group-sub-title-font-family: var(--font-family-roboto); /* 副標題字體家族 */
@@ -75,7 +75,7 @@
     --form-input-group-content-info-text-gap: 8px; /* 驗證訊息元素間距 */
     --form-input-group-content-info-text-color: var(--color-gray-600); /* 驗證訊息顏色 */
     --form-input-group-content-info-text-font-size: var(--fs-14); /* 驗證訊息字體大小 */
-    --form-input-group-content-info-text-font-weight: var(--font-weight-400); /* 驗證訊息字體粗細 */
+    --form-input-group-content-info-text-font-weight: 400; /* 驗證訊息字體粗細 */
     --form-input-group-content-info-text-line-height: var(--line-height-14-sh); /* 驗證訊息行高 */
     --form-input-group-content-info-text-letter-spacing: 0.16px; /* 驗證訊息字母間距 */
     --form-input-group-content-info-text-font-family: var(--font-family-roboto); /* 驗證訊息字體家族 */

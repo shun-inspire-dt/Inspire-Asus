@@ -273,15 +273,15 @@
         font-family: var(--font-family-roboto, 'Roboto', sans-serif);
 
         &.weight_regular {
-            font-weight: var(--font-weight-400, 400);
+            font-weight: 400;
         }
 
         &.weight_medium {
-            font-weight: var(--font-weight-500, 500);
+            font-weight: 500;
         }
 
         &.weight_bold {
-            font-weight: var(--font-weight-700, 700);
+            font-weight: 700;
         }
     }
 
@@ -289,17 +289,17 @@
     &.font_tt .link-text {
         &.weight_regular {
             font-family: var(--font-family-tt-norms-pro-normal, 'TTNormsProNormal', 'Roboto', sans-serif);
-            font-weight: var(--font-weight-450, 450);
+            font-weight: 450;
         }
 
         &.weight_medium {
             font-family: var(--font-family-tt-norms-pro-medium, 'TTNormsProMedium', 'Roboto', sans-serif);
-            font-weight: var(--font-weight-500, 500);
+            font-weight: 500;
         }
 
         &.weight_bold {
             font-family: var(--font-family-tt-norms-pro-medium, 'TTNormsProMedium', 'Roboto', sans-serif);
-            font-weight: var(--font-weight-700, 700);
+            font-weight: 700;
         }
     }
 
