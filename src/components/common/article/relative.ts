@@ -1,0 +1,323 @@
+/** Type */
+import type Swiper from 'swiper';
+/** Modules */
+import { mySwiper } from '@js/components/common/swiper/swiper';
+
+const swipers = document.querySelectorAll('.section-relative-swiper') as NodeListOf<HTMLElement>;
+/**
+ * 取得 Swiper 的 navigation 元素
+ * @param id - Swiper 的 ID
+ * @param type - 1 或 2
+ * @param direction - 方向 (next 或 prev)
+ * @returns navigation 元素的 CSS selector
+ */
+const navigationEl = (id: string, type: 1 | 2, direction: 'next' | 'prev') => {
+    if (id && !id.includes('undefined')) {
+        if (type === 1) {
+            return `#${id} .pagination__arrow.pagination__arrow--${direction}`;
+        } else {
+            return `#${id}Container .section-relative-navigatior-arrow--${direction}`;
+        }
+    }
+    return '';
+};
+// 取得當前螢幕尺寸對應的 slidesPerGroup (僅用於初始化)
+const getInitialSlidesPerGroup = (slidesPerGroupArray: number[]) => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth >= 1280) {
+        return slidesPerGroupArray[2] || 3; // 對應 1280 breakpoint
+    } else if (windowWidth >= 768) {
+        return slidesPerGroupArray[1] || 2; // 對應 768 breakpoint
+    } else {
+        return slidesPerGroupArray[0] || 1; // 對應 0 breakpoint (預設)
+    }
+};
+
+// 更新 pagination 組件的總頁數和顯示
+const updatePaginationDisplay = ({
+    totalSlides,
+    slidesPerGroup,
+    activePage,
+    paginationElement
+}: {
+    totalSlides: string;
+    slidesPerGroup: number;
+    activePage: number;
+    paginationElement: HTMLElement;
+}) => {
+    const totalPages = calculateTotalPages(totalSlides, slidesPerGroup);
+
+    if (paginationElement) {
+        // 取得所有現有的頁碼按鈕
+        const existingItems = paginationElement.querySelectorAll(
+            '.pagination__item[data-index]'
+        ) as NodeListOf<HTMLAnchorElement>;
+
+        // 更新現有頁碼按鈕的顯示狀態
+        existingItems.forEach((item) => {
+            const pageIndex = parseInt(item.getAttribute('data-index') || '1');
+
+            if (pageIndex <= totalPages) {
+                // 頁碼在範圍內，根據邏輯決定顯示/隱藏
+                const shouldShow = shouldShowPage(pageIndex, activePage, totalPages, 999) || pageIndex === totalPages;
+                // && shouldShowEndEllipsis(activePage, totalPages, 999)
+                item.style.display = shouldShow ? 'flex' : 'none';
+            } else {
+                // 頁碼超出範圍，隱藏
+                item.style.display = 'none';
+            }
+        });
+
+        // 處理結束省略號顯示
+        const endEllipsis = paginationElement.querySelector('.pagination__ellipsis:last-of-type') as HTMLElement;
+
+        if (endEllipsis) {
+            const needsEndEllipsis = shouldShowEndEllipsis(activePage, totalPages, 999);
+
+            if (needsEndEllipsis) {
+                // 找到最後一個顯示的頁碼按鈕
+                const visibleItems = Array.from(existingItems).filter(
+                    (item) => item.style.display === 'flex' || item.style.display === ''
+                );
+                const lastVisibleItem = visibleItems[visibleItems.length - 1];
+
+                // 將省略號移動到最後一個可見項目之後
+                if (lastVisibleItem && lastVisibleItem.nextSibling !== endEllipsis) {
+                    lastVisibleItem.parentNode?.insertBefore(endEllipsis, lastVisibleItem);
+                }
+
+                endEllipsis.style.display = 'flex';
+            } else {
+                endEllipsis.style.display = 'none';
+            }
+        }
+    }
+};
+
+/**
+ * 計算不同螢幕尺寸下的總頁數
+ * @param slidesPerGroup - 當前螢幕尺寸下的每組幻燈片數量
+ * @returns 總頁數
+ */
+const calculateTotalPages = (totalSlides: string, slidesPerGroup: number) => {
+    return Math.ceil(parseFloat(totalSlides) / slidesPerGroup);
+};
+
+/**
+ * 判斷指定頁碼是否應該顯示在可見範圍內
+ * @param page - 要檢查的頁碼
+ * @param current - 當前活躍頁碼
+ * @param total - 總頁數
+ * @param visible - 可見頁碼數量 (例如: 6)
+ * @returns 是否應該顯示該頁碼
+ *
+ * 邏輯說明:
+ * 1. 如果總頁數 <= 可見數量，直接顯示所有頁碼
+ * 2. 計算以當前頁為中心的可見範圍
+ * 3. 確保範圍不超出邊界 (1 到 total)
+ * 4. 如果範圍不足 visible 數量，向前調整起始位置
+ *
+ * 範例: current=5, total=12, visible=6
+ * → half=3, start=2, end=7
+ * → 顯示頁碼 2,3,4,5,6,7
+ */
+const shouldShowPage = (page: number, current: number, total: number, visible: number): boolean => {
+    // 如果總頁數不超過可見數量，顯示所有頁碼
+    if (total <= visible) return true;
+
+    // 計算可見範圍的一半 (向下取整)
+    const half = Math.floor(visible / 2);
+
+    // 計算起始頁碼 (當前頁 - 一半，但不能小於 1)
+    let start = Math.max(1, current - half);
+
+    // 計算結束頁碼 (起始頁 + 可見數量 - 1，但不能超過總頁數)
+    let end = Math.min(total, start + visible - 1);
+
+    // 如果實際範圍小於應顯示的數量，向前調整起始位置
+    // 例如: 當 current 接近末尾時，確保顯示足夠的頁碼
+    if (end - start + 1 < visible) {
+        start = Math.max(1, end - visible + 1);
+    }
+
+    // 判斷指定頁碼是否在計算出的範圍內
+    return page >= start && page <= end;
+};
+
+/**
+ * 判斷是否應該顯示結束省略號 (...)
+ * @param current - 當前活躍頁碼
+ * @param total - 總頁數
+ * @param visible - 可見頁碼數量
+ * @returns 是否應該顯示結束省略號
+ *
+ * 邏輯說明:
+ * 1. 如果總頁數 <= 可見數量，不需要省略號
+ * 2. 使用與 shouldShowPage 相同的邏輯計算可見範圍
+ * 3. 如果可見範圍的結束頁碼 < 總頁數-1，則需要省略號
+ * 4. 這確保省略號只在 "可見範圍" 和 "最後一頁" 之間有間隔時顯示
+ *
+ * 範例: current=1, total=12, visible=6
+ * → end=6, total-1=11
+ * → 6 < 11，所以顯示省略號: 1,2,3,4,5,6,...,12
+ */
+const shouldShowEndEllipsis = (current: number, total: number, visible: number): boolean => {
+    // 如果總頁數不超過可見數量，不需要省略號
+    if (total <= visible) return false;
+
+    // 使用相同邏輯計算可見範圍 (與 shouldShowPage 一致)
+    const half = Math.floor(visible / 2);
+    let start = Math.max(1, current - half);
+    let end = Math.min(total, start + visible - 1);
+
+    // 確保範圍完整
+    if (end - start + 1 < visible) {
+        start = Math.max(1, end - visible + 1);
+    }
+
+    // 如果可見範圍的結束頁碼 < 倒數第二頁，則需要省略號
+    // 例如: end=6, total=12 → 6 < 11，需要省略號
+    return end < total - 1;
+};
+
+// 綁定分頁按鈕事件監聽器的函數
+const bindPaginationEvents = ({
+    swiperInstance,
+    paginationElement,
+    slidesPerGroupArray
+}: {
+    swiperInstance: Swiper;
+    paginationElement: HTMLElement;
+    slidesPerGroupArray: number[];
+}) => {
+    // 檢查 paginationElement 是否存在
+    if (!paginationElement) return;
+
+    const paginationItems = paginationElement.querySelectorAll(
+        '.pagination__item[data-index]'
+    ) as NodeListOf<HTMLAnchorElement>;
+
+    const handlePaginationClick = (item: HTMLAnchorElement) => {
+        return (e: Event) => {
+            e.preventDefault(); // 阻止預設的連結行為
+
+            if (!swiperInstance) return;
+
+            const pageIndex = parseInt(item.getAttribute('data-index') || '1');
+            // 直接從 Swiper 實例取得當前的 slidesPerGroup
+            const currentSlidesPerGroup = getInitialSlidesPerGroup(slidesPerGroupArray);
+            const targetSlideIndex = -(currentSlidesPerGroup - 1) - 1 + pageIndex * currentSlidesPerGroup;
+
+            // 滑動到指定的 slide
+            if (typeof swiperInstance.slideTo === 'function') {
+                swiperInstance.slideTo(targetSlideIndex);
+            }
+        };
+    };
+
+    // 移除舊的事件監聽器並添加新的
+    paginationItems?.forEach((item) => {
+        // 移除可能存在的舊監聽器
+        const oldHandler = (item as any)._paginationHandler;
+        if (oldHandler) {
+            item.removeEventListener('click', oldHandler);
+        }
+
+        // 添加新的監聽器
+        const newHandler = handlePaginationClick(item);
+        item.addEventListener('click', newHandler);
+        (item as any)._paginationHandler = newHandler;
+    });
+};
+
+swipers.forEach((swiper) => {
+    // 從 pagination 元素的 data 屬性取得配置
+    const container = swiper.parentElement as HTMLElement;
+    const { slidesPerGroup: slidesPerGroupData = '1,2,3', totalSlides = '0', targetPagination = '' } = container.dataset;
+    const slidesPerGroupArray = slidesPerGroupData
+        .split(',')
+        .map((num) => (isNaN(parseInt(num.trim())) ? 1 : parseInt(num.trim())));
+    const paginationElement = document.querySelector(targetPagination) as HTMLElement;
+    const navigation = {
+        nextEl: [navigationEl(paginationElement.id, 1, 'next'), navigationEl(swiper.id, 2, 'next')].filter(Boolean).join(','),
+        prevEl: [navigationEl(paginationElement.id, 1, 'prev'), navigationEl(swiper.id, 2, 'prev')].filter(Boolean).join(',')
+    };
+
+    mySwiper(swiper, {
+        spaceBetween: 20,
+        slidesPerView: 3,
+        slidesPerGroup: slidesPerGroupArray[0],
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            768: {
+                slidesPerView: 2,
+                slidesPerGroup: slidesPerGroupArray[1]
+            },
+            1280: {
+                slidesPerView: 3,
+                slidesPerGroup: slidesPerGroupArray[2]
+            }
+        },
+        navigation,
+        on: {
+            breakpoint(swiperInstance) {
+                // 檢查 slides 是否存在
+                // if(!swiperInstance.slides.length) return;
+
+                // 更新 pagination 顯示
+                updatePaginationDisplay({
+                    totalSlides,
+                    slidesPerGroup: getInitialSlidesPerGroup(slidesPerGroupArray),
+                    activePage: swiperInstance.activeIndex,
+                    paginationElement
+                });
+
+                // 重新綁定事件監聽器
+                bindPaginationEvents({
+                    swiperInstance,
+                    paginationElement,
+                    slidesPerGroupArray
+                });
+            },
+            slideChange(swiperInstance) {
+                const activeIndex = swiperInstance.activeIndex;
+                // 直接從 Swiper 實例取得當前的 slidesPerGroup
+                const currentSlidesPerGroup = getInitialSlidesPerGroup(slidesPerGroupArray);
+                const currentPage = Math.floor(activeIndex / currentSlidesPerGroup) + 1; // 根據 slidesPerGroup 計算頁碼
+
+                // 重新計算並更新顯示範圍
+                updatePaginationDisplay({
+                    totalSlides,
+                    slidesPerGroup: currentSlidesPerGroup,
+                    activePage: currentPage,
+                    paginationElement
+                });
+
+                // 檢查 paginationElement 是否存在
+                if (!paginationElement) return;
+
+                // 取得當前的分頁按鈕
+                const currentPaginationItems = paginationElement.querySelectorAll(
+                    '.pagination__item[data-index]'
+                ) as NodeListOf<HTMLAnchorElement>;
+
+                // 移除所有按鈕的 active 狀態
+                currentPaginationItems?.forEach((item) => {
+                    item.classList.remove('pagination__item--active');
+                    item.removeAttribute('aria-current');
+                });
+
+                // 為當前頁面的按鈕添加 active 狀態
+                const currentPageButton = paginationElement.querySelector(
+                    `.pagination__item[data-index="${currentPage}"]`
+                ) as HTMLAnchorElement;
+                if (currentPageButton) {
+                    currentPageButton.classList.add('pagination__item--active');
+                    currentPageButton.setAttribute('aria-current', 'page');
+                }
+            }
+        }
+    });
+});

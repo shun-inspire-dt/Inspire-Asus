@@ -1,0 +1,71 @@
+---
+/** Common Component */
+import Swiper from '@components/common/swiper/swiper.astro';
+import Title from '../section/title.astro';
+import Pagination from '../pagination/pagination.astro';
+import NavigatiorArrow from '../icons/arrows/navigatiorArrow.astro';
+/** Style */
+import './relative.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    count?: number;
+    type?: 1 | 2 | 3;
+}
+
+const { IDName, className, style, attribute = {}, title = 'Title', count = 1, type = 1 } = Astro.props as Props;
+---
+
+<div
+    class:list={[
+        className,
+        ':uno-section-relative: overflow-hidden',
+        { ':uno-section-relative-1: sect-p-sm md:sect-p-md xl:sect-p-lg': type === 1 },
+        { ':uno-section-relative-2: sect-p-sub-md-t md:sect-p-sub-lg-t xl:sect-p-sub-xl-t': type === 2 },
+        { ':uno-section-relative-3: sect-p-sub-sm-t md:sect-p-sub-md-t xl:sect-p-sub-lg-t': type === 3 }
+    ]}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-section-relative-inner: flex flex-col items-center justify-center">
+        <Title title={title} size="md" />
+        <Swiper
+            IDName={IDName}
+            className="section-relative-swiper-container"
+            swiperClassName="section-relative-swiper"
+            attribute={{
+                'data-slides-per-group': '1,2,3',
+                'data-total-slides': count,
+                'data-target-pagination': `#${IDName}-pagination`
+            }}
+        >
+            {
+                Array.from({ length: count }).map(() => (
+                    <div class="swiper-slide">
+                        <slot />
+                    </div>
+                ))
+            }
+            <Fragment slot="outspace">
+                <div class="section-relative-navigatior-arrow section-relative-navigatior-arrow--prev">
+                    <NavigatiorArrow direction="left" />
+                </div>
+                <div class="section-relative-navigatior-arrow section-relative-navigatior-arrow--next">
+                    <NavigatiorArrow direction="right" />
+                </div>
+            </Fragment>
+        </Swiper>
+        <Pagination
+            IDName={`${IDName}-pagination`}
+            className="section-relative-pagination"
+            total={count}
+            visiblePages={count}
+            noDisabled
+            hasDataValue
+        />
+    </div>
+</div>
