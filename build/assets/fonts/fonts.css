@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "TTNormsProNormal";
+  font-style: normal;
+  font-weight: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('TTNormsProNormal_normal_normal.woff2') format('woff2'), 
+       url('TTNormsProNormal_normal_normal.woff') format('woff');
+}
+
+@font-face {
+  font-family: "TTNormsProMedium";
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+  font-display: swap;
+  src: url('TTNormsProMedium_normal_normal.woff2') format('woff2'), 
+       url('TTNormsProMedium_normal_normal.woff') format('woff');
+}
