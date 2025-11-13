@@ -1,10 +1,60 @@
 ---
+/**
+ * Modal 彈窗組件
+ * 
+ * 基於 Bootstrap Modal 的可重用彈窗組件，支援多種尺寸、位置和自訂選項
+ * 
+ * @example
+ * ```astro
+ * <Modal 
+ *   id="example" 
+ *   title="範例彈窗" 
+ *   sizes="lg" 
+ *   center={true}
+ * >
+ *   <p>彈窗內容</p>
+ * </Modal>
+ * ```
+ */
+
 /** Common Components */
 /** Button */
 import Button from '@components/common/button/button.astro';
 /** Style */
 import './modal.scss';
 
+/**
+ * Modal 組件的 Props 介面
+ * 
+ * @property {string} id - Modal 的唯一識別 ID
+ * @property {'sm' | 'md' | 'lg' | 'xl'} sizes - Modal 尺寸 @default 'md'
+ * @property {boolean} center - 是否垂直置中 @default true
+ * @property {boolean} scrollable - 是否可滾動 @default false
+ * @property {string} title - Modal 標題
+ * @property {attribute} attribute - 額外的 HTML 屬性
+ * @property {string} Modalclass - Modal 容器的 CSS 類別
+ * @property {string} bodyClass - Modal 主體的 CSS 類別
+ * @property {string} titleClass - Modal 標題的 CSS 類別
+ * @property {string} dialogClass - Modal 對話框的 CSS 類別
+ * @property {string} contentClass - Modal 內容的 CSS 類別
+ * @property {boolean} hideHeader - 是否隱藏標題列 @default false
+ * @property {boolean} hideTitle - 是否隱藏標題文字 @default false
+ * @property {string} headerClass - 標題列的 CSS 類別
+ * @property {boolean} hideColse - 是否隱藏關閉按鈕 @default false
+ * @property {boolean} hideFooter - 是否隱藏底部按鈕列 @default false
+ * @property {string} footerClass - 底部按鈕列的 CSS 類別
+ * @property {string} cancelTitle - 取消按鈕文字 @default '取消'
+ * @property {variant} cancelVariant - 取消按鈕樣式變體
+ * @property {boolean} cancelDisabled - 取消按鈕是否禁用 @default false
+ * @property {string} cancelClass - 取消按鈕的 CSS 類別
+ * @property {boolean} cancelOnly - 是否只顯示取消按鈕 @default false
+ * @property {string} okTitle - 確認按鈕文字 @default '儲存'
+ * @property {variant} okVariant - 確認按鈕樣式變體
+ * @property {boolean} okDisabled - 確認按鈕是否禁用 @default false
+ * @property {string} okClass - 確認按鈕的 CSS 類別
+ * @property {string[]} okAttribute - 確認按鈕的額外屬性
+ * @property {boolean} okOnly - 是否只顯示確認按鈕 @default false
+ */
 export interface Props {
     id: string;
     sizes?: 'sm' | 'md' | 'lg' | 'xl';
@@ -12,27 +62,22 @@ export interface Props {
     scrollable?: boolean;
     title?: string;
     attribute?: attribute;
-
     Modalclass?: string;
     bodyClass?: string;
     titleClass?: string;
     dialogClass?: string;
     contentClass?: string;
-
     hideHeader?: boolean;
     hideTitle?: boolean;
     headerClass?: string;
     hideColse?: boolean;
-
     hideFooter?: boolean;
     footerClass?: string;
-
     cancelTitle?: string;
     cancelVariant?: variant;
     cancelDisabled?: boolean;
     cancelClass?: string;
     cancelOnly?: boolean;
-
     okTitle?: string;
     okVariant?: variant;
     okDisabled?: boolean;
@@ -163,9 +208,19 @@ const modalSize = modalSizes?.[sizes];
 </div>
 
 <script>
+    /**
+     * Modal 初始化腳本
+     * 
+     * 自動初始化頁面上所有的 Modal 元素，
+     * 為每個 Modal 添加事件監聽器和方法
+     */
+    
     /** Modules */
     import { Modal } from '@js/components/common/modal/modal';
 
+    /**
+     * 查找所有 Modal 元素並初始化
+     */
     const modals = document.querySelectorAll('.modal') as NodeListOf<HTMLElement>;
     [...modals].forEach((modal) => {
         new Modal(modal).addMethod();

@@ -1,100 +1,165 @@
+/**
+ * Modal 彈窗樣式
+ * 
+ * 基於 Bootstrap Modal 的自訂樣式，提供完整的 CSS 變數系統用於客製化
+ * 支援多種尺寸、位置和外觀設定，包含響應式設計和無障礙功能
+ * 
+ * @features
+ * - 完整的 CSS 變數系統，支援深度客製化
+ * - 響應式尺寸變體 (sm, md, lg, xl)
+ * - 可選的標題列、底部按鈕列顯示/隱藏
+ * - 自訂關閉按鈕樣式和位置
+ * - 滾動內容支援和自訂滾動條
+ * - 靈活的按鈕佈局和尺寸控制
+ * 
+ * @example 基本使用
+ * ```scss
+ * .modal {
+ *   --bs-modal-width: 500px;
+ *   --modal-title-font-size: 1.25rem;
+ *   --modal-footer-justify: center;
+ * }
+ * ```
+ * 
+ * @example 自訂尺寸變體
+ * ```scss
+ * .modal-lg {
+ *   --bs-modal-width-lg: 800px;
+ *   --modal-body-padding-x: 2rem;
+ * }
+ * ```
+ * 
+ * @example 隱藏元素的樣式調整
+ * ```scss
+ * .modal-body.hideHeader {
+ *   --modal-hide-header-body-padding-top: 2rem;
+ * }
+ * ```
+ */
+
 @use '../../../scss/mixin/scrollbar.scss' as scrollbar;
 
+/**
+ * Modal 主要樣式類別
+ * 
+ * 包含所有 Bootstrap Modal 變數和自訂變數的定義
+ * 變數分為三大類：Bootstrap 原生變數、自訂擴展變數、尺寸變體
+ * 
+ * @structure
+ * 1. Bootstrap Modal 基礎變數 - 覆蓋 Bootstrap 預設值
+ * 2. 自訂 Modal 變數 - 擴展功能和樣式控制
+ * 3. Modal 尺寸變體 - 響應式尺寸設定
+ * 4. Modal 樣式類別 - 具體的樣式實現
+ */
 .modal {
-    /** BS Modal 本身 */
-    // --bs-modal-zindex: ;
-    // --bs-modal-width: ;
-    /** BS Modal Body Padding */
-    // --bs-modal-padding: ;
-    // --bs-modal-margin: ;
-    /** BS Modal Font Color */
-    // --bs-modal-color: ;
-    // --bs-modal-bg: ;
-    // --bs-modal-border-color: ;
-    // --bs-modal-border-width: ;
-    // --bs-modal-border-radius: ;
-    // --bs-modal-box-shadow: ;
-    /** BS Modal Header */
-    // --bs-modal-inner-border-radius: ;
-    // --bs-modal-header-border-color: ;
-    // --bs-modal-header-border-width: ;
-    /** BS Modal Title */
-    // --bs-modal-title-line-height: ;
-    /** BS Footer Title */
-    // --bs-modal-footer-gap: ;
-    // --bs-modal-footer-bg: ;
-    // --bs-modal-footer-border-color: ;
-    // --bs-modal-footer-border-width: ;
-    /** BS Modal Size */
-    // --bs-modal-width-sm: ;
-    // --bs-modal-width-lg: ;
-    // --bs-modal-width-xl: ;
+    /* ===== Bootstrap Modal 基礎變數 ===== */
+    /* 這些變數直接覆蓋 Bootstrap Modal 的預設樣式 */
 
-    /** --------------------------------------------- */
+    /** Modal 容器設定 */
+    --bs-modal-zindex: 1052; /* Modal 的 z-index 層級 */
+    --bs-modal-width: 51rem; /* Modal 的寬度 */
 
-    /** Modal Header */
-    // --modal-header-justify: ;
-    // --modal-header-padding-x: ;
-    // --modal-header-padding-top: ;
-    // --modal-header-padding-bottom: ;
-    /** Modal Title */
-    // --modal-title-justify: ;
-    // --modal-title-padding-x: ;
-    // --modal-title-padding-top: ;
-    // --modal-title-padding-bottom: ;
-    // --modal-title-gap: ;
-    // --modal-title-font-size: ;
-    // --modal-title-color: ;
-    // --modal-title-font-weight: ;
-    // --modal-title-font-family: ;
-    // --modal-title-line-height: ;
-    // --modal-title-letter-spacing: ;
-    /** Footer Title */
-    // --modal-footer-padding-x: ;
-    // --modal-footer-padding-top: ;
-    // --modal-footer-padding-bottom: ;
-    // --modal-footer-justify: ;
-    // --modal-footer-button-max-width: ;
-    // --modal-footer-button-width: ;
-    /** Modal Body */
-    // --modal-body-padding-x: ;
-    // --modal-body-padding-top: ;
-    // --modal-body-padding-bottom: ;
-    // --modal-hide-header-body-padding-top: ;
-    // --modal-hide-footer-body-padding-bottom: ;
-    /** Modal Close Button */
-    // --modal-close-size: ;
-    // --modal-close-padding: ;
-    // --modal-close-top: ;
-    // --modal-close-right: ;
-    // --modal-close-background-image: ;
-    // --modal-close-hover-background-image: ;
+    /** Modal 間距設定 */
+    --bs-modal-padding: 4rem; /* Modal 內邊距 */
+    --bs-modal-margin: 1.75rem; /* Modal 外邊距 */
 
-    /** Modal Size */
-    // &-sm {
-    //     --bs-modal-width: var(--bs-modal-width-sm);
-    // }
-    // &-lg {
-    //     @screen md {
-    //         --bs-modal-width: var(--bs-modal-width-lg);
-    //     }
-    // }
-    // &-xl {
-    //     @screen md {
-    //         --bs-modal-width: var(--bs-modal-width-xl);
-    //     }
-    // }
+    /** Modal 外觀設定 */
+    --bs-modal-color: var(--color-gray-900, #181818); /* Modal 文字顏色 */
+    --bs-modal-bg: var(--color-white, #ffffff); /* Modal 背景顏色 */
+    --bs-modal-border-color: var(--color-white, #ffffff); /* Modal 邊框顏色 */
+    --bs-modal-border-width: 0px; /* Modal 邊框寬度 */
+    --bs-modal-border-radius: 1.5rem; /* Modal 圓角 */
+    --bs-modal-box-shadow: none; /* Modal 陰影 */
 
+    /** Modal 標題列設定 */
+    --bs-modal-inner-border-radius: 1.5rem; /* 內部圓角 */
+    --bs-modal-header-border-color: var(--color-white, #ffffff); /* 標題列邊框顏色 */
+    --bs-modal-header-border-width: 0px; /* 標題列邊框寬度 */
+
+    /** Modal 標題設定 */
+    --bs-modal-title-line-height: var(--line-height-24, 1.5rem); /* 標題行高 */
+
+    /** Modal 底部設定 */
+    --bs-modal-footer-gap: 1rem; /* 底部按鈕間距 */
+    --bs-modal-footer-bg: var(--color-white, #ffffff); /* 底部背景顏色 */
+    --bs-modal-footer-border-color: var(--color-white, #ffffff); /* 底部邊框顏色 */
+    --bs-modal-footer-border-width: 0px; /* 底部邊框寬度 */
+
+    /** Modal 尺寸變體 */
+    --bs-modal-width-sm: calc(100% - 2.5rem); /* 小尺寸 Modal 寬度 */
+    --bs-modal-width-lg: 43rem; /* 大尺寸 Modal 寬度 */
+    --bs-modal-width-xl: 51rem; /* 超大尺寸 Modal 寬度 */
+
+    /* ===== 自訂 Modal 變數 ===== */
+    /* 這些變數提供額外的樣式控制，超越 Bootstrap 原生功能 */
+
+    /** Modal 標題列自訂設定 */
+    --modal-header-justify: center; /* 標題列對齊方式 */
+    --modal-header-padding-x: 0; /* 標題列水平內邊距 */
+    --modal-header-padding-top: 0; /* 標題列上內邊距 */
+    --modal-header-padding-bottom: 0; /* 標題列下內邊距 */
+
+    /** Modal 標題自訂設定 */
+    --modal-title-justify: center; /* 標題對齊方式 */
+    --modal-title-padding-x: 0; /* 標題水平內邊距 */
+    --modal-title-padding-top: 0; /* 標題上內邊距 */
+    --modal-title-padding-bottom: 0; /* 標題下內邊距 */
+    --modal-title-gap: 0.5rem; /* 標題元素間距 */
+    --modal-title-font-size: var(--fs-20, 1.25rem); /* 標題字體大小 */
+    --modal-title-color: var(--color-gray-900, #181818); /* 標題文字顏色 */
+    --modal-title-font-weight: 500; /* 標題字體粗細 */
+    --modal-title-font-family: var(--font-family-tt-norms-pro-medium); /* 標題字體家族 */
+    --modal-title-line-height: var(--line-height-20, 1.75rem); /* 標題行高 */
+    --modal-title-letter-spacing: var(--letter-spacing, 0); /* 標題字母間距 */
+
+    /** Modal 底部自訂設定 */
+    --modal-footer-padding-x: 0; /* 底部水平內邊距 */
+    --modal-footer-padding-top: 0; /* 底部上內邊距 */
+    --modal-footer-padding-bottom: 0; /* 底部下內邊距 */
+    --modal-footer-justify: center; /* 底部按鈕對齊方式 */
+    --modal-footer-button-max-width: 100%; /* 底部按鈕最大寬度 */
+    --modal-footer-button-width: 9.75rem; /* 底部按鈕寬度 */
+
+    /** Modal 主體自訂設定 */
+    --modal-body-padding-x: 0; /* 主體水平內邊距 */
+    --modal-body-padding-top: 0; /* 主體上內邊距 */
+    --modal-body-padding-bottom: 0; /* 主體下內邊距 */
+    --modal-hide-header-body-padding-top: 0; /* 隱藏標題時主體上內邊距 */
+    --modal-hide-footer-body-padding-bottom: 0; /* 隱藏底部時主體下內邊距 */
+
+    /** Modal 關閉按鈕自訂設定 */
+    --modal-close-size: 1rem; /* 關閉按鈕尺寸 */
+    --modal-close-padding: 0; /* 關閉按鈕內邊距 */
+    --modal-close-top: 1.125rem; /* 關閉按鈕上方位置 */
+    --modal-close-right: 1.125rem; /* 關閉按鈕右方位置 */
+    --modal-close-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2L2 14M2 2L14 14" stroke="%234D4D4D" stroke-linecap="round"/></svg>'); /* 關閉按鈕背景圖片 */
+    --modal-close-hover-background-image: var(--modal-close-background-image); /* 關閉按鈕懸停背景圖片 */
+
+    /* ===== Modal 樣式類別 ===== */
+
+    /**
+     * Modal 標題列樣式
+     * 包含標題、關閉按鈕和其他標題列元素
+     */
     &-header {
         @apply flex items-center relative z-5;
         justify-content: var(--modal-header-justify);
         padding: var(--modal-header-padding-top) var(--modal-header-padding-x) var(--modal-header-padding-bottom);
 
+        /**
+         * 隱藏標題文字修飾符
+         * 僅隱藏標題文字，保留標題列結構
+         */
         &.hideTitle {
             .modal-title span {
                 @apply hidden;
             }
         }
+
+        /**
+         * 隱藏整個標題列修飾符
+         * 完全移除標題列並重置相關變數
+         */
         &.hideHeader {
             --bs-modal-header-top: 0rem;
             --bs-modal-header-bottom: 0rem;
@@ -107,18 +172,33 @@
                 @apply hidden;
             }
         }
+
+        /**
+         * 隱藏關閉按鈕修飾符
+         * 隱藏關閉按鈕並禁用其事件
+         */
         &.hideCloseButton {
             .modal-close-button {
                 @apply hidden pointer-events-none;
             }
         }
     }
+
+    /**
+     * Modal 標題樣式
+     * 控制標題文字的排版、間距和字體樣式
+     * 支援左右兩側插槽內容的排列
+     */
     &-title {
         @apply flex items-center;
         justify-content: var(--modal-title-justify);
         gap: var(--modal-title-gap);
         padding: var(--modal-title-padding-top) var(--modal-title-padding-x) var(--modal-title-padding-bottom);
 
+        /**
+         * 標題文字樣式
+         * 使用 CSS 變數控制所有字體相關屬性
+         */
         span {
             color: var(--modal-title-color);
             font-size: var(--modal-title-font-size);
@@ -129,32 +209,74 @@
             text-indent: var(--modal-title-letter-spacing);
         }
     }
+
+    /**
+     * Modal 主體內容樣式
+     * 包含主要內容區域，支援滾動和響應式佈局
+     * 根據標題列和底部按鈕的顯示狀態調整內邊距
+     */
     &-body {
         padding: var(--modal-body-padding-top) var(--modal-body-padding-x) var(--modal-body-padding-bottom);
         @include scrollbar.scrollbar();
 
+        /**
+         * 隱藏標題列時的主體樣式
+         * 調整上內邊距以補償缺失的標題列
+         */
         &.hideHeader {
             padding-top: var(--modal-hide-header-body-padding-top);
         }
+
+        /**
+         * 隱藏底部按鈕列時的主體樣式
+         * 調整下內邊距以補償缺失的底部按鈕列
+         */
         &.hideFooter {
             padding-bottom: var(--modal-hide-footer-body-padding-bottom);
         }
+
+        /**
+         * 內容元素的基礎樣式
+         * 確保文字內容正確換行和寬度限制
+         */
         :where(dev, p, span, li) {
             @apply max-w-full whitespace-normal;
         }
     }
+
+    /**
+     * Modal 底部按鈕列樣式
+     * 包含取消和確認按鈕，支援自訂對齊方式和按鈕尺寸
+     * 使用 flexbox 佈局控制按鈕間距和排列
+     */
     &-footer {
         justify-content: var(--modal-footer-justify);
         padding: var(--modal-footer-padding-top) var(--modal-footer-padding-x) var(--modal-footer-padding-bottom);
         gap: var(--bs-modal-footer-gap);
+
+        /**
+         * 重置所有直接子元素的外邊距
+         * 避免按鈕預設樣式影響佈局
+         */
         & > * {
             @apply m-0rem;
         }
+
+        /**
+         * 底部按鈕的尺寸控制
+         * 支援最大寬度和固定寬度設定
+         */
         .btn {
             max-width: var(--modal-footer-button-max-width);
             width: var(--modal-footer-button-width);
         }
     }
+
+    /**
+     * Modal 關閉按鈕樣式
+     * 位於標題列右上角的關閉按鈕
+     * 支援自訂圖示和懸停效果
+     */
     &-close-button {
         @apply bg-contain bg-center bg-no-repeat;
         position: absolute;
@@ -165,10 +287,23 @@
         background: var(--modal-close-background-image) !important;
         padding: var(--modal-close-padding);
 
+        /**
+         * 關閉按鈕懸停狀態
+         * 切換到懸停時的背景圖片
+         */
         &:hover {
             background: var(--modal-close-hover-background-image) !important;
         }
     }
+
+    /**
+     * Modal 背景遮罩樣式
+     * Bootstrap Modal 的背景遮罩層
+     * 可在此處添加自訂遮罩效果
+     */
     &-backdrop {
+        --bs-backdrop-zindex: 1050; /* z-index */
+        --bs-backdrop-bg: var(--backdrop-color); /* 背景顏色 */
+        --bs-backdrop-opacity: var(--backdrop-opacity); /* 透明度 */
     }
 }
