@@ -45,8 +45,9 @@
     --checkbox-letter-spacing: var(--letter-spacing); /* 字母間距 */
 
     /* 標籤佈局變數 */
+    --checkbox-label-display: inline-block; /* 標籤排列方式 */
     --checkbox-label-flex-direction: row; /* 標籤內容排列方向 */
-    --checkbox-label-align-items: center; /* 標籤垂直對齊 */
+    --checkbox-label-align-items: flex-start; /* 標籤垂直對齊 */
     --checkbox-label-justify-content: flex-start; /* 標籤水平對齊 */
     --checkbox-label-gap: 0px; /* 標籤內容間距 */
 
@@ -117,7 +118,7 @@
     .form-check-label {
         /* 禁止文字選取，設定游標為指標 */
         @apply select-none cursor-pointer;
-        display: flex;
+        display: var(--checkbox-label-display);
         flex-direction: var(--checkbox-label-flex-direction);
         align-items: var(--checkbox-label-align-items);
         justify-content: var(--checkbox-label-justify-content);
