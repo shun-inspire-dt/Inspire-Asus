@@ -57,10 +57,10 @@
 
     /** Modal 容器設定 */
     --bs-modal-zindex: 1052; /* Modal 的 z-index 層級 */
-    --bs-modal-width: 51rem; /* Modal 的寬度 */
+    --bs-modal-width: 20rem; /* Modal 的寬度 */
 
     /** Modal 間距設定 */
-    --bs-modal-padding: 4rem; /* Modal 內邊距 */
+    --bs-modal-padding: 3rem; /* Modal 內邊距 */
     --bs-modal-margin: 1.75rem; /* Modal 外邊距 */
 
     /** Modal 外觀設定 */
@@ -109,7 +109,7 @@
     --modal-title-color: var(--color-gray-900, #181818); /* 標題文字顏色 */
     --modal-title-font-weight: 500; /* 標題字體粗細 */
     --modal-title-font-family: var(--font-family-tt-norms-pro-medium); /* 標題字體家族 */
-    --modal-title-line-height: var(--line-height-20, 1.75rem); /* 標題行高 */
+    --modal-title-line-height: var(--line-height-24, 2rem); /* 標題行高 */
     --modal-title-letter-spacing: var(--letter-spacing, 0); /* 標題字母間距 */
 
     /** Modal 底部自訂設定 */
@@ -118,7 +118,7 @@
     --modal-footer-padding-bottom: 0; /* 底部下內邊距 */
     --modal-footer-justify: center; /* 底部按鈕對齊方式 */
     --modal-footer-button-max-width: 100%; /* 底部按鈕最大寬度 */
-    --modal-footer-button-width: 9.75rem; /* 底部按鈕寬度 */
+    --modal-footer-button-width: 100%; /* 底部按鈕寬度 */
 
     /** Modal 主體自訂設定 */
     --modal-body-padding-x: 0; /* 主體水平內邊距 */
@@ -135,7 +135,40 @@
     --modal-close-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2L2 14M2 2L14 14" stroke="%234D4D4D" stroke-linecap="round"/></svg>'); /* 關閉按鈕背景圖片 */
     --modal-close-hover-background-image: var(--modal-close-background-image); /* 關閉按鈕懸停背景圖片 */
 
-    /* ===== Modal 樣式類別 ===== */
+    /* ===== Breakpoint 樣式 ===== */
+    @screen md {
+        --bs-modal-width: var(--bs-modal-width-lg); /* Modal 的寬度 */
+        --bs-modal-padding: 4rem;
+        /** Modal 底部自訂設定 */
+        --modal-footer-button-max-width: 9.75rem; /* 底部按鈕最大寬度 */
+        --modal-footer-button-width: 9.75rem; /* 底部按鈕寬度 */
+    }
+    @screen xl {
+        --bs-modal-width: var(--bs-modal-width-xl); /* Modal 的寬度 */
+    }
+
+    /** Modal 尺寸變體 */
+    .modal-xl {
+        --bs-modal-width: calc(100% - 2.5rem); /* 超大尺寸 Modal 寬度 */
+        @screen md {
+            --bs-modal-width: 43rem; /* 超大尺寸 Modal 寬度 */
+        }
+        @screen xl {
+            --bs-modal-width: 51rem; /* 超大尺寸 Modal 寬度 */
+        }
+    }
+    .modal-lg {
+        --bs-modal-width: calc(100% - 2.5rem); /* 大尺寸 Modal 寬度 */
+        @screen md {
+            --bs-modal-width: 43rem; /* 大尺寸 Modal 寬度 */
+        }
+    }
+    .modal-sm {
+        --bs-modal-width: calc(100% - 2.5rem); /* 小尺寸 Modal 寬度 */
+        @screen sm {
+            --bs-modal-width: 20rem; /* 小尺寸 Modal 寬度 */
+        }
+    }
 
     /**
      * Modal 標題列樣式
@@ -190,7 +223,7 @@
      * 支援左右兩側插槽內容的排列
      */
     &-title {
-        @apply flex items-center;
+        @apply flex flex-col items-center;
         justify-content: var(--modal-title-justify);
         gap: var(--modal-title-gap);
         padding: var(--modal-title-padding-top) var(--modal-title-padding-x) var(--modal-title-padding-bottom);
