@@ -1,0 +1,67 @@
+---
+/** Common Component */
+import Title, { type Props as TitleProps } from './title.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    type?: 1 | 2;
+    display?: 'flex' | 'grid';
+    block?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title = '',
+    type = 1,
+    display = 'flex',
+    block = false
+} = Astro.props as Props;
+const normalStyle = '';
+---
+
+<div
+    class:list={[
+        className,
+        ':uno-section-form-container: xl:sect-p-lg md:sect-p-md sect-p-sm',
+        { ':uno-section-form-container-BG: bg-gray-50': type === 1 },
+        { ':uno-section-form-container-BG-Image: bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat': type === 2 }
+    ]}
+    style={{ ...(type === 2 ? { '--bg-image': `url("/assets/images/pages/feature-BG-2.png")` } : {}), ...style }}
+    {...attribute}
+>
+    <form id={IDName ? `${IDName}Form` : undefined} class=":uno-section-form-container-inner: container-fluid" action="">
+        {title && <Title title={title} />}
+        <slot name="top" />
+        <div
+            class:list={[
+                ':uno-section-form-body: mx-auto py-2.5rem md:py-3rem px-1.5rem md:px-2.5rem bg-white rounded-xl',
+                {
+                    ':uno-section-form-normal: md:max-w-10/12 xl:max-w-1/2': !block,
+                    ':uno-section-form-block: w-full': block
+                }
+            ]}
+        >
+            <slot name="sub-title" />
+            <div
+                class:list={[
+                    {
+                        [`:uno-section-form-column: flex flex-col items-center gap-1.5rem`]: display === 'flex'
+                    },
+                    {
+                        [`:uno-section-form-grid: grid grid-cols-1 xl:grid-cols-2 gap-1.5rem xl:gap-y-1.5rem xl:gap-x-2rem`]:
+                            display === 'grid'
+                    }
+                ]}
+            >
+                <slot />
+            </div>
+        </div>
+    </form>
+</div>
