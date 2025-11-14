@@ -201,13 +201,13 @@ const { IDName, className, bodyClassName, footerShowBorderTop = false, minMargin
         <slot name="link" />
     </head>
     <body class:list={bodyClassName}>
-        <!-- <Toast /> -->
         <Header />
         <main id={IDName} class:list={[className, { 'margin-top': minMarginHeader }]} data-name={IDName}>
             <slot />
         </main>
         <Footer showBorderTop={footerShowBorderTop} />
         <Script />
+        <Toast />
         <slot name="script" />
     </body>
 </html>
