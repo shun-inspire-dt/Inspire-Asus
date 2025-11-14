@@ -1,7 +1,8 @@
 @import './input/input.scss';
 
 textarea.control-input {
-    min-height: 100px;
+    --textarea-height: 6.25rem;
+    min-height: var(--textarea-height);
     &.noresize {
         resize: none;
     }

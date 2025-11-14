@@ -33,6 +33,7 @@ const {
     successFeedback,
     FeedbackIcon,
     attribute = {},
+    style,
     size,
     noResize
 } = Astro.props as Props;
@@ -77,6 +78,9 @@ const validAttribute = {
     disabled={disabled}
     readonly={readonly}
     aria-label={title}
+    style={style}
     {...attribute}
-    {...validAttribute}>{(value as string)?.trim()}</textarea
+    {...validAttribute}
 >
+    {(value as string)?.trim()}
+</textarea>
