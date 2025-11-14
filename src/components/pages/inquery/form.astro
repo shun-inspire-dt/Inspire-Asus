@@ -1,0 +1,89 @@
+---
+/** Common Component */
+import MySectionForm from '@components/common/section/form.astro';
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Select */
+import Select from '@components/common/form/select/select.astro';
+/** Textarea */
+import Textarea from '@components/common/form/textarea.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** CheckboxGroup */
+import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
+/** Checkbox */
+import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Style */
+import './form.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'Inquery', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MySectionForm
+    IDName={IDName}
+    type={2}
+    display="grid"
+    title="諮詢清單"
+    block
+    class:list={[className]}
+    style={style}
+    {...attribute}
+>
+    <h2
+        class=":uno-inquery-title: flex items-center justify-start pb-1.5rem xl:pb-2rem text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left"
+        slot="sub-title"
+    >
+        聯絡資訊
+    </h2>
+    <div class=":uno-section-form-grid-item: flex flex-col gap-24px">
+        <InputGroup label="公司名稱" block>
+            <Input />
+        </InputGroup>
+        <InputGroup label="統編" block>
+            <Input type="text" inputmode="numeric" minLength={8} maxLength={8} />
+        </InputGroup>
+        <InputGroup label="部門" block>
+            <Select
+                data={[
+                    { text: 'IT部門', value: 'IT部門' },
+                    { text: '財務部門', value: '財務部門' }
+                ]}
+                value="IT部門"
+            />
+        </InputGroup>
+        <InputGroup label="職稱" block>
+            <Input />
+        </InputGroup>
+        <InputGroup label="公司電話" block>
+            <Input type="tel" inputmode="tel" />
+        </InputGroup>
+    </div>
+    <div class=":uno-section-form-grid-item: flex flex-col gap-24px">
+        <InputGroup label="聯絡姓名" block>
+            <Input />
+        </InputGroup>
+        <InputGroup label="聯絡手機" block>
+            <Input type="tel" inputmode="tel" />
+        </InputGroup>
+        <InputGroup label="聯絡信箱" block>
+            <Input type="email" inputmode="email" />
+        </InputGroup>
+        <InputGroup label="備註" block>
+            <Textarea style={{ 'min-height': '8.625rem' }} />
+        </InputGroup>
+        <div class="flex items-center justify-end">
+            <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" size="lg" title="送出" variant="blue" block>送出</Button>
+        </div>
+    </div>
+</MySectionForm>

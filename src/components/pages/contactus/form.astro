@@ -1,0 +1,91 @@
+---
+/** Common Component */
+import MySectionForm from '@components/common/section/form.astro';
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Textarea */
+import Textarea from '@components/common/form/textarea.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** CheckboxGroup */
+import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
+/** Checkbox */
+import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Style */
+import './form.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'Contactus', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MySectionForm IDName={IDName} type={2} title="聯絡我們" class:list={[className]} style={style} {...attribute}>
+    <InputGroup label="聯絡人姓名" block>
+        <Input />
+    </InputGroup>
+    <InputGroup label="公司名稱" block>
+        <Input />
+    </InputGroup>
+    <InputGroup label="職稱" block>
+        <Input />
+    </InputGroup>
+    <InputGroup label="公司電子郵件" block>
+        <Input type="email" inputmode="email" />
+    </InputGroup>
+    <InputGroup label="公司電話" block>
+        <Input type="tel" inputmode="tel" />
+    </InputGroup>
+    <InputGroup label="我們可以如何協助您？" block>
+        <Textarea />
+    </InputGroup>
+    <CheckboxGroup showTop={false}>
+        <Checkbox>
+            我同意華碩及華碩授權經銷商，透過上述表單所提供的電話/電子郵件與我聯繫，限用於商業用途和報價，並同意 "<ALink
+                link=""
+                showArrow={false}
+                extend>隱私權條款</ALink
+            >"
+        </Checkbox>
+        <Checkbox>
+            我同意提供上述資訊給華碩，用以接收華碩新聞、活動、最新產品和服務信息等相關資訊，並同意 "<ALink
+                link=""
+                showArrow={false}
+                extend>隱私權條款</ALink
+            >"
+        </Checkbox>
+    </CheckboxGroup>
+    <Button type={'submit'} size="lg" title="送出" variant="blue" block>送出</Button>
+</MySectionForm>
+
+<script>
+    const toast = document.querySelector('#toastModal') as HTMLElement;
+    const form = document.querySelector('#ContactusForm') as HTMLFormElement;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        toast.dispatchEvent(
+            new CustomEvent('fire', {
+                detail: {
+                    icon: 'success',
+                    title: '表單已送出',
+                    text: '謝謝詢問，我們會透過Email或電話與您聯繫',
+                    link: {
+                        primaryText: '回首頁',
+                        primaryLink: '/',
+                        primaryVariant: 'blue'
+                    },
+                    hidePrevented: true
+                }
+            })
+        );
+    });
+</script>

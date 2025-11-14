@@ -1,0 +1,77 @@
+---
+/** Common Component */
+import MySectionForm from '@components/common/section/form.astro';
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Select */
+import Select from '@components/common/form/select/select.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** CheckboxGroup */
+import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
+/** Checkbox */
+import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Style */
+import './form.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MySectionForm type={2} title="成為 ISV 夥伴" id={IDName} class:list={[className]} style={style} {...attribute}>
+    <InputGroup label="產業類別" block>
+        <Select
+            data={[
+                { text: '雲端與基礎設施', value: '雲端與基礎設施' },
+                { text: '企業應用', value: '企業應用' },
+                { text: '資料中心', value: '資料中心' },
+                { text: '儲存', value: '儲存' },
+                { text: '安全', value: '安全' },
+                { text: '儲存', value: '儲存' }
+            ]}
+            value="雲端與基礎設施"
+        />
+    </InputGroup>
+    <InputGroup label="聯絡人姓名" block>
+        <Input />
+    </InputGroup>
+    <InputGroup label="公司名稱" block>
+        <Input />
+    </InputGroup>
+    <InputGroup label="職稱" block>
+        <Input />
+    </InputGroup>
+    <InputGroup label="公司電子郵件" block>
+        <Input type="email" inputmode="email" />
+    </InputGroup>
+    <InputGroup label="公司電話" block>
+        <Input type="tel" inputmode="tel" />
+    </InputGroup>
+    <CheckboxGroup showTop={false}>
+        <Checkbox>
+            我同意華碩及華碩授權經銷商，透過上述表單所提供的電話/電子郵件與我聯繫，限用於商業用途和報價，並同意 "<ALink
+                link=""
+                showArrow={false}
+                extend>隱私權條款</ALink
+            >"
+        </Checkbox>
+        <Checkbox>
+            我同意提供上述資訊給華碩，用以接收華碩新聞、活動、最新產品和服務信息等相關資訊，並同意 "<ALink
+                link=""
+                showArrow={false}
+                extend>隱私權條款</ALink
+            >"
+        </Checkbox>
+    </CheckboxGroup>
+    <Button type={'submit'} size="lg" title="送出" variant="blue" block>送出</Button>
+</MySectionForm>
