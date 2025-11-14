@@ -1,7 +1,6 @@
 ---
 /** Common Component */
 import Swiper from '@components/common/swiper/swiper.astro';
-import Title from '../section/title.astro';
 import Pagination from '../pagination/pagination.astro';
 import NavigatiorArrow from '../icons/arrows/navigatiorArrow.astro';
 /** Style */
@@ -32,7 +31,11 @@ const { IDName, className, style, attribute = {}, title = 'Title', count = 1, ty
     {...attribute}
 >
     <div class=":uno-section-relative-inner: flex flex-col items-center justify-center">
-        <Title title={title} size="md" />
+        <h2
+            class=":uno-section-relative-title: flex items-center justify-center pb-2rem xl:pb-3rem text-gray-900 font-tt-medium text-30 md:text-36 xl:text-44 lh-120 font-medium text-center"
+        >
+            {title}
+        </h2>
         <Swiper
             IDName={IDName}
             className="section-relative-swiper-container"
