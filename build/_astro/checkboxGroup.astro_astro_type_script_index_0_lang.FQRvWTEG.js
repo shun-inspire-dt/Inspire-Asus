@@ -1,0 +1,1 @@
+["checked","radio"].forEach(c=>{const e=document.querySelector(`input[type=${c}][data-checkbox-main]`);e?.addEventListener("change",()=>{["checked","radio"].forEach(o=>{(e.closest("[data-checkbox-group]")?.querySelectorAll(`input[type=${o}]:not([data-checkbox-main])`)).forEach(a=>{a.checked=e.checked})})})});
