@@ -96,6 +96,11 @@
         @include inline();
     }
 
+    /* 垂直排列變體 */
+    &.block-group {
+        width: 100%;
+    }
+
     /* 水平排列變體 - 大螢幕時水平 */
     &.inline-group {
         @screen lg {

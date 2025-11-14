@@ -31,6 +31,7 @@ import './inputGroup.scss';
  * @property {Object} [contentStyle] - 內容區域的自定義 CSS 樣式
  * @property {boolean} [border=false] - 是否顯示底部邊框
  * @property {boolean} [inline=false] - 是否在大螢幕時水平排列
+ * @property {boolean} [block=false] - 是否最大寬度排列
  * @property {boolean} [alwaysInline=false] - 是否總是水平排列
  * @property {boolean} [inlineContent=false] - 內容區域是否在中螢幕以上水平排列
  * @property {boolean} [inlineContentPadding=false] - 水平排列時是否調整內容上邊距
@@ -57,6 +58,7 @@ export interface Props {
     contentStyle?: { [key: string]: string | number };
     border?: boolean;
     inline?: boolean;
+    block?: boolean;
     alwaysInline?: boolean;
     inlineContent?: boolean;
     inlineContentPadding?: boolean;
@@ -90,6 +92,7 @@ const {
     contentStyle, // 內容區域樣式
     border, // 是否顯示底部邊框
     inline, // 大螢幕時是否水平排列
+    block, // 最大寬度排列
     alwaysInline, // 是否總是水平排列
     inlineContent, // 內容區域是否水平排列
     inlineContentPadding, // 水平排列時內容上邊距調整
@@ -116,6 +119,7 @@ const {
         {
             'border-bottom': border, // 底部邊框
             'inline-group': inline, // 大螢幕時水平排列
+            'block-group': block, // 垂直排列
             'always-inline-group': alwaysInline, // 總是水平排列
             'input-group-required': required, // 必填欄位標記
             'input-group-padding-label': (inline || alwaysInline) && inlineLabelPadding, // 水平排列時標籤內邊距
