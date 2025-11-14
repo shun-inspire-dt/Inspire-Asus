@@ -1,7 +1,7 @@
 #headerBottom {
     @apply flex items-center justify-end gap-1rem xl:gap-1.25rem ml-a;
 
-    button.header-control-button {
+    a.header-control-button {
         @apply lt-xl:hidden;
     }
     .header-control {
