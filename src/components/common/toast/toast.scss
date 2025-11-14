@@ -1,48 +1,65 @@
 #toastModal {
     /** Modal */
-    /** Modal Body Padding */
-    // --bs-modal-padding: ;
-    // --modal-body-padding-top: ;
-    // --modal-body-padding-x: ;
     /** Modal Header */
-    // --modal-header-justify: ;
+    --modal-header-justify: center;
+    --modal-header-padding-top: 3rem;
+    --modal-header-padding-bottom: 0.75rem;
+    /** Modal Title */
+    --modal-title-gap: 0.75rem;
     /** --------------------------------------------- */
 
     /** Toast Body */
-    // --toast-body-gap: ;
-    // --toast-body-padding-x: ;
-    // --toast-body-padding-top: ;
-    // --toast-body-padding-bottom: ;
+    --toast-body-gap: 1.5rem;
+    --toast-body-padding-x: 1.5rem;
+    --toast-body-padding-top: 0rem;
+    --toast-body-padding-bottom: 3rem;
 
     /** Toast Text */
-    // --toast-font-size: ;
-    // --toast-font-weight: ;
-    // --toast-line-height: ;
-    // --toast-letter-spacing: ;
-    // --toast-font-family: ;
-    // --toast-color: ;
-    // --toast-text-align: ;
-    // --toast-text-padding-x: ;
-    // --toast-text-padding-top: ;
-    // --toast-text-padding-bottom: ;
+    --toast-font-size: var(--fs-18, 1.125rem);
+    --toast-font-weight: 400;
+    --toast-line-height: var(--line-height-18-sh, 1.125rem);
+    --toast-letter-spacing: var(--letter-spacing);
+    --toast-font-family: var(--font-family-roboto);
+    --toast-color: var(--color-gray-900, #181818);
+    --toast-text-align: center;
+    --toast-text-padding-x: 0rem;
+    --toast-text-padding-top: 0rem;
+    --toast-text-padding-bottom: 0rem;
 
     /** Toast Footer */
-    // --toast-footer-gap: ;
-    // --toast-footer-padding-x: ;
-    // --toast-footer-padding-top: ;
-    // --toast-footer-padding-bottom: ;
+    --toast-footer-gap: 1rem;
+    --toast-footer-padding-x: 0rem;
+    --toast-footer-padding-top: 0rem;
+    --toast-footer-padding-bottom: 0rem;
 
     /** Toast Title Icon */
-    // --toast-icon-size: ;
-    // --toast-icon-gap: ;
-    // --toast-icon-error-background-image: ;
-    // --toast-icon-success-background-image: ;
-
+    --toast-icon-size: 3rem;
+    --toast-icon-gap: 0rem;
+    --toast-icon-error-background-image: ;
+    --toast-icon-success-background-image: url('data:image/svg+xml,<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 24C44 27.9556 42.827 31.8224 40.6294 35.1114C38.4318 38.4004 35.3082 40.9638 31.6537 42.4776C27.9992 43.9913 23.9778 44.3874 20.0982 43.6157C16.2186 42.844 12.6549 40.9392 9.85787 38.1421C7.06082 35.3451 5.15601 31.7814 4.3843 27.9018C3.6126 24.0222 4.00867 20.0009 5.52242 16.3463C7.03617 12.6918 9.59962 9.56823 12.8886 7.37061C16.1776 5.17298 20.0444 4 24 4C26.6264 4 29.2272 4.51731 31.6537 5.52241C34.0802 6.5275 36.285 8.00069 38.1421 9.85786C39.9993 11.715 41.4725 13.9198 42.4776 16.3463C43.4827 18.7728 44 21.3736 44 24Z" fill="%231A821C"/><path d="M15 24.8571L21.6087 32L34 17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    
     /** Toast Link Button */
-    // --toast-button-height: ;
-    // --toast-button-icon-size: ;
-    // --toast-button-icon-color: ;
-    // --toast-button-loader-size: ;
+    --toast-button-height: 2.5rem;
+    --toast-button-icon-size: 3rem;
+    --toast-button-icon-color: var(--color-green-600, #1a821c);
+    --toast-button-loader-size: 2rem;
+    --toast-button-max-width: 100%; /* 底部按鈕最大寬度 */
+    --toast-button-width: 9.75rem; /* 底部按鈕寬度 */
+    
+    /** === Breakpoint === */
+    @screen md {
+        /** Toast Header */
+        --modal-header-padding-top: 4rem;
+        /** Toast Body */
+        --toast-body-padding-x: 4rem;
+        --toast-body-padding-bottom: 4rem;
+        /** Modal 底部自訂設定 */
+        --toast-button-max-width: 9.75rem; /* 底部按鈕最大寬度 */
+        --toast-button-width: 9.75rem; /* 底部按鈕寬度 */
+        /** Toast Title Icon */
+        --toast-icon-size: 3.75rem;
+        --toast-icon-success-background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M56 30C56 35.1423 54.4751 40.1691 51.6182 44.4448C48.7613 48.7205 44.7007 52.053 39.9498 54.0209C35.1989 55.9887 29.9712 56.5036 24.9277 55.5004C19.8842 54.4972 15.2514 52.0209 11.6152 48.3848C7.97907 44.7486 5.50281 40.1158 4.49959 35.0723C3.49638 30.0288 4.01127 24.8011 5.97914 20.0502C7.94702 15.2993 11.2795 11.2387 15.5552 8.38179C19.8309 5.52487 24.8577 4 30 4C33.4144 4 36.7953 4.67251 39.9498 5.97913C43.1042 7.28575 45.9705 9.2009 48.3848 11.6152C50.7991 14.0295 52.7142 16.8958 54.0209 20.0502C55.3275 23.2047 56 26.5856 56 30Z" fill="%231A821C"/><path d="M18 31.4762L26.6957 41L43 21" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    }
 
     .toast-text {
         color: var(--toast-color);
@@ -78,22 +95,21 @@
         padding: var(--toast-body-padding-top) var(--toast-body-padding-x) var(--toast-body-padding-bottom);
     }
     .toast-footer {
-        @apply flex items-center;
+        @apply flex items-center justify-center;
         gap: var(--toast-footer-gap);
         padding: var(--toast-footer-padding-top) var(--toast-footer-padding-x) var(--toast-footer-padding-bottom);
     }
     .toast-button {
-        --btn-padding-x: 1rem;
         @apply flex-auto;
+        width: var(--modal-footer-button-width);
+        max-width: var(--modal-footer-button-max-width);
         min-height: var(--toast-button-height);
         .toast-button-loader {
             width: var(--toast-button-loader-size);
             height: var(--toast-button-loader-size);
             border-radius: 50%;
             background-color: #fff;
-            box-shadow:
-                calc(var(--toast-button-loader-size) * 2) 0 #fff,
-                calc(var(--toast-button-loader-size) * -2) 0 #fff;
+            box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff, calc(var(--toast-button-loader-size) * -2) 0 #fff;
             position: relative;
             animation: flash 0.5s ease-out infinite alternate;
         }
@@ -101,21 +117,15 @@
         @keyframes flash {
             0% {
                 background-color: #fff2;
-                box-shadow:
-                    calc(var(--toast-button-loader-size) * 2) 0 #fff2,
-                    calc(var(--toast-button-loader-size) * -2) 0 #fff;
+                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff2, calc(var(--toast-button-loader-size) * -2) 0 #fff;
             }
             50% {
                 background-color: #fff;
-                box-shadow:
-                    calc(var(--toast-button-loader-size) * 2) 0 #fff2,
-                    calc(var(--toast-button-loader-size) * -2) 0 #fff2;
+                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff2, calc(var(--toast-button-loader-size) * -2) 0 #fff2;
             }
             100% {
                 background-color: #fff2;
-                box-shadow:
-                    calc(var(--toast-button-loader-size) * 2) 0 #fff,
-                    calc(var(--toast-button-loader-size) * -2) 0 #fff2;
+                box-shadow: calc(var(--toast-button-loader-size) * 2) 0 #fff, calc(var(--toast-button-loader-size) * -2) 0 #fff2;
             }
         }
     }

@@ -9,7 +9,7 @@ import './toast.scss';
 ---
 
 <!-- Alert -->
-<Modal id="toast" title="" sizes="sm" center hideFooter={true}>
+<Modal id="toast" title="" sizes="xl" center hideFooter={true}>
     <Fragment slot="title-left">
         <div class="toast-icon" style="display: none;">
             <div class="icon-close" data-toast-icon="error" style="display: none;"></div>
@@ -25,6 +25,7 @@ import './toast.scss';
                 button
                 attribute={{ 'data-toast-button-primary': '' }}
                 style={{ display: 'none' }}
+                round
             />
             <ALink
                 className="toast-button"
@@ -32,6 +33,7 @@ import './toast.scss';
                 button
                 attribute={{ 'data-toast-button-secondary': '' }}
                 style={{ display: 'none' }}
+                round
             />
         </div>
     </div>

@@ -47,7 +47,7 @@ export class Toast {
     private icon: string = '';
     private className: string = '';
     private close?: () => void;
-    private hideCloseButton?: boolean = false;
+    private hideCloseButton?: boolean = true;
     private hidePrevented?: boolean = false;
     public toast: HTMLElement = document.getElementById('toastModal') as HTMLElement;
     private myModal: Modal = new Modal(this.toast);
@@ -277,42 +277,51 @@ export class Toast {
     }
 
     private setAttribute(options: options = {}) {
-        this.title = options?.title as string;
-        this.text = options?.text as string;
-        this.icon = options?.icon as string;
-        this.className = options?.className as string;
-        this.timeout = (options?.timeout as number) || 0;
-        this.close = options?.close as () => void;
-        this.hideCloseButton = options?.hideCloseButton as boolean;
-        this.hidePrevented = options?.hidePrevented as boolean;
-        if (!!options.link && !!Object.values(options.link).length) {
+        const { title, text, icon, className, timeout, close, hideCloseButton, hidePrevented, link } = options;
+        this.title = title as string;
+        this.text = text as string;
+        this.icon = icon as string;
+        this.className = className as string;
+        this.timeout = (timeout as number) || this.timeout;
+        this.close = close as () => void;
+        this.hideCloseButton = hideCloseButton as boolean || this.hideCloseButton;
+        this.hidePrevented = hidePrevented as boolean || this.hidePrevented;
+        if (!!link && !!Object.values(link).length) {
+            const {
+                primaryText,
+                primaryLink,
+                primaryLinkSecond,
+                primaryVariant,
+                primaryAttribute,
+                primaryIcon,
+                primarySvg,
+                secondaryText,
+                secondaryLink,
+                secondaryLinkSecond,
+                secondaryVariant,
+                secondaryAttribute,
+                secondaryIcon,
+                secondarySvg,
+                cancel,
+                ok
+            } = link;
             this.links.set(0, {
-                text: options?.link?.primaryText ?? '',
-                link: (options?.link?.primaryLinkSecond as string)
-                    ? (options?.link?.primaryLinkSecond as string)
-                    : options?.link?.primaryLink ?? '',
-                variant: options?.link?.primaryVariant ?? 'primary',
-                attribute:
-                    options?.link?.primaryAttribute && typeof options?.link?.primaryAttribute === 'object'
-                        ? options?.link?.primaryAttribute
-                        : {},
-                icon: options?.link?.primaryIcon ?? '',
-                svg: options?.link?.primarySvg ?? '',
-                do: options?.link?.cancel
+                text: primaryText ?? '',
+                link: (primaryLinkSecond as string) ? (primaryLinkSecond as string) : primaryLink ?? '',
+                variant: primaryVariant ?? 'primary',
+                attribute: primaryAttribute && typeof primaryAttribute === 'object' ? primaryAttribute : {},
+                icon: primaryIcon ?? '',
+                svg: primarySvg ?? '',
+                do: cancel
             });
             this.links.set(1, {
-                text: options?.link?.secondaryText ?? '',
-                link: (options?.link?.secondaryLinkSecond as string)
-                    ? (options?.link?.secondaryLinkSecond as string)
-                    : options?.link?.secondaryLink ?? '',
-                variant: options?.link?.secondaryVariant ?? 'primary',
-                attribute:
-                    options?.link?.secondaryAttribute && typeof options?.link?.secondaryAttribute === 'object'
-                        ? options?.link?.secondaryAttribute
-                        : {},
-                icon: options?.link?.secondaryIcon ?? '',
-                svg: options?.link?.secondarySvg ?? '',
-                do: options?.link?.ok
+                text: secondaryText ?? '',
+                link: (secondaryLinkSecond as string) ? (secondaryLinkSecond as string) : secondaryLink ?? '',
+                variant: secondaryVariant ?? 'primary',
+                attribute: secondaryAttribute && typeof secondaryAttribute === 'object' ? secondaryAttribute : {},
+                icon: secondaryIcon ?? '',
+                svg: secondarySvg ?? '',
+                do: ok
             });
         }
     }
@@ -430,7 +439,7 @@ export class Toast {
         this.text = '';
         this.icon = '';
         this.className = '';
-        this.hideCloseButton = false;
+        this.hideCloseButton = true;
         this.hidePrevented = false;
         this.timeout = 0;
         this.links = new Map();
