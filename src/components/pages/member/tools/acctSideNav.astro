@@ -4,27 +4,37 @@ import { memberNavItems as data } from '@components/pages/member/tools/navs';
 /** Common Component */
 import AcctSideNavTab from './acctSideNavTab.astro';
 import AcctSideNavSubTab from './acctSideSubNavTab.astro';
+/** Style */
+import './acctSideNav.scss';
+import { undefined } from 'astro:schema';
 
+const activeTab = ['會員中心', '訊息中心', '帳戶設定', '基本資料', '帳號管理', '變更密碼', '我的諮詢夾', '我的收藏清單'] as const;
 /** Props */
 interface Props {
     IDName?: string;
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
+    type?: 'default' | 'indented' | 'side';
+    padding?: 'default' | 'width';
+    active?: (typeof activeTab)[number];
 }
 
 export type { Props };
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, active = '會員中心', type = 'side', padding = 'width' } = Astro.props as Props;
 ---
 
 <nav
     id={IDName}
-    class:list={[className, ':uno-acct-side-nav: w-18.4375rem padding-tablet py-1.5rem bg-white rounded-2xl']}
+    class:list={['acct-side-nav', className]}
     style={style}
+    data-indented={type === 'indented' ? 'true' : undefined}
+    data-side={type === 'side' ? 'true' : undefined}
+    data-width={padding === 'width' ? 'true' : undefined}
     {...attribute}
 >
-    <ul class=":uno-acct-side-nav-ul: flex flex-col gap-0.75rem">
+    <ul class="acct-side-nav-ul">
         {
             data.map((item) => (
                 <li>
@@ -38,15 +48,17 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
                             type: item.children && item.children.length > 0 ? 'button' : null,
                             'data-bs-toggle': item.children && item.children.length > 0 ? 'collapse' : null,
                             'data-bs-target': item.children && item.children.length > 0 ? `#nav-${item.id}` : null,
-                            'aria-expanded': item.children && item.children.length > 0 ? 'false' : null,
+                            'aria-expanded':
+                                item.children && item.children.length > 0 ? (item.label === active ? 'true' : 'false') : null,
                             'aria-controls': item.children && item.children.length > 0 ? `nav-${item.id}` : null,
-                            ...(item.href ? { href: item.href } : {}),
+                            ...(item.href ? { href: item.href } : {})
                         }}
+                        className={{ active: item.label === active }}
                     >
                         {item.label}
                     </AcctSideNavTab>
                     {item.children && item.children.length > 0 && (
-                        <div id={`nav-${item.id}`} class="collapse">
+                        <div id={`nav-${item.id}`} class:list={['collapse', item.label === active ? 'show' : '']}>
                             {item.children.map((subItem) => (
                                 <AcctSideNavSubTab
                                     Tag="a"
@@ -54,6 +66,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
                                         href: subItem.href,
                                         title: subItem.label
                                     }}
+                                    className={{ active: subItem.label === active }}
                                 >
                                     {subItem.label}
                                 </AcctSideNavSubTab>

@@ -1,0 +1,18 @@
+
+.acct-side-nav {
+    @apply py-0.75rem bg-white;
+
+    &[data-side='true'] {
+        @apply py-1.5rem rounded-2xl;
+    }
+    &[data-side='true'][data-width='true'] {
+        @apply padding-tablet;
+    }
+    &[data-indented='true'][data-width='true'] {
+        @apply px-6.25%;
+    }
+}
+
+.acct-side-nav-ul {
+    @apply flex flex-col gap-0.75rem;
+}
