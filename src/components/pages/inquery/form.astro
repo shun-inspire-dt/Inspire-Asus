@@ -1,4 +1,6 @@
 ---
+/** Type */
+import type { dataType } from './data';
 /** Common Component */
 import MySectionForm from '@components/common/section/form.astro';
 /** InputGroup */
@@ -11,12 +13,8 @@ import Select from '@components/common/form/select/select.astro';
 import Textarea from '@components/common/form/textarea.astro';
 /** Button */
 import Button from '@components/common/button/button.astro';
-/** CheckboxGroup */
-import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
-/** Checkbox */
-import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
-/** Link */
-import ALink from '@components/common/link/link.astro';
+/** Main Component */
+import Card from './card.astro';
 /** Style */
 import './form.scss';
 
@@ -25,9 +23,10 @@ export interface Props {
     className?: className;
     attribute?: attribute;
     style?: { [key: string]: string };
+    data: dataType;
 }
 
-const { IDName = 'Inquery', className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astro.props as Props;
 ---
 
 <MySectionForm
@@ -40,12 +39,25 @@ const { IDName = 'Inquery', className, style, attribute = {} } = Astro.props as 
     style={style}
     {...attribute}
 >
-    <h2
-        class=":uno-inquery-title: flex items-center justify-start pb-1.5rem xl:pb-2rem text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left"
-        slot="sub-title"
+    <div
+        class=":uno-inquery-cart: w-full mb-2rem mx-auto py-2.5rem md:py-3rem px-1.5rem md:px-2.5rem bg-white rounded-xl"
+        slot="top"
     >
-        聯絡資訊
-    </h2>
+        <div class=":uno-inquery-form-head: w-full flex items-center justify-between flex-wrap gap-y-0.75rem gap-x-1.875rem pb-1.5rem xl:pb-2rem" slot="sub-title">
+            <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">
+                方案清單
+            </h2>
+            <span class=":uno-inquery-cart-amount: text-gray-900 font-tt-medium text-16 lh-120 text-right"
+                >合計詢問 <b class=":uno-inquery-cart-amount-number: font-medium">2</b> 個方案</span
+            >
+        </div>
+        <div class="w-full flex flex-col items-center gap-1.5rem">
+            {data.map((x) => <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} />)}
+        </div>
+    </div>
+    <div class=":uno-inquery-form-head: w-full flex items-center justify-between flex-wrap gap-y-0.75rem gap-x-1.875rem pb-1.5rem xl:pb-2rem" slot="sub-title">
+        <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">聯絡資訊</h2>
+    </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-24px">
         <InputGroup label="公司名稱" block>
             <Input />
@@ -83,7 +95,9 @@ const { IDName = 'Inquery', className, style, attribute = {} } = Astro.props as 
             <Textarea style={{ 'min-height': '8.625rem' }} />
         </InputGroup>
         <div class="flex items-center justify-end">
-            <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" size="lg" title="送出" variant="blue" block>送出</Button>
+            <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" size="lg" title="送出" variant="blue" block
+                >送出</Button
+            >
         </div>
     </div>
 </MySectionForm>

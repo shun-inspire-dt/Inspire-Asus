@@ -1,4 +1,6 @@
 ---
+/** Data */
+import { data } from '@components/pages/inquery/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -12,5 +14,5 @@ import '@scss/pages/inquery.scss';
 ---
 
 <Layouts IDName="Inquery" minMarginHeader>
-    <Form />
+    <Form data={data} />
 </Layouts>
