@@ -1,0 +1,63 @@
+---
+/** Common Component */
+import MySectionForm from '@components/pages/member/auth/form.astro';
+import Divider from '@components/pages/member/auth/divider.astro';
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Input */
+import PasswordInput from '@components/common/form/input/passwordInput.astro';
+/** Textarea */
+import Textarea from '@components/common/form/textarea.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** CheckboxGroup */
+import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
+/** Checkbox */
+import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Link */
+import A from '@components/common/link/a.astro';
+/** SocialIcon */
+import SocialIcon from '@components/common/icons/social/SocialIcon.astro';
+/** Style */
+import './form.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MySectionForm id={IDName} title="會員登入" class:list={[className]} style={style} {...attribute}>
+    <InputGroup label="帳號" infoText="請輸入電子郵件" block>
+        <Input type="email" inputmode="email" />
+    </InputGroup>
+    <InputGroup label="密碼" block style={{ '--form-input-group-content-gap': '0.75rem' }}>
+        <PasswordInput />
+        <div class=":uno-auth-check: w-full flex items-center justify-between gap-1.875rem">
+            <Checkbox>記住我</Checkbox>
+            <ALink link={'/forget-password'} title={'忘記密碼？'}>忘記密碼？</ALink>
+        </div>
+    </InputGroup>
+    <Button type="submit" variant="blue" block>登入</Button>
+    <div class=":uno-auth-check-login: flex items-baseline justify-center gap-0.3125rem">
+        <span class=":uno-auth-check-login-label: text-gray-900 body-02-sh">尚未註冊會員?</span>
+        <ALink link={'/register'} title={'立即註冊'}>立即註冊</ALink>
+    </div>
+    <Divider>或選擇其他方式登入</Divider>
+    <div class=":uno-auth-other: flex items-center justify-center flex-wrap gap-y-1rem">
+        <A link={''} className=":uno-auth-other-Link: px-1rem" title={'Google 登入'} extend>
+            <SocialIcon type="icon_google" size="lg" />
+        </A>
+        <A link={''} className=":uno-auth-other-Link: px-1rem" title={'Microsof 登入'} extend>
+            <SocialIcon type="icon_microsoft" size="lg" />
+        </A>
+    </div>
+</MySectionForm>
