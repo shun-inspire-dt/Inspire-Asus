@@ -11,6 +11,7 @@ export interface Props {
     type?: 1 | 2;
     display?: 'flex' | 'grid';
     block?: boolean;
+    action?: string;
 }
 
 const {
@@ -21,22 +22,23 @@ const {
     title = '',
     type = 1,
     display = 'flex',
-    block = false
+    block = false,
+    action = ''
 } = Astro.props as Props;
 const normalStyle = '';
 ---
 
 <div
     class:list={[
-        className,
         ':uno-section-form-container: xl:sect-p-lg md:sect-p-md sect-p-sm',
         { ':uno-section-form-container-BG: bg-gray-50': type === 1 },
-        { ':uno-section-form-container-BG-Image: bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat': type === 2 }
+        { ':uno-section-form-container-BG-Image: bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat': type === 2 },
+        className
     ]}
     style={{ ...(type === 2 ? { '--bg-image': `url("/assets/images/pages/feature-BG-2.png")` } : {}), ...style }}
     {...attribute}
 >
-    <form id={IDName ? `${IDName}Form` : undefined} class=":uno-section-form-container-inner: container-fluid" action="">
+    <form id={IDName ? `${IDName}Form` : undefined} class=":uno-section-form-container-inner: container-fluid" action={action}>
         {title && <Title title={title} />}
         <slot name="top" />
         <div
