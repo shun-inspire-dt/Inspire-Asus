@@ -58,7 +58,6 @@ const getIconConfig = (type: string, size: string) => {
 
 const iconKey = `${type}-${size}` as keyof typeof iconMap;
 const IconComponent = iconMap[iconKey] || iconMap['icon_google-lg'];
-const iconConfig = getIconConfig(type, size);
 
 const classes = ['social-icon', `social-icon--${type.replace('icon_', '')}`, `social-icon--${size.toLowerCase()}`, className]
     .filter(Boolean)
@@ -79,9 +78,7 @@ const style = {
     data-social-icon
     data-type={type}
     data-size={size}
-    title={`${iconConfig.displayName} 圖示`}
     role="img"
-    aria-label={`${iconConfig.displayName} 社群媒體圖示`}
     style={style}
     {...rest}
 >
