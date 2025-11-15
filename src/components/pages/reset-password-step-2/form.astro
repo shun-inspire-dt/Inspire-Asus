@@ -1,0 +1,44 @@
+---
+/** Common Component */
+import MySectionForm from '@components/common/section/form.astro';
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Textarea */
+import Textarea from '@components/common/form/textarea.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** CheckboxGroup */
+import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
+/** Checkbox */
+import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Style */
+import './form.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MySectionForm IDName={IDName} className={[":uno-step-2-form-container: flex items-center min-h-[calc(100vh-8.875rem)] md:min-h-[calc(100vh-7.25rem)]", className]} style={style} {...attribute}>
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M56 30C56 35.1423 54.4751 40.1691 51.6182 44.4448C48.7613 48.7205 44.7007 52.053 39.9498 54.0209C35.1989 55.9887 29.9712 56.5036 24.9277 55.5004C19.8842 54.4972 15.2514 52.0209 11.6152 48.3848C7.97907 44.7486 5.50281 40.1158 4.49959 35.0723C3.49638 30.0288 4.01127 24.8011 5.97914 20.0502C7.94702 15.2993 11.2795 11.2387 15.5552 8.38179C19.8309 5.52487 24.8577 4 30 4C33.4144 4 36.7953 4.67251 39.9498 5.97913C43.1042 7.28575 45.9705 9.2009 48.3848 11.6152C50.7991 14.0295 52.7142 16.8958 54.0209 20.0502C55.3275 23.2047 56 26.5856 56 30Z"
+            fill="var(--color-green-600, #1A821C)"></path>
+        <path d="M18 31.4762L26.6957 41L43 21" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"
+        ></path>
+    </svg>
+    <div class=":uno-step-2-head: space-y-0.5rem text-gray-900 text-center">
+        <h2 class=":uno-step-2-title: font-tt-medium font-medium text-24 lh-120">已寄出認證信</h2>
+        <p class=":uno-step-2-info-text: font-roboto text-16 lh-150 [&>b]:font-medium [&>strong]:font-medium">我們已經發送一封到 <b>service@gmail.com</b> 內含密碼重設連結的電子郵件給您。請按照電子郵件中的說明重置密碼。如果您沒有收到電子郵件，請檢查您的垃圾郵件箱。</p>
+    </div>
+    <Button Tag='a' link='/' size="lg" title="返回首頁，重新登入" variant="blue" block>返回首頁，重新登入</Button>
+</MySectionForm>
