@@ -1,0 +1,29 @@
+---
+/** Common Component */
+import MySectionForm from '@components/common/section/form.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    action?: string;
+}
+
+const { IDName, className, style, attribute = {}, title, action } = Astro.props as Props;
+---
+
+<MySectionForm IDName={IDName} class:list={[className]} style={style} {...attribute} action={action}>
+    {
+        title && (
+            <h2
+                class=":uno-auth-title: flex items-center justify-center flex-none mb-1.5rem text-gray-900 font-tt-medium text-30 md:text-36 lh-120 font-medium text-center"
+                slot="sub-title"
+            >
+                {title}
+            </h2>
+        )
+    }
+    <slot></slot>
+</MySectionForm>

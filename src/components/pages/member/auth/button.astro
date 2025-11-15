@@ -1,0 +1,67 @@
+---
+/** Common Component */
+/** Button */
+import MyButton from '@components/common/button/button.astro';
+import SocialIcon, { type Props as SocialIconProps } from '@components/common/icons/social/SocialIcon.astro';
+
+/**
+ * 社群登入按鈕元件 Props
+ *
+ * @property {string} [IDName]  按鈕外層容器 ID 名稱
+ * @property {*} [className]    傳入按鈕的額外樣式 class，可為字串或陣列
+ * @property {attribute} [attribute]  透傳至按鈕的原生 HTML 屬性物件
+ * @property {{ [key: string]: string }} [style]  內聯樣式設定
+ * @property {'microsoft' | 'line' | 'google' | 'fb' | 'apple'} [type]  社群登入種類，預設為 'google'
+ */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    type?: 'microsoft' | 'line' | 'google' | 'fb' | 'apple';
+    status?: 'login' | 'register' | 'registed';
+}
+
+const { IDName, className, style, attribute = {}, type = 'google', status = 'register' } = Astro.props as Props;
+
+/**
+ * 對應各社群登入類型使用的圖示名稱
+ */
+const socialIcons = {
+    microsoft: 'icon_microsoft',
+    line: 'icon_line',
+    google: 'icon_google',
+    fb: 'icon_fb',
+    apple: 'icon_apple'
+};
+/**
+ * 各社群登入按鈕顯示文字
+ */
+const title = (icon: string, status: string) => {
+    const key = `${icon}_${status}`;
+    const titles = {
+        microsoft_register: '使用 Microsoft 註冊',
+        line_register: '使用 LINE 註冊',
+        google_register: '使用 Google 註冊',
+        fb_register: '使用 Facebook 註冊',
+        apple_register: '使用 Apple 註冊',
+        microsoft_login: '使用 Microsoft 登入',
+        line_login: '使用 LINE 登入',
+        google_login: '使用 Google 登入',
+        fb_login: '使用 Facebook 登入',
+        apple_login: '使用 Apple 登入',
+        microsoft_registed: '目前使用 Microsoft 帳號做註冊',
+        line_registed: '目前使用 LINE 帳號做註冊',
+        google_registed: '目前使用 Google 帳號做註冊',
+        fb_registed: '目前使用 Facebook 帳號做註冊',
+        apple_registed: '目前使用 Apple 帳號做註冊'
+    };
+    return titles[key as keyof typeof titles];
+};
+const socialIconType = socialIcons[type] as SocialIconProps['type'];
+---
+
+<MyButton IDName={IDName} variant="neutral-outline" className={[className]} style={style} attribute={attribute}>
+    <SocialIcon type={socialIconType} size="md" />
+    {title(type, status)}
+</MyButton>

@@ -1,0 +1,18 @@
+---
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[":uno-auth-divider: w-full flex items-center justify-between gap-2rem md:gap-3.5rem xl:gap-4rem", className]} style={style} {...attribute}>
+    <span class=":uno-auth-divider-line: h-[1px] w-full bg-gray-200"></span>
+    <span class="flex-none text-gray-900 body-02">
+        <slot></slot>
+    </span>
+    <span class=":uno-auth-divider-line: h-[1px] w-full bg-gray-200"></span>
+</div>
