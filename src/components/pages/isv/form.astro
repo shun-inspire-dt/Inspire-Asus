@@ -25,10 +25,10 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName = "Isv", className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<MySectionForm type={2} title="成為 ISV 夥伴" id={IDName} class:list={[className]} style={style} {...attribute}>
+<MySectionForm type={2} title="成為 ISV 夥伴" IDName={IDName} class:list={[className]} style={style} {...attribute}>
     <InputGroup label="產業類別" block>
         <Select
             data={[

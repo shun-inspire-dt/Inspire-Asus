@@ -14,3 +14,27 @@ import '@scss/pages/isv.scss';
 <Layouts IDName="Isv" minMarginHeader>
     <Form />
 </Layouts>
+
+<script is:inline>
+    const toast = document.querySelector('#toastModal');
+    const form = document.querySelector('#IsvForm');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        toast.dispatchEvent(
+            new CustomEvent('fire', {
+                detail: {
+                    icon: 'success',
+                    title: '表單已送出',
+                    text: '謝謝詢問，我們會透過Email或電話與您聯繫',
+                    link: {
+                        primaryText: '回首頁',
+                        primaryLink: '/',
+                        primaryVariant: 'blue'
+                    },
+                    hidePrevented: true
+                }
+            })
+        );
+    });
+</script>

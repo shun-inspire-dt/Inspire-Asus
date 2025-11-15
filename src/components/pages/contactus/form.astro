@@ -65,27 +65,3 @@ const { IDName = 'Contactus', className, style, attribute = {} } = Astro.props a
     </CheckboxGroup>
     <Button type={'submit'} size="lg" title="送出" variant="blue" block>送出</Button>
 </MySectionForm>
-
-<script>
-    const toast = document.querySelector('#toastModal') as HTMLElement;
-    const form = document.querySelector('#ContactusForm') as HTMLFormElement;
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        toast.dispatchEvent(
-            new CustomEvent('fire', {
-                detail: {
-                    icon: 'success',
-                    title: '表單已送出',
-                    text: '謝謝詢問，我們會透過Email或電話與您聯繫',
-                    link: {
-                        primaryText: '回首頁',
-                        primaryLink: '/',
-                        primaryVariant: 'blue'
-                    },
-                    hidePrevented: true
-                }
-            })
-        );
-    });
-</script>
