@@ -10,6 +10,13 @@ import Content from '@components/pages/member/order-aocc/[id]/content.astro';
 import Form from '@components/pages/member/order-aocc/[id]/form.astro';
 /** Style */
 import '@scss/pages/member/order-aocc/[...id].scss';
+
+export async function getStaticPaths() {
+    return Array.from({ length: 10 }).map((_, index) => ({ params: { id: index } }));
+}
+const { id } = Astro.params;
+
+export const prerender = true;
 ---
 
 <Layouts IDName="MemberOrder-aoccDetail" minMarginHeader isMemberFooter>
