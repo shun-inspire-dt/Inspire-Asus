@@ -21,7 +21,7 @@ const TopId = IDName || `main-checkbox-${Math.random().toString(36).substr(2, 9)
     class:list={[
         className,
         ':uno-checkbox-group: w-full flex flex-col gap-0.75rem pt-1.5rem border-t border-gray-200',
-        { ':uno-checkbox-group-main: [&>div]:pl-1.5rem': showTop }
+        { ':uno-checkbox-group-main: [&>div~div]:pl-1.5rem': showTop }
     ]}
     style={style}
     data-checkbox-group
@@ -40,15 +40,16 @@ const TopId = IDName || `main-checkbox-${Math.random().toString(36).substr(2, 9)
 </div>
 
 <script>
-    ['checked', 'radio'].forEach((type) => {
+    ['checkbox', 'radio'].forEach((type) => {
         const mainCheckbox = document.querySelector(`input[type=${type}][data-checkbox-main]`) as HTMLInputElement;
         mainCheckbox?.addEventListener('change', () => {
-            ['checked', 'radio'].forEach((type) => {
+            ['checkbox', 'radio'].forEach((type) => {
                 const childrens = mainCheckbox
                     .closest('[data-checkbox-group]')
                     ?.querySelectorAll(`input[type=${type}]:not([data-checkbox-main])`) as NodeListOf<HTMLInputElement>;
                 childrens.forEach((child) => {
                     child.checked = mainCheckbox.checked;
+                    child.dispatchEvent(new Event('change'));
                 });
             });
         });
