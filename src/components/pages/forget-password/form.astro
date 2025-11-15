@@ -1,0 +1,37 @@
+---
+/** Common Component */
+import MySectionForm from '@components/pages/member/auth/form.astro';
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './form.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MySectionForm id={IDName} title="忘記密碼?" class:list={[className]} style={style} {...attribute} action='/reset-password'>
+    <p class=":uno-forget-password-info-text: mt--1rem text-gray-900 text-16 lh-150 text-center">
+        請輸入您當初註冊時所填寫的 E-mail 帳號或手機號碼。
+    </p>
+    <img width="120" height="120" src="/assets/images/pages/dropped-image.png" alt="忘記密碼" loading="lazy" />
+    <InputGroup label="帳號" infoText="電子郵件地址是您的帳戶" block>
+        <Input type="email" inputmode="email" />
+    </InputGroup>
+    <hr class=":uno-forget-password-divider: w-full h-1px bg-gray-200" />
+    <p class=":uno-forget-password-warning-text: text-gray-600 text-14 lh-150 text-left">
+        若是使用社群帳號 (如: Facebook, Google+ ) 登入的會員，請輸入您註冊社群帳號時所使用的 E-mail
+        帳號或手機號碼。我們將會寄送一封驗證電子郵件/SMS至您的信箱/手機。
+    </p>
+    <Button type="submit" variant="blue" title="確認寄出" block>確認寄出</Button>
+</MySectionForm>
