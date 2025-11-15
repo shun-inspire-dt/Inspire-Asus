@@ -1,0 +1,19 @@
+---
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Body from '@components/pages/member/tools/body.astro';
+/** Main Components */
+import Content from '@components/pages/member/account-management/content.astro';
+import Form from '@components/pages/member/account-management/form.astro';
+/** Style */
+import '@scss/pages/member/account-management.scss';
+---
+
+<Layouts IDName="MemberAccount-management" minMarginHeader isMemberFooter>
+    <Body>
+        <Form />
+    </Body>
+</Layouts>
