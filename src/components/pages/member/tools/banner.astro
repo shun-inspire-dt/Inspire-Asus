@@ -1,0 +1,67 @@
+---
+/** Common Component */
+import button from '@components/common/collapse/collapse.astro';
+/** Main Component */
+import CollapseArrow from '@components/common/icons/arrows/collapseArrow.astro';
+/** Style */
+import './banner.scss';
+
+/** Common Component */
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    name?: string;
+}
+
+const { IDName, className, style, attribute = {}, name = 'Jon Snow' } = Astro.props as Props;
+---
+
+<button
+    id={IDName}
+    class:list={[
+        ':uno-acct-mobile-menu: w-full fixed xl:static top-[calc(var(--header-height)+0.0625rem)] left-0 right-0 z-1045 py-0.8125rem xl:py-1.5rem bg-white xl:bg-transparent border-b border-gray-200 xl:border-b-0 xl:pointer-events-none [&.active_.collapseArrow]:rotate-180',
+        className
+    ]}
+    style={style}
+    data-bs-toggle="offcanvas"
+    data-bs-target="#memberNavOffcanvas"
+    aria-controls="memberNavOffcanvas"
+    {...attribute}
+>
+    <div class="container-fluid flex items-center justify-between gap-1.25rem">
+        <div class=":uno-acct-mobile-menu-head: flex items-center gap-0.75rem" slot="title">
+            <span class=":uno-acct-mobile-menu-head-item: text-gray-700 body-02-sh">會員</span>
+            <span class=":uno-acct-mobile-menu-head-bar: bar"></span>
+            <span class=":uno-acct-mobile-menu-head-item: text-gray-900 heading-02-sh">歡迎, {name}!</span>
+        </div>
+        <CollapseArrow className=":uno-acct-mobile-menu-arrow: !xl:hidden" />
+    </div>
+</button>
+
+<script>
+    /**
+     * Offcanvas State Management
+     * 側邊選單狀態管理
+     *
+     * 功能說明：
+     * - 監聽 Bootstrap Offcanvas 的顯示/隱藏事件
+     * - 自動為觸發按鈕添加/移除 active 類別
+     * - 實現漢堡選單圖示的動畫效果
+     */
+
+    // 取得 Offcanvas 元素和觸發按鈕
+    const offcanvas = document.getElementById('memberNavOffcanvas') as HTMLElement;
+    const button = document.querySelector('button[data-bs-target="#memberNavOffcanvas"]') as HTMLButtonElement;
+
+    // 監聽 Offcanvas 顯示事件
+    offcanvas.addEventListener('show.bs.offcanvas', () => {
+        button.classList.add('active'); // 添加 active 類別，觸發按鈕動畫
+    });
+
+    // 監聽 Offcanvas 隱藏事件
+    offcanvas.addEventListener('hide.bs.offcanvas', () => {
+        button.classList.remove('active'); // 移除 active 類別，恢復按鈕狀態
+    });
+</script>

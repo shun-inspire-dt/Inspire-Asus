@@ -1,0 +1,29 @@
+---
+/** Common Components - 通用組件 */
+/** Offcanvas Base Component - Offcanvas 基礎組件 */
+import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
+/** Main Component */
+import AcctSideNav from './acctSideNav.astro';
+/** Style */
+import './navOffcanvas.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'memberNav', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<MyOffcanvas
+    IDName={IDName}
+    postion="top"
+    hideHeader
+    className={['member-nav-offcanvas', className]}
+    attribute={attribute}
+    style={{ '--bs-offcanvas-height': 'calc(100vh - (var(--header-height) + 3.125rem))', ...style }}
+>
+    <AcctSideNav type="default" padding="width" />
+</MyOffcanvas>
