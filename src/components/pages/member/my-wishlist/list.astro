@@ -1,0 +1,16 @@
+---
+/** Style */
+import './list.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className]} style={style} {...attribute}>
+</div>

@@ -20,8 +20,8 @@ const componentId = IDName || `collapse-${Math.random().toString(36).substr(2, 9
 
 <div
     class:list={[
-        className,
-        ':uno-Collapse: w-full flex flex-col space-y-[var(--collapse-gap)] py-[var(--collapse-padding-y)] border-t-[size:var(--collapse-border-width)] border-solid border-t-[color:var(--collapse-border-color)] [--collapse-padding-y:0rem] [--collapse-gap:0rem] [--collapse-border-width:1px] [--collapse-border-color:var(--color-gray-200)] [--collapse-btn-padding-x:0rem] [--collapse-btn-padding-y:0.75rem]'
+        ':uno-Collapse: w-full flex flex-col space-y-[var(--collapse-gap)] py-[var(--collapse-padding-y)] border-t-[size:var(--collapse-border-width)] border-solid border-t-[color:var(--collapse-border-color)] [--collapse-padding-y:0rem] [--collapse-gap:0rem] [--collapse-border-width:1px] [--collapse-border-color:var(--color-gray-200)] [--collapse-btn-padding-x:0rem] [--collapse-btn-padding-y:0.75rem]',
+        className
     ]}
     style={{ ...style }}
     data-collapse
@@ -39,7 +39,7 @@ const componentId = IDName || `collapse-${Math.random().toString(36).substr(2, 9
         aria-expanded={show}
         data-bs-controls={componentId}
     >
-        {title}
+        <slot name="title">{title}</slot>
         <CollapseArrow />
     </button>
     <div id={componentId} class:list={['collapse', { show: show }]}>
