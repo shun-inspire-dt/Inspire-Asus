@@ -11,12 +11,18 @@
     padding-left: 1rem;
     padding-right: 1rem;
     background-color: white;
-    border-radius: 0.5rem;
     cursor: pointer;
+    
+    @at-root [data-width="true"]:not([data-side="true"]) & {
+        @apply px-6.25%;
+    }
+    @at-root [data-side="true"] & {
+        border-radius: 0.5rem;
+    }
     
     &:hover,
     &.active {
-        background-color: var(--gray-50, #f9fafb);
+        background-color: var(--color-gray-50, #f9fafb);
         
         .acct-side-nav-tab__content {
             color: var(--blue-500, #3b82f6);
