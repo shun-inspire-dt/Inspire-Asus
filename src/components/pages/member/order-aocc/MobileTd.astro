@@ -35,7 +35,7 @@ const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
             <span class=":uno-order-aocc-list-title: font-medium">狀態</span>
             <span>{data[4].text}</span>
         </li>
-        <li class=":uno-order-aocc-card-li: flex items-baseline justify-center">
+        <li class=":uno-order-aocc-card-li-center: flex items-baseline justify-center">
             <ALink link={`/member/order-aocc/${data[0].text}`} size="14" title="查看明細">查看明細</ALink>
         </li>
     </ul>
