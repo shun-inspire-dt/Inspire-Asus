@@ -1,10 +1,14 @@
 ---
+/** Data */
+import { data } from '@components/pages/member/order-aocc/data';
+import { data as inqueryData } from '@components/pages/inquery/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
 
 /** Common Components */
-
+import Body from '@components/pages/member/tools/body.astro';
+import Title from '@components/pages/member/tools/title.astro';
 /** Main Components */
 import Content from '@components/pages/member/order-aocc/[id]/content.astro';
 import Form from '@components/pages/member/order-aocc/[id]/form.astro';
@@ -12,12 +16,25 @@ import Form from '@components/pages/member/order-aocc/[id]/form.astro';
 import '@scss/pages/member/order-aocc/[...id].scss';
 
 export async function getStaticPaths() {
-    return Array.from({ length: 10 }).map((_, index) => ({ params: { id: index } }));
+    return data.flatMap((x) => x.items.map((y) => y.text).filter((_, index) => index === 0)).map((id) => ({ params: { id } }));
 }
+const targetData = data.map((x) => x.items.map((y) => y.text));
 const { id } = Astro.params;
+const [_, date = '', text = '', quantity = '', status = ''] = targetData.filter((x) => x.includes(id?.toString())).flatMap((x) => x) || [];
 
 export const prerender = true;
 ---
 
 <Layouts IDName="MemberOrder-aoccDetail" minMarginHeader isMemberFooter>
+    <Body activeTab="我的諮詢夾">
+        <Title
+            title={'諮詢編號: ' + id}
+            link="/member/order-aocc"
+            linkText="返回我的諮詢夾列表"
+            rightText={`日期: ${date as string}`}
+            showRightText
+            showLink
+        />
+        <Content date={date as string} data={inqueryData} />
+    </Body>
 </Layouts>

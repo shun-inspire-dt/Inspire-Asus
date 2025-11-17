@@ -1,16 +1,24 @@
 ---
+/** Data */
+import { data, field } from '@components/pages/member/order-aocc/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
 
 /** Common Components */
-
+import Body from '@components/pages/member/tools/body.astro';
+import Title from '@components/pages/member/tools/title.astro';
+import Sort from '@components/pages/member/tools/sort.astro';
 /** Main Components */
-import Content from '@components/pages/member/order-aocc/content.astro';
-import List from '@components/pages/member/order-aocc/list.astro';
+import Table from '@components/pages/member/order-aocc/content.astro';
 /** Style */
 import '@scss/pages/member/order-aocc.scss';
 ---
 
 <Layouts IDName="MemberOrder-aocc" minMarginHeader isMemberFooter>
+    <Body activeTab="我的諮詢夾">
+        <Title title="我的諮詢夾" showSort />
+        <Table data={data} field={field} />
+        <Sort type="bottom" />
+    </Body>
 </Layouts>
