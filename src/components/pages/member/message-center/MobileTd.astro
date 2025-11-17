@@ -1,0 +1,25 @@
+---
+/** Type */
+import type { tableChidType } from '@components/common/tables/tables.type';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data: tableChidType[];
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ":uno-message-center-card: space-y-0.5rem"]} style={style} {...attribute}>
+    <div class="flex items-baseline justify-between">
+        <strong class="font-roboto body-03-sh font-medium text-gray-900">{data[2].text}</strong>
+        <span class="font-roboto body-01-sh">{data[0].text}</span>
+    </div>
+    <div class="flex flex-col gap-0.5rem">
+        <p class="font-roboto body-01-sh text-gray-900">{data[1].text}</p>
+        <p class="font-roboto body-01-sh text-gray-600">{data[3].text}</p>
+    </div>
+</div>

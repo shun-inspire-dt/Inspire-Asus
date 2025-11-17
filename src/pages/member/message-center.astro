@@ -1,10 +1,14 @@
 ---
+/** Data */
+import { data, field } from '@components/pages/member/message-center/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
 
 /** Common Components */
-
+import Body from '@components/pages/member/tools/body.astro';
+import Title from '@components/pages/member/tools/title.astro';
+import Sort from '@components/pages/member/tools/sort.astro';
 /** Main Components */
 import Content from '@components/pages/member/message-center/content.astro';
 import Table from '@components/pages/member/message-center/table.astro';
@@ -13,4 +17,9 @@ import '@scss/pages/member/message-center.scss';
 ---
 
 <Layouts IDName="MemberMessage-center" minMarginHeader isMemberFooter>
+    <Body activeTab="訊息中心">
+        <Title title="訊息中心" showSort />
+        <Table data={data} field={field} />
+        <Sort type="bottom" />
+    </Body>
 </Layouts>
