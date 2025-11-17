@@ -27,17 +27,17 @@ const progress: progress = [
 
 <div id={IDName} class:list={[className, ':uno-order-aocc-detail: space-y-2rem']} style={style} {...attribute}>
     <Progress progress={progress} />
-    <div class="space-y-2rem">
-        <div class="flex flex-col gap-1rem pb-1.5rem border-b border-gray-200">
-            <strong class="text-gray-900 font-tt-medium font-medium text-20 lh-120">諮詢備註</strong>
-            <p class="text-gray-900 font-roboto text-16 lh-120">訂單備註訂單備註訂單備註訂單備註訂單備註訂單備註訂單備註</p>
+    <div class=":uno-order-aocc-detail-content: space-y-2rem">
+        <div class=":uno-order-aocc-detail-comment: flex flex-col gap-1rem pb-1.5rem border-b border-gray-200">
+            <strong class=":uno-order-aocc-detail-comment-title: text-gray-900 font-tt-medium font-medium text-20 lh-120">諮詢備註</strong>
+            <p class=":uno-order-aocc-detail-comment-text: text-gray-900 font-roboto text-16 lh-120">訂單備註訂單備註訂單備註訂單備註訂單備註訂單備註訂單備註</p>
         </div>
-        <div class="flex flex-col gap-1rem">
-            <div class="flex items-baseline justify-between gap-0.5rem">
-                <strong class="text-gray-900 font-tt-medium font-medium text-20 lh-120">產品清單</strong>
-                <p class="text-gray-900 font-roboto text-16 lh-120 [&>b]:font-medium">共 <b>2</b> 項產品</p>
+        <div class=":uno-order-aocc-detail-product: flex flex-col gap-1rem">
+            <div class=":uno-order-aocc-detail-product-head: flex items-baseline justify-between gap-0.5rem">
+                <strong class=":uno-order-aocc-detail-product-title: text-gray-900 font-tt-medium font-medium text-20 lh-120">產品清單</strong>
+                <p class=":uno-order-aocc-detail-product-text: text-gray-900 font-roboto text-16 lh-120 [&>b]:font-medium">共 <b>2</b> 項產品</p>
             </div>
-            <div class="flex flex-col gap-1rem">
+            <div class=":uno-order-aocc-detail-product-list: flex flex-col gap-1rem">
                 {
                     data.map((x) => (
                         <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} readonly />

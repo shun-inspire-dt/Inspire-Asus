@@ -17,25 +17,25 @@ const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
 ---
 
 <div id={IDName} class:list={[className, ':uno-order-aocc-card: space-y-0.5rem text-gray-900']} style={style} {...attribute}>
-    <strong class="font-roboto body-03-sh font-medium">{data[2].text}</strong>
-    <ul class="space-y-0.5rem font-roboto body-01-sh">
-        <li class="flex items-baseline justify-between">
-            <span class="font-medium">詢問單號</span>
+    <strong class=":uno-order-aocc-card-title: font-roboto body-03-sh font-medium">{data[2].text}</strong>
+    <ul class=":uno-order-aocc-card-list: space-y-0.5rem font-roboto body-01-sh">
+        <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
+            <span class=":uno-order-aocc-list-title: font-medium">詢問單號</span>
             <span>{data[0].text}</span>
         </li>
-        <li class="flex items-baseline justify-between">
-            <span class="font-medium">詢問日期</span>
+        <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
+            <span class=":uno-order-aocc-list-title: font-medium">詢問日期</span>
             <span>{data[1].text}</span>
         </li>
-        <li class="flex items-baseline justify-between">
-            <span class="font-medium">數量</span>
+        <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
+            <span class=":uno-order-aocc-list-title: font-medium">數量</span>
             <span>{data[3].text}</span>
         </li>
-        <li class="flex items-baseline justify-between">
-            <span class="font-medium">狀態</span>
+        <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
+            <span class=":uno-order-aocc-list-title: font-medium">狀態</span>
             <span>{data[4].text}</span>
         </li>
-        <li class="flex items-baseline justify-center">
+        <li class=":uno-order-aocc-card-li: flex items-baseline justify-center">
             <ALink link={`/member/order-aocc/${data[0].text}`} size="14" title="查看明細">查看明細</ALink>
         </li>
     </ul>
