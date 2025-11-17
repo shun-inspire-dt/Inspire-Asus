@@ -95,7 +95,7 @@ const allPages = Array.from({ length: total }, (_, i) => i + 1);
 >
     {/** 上一頁按鈕 */}
     <a
-        href={active > 1 ? `#page-${active - 1}` : undefined}
+        href={active > 1 ? `?page=${active - 1}` : undefined}
         title="上一頁"
         class:list={[
             'pagination__arrow',
@@ -129,7 +129,7 @@ const allPages = Array.from({ length: total }, (_, i) => i + 1);
                         </span>
                     )}
                     <a
-                        href={`#page-${page}`}
+                        href={`?page=${page}`}
                         title={`第 ${page} 頁`}
                         class:list={['pagination__item', { 'pagination__item--active': active === page && !noActive }]}
                         aria-label={`第 ${page} 頁`}
@@ -155,7 +155,7 @@ const allPages = Array.from({ length: total }, (_, i) => i + 1);
 
     {/** 下一頁按鈕 */}
     <a
-        href={active < total ? `#page-${active + 1}` : undefined}
+        href={active < total ? `?page=${active + 1}` : undefined}
         title="下一頁"
         class:list={[
             'pagination__arrow',
