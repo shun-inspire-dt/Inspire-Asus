@@ -1,0 +1,47 @@
+.inquery-card {
+    $card: &;
+    @apply w-full flex flex-col md:flex-row md:items-start gap-1rem xl:gap-1.5rem p-1.5rem md:p-2rem bg-gray-50 rounded-lg;
+
+    &-img {
+        @apply w-full aspect-video md:w-15rem xl:flex-none object-cover object-center;
+    }
+    &-body {
+        @apply w-full md:w-[calc(100%-15rem)] flex flex-col xl:flex-row gap-1rem xl:gap-1.5rem;
+
+        @at-root #{$card}.readonly & {
+            width: 100% !important;
+            flex-direction: row !important;
+            gap: 2.5rem !important;
+        }
+    }
+    &-content {
+        @apply flex flex-col gap-0.75rem;
+        @at-root #{$card}.readonly & {
+            flex-grow: 1;
+        }
+    }
+    &-link {
+        @apply hover:underline hover:underline-offset-3;
+    }
+    &-title {
+        @apply text-gray-900 font-tt-medium text-18 xl:text-20 lh-120 font-medium text-left;
+    }
+    &-label {
+        @apply text-gray-900 font-roboto text-14 lh-140 text-left;
+    }
+    &-brief {
+        @apply text-gray-900 font-roboto text-16 lh-140 text-left line-clamp-3;
+    }
+    &-controller {
+        @apply xl:w-9.75rem flex items-center justify-between xl:justify-start xl:flex-none gap-1.5rem;
+    }
+    &-select {
+        @apply max-w-7.5rem xl:max-w-6.25rem flex-none;
+    }
+    &-remove {
+        @apply flex-none;
+    }
+    &-quantity {
+        @apply flex items-center flex-none text-gray-900 font-tt-medium font-medium text-20 lh-120 text-right;
+    }
+}
