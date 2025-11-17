@@ -1,4 +1,8 @@
 ---
+/** Common Component */
+/** Button */
+import Button from '@components/common/button/button.astro';
+import SocialIcon from '@components/common/icons/social/SocialIcon.astro';
 /** Style */
 import './form.scss';
 
@@ -12,5 +16,56 @@ export interface Props {
 const { IDName, className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
+<div
+    id={IDName}
+    class:list={[className, ':uno-account-management: border-t border-gray-200 text-gray-900']}
+    style={style}
+    {...attribute}
+>
+    <ul
+        class=":uno-account-management-acct: flex flex-col md:flex-row md:items-center gap-0.75rem md:gap-0 py-1.5rem md:py-2rem border-b border-gray-200"
+    >
+        <li class=":uno-account-management-acct-title: md:min-w-9.375rem body-04-sh font-medium">您的 Email</li>
+        <li class=":uno-account-management-acct-content: flex md:flex-row items-center gap-1.25rem flex-none md:flex-1">
+            <span class=":uno-account-management-acct-email: flex flex-col md:flex-row gap-0.5rem md:flex-1 body-02">
+                <span
+                    class=":uno-account-management-acct-email-text: min-h-2rem flex flex-col md:flex-row md:items-center md:flex-1 gap-0.9375rem"
+                >
+                    marketing@inspire-dt.com
+                </span>
+                <span class=":uno-account-management-acct-email-btn: flex">
+                    <Button type={'button'} variant="blue-outline" size="sm" title="變更信箱">變更信箱</Button>
+                </span>
+            </span>
+        </li>
+    </ul>
+    <ul
+        class=":uno-account-management-social: flex flex-col md:flex-row md:items-start gap-0.75rem md:gap-0 py-1.5rem md:py-2rem border-b border-gray-200"
+    >
+        <li class=":uno-account-management-social-title: md:min-w-9.375rem body-04-sh md:lh-[2rem] font-medium">社群帳號</li>
+        <li class=":uno-account-management-social-list: flex flex-col gap-1rem md:flex-1">
+            <span class=":uno-account-management-social-item: flex md:flex-row items-center gap-1.25rem flex-none">
+                <span class=":uno-account-management-social-item-content: flex flex-col md:flex-row gap-0.5rem md:flex-1">
+                    <span class=":uno-account-management-social-item-text: min-h-2rem flex items-center md:flex-row md:items-center md:flex-1 gap-0.9375rem">
+                        <SocialIcon type="icon_google" size="sm" />
+                        已與 Google 帳號做連結
+                    </span>
+                    <span class=":uno-account-management-social-item-link: flex">
+                        <Button Tag="a" variant="blue-outline" size="sm" title="解除連結">解除連結</Button>
+                    </span>
+                </span>
+            </span>
+            <span class=":uno-account-management-social-item: flex md:flex-row items-center gap-1.25rem flex-none">
+                <span class=":uno-account-management-social-item-content: flex flex-col md:flex-row gap-0.5rem md:flex-1">
+                    <span class=":uno-account-management-social-item-text: min-h-2rem flex items-center md:flex-row md:items-center md:flex-1 gap-0.9375rem">
+                        <SocialIcon type="icon_microsoft" size="sm" />
+                        尚未與 Microsoft 帳號做連結
+                    </span>
+                    <span class=":uno-account-management-social-item-link: flex">
+                        <Button Tag="a" variant="blue-outline" size="sm" title="立即連結">立即連結</Button>
+                    </span>
+                </span>
+            </span>
+        </li>
+    </ul>
 </div>

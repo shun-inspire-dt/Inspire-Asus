@@ -5,6 +5,7 @@ import Layouts from '@layouts/layouts.astro';
 
 /** Common Components */
 import Body from '@components/pages/member/tools/body.astro';
+import Title from '@components/pages/member/tools/title.astro';
 /** Main Components */
 import Content from '@components/pages/member/account-management/content.astro';
 import Form from '@components/pages/member/account-management/form.astro';
@@ -13,7 +14,8 @@ import '@scss/pages/member/account-management.scss';
 ---
 
 <Layouts IDName="MemberAccount-management" minMarginHeader isMemberFooter>
-    <Body>
+    <Body activeTab="帳號管理" activeCollapse="帳戶設定">
+        <Title title="帳號管理" showSort />
         <Form />
     </Body>
 </Layouts>
