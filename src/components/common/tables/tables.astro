@@ -1,9 +1,39 @@
 ---
+/**
+ * 表格組件 - 提供響應式表格功能，支援行動裝置模式、滾動、固定欄位等功能
+ * @component Tables
+ * @description 可自訂的表格組件，支援多種顯示模式和互動功能
+ * @author ASUS Team
+ * @version 1.0.0
+ */
+
 /** Type */
 import type { Props as IconsProps } from '@components/common/icons/icons.astro';
 import type { tableChidType, tableChidTRType, childComponentProps, EmptyComponentProps } from './tables.type';
 /** Style */
 import './tables.scss';
+
+/**
+ * 表格組件屬性介面
+ * @interface Props
+ * @property {string} IDName - 表格 ID 名稱
+ * @property {string} className - 自訂 CSS 類別
+ * @property {attribute} attribute - HTML 屬性
+ * @property {string} style - 內聯樣式
+ * @property {tableChidType[]} field - 表格欄位定義
+ * @property {tableChidTRType[]} data - 表格資料
+ * @property {boolean} scrollable - 是否啟用水平滾動
+ * @property {'top' | 'bottom' | 'all' | false} rouned - 圓角設定
+ * @property {boolean} sticky - 是否固定第一欄
+ * @property {'sm' | 'md' | 'lg' | 'xl' | '2xl'} mobileTable - 行動裝置模式斷點
+ * @property {(_props: childComponentProps) => any} MobileComponent - 行動裝置自訂組件
+ * @property {(_props: EmptyComponentProps) => any} EmptyComponent - 空資料自訂組件
+ * @property {boolean} emptyHideHead - 空資料時是否隱藏表頭
+ * @property {IconsProps['icon']} emptyIcon - 空資料圖示
+ * @property {string} emptyText - 空資料文字
+ * @property {boolean} hideTitle - 是否隱藏標題
+ * @property {boolean} hideToolTip - 是否隱藏工具提示
+ */
 export interface Props {
     IDName?: string;
     className?: any;
