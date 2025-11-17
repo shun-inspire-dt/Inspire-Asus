@@ -3,7 +3,7 @@
 /** Offcanvas Base Component - Offcanvas 基礎組件 */
 import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
 /** Main Component */
-import AcctSideNav from './acctSideNav.astro';
+import AcctSideNav, { type Props as AcctSideNavProps } from './acctSideNav.astro';
 /** Style */
 import './navOffcanvas.scss';
 
@@ -12,9 +12,10 @@ export interface Props {
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
+    activeTab?: AcctSideNavProps['active'];
 }
 
-const { IDName = 'memberNav', className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'memberNav', className, style, attribute = {}, activeTab } = Astro.props as Props;
 ---
 
 <MyOffcanvas
@@ -25,5 +26,5 @@ const { IDName = 'memberNav', className, style, attribute = {} } = Astro.props a
     attribute={attribute}
     style={{ '--bs-offcanvas-height': 'calc(100vh - (var(--header-height) + 3.125rem))', ...style }}
 >
-    <AcctSideNav type="default" padding="width" />
+    <AcctSideNav type="default" padding="width" active={activeTab} />
 </MyOffcanvas>

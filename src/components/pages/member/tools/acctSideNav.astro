@@ -17,11 +17,12 @@ interface Props {
     type?: 'default' | 'indented' | 'side';
     padding?: 'default' | 'width';
     active?: (typeof activeTab)[number];
+    activeCollapse?: (typeof activeTab)[number];
 }
 
 export type { Props };
 
-const { IDName, className, style, attribute = {}, active = '會員中心', type = 'side', padding = 'width' } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, active = '會員中心', type = 'side', padding = 'width', activeCollapse } = Astro.props as Props;
 ---
 
 <nav
@@ -48,7 +49,7 @@ const { IDName, className, style, attribute = {}, active = '會員中心', type 
                             'data-bs-toggle': item.children && item.children.length > 0 ? 'collapse' : null,
                             'data-bs-target': item.children && item.children.length > 0 ? `#nav-${item.id}` : null,
                             'aria-expanded':
-                                item.children && item.children.length > 0 ? (item.label === active ? 'true' : 'false') : null,
+                                item.children && item.children.length > 0 ? (item.label === activeCollapse ? 'true' : 'false') : null,
                             'aria-controls': item.children && item.children.length > 0 ? `nav-${item.id}` : null,
                             ...(item.href ? { href: item.href } : {})
                         }}
@@ -57,7 +58,7 @@ const { IDName, className, style, attribute = {}, active = '會員中心', type 
                         {item.label}
                     </AcctSideNavTab>
                     {item.children && item.children.length > 0 && (
-                        <div id={`nav-${item.id}`} class:list={['collapse', item.label === active ? 'show' : '']}>
+                        <div id={`nav-${item.id}`} class:list={['collapse', item.label === activeCollapse ? 'show' : '']}>
                             {item.children.map((subItem) => (
                                 <AcctSideNavSubTab
                                     Tag="a"
