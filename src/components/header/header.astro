@@ -94,9 +94,13 @@ const { IDName = 'header', className, style, attribute = {} } = Astro.props as P
                         <div class="menu-link-list">
                             <div class="menu-link-ul">
                                 {
-                                    ['基本資料', '訊息中心(10)', '我的諮詢夾(10)', '我的收藏清單(10)', '登出'].map((z) => (
-                                        <A link="#" title={z} />
-                                    ))
+                                    [
+                                        { title: '基本資料', link: '/member/basic-info' },
+                                        { title: '訊息中心(10)', link: '/member/message-center' },
+                                        { title: '我的諮詢夾(10)', link: '/member/order-aocc' },
+                                        { title: '我的收藏清單(10)', link: '/member/my-wishlist' },
+                                        { title: '登出', link: '' }
+                                    ].map((z) => <A link={z.link} title={z.title} />)
                                 }
                             </div>
                         </div>
