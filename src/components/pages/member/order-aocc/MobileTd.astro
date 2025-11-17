@@ -1,0 +1,42 @@
+---
+/** Type */
+import type { tableChidType } from '@components/common/tables/tables.type';
+/** Common Component */
+/** Link */
+import ALink from '@components/common/link/link.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data: tableChidType[];
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ':uno-order-aocc-card: space-y-0.5rem text-gray-900']} style={style} {...attribute}>
+    <strong class="font-roboto body-03-sh font-medium">{data[2].text}</strong>
+    <ul class="space-y-0.5rem font-roboto body-01-sh">
+        <li class="flex items-baseline justify-between">
+            <span class="font-medium">詢問單號</span>
+            <span>{data[0].text}</span>
+        </li>
+        <li class="flex items-baseline justify-between">
+            <span class="font-medium">詢問日期</span>
+            <span>{data[1].text}</span>
+        </li>
+        <li class="flex items-baseline justify-between">
+            <span class="font-medium">數量</span>
+            <span>{data[3].text}</span>
+        </li>
+        <li class="flex items-baseline justify-between">
+            <span class="font-medium">狀態</span>
+            <span>{data[4].text}</span>
+        </li>
+        <li class="flex items-baseline justify-center">
+            <ALink link={`/member/order-aocc/${data[0].text}`} size="14" title="查看明細">查看明細</ALink>
+        </li>
+    </ul>
+</div>

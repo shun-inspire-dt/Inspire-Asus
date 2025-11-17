@@ -1,4 +1,9 @@
 ---
+/** Type */
+import type { dataType } from '../../../inquery/data';
+/** Common Component */
+import Progress from '@components/common/progress/progress.astro';
+import Card from '../../../inquery/card.astro';
 /** Style */
 import './content.scss';
 
@@ -7,10 +12,38 @@ export interface Props {
     className?: className;
     attribute?: attribute;
     style?: { [key: string]: string };
+    date?: string;
+    data?: dataType;
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, date = '', data = [] } = Astro.props as Props;
+
+const progress: progress = [
+    { id: 1, title: '諮詢成立', date: date, active: true },
+    { id: 2, title: '諮詢成立', date: date, active: false },
+    { id: 3, title: '諮詢成立', date: date, active: false }
+];
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
+<div id={IDName} class:list={[className, ':uno-order-aocc-detail: space-y-2rem']} style={style} {...attribute}>
+    <Progress progress={progress} />
+    <div class="space-y-2rem">
+        <div class="flex flex-col gap-1rem pb-1.5rem border-b border-gray-200">
+            <strong class="text-gray-900 font-tt-medium font-medium text-20 lh-120">諮詢備註</strong>
+            <p class="text-gray-900 font-roboto text-16 lh-120">訂單備註訂單備註訂單備註訂單備註訂單備註訂單備註訂單備註</p>
+        </div>
+        <div class="flex flex-col gap-1rem">
+            <div class="flex items-baseline justify-between gap-0.5rem">
+                <strong class="text-gray-900 font-tt-medium font-medium text-20 lh-120">產品清單</strong>
+                <p class="text-gray-900 font-roboto text-16 lh-120 [&>b]:font-medium">共 <b>2</b> 項產品</p>
+            </div>
+            <div class="flex flex-col gap-1rem">
+                {
+                    data.map((x) => (
+                        <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} readonly />
+                    ))
+                }
+            </div>
+        </div>
+    </div>
 </div>

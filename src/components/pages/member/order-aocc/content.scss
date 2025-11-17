@@ -1,0 +1,11 @@
+#OrderAoccTable {
+    --td-padding-x: 0rem;
+
+    border-top: var(--table-border-bottom-width) solid var(--table-border-color);
+    border-bottom: var(--table-border-bottom-width) solid var(--table-border-color);
+    @screen md {
+        --td-padding-x: 1rem;
+
+        border-top: none;
+    }
+}

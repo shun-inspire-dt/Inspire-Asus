@@ -1,0 +1,22 @@
+---
+/** Type */
+import type { tableChidType } from '@components/common/tables/tables.type';
+/** Common Component */
+/** Link */
+import ALink from '@components/common/link/link.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    index?: number;
+    data?: tableChidType;
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<ALink IDName={IDName} link={`/member/order-aocc/${data?.data?.id}`} className={[className]} style={style} attribute={attribute}>
+    查看明細
+</ALink>

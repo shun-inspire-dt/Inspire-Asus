@@ -1,4 +1,8 @@
 ---
+/** Common Component */
+/** Tables */
+import Tables, { type Props as TablesProps } from '@components/common/tables/tables.astro';
+import MobileTd from './MobileTd.astro';
 /** Style */
 import './content.scss';
 
@@ -7,10 +11,20 @@ export interface Props {
     className?: className;
     attribute?: attribute;
     style?: { [key: string]: string };
+    data?: TablesProps['data'];
+    field?: TablesProps['field'];
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'OrderAocc', className, style, attribute = {}, data = [], field = [] } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
-</div>
+<Tables
+    IDName={IDName}
+    data={data}
+    field={field}
+    className={[className, ':uno-order-aocc-tables:']}
+    mobileTable="md"
+    MobileComponent={MobileTd}
+    style={style}
+    {...attribute}
+/>
