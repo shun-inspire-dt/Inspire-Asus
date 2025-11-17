@@ -53,17 +53,17 @@ export const memberNavItems: NavItem[] = [
             {
                 id: 'basic-info',
                 label: '基本資料',
-                href: '/member/account-settings/basic-info'
+                href: '/member/basic-info'
             },
             {
                 id: 'account-management',
                 label: '帳號管理',
-                href: '/member/account-settings/account-management'
+                href: '/member/account-management'
             },
             {
                 id: 'update-password',
                 label: '變更密碼',
-                href: '/member/account-settings/update-password'
+                href: '/member/update-password'
             }
         ]
     },
