@@ -1,7 +1,7 @@
 ---
 /** Main Component */
 import Banner from './banner.astro';
-import AcctSideNav from './acctSideNav.astro';
+import AcctSideNav, { type Props as AcctSideNavProps } from './acctSideNav.astro';
 import NavOffcanvas from './navOffcanvas.astro';
 
 
@@ -10,18 +10,20 @@ export interface Props {
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
+    activeTab?: AcctSideNavProps['active'];
+    activeCollapse?: AcctSideNavProps['activeCollapse'];
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, activeTab, activeCollapse } = Astro.props as Props;
 ---
 
 <div id={IDName} class:list={[className, ":uno-member-body: min-h-[calc(100vh-8.875rem)] md:min-h-[calc(100vh-7.25rem)] pt-3.1875rem xl:pt-0 bg-gray-50"]} style={style} {...attribute}>
     <Banner />
     <div class="container-fluid xl:flex xl:items-start xl:gap-1.25rem pt-1rem pb-3rem md:pb-5rem xl:pt-0">
-        <AcctSideNav className=":uno-member-side-nav: w-18.4375rem lt-lg:hidden flex-none" />
+        <AcctSideNav className=":uno-member-side-nav: w-18.4375rem lt-xl:hidden flex-none" active={activeTab} activeCollapse={activeCollapse} />
         <div class=":uno-member-content: xl:w-full flex flex-col gap-2rem py-2rem px-1.5rem xl:p-3rem bg-white rounded-xl">
             <slot />
         </div>
     </div>
 </div>
-<NavOffcanvas />
+<NavOffcanvas activeTab={activeTab} />
