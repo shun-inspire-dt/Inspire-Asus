@@ -1,4 +1,11 @@
 ---
+/** Common Component */
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import PasswordInput from '@components/common/form/input/passwordInput.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
 /** Style */
 import './form.scss';
 
@@ -12,5 +19,35 @@ export interface Props {
 const { IDName, className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
-</div>
+<form
+    id={IDName}
+    class:list={[className, ':uno-update-password-form: flex flex-col gap-2rem md:gap-1.25rem xl:gap-1.5rem']}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-section-half-form-grid-item: xl:w-1/2 flex flex-col gap-1.5rem">
+        <InputGroup label="舊密碼" infoText="請輸入您的舊密碼" block>
+            <PasswordInput />
+        </InputGroup>
+        <InputGroup label="新密碼" infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。" block>
+            <PasswordInput />
+        </InputGroup>
+        <InputGroup label="再次輸入您的新密碼" infoText="請您再次輸入您的新密碼" block>
+            <PasswordInput />
+        </InputGroup>
+    </div>
+    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
+        <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
+            <Button
+                type={'submit'}
+                className=":uno-basic-info-form-button: md:max-w-9.75rem"
+                size="lg"
+                title="送出"
+                variant="blue"
+                block
+            >
+                確認修改
+            </Button>
+        </div>
+    </div>
+</form>
