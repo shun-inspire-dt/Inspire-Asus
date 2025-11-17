@@ -132,6 +132,7 @@ export interface Props {
     className?: any;
     minMarginHeader?: boolean;
     footerShowBorderTop?: boolean;
+    footerPages?: string[];
     isMemberFooter?: boolean;
 }
 
@@ -140,6 +141,7 @@ const {
     className,
     bodyClassName,
     footerShowBorderTop = false,
+    footerPages = [],
     minMarginHeader = false,
     isMemberFooter = false
 } = Astro.props as Props;
@@ -215,7 +217,7 @@ const {
         <main id={IDName} class:list={[className, { 'margin-top': minMarginHeader }]} data-name={IDName}>
             <slot />
         </main>
-        {isMemberFooter ? <MemberFooter /> : <Footer showBorderTop={footerShowBorderTop} />}
+        {isMemberFooter ? <MemberFooter /> : <Footer pages={footerPages} showBorderTop={footerShowBorderTop} />}
         <Script />
         <Toast />
         <slot name="script" />

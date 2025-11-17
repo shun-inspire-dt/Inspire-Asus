@@ -19,7 +19,7 @@ const { id } = Astro.params;
 export const prerender = true;
 ---
 
-<Layouts IDName="NewsDetail" minMarginHeader>
+<Layouts IDName="NewsDetail" minMarginHeader footerPages={['最新消息']}>
     <Article />
     <Relative />
 </Layouts>

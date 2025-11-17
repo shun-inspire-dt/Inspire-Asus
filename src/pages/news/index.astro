@@ -17,7 +17,7 @@ import Script from '@components/pages/news/script.astro';
 import '@scss/pages/news.scss';
 ---
 
-<Layouts IDName="News" footerShowBorderTop>
+<Layouts IDName="News" footerShowBorderTop footerPages={['最新消息']}>
     <Banner img="news-banner" title="最新消息" />
     <Articles />
     <ArticlesList
