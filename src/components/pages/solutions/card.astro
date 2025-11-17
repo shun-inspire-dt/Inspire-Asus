@@ -18,6 +18,8 @@ export interface Props {
     logoImage?: string;
     img?: string;
     link?: string;
+    linkText?: string;
+    showLinkArrow?: boolean;
     imgBreakpoints?: PictureProps['breakpoints'];
     width?: string | number;
     showPlayBack?: boolean;
@@ -33,6 +35,8 @@ const {
     logoImage = '/assets/logos/Business-Vertical-Light',
     img = '/assets/images/pages/solutions-bg-1',
     link = '',
+    linkText = '了解更多',
+    showLinkArrow = true,
     width = '100%',
     showPlayBack = true,
     // 響應式圖片斷點設定，依照不同螢幕尺寸載入對應圖片
@@ -126,7 +130,7 @@ const cardStyle = {
             >
                 <Picture img={logoImage} alt={title} type="svg" loading="lazy" decoding="async" noWebp />
             </div>
-            <ALink link={link} className=":uno-solutions-card-link: mt-1rem" title={'了解更多'} size="16" showArrow />
+            <ALink link={link} className=":uno-solutions-card-link: mt-1rem" title={linkText} size="16" showArrow={showLinkArrow} />
         </div>
     </div>
 </div>
