@@ -1,0 +1,71 @@
+---
+/** Modules */
+import { bannerImage, bannerImages } from '../../common/banner/banner';
+/** Common Component */
+/** Swiper */
+import Swiper from '@components/common/swiper/swiper.astro';
+/** Picture */
+import Picture from '@components/common/images/picture.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
+/** Style */
+import './banner.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'IndexBanner', className, style, attribute = {} } = Astro.props as Props;
+const imgBreakpoints = bannerImages('index-banner');
+const image = bannerImage('index-banner');
+---
+
+<Swiper
+    IDName={IDName}
+    pagination="inside"
+    className={['index-banner', className]}
+    swiperClassName="has-indicator"
+    style={style}
+    {...attribute}
+>
+    {
+        Array.from({ length: 5 }).map(() => (
+            <div class="swiper-slide index-banner-slide">
+                <Picture
+                    img={image}
+                    breakpoints={imgBreakpoints}
+                    className="index-banner-image"
+                    width={1440}
+                    height={777}
+                    alt="ASUS MarketPlace"
+                    noWebp
+                />
+                <div class="index-banner-article">
+                    <h1 class="index-banner-title">
+                        ASUS MarketPlace
+                    </h1>
+                    <strong class="index-banner-text">
+                        數位轉型不必再分散與複雜，透過
+                        商用數位轉型整合解決方案平台，企業即可一次到位完成管理、行銷與營運升級，快速抓住未來商機。
+                    </strong>
+                    <div class="index-banner-link">
+                        <Button Tag="a" variant="blue" size="sm" link="/solution" title="ASUS MarketPlace">
+                            查看更多
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+</Swiper>
+
+<script>
+    import { mySwiper } from '@js/components/common/swiper/swiper';
+
+    mySwiper('#IndexBannerSwiper', {
+        speed: 3000,
+    });
+</script>

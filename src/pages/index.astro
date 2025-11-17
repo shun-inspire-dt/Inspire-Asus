@@ -1,7 +1,29 @@
 ---
+/** Data */
+import { data } from '@components/pages/index/aboutus.ts';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import Script from '@components/common/article/relative.js.astro';
+/** Main Components */
+import Banner from '@components/pages/index/banner.astro';
+import Aboutus from '@components/pages/index/aboutus.astro';
+import Solutions from '@components/pages/index/solutions.astro';
+import Success from '@components/pages/index/success.astro';
+import Ivy from '@components/pages/index/ivy.astro';
+import News from '@components/pages/index/news.astro';
+/** Style */
+import '@scss/pages/index.scss';
 ---
 
-<Layouts IDName="">
+<Layouts IDName="Index">
+    <Banner />
+    <Aboutus data={data} />
+    <Solutions />
+    <Success />
+    <Ivy />
+    <News />
 </Layouts>
+<Script />

@@ -1,0 +1,43 @@
+.index-banner {
+    @apply w-full h-34.25rem md:h-43.625rem lg:h-48.5625rem;
+
+    &-slide {
+        @apply relative;
+    }
+    &-image {
+        @apply size-full object-cover object-cb;
+    }
+    &-article {
+        @apply min-w-[calc(100%-3.75rem)] md:min-w-[calc(100%-8rem)] xl:min-w-auto h-full xl:h-auto flex flex-col items-center xl:items-start pt-4.75rem md:pt-6.5rem xl:pt-5.25rem absolute left-1/2 xl:left-[calc(6.25%+3.875rem)] top-0 xl:top-auto xl:bottom-14.4375rem -translate-x-1/2 xl:translate-x-0;
+    }
+    &-title {
+        @apply mb-0.625rem md:mb-1.0625rem xl:mb-0.3125rem text-gray-900 font-tt-normal text-1.75rem md:text-2.625rem xl:text-52 lh-[116%] text-center xl:text-left font-normal;
+    }
+    &-text {
+        @apply xl:max-w-33.75rem mt-0.25rem md:mt-0.75rem xl:mt-0 text-gray-900 font-roboto text-14 md:text-1.375rem lh-[127%] text-center xl:text-left font-normal;
+    }
+    &-link {
+        @apply mt-0.5rem md:mt-1.375rem xl:mt-1.5625rem;
+
+        .btn.btn-sm {
+            @screen md {
+                --btn-min-width: 8.125rem;
+                --btn-padding-x: 1rem; /* 大按鈕水平內邊距 */
+                --btn-padding-y: 0.5rem; /* 大按鈕垂直內邊距 */
+                --btn-font-size: var(--fs-18, 1.125rem); /* 大按鈕字體大小 */
+                --btn-line-height: var(--line-height-18-sh, 1.5rem); /* 1.125rem 字體對應 1.5rem 行高 */
+                --btn-min-height: 2.5rem; /* 大按鈕最小高度 */
+                --btn-border-radius: 0.5rem; /* 大按鈕圓角 */
+                --btn-gap: 0.5rem; /* 大按鈕內元素間距 */
+            }
+        }
+    }
+}
+
+#IndexBannerSwiper {
+    @apply h-full;
+
+    &Container {
+        @apply bg-gray-50;
+    }
+}

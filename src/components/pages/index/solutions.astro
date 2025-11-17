@@ -1,0 +1,39 @@
+---
+/** Common Component */
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Style */
+import './ivy.scss';
+import Card from '../solutions/card.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-index-solutions-section: sect-p-sm md:sect-p-md xl:sect-p-lg bg-[linear-gradient(180deg,#F5F5F5_0%,#FFFFFF_100%)]'
+    ]}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-index-solutions-section-container: container-fluid flex flex-col items-center gap-3rem">
+        <h2 class=":uno-index-solutions-section-title: text-gray-900 font-tt-medium font-medium text-30 md:text-36 xl:text-44 lh-120">解決方案</h2>
+        <div class=":uno-index-solutions-section-cards: w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-1.25rem">
+            {
+                Array.from({ length: 6 }).map((_, index) => (
+                    <Card link={`/solutions/${index}`} showPlayBack={(index + 1) % 2 === 0} />
+                ))
+            }
+        </div>
+        <ALink link={'/solution'} title={'查看更多'} showArrow>查看更多</ALink>
+    </div>
+</div>

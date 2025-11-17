@@ -1,0 +1,45 @@
+---
+/** Style */
+import './ivy.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName, className, style, attribute = {} } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-index-ivy-section: container-fluid flex flex-col items-center gap-2rem sect-p-sm md:sect-p-md xl:sect-p-lg'
+    ]}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-index-ivy-head: flex flex-col items-center gap-1.5rem">
+        <h2 class=":uno-index-ivy-title: text-gray-900 font-tt-medium font-medium text-30 md:text-36 xl:text-44 lh-120">成為華碩合作夥伴</h2>
+        <p class=":uno-index-ivy-subTitle: max-w-47.25rem text-gray-900 body-03 text-center">
+            您的專業，是滋養數位沃土的泉源，一同共創、共享繁茂永續且多贏的產業智慧生態。
+        </p>
+    </div>
+    <div class=":uno-index-ivy-brands: w-full grid grid-cols-4 md:grid-cols-5 xl:grid-cols-8 gap-1.25rem">
+        {
+            Array.from({ length: 40 }).map((_, index) => (
+                <img
+                    width="140"
+                    height="48"
+                    class=":uno-index-ivy-brand-item: w-full h-1.7875rem md:h-3rem object-contain object-c"
+                    src={`/assets/images/pages/brands/Logo-${index < 9 ? `0${index + 1}` : index + 1}.png`}
+                    alt="Logo"
+                    loading="lazy"
+                    decoding="async"
+                />
+            ))
+        }
+    </div>
+</div>

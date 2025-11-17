@@ -1,0 +1,48 @@
+---
+/** Type */
+import type { dataType } from './aboutus.ts';
+/** Style */
+import './aboutus.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: className;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    data?: dataType;
+}
+
+const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+---
+
+<div
+    id={IDName}
+    class:list={[
+        className,
+        ':uno-index-aboutus-section: sect-p-sm md:sect-p-md xl:sect-p-lg bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat'
+    ]}
+    style={{ '--bg-image': 'url("/assets/images/pages/feature-BG-2.png")', ...style }}
+    {...attribute}
+>
+    <div class=":uno-index-aboutus-section-container: container-fluid flex flex-col items-center gap-2rem md:gap-3rem">
+        <h2
+            class=":uno-index-solutions-title: text-gray-900 font-tt-medium font-medium text-30 md:text-36 xl:text-44 lh-120"
+        >
+            Why ASUS Business?
+        </h2>
+        <div class=":uno-index-aboutus-content: w-full grid grid-cols-1 xl:grid-cols-3 gap-1.25rem">
+            {
+                data?.map((item, index) => (
+                    <div class=":uno-index-aboutus-card: w-full flex xl:flex-col items-center xl:items-start gap-1.25rem p-1.5rem bg-white rounded-xl">
+                        <span class=":uno-index-aboutus-card-icon-sm: size-2.75rem block xl:hidden flex-none [&>svg]:size-full" set:html={item.image?.sm} />
+                        <span class=":uno-index-aboutus-card-icon-lg: size-3.75rem hidden xl:block flex-none [&>svg]:size-full" set:html={item.image?.lg} />
+                        <div class=":uno-index-aboutus-card-head: w-full flex flex-col gap-0.5rem">
+                            <h3 class=":uno-index-aboutus-card-title: text-gray-900 font-tt-medium font-medium text-24 lh-24">{item.title}</h3>
+                            <p class=":uno-index-aboutus-card-description: text-gray-900 body-03">{item.description}</p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>
