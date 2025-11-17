@@ -17,5 +17,41 @@
         // --swiper-pagination-color: ;
         // --swiper-pagination-bullet-inactive-color: ;
         // --swiper-pagination-bullet-inactive-opacity: ;
+
+        &.has-indicator {
+            .swiper-pagination {
+                /** pagination */
+                --swiper-pagination-bullet-horizontal-gap: 0.5rem;
+                --swiper-pagination-bullet-border-radius: 999px;
+                --swiper-pagination-bullet-size: 8px;
+                --swiper-pagination-bullet-width: 8px;
+                --swiper-pagination-bullet-height: 8px;
+                --swiper-pagination-top: auto;
+                --swiper-pagination-bottom: 1rem;
+                --swiper-pagination-color: var(--color-gray-500, #818181);
+                --swiper-pagination-bullet-inactive-color: transparent;
+                --swiper-pagination-bullet-inactive-opacity: 1;
+
+                @apply h-1rem w-a flex items-center justify-center left-1/2 -translate-x-1/2 px-4px bg-white rounded-xl;
+
+                .swiper-pagination-bullet {
+                    @apply border border-transparent transition-colors duration-200 ease-in-out;
+                    &:focus,
+                    &:active,
+                    &:focus-within {
+                        @apply outline outline-2 outline-blue-500;
+                    }
+                    &:not(.swiper-pagination-bullet-active) {
+                        @apply border-gray-700;
+                    }
+                    &:first-child {
+                        @apply ml-0;
+                    }
+                    &:last-child {
+                        @apply mr-0;
+                    }
+                }
+            }
+        }
     }
 }
