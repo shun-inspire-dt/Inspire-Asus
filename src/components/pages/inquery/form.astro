@@ -43,7 +43,10 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
         class=":uno-inquery-cart: w-full mb-2rem mx-auto py-2.5rem md:py-3rem px-1.5rem md:px-2.5rem bg-white rounded-xl"
         slot="top"
     >
-        <div class=":uno-inquery-form-head: w-full flex items-center justify-between flex-wrap gap-y-0.75rem gap-x-1.875rem pb-1.5rem xl:pb-2rem" slot="sub-title">
+        <div
+            class=":uno-inquery-form-head: w-full flex items-center justify-between flex-wrap gap-y-0.75rem gap-x-1.875rem pb-1.5rem xl:pb-2rem"
+            slot="sub-title"
+        >
             <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">
                 方案清單
             </h2>
@@ -55,10 +58,13 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
             {data.map((x) => <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} />)}
         </div>
     </div>
-    <div class=":uno-inquery-form-head: w-full flex items-center justify-between flex-wrap gap-y-0.75rem gap-x-1.875rem pb-1.5rem xl:pb-2rem" slot="sub-title">
+    <div
+        class=":uno-inquery-form-head: w-full flex items-center justify-between flex-wrap gap-y-0.75rem gap-x-1.875rem pb-1.5rem xl:pb-2rem"
+        slot="sub-title"
+    >
         <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">聯絡資訊</h2>
     </div>
-    <div class=":uno-section-form-grid-item: flex flex-col gap-24px">
+    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <InputGroup label="公司名稱" block>
             <Input />
         </InputGroup>
@@ -81,7 +87,7 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
             <Input type="tel" inputmode="tel" />
         </InputGroup>
     </div>
-    <div class=":uno-section-form-grid-item: flex flex-col gap-24px">
+    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <InputGroup label="聯絡姓名" block>
             <Input />
         </InputGroup>
@@ -94,10 +100,10 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
         <InputGroup label="備註" block>
             <Textarea style={{ 'min-height': '8.625rem' }} />
         </InputGroup>
-        <div class="flex items-center justify-end">
-            <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" size="lg" title="送出" variant="blue" block
-                >送出</Button
-            >
+        <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
+            <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" size="lg" title="送出" variant="blue" block>
+                送出
+            </Button>
         </div>
     </div>
 </MySectionForm>
