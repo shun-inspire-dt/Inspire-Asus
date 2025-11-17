@@ -1,18 +1,50 @@
 @mixin article {
-    @apply lh-[0.5rem];
+    @apply lh-[0.5rem] text-gray-900 text-18 font-normal;
     br {
         content: '';
         display: block;
     }
 
     /** Default Text */
+    :where(
+            i,
+            em,
+            u,
+            mark,
+            small,
+            sub,
+            sup,
+            s,
+            del,
+            ins,
+            code,
+            kbd,
+            samp,
+            var,
+            q,
+            blockquote,
+            cite,
+            abbr,
+            dfn,
+            time,
+            data,
+            ruby,
+            rt,
+            rp,
+            wbr,
+            pre,
+            table
+        ) {
+        @apply font-roboto lh-150;
+    }
     p {
-        @apply mb-1rem text-gray-900 font-roboto text-18 lh-150 font-normal;
+        @apply mb-1rem font-roboto lh-150;
     }
     span {
         @apply inline-block text-gray-600 font-roboto text-16 lh-150 font-normal;
     }
-    b, strong {
+    b,
+    strong {
         @apply font-tt-medium lh-150 font-medium;
     }
     h1 {
@@ -33,7 +65,12 @@
     h6 {
         @apply text-18;
     }
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         @apply mb-1rem font-tt-medium lh-150 font-medium;
     }
     a {
@@ -41,12 +78,15 @@
         @apply underline underline-offset-[var(--underline-offset)];
         @apply transition-colors duration-200 ease-in-out;
     }
-    ul, ol {
+    ul,
+    ol {
         @apply space-y-1rem;
         @apply lh-150;
         @apply list-disc;
     }
-    figcaption, span.note, p.note {
+    figcaption,
+    span.note,
+    p.note {
         @apply mt-0.75rem mb-1rem text-gray-600 text-16 lh-16 font-normal;
     }
     img {
@@ -57,12 +97,14 @@
 
         & + :where(figcaption, span.note, p.note) {
             margin-top: -0.25rem;
-        } 
+        }
     }
-    [style*="text-align: center"] img, img[style*="text-align: center"] {
+    [style*='text-align: center'] img,
+    img[style*='text-align: center'] {
         @apply mx-a;
     }
-    [style*="text-align: right"] img, img[style*="text-align: right"] {
+    [style*='text-align: right'] img,
+    img[style*='text-align: right'] {
         @apply ml-a;
     }
 }
