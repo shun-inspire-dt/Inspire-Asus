@@ -4,7 +4,8 @@ import Layouts from '@layouts/layouts.astro';
 /** Global Components */
 
 /** Common Components */
-
+import Body from '@components/pages/member/tools/body.astro';
+import Title from '@components/pages/member/tools/title.astro';
 /** Main Components */
 import Content from '@components/pages/member/basic-info/content.astro';
 import Form from '@components/pages/member/basic-info/form.astro';
@@ -13,4 +14,8 @@ import '@scss/pages/member/basic-info.scss';
 ---
 
 <Layouts IDName="MemberBasic-info" minMarginHeader isMemberFooter>
+    <Body activeTab="基本資料" activeCollapse="帳戶設定">
+        <Title title="個人基本資料" showSort />
+        <Form />
+    </Body>
 </Layouts>

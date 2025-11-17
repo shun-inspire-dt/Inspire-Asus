@@ -1,4 +1,15 @@
 ---
+/** Common Component */
+/** InputGroup */
+import InputGroup from '@components/common/form/group/inputGroup.astro';
+/** Input */
+import Input from '@components/common/form/input/input.astro';
+/** Select */
+import Select from '@components/common/form/select/select.astro';
+/** Textarea */
+import Textarea from '@components/common/form/textarea.astro';
+/** Button */
+import Button from '@components/common/button/button.astro';
 /** Style */
 import './form.scss';
 
@@ -12,5 +23,61 @@ export interface Props {
 const { IDName, className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
-</div>
+<form
+    id={IDName}
+    class:list={[className, ':uno-basic-info-form: grid grid-cols-1 md:grid-cols-2 gap-2rem md:gap-1.25rem xl:gap-1.5rem']}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
+        <strong class="font-tt-medium font-medium text-gray-900 text-20 lh-20">基本資料</strong>
+        <InputGroup label="姓名" infoText='請輸入您的姓名' error block>
+            <Input />
+        </InputGroup>
+        <InputGroup label="手機號碼" infoText='請輸入公司名稱' error block>
+            <Input type="tel" inputmode="tel" />
+        </InputGroup>
+        <InputGroup label="電子信箱" infoText='請輸入您的手機號碼' error block>
+            <Input type="email" inputmode="email" />
+        </InputGroup>
+    </div>
+    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
+        <strong class="font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
+        <InputGroup label="公司名稱" infoText='請輸入公司的統編' error block>
+            <Input />
+        </InputGroup>
+        <InputGroup label="公司統編" infoText='請輸入您的電子郵件' error block>
+            <Input type="text" inputmode="numeric" minLength={8} maxLength={8} />
+        </InputGroup>
+        <InputGroup label="公司部門" block>
+            <Select
+                data={[
+                    { text: 'IT部門', value: 'IT部門' },
+                    { text: '財務部門', value: '財務部門' }
+                ]}
+                value="IT部門"
+            />
+        </InputGroup>
+        <InputGroup label="公司職稱" infoText='請輸入在公司的職稱' error block>
+            <Input />
+        </InputGroup>
+        <InputGroup label="產業類別" block>
+            <Select
+                data={[
+                    { text: '雲端與基礎設施', value: '雲端與基礎設施' },
+                    { text: '企業應用', value: '企業應用' },
+                    { text: '資料中心', value: '資料中心' },
+                    { text: '儲存', value: '儲存' },
+                    { text: '安全', value: '安全' },
+                    { text: '儲存', value: '儲存' }
+                ]}
+                value="IT部門"
+            />
+        </InputGroup>
+        <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
+            <Button type={'submit'} className=":uno-basic-info-form-button: md:max-w-9.75rem" size="lg" title="送出" variant="blue" block>
+                確認修改
+            </Button>
+        </div>
+    </div>
+</form>
