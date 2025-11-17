@@ -30,7 +30,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
     {...attribute}
 >
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
-        <strong class="font-tt-medium font-medium text-gray-900 text-20 lh-20">基本資料</strong>
+        <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">基本資料</strong>
         <InputGroup label="姓名" infoText='請輸入您的姓名' error block>
             <Input />
         </InputGroup>
@@ -42,7 +42,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
         </InputGroup>
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
-        <strong class="font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
+        <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
         <InputGroup label="公司名稱" infoText='請輸入公司的統編' error block>
             <Input />
         </InputGroup>
