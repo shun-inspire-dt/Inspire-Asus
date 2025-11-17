@@ -28,7 +28,12 @@ export const clearSelect = (container: HTMLElement) => {
 };
 
 export const setSelect = (__containers__?: HTMLElement[]) => {
-    let optionIndex, optionAmount: number, select, DIV_A, DIV_B, DIV_C;
+    let optionIndex: number,
+        optionAmount: number,
+        select: HTMLSelectElement,
+        DIV_A: HTMLElement,
+        DIV_B: HTMLElement,
+        DIV_C: HTMLElement;
     /* look for any elements with the class "custom-select": */
     const containers = __containers__ || (document.getElementsByClassName('custom-select') as HTMLCollectionOf<HTMLElement>);
 
@@ -36,32 +41,32 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
         select = container?.getElementsByTagName('select')[0] as HTMLSelectElement;
         optionAmount = select.length as number;
         const isLinkSelect = container.hasAttribute('data-select-link');
-        
+
         // 檢查是否已有預先寫好的 HTML 結構
         let existingSelected = container.querySelector('.select-selected') as HTMLDivElement;
         let existingItems = container.querySelector('.select-items') as HTMLDivElement;
-        
+
         if (existingSelected && existingItems) {
             // 使用現有的 HTML 結構
             DIV_A = existingSelected;
             DIV_B = existingItems;
-            
+
             // 更新顯示內容
             DIV_A.innerHTML = select.options[select.selectedIndex].innerHTML;
-            
+
             // 清空現有選項，重新生成
             DIV_B.innerHTML = '';
         } else {
             // 清除可能存在的舊結構
             clearSelect(container);
-            
+
             // 動態創建新結構
             /*  這是 select 的 input */
             DIV_A = document.createElement('DIV') as HTMLDivElement;
             DIV_A.setAttribute('class', 'select-selected select-selected-placeholder');
             DIV_A.innerHTML = select.options[select.selectedIndex].innerHTML;
             container.appendChild(DIV_A);
-            
+
             /* 這是 select 的 下拉選單 */
             DIV_B = document.createElement('DIV') as HTMLDivElement;
             DIV_B.setAttribute('class', 'select-items select-hide');
@@ -77,7 +82,7 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
             } else {
                 DIV_C = document.createElement('DIV');
             }
-            
+
             DIV_C.innerHTML = select.options[optionIndex].innerHTML;
             DIV_C.addEventListener('click', function () {
                 /* when an item is clicked, update the original select box, and the selected item: */
@@ -111,7 +116,7 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
                         break;
                     }
                 }
-                
+
                 // 如果是連結選擇器，不要關閉下拉選單，讓連結正常跳轉
                 if (!isLinkSelect) {
                     selectParent.click();
@@ -119,7 +124,7 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
             });
             DIV_B.appendChild(DIV_C);
         }
-        
+
         // 只有在動態創建時才需要將 DIV_B 添加到容器
         if (!existingItems) {
             container.appendChild(DIV_B);
@@ -136,21 +141,21 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
         });
 
         // 監聽原生 select 的 change 事件，同步更新自定義 select 顯示
-        select.addEventListener('change', function() {
+        select.addEventListener('change', function () {
             const selectedOption = this.options[this.selectedIndex];
             const customSelectDisplay = container.querySelector('.select-selected') as HTMLElement;
-            
+
             if (customSelectDisplay && selectedOption) {
                 // 更新顯示文字
                 customSelectDisplay.innerHTML = selectedOption.innerHTML;
-                
+
                 // 移除 placeholder 樣式（如果有選擇值）
                 if (this.value) {
                     customSelectDisplay.classList.remove('select-selected-placeholder');
                 } else {
                     customSelectDisplay.classList.add('select-selected-placeholder');
                 }
-                
+
                 // 更新選項的 same-as-selected 狀態
                 const allOptions = container.querySelectorAll('.select-items > *');
                 allOptions.forEach((option, index) => {
