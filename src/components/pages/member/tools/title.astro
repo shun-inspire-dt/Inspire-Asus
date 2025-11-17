@@ -1,0 +1,61 @@
+---
+/** Common Component */
+/** Link */
+import ALink from '@components/common/link/link.astro';
+/** Sort */
+import Sort from './sort.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    title?: string;
+    infoText?: string;
+    showInfoText?: boolean;
+    rightText?: string;
+    showRightText?: boolean;
+    showSort?: boolean;
+    link?: string;
+    linkText?: string;
+    showLink?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    title,
+    infoText,
+    showInfoText,
+    rightText,
+    showRightText,
+    showSort,
+    link,
+    linkText = '返回',
+    showLink
+} = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, ':uno-member-header: flex flex-col gap-1.25rem']} style={style} {...attribute}>
+    {
+        showLink && (
+            <div class=":uno-member-link: h-[var(--line-height-16-sh)]">
+                <ALink link={link} title={linkText} back showArrow />
+            </div>
+        )
+    }
+    <div class=":uno-member-head: w-full flex flex-col md:flex-row md:items-center justify-between gap-0.5rem">
+        <div class=":uno-member-head-top: w-full flex flex-col gap-0.5rem md:gap-1rem">
+            {title && <h2 class=":uno-member-title: text-gray-900 font-tt-medium font-medium text-24 lh-24 md:text-30 md:lh-30">{title}</h2>}
+            {Boolean(showInfoText && infoText) && <span class=":uno-member-info-text: font-roboto text-14 text-gray-900 lh-14">{infoText}</span>}
+            {showSort && <Sort type="top" showPagination={false} />}
+        </div>
+        {
+            Boolean(showRightText && rightText) && (
+                <span class=":uno-member-right-text: flex-none font-roboto text-16 text-gray-900 lh-120">{rightText}</span>
+            )
+        }
+    </div>
+</div>
