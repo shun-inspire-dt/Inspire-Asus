@@ -1,15 +1,15 @@
 ---
 /**
  * Modal 彈窗組件
- * 
+ *
  * 基於 Bootstrap Modal 的可重用彈窗組件，支援多種尺寸、位置和自訂選項
- * 
+ *
  * @example
  * ```astro
- * <Modal 
- *   id="example" 
- *   title="範例彈窗" 
- *   sizes="lg" 
+ * <Modal
+ *   id="example"
+ *   title="範例彈窗"
+ *   sizes="lg"
  *   center={true}
  * >
  *   <p>彈窗內容</p>
@@ -25,7 +25,7 @@ import './modal.scss';
 
 /**
  * Modal 組件的 Props 介面
- * 
+ *
  * @property {string} id - Modal 的唯一識別 ID
  * @property {'sm' | 'md' | 'lg' | 'xl'} sizes - Modal 尺寸 @default 'md'
  * @property {boolean} center - 是否垂直置中 @default true
@@ -62,27 +62,35 @@ export interface Props {
     scrollable?: boolean;
     title?: string;
     attribute?: attribute;
+
     Modalclass?: string;
     bodyClass?: string;
+    headerClass?: string;
     titleClass?: string;
     dialogClass?: string;
     contentClass?: string;
+    footerClass?: string;
+
+    ContentTag?: string;
+    contentAttribute?: attribute;
+
     hideHeader?: boolean;
     hideTitle?: boolean;
-    headerClass?: string;
     hideColse?: boolean;
     hideFooter?: boolean;
-    footerClass?: string;
+
     cancelTitle?: string;
     cancelVariant?: variant;
     cancelDisabled?: boolean;
     cancelClass?: string;
+    cancelAttribute?: attribute;
     cancelOnly?: boolean;
+
     okTitle?: string;
     okVariant?: variant;
     okDisabled?: boolean;
     okClass?: string;
-    okAttribute?: string[];
+    okAttribute?: attribute;
     okOnly?: boolean;
 }
 
@@ -99,6 +107,10 @@ const {
     titleClass = '',
     dialogClass = '',
     contentClass = '',
+    footerClass = '',
+
+    ContentTag = 'div',
+    contentAttribute = {},
 
     hideHeader = false,
     hideTitle = false,
@@ -106,19 +118,19 @@ const {
     hideColse = false,
 
     hideFooter = false,
-    footerClass = '',
 
     cancelTitle = '取消',
     cancelVariant,
     cancelDisabled = false,
     cancelClass = '',
+    cancelAttribute = { 'data-bs-dismiss': 'modal' },
     cancelOnly = false,
 
     okTitle = '儲存',
     okVariant,
     okDisabled = false,
     okClass = '',
-    okAttribute = [],
+    okAttribute = {},
     okOnly = false
 } = Astro.props as Props;
 
@@ -149,7 +161,7 @@ const modalSize = modalSizes?.[sizes];
             dialogClass
         ]}
     >
-        <div class:list={['modal-content', contentClass]}>
+        <ContentTag class:list={['modal-content', contentClass]} {...contentAttribute}>
             {
                 !hideHeader && (
                     <div class:list={['modal-header', { hideHeader: hideTitle }, headerClass]}>
@@ -188,14 +200,14 @@ const modalSize = modalSizes?.[sizes];
                                 <Button
                                     className={[cancelClass]}
                                     variant={cancelVariant}
-                                    attribute={{ 'data-bs-dismiss': 'modal' }}
+                                    attribute={cancelAttribute}
                                     disabled={cancelDisabled}
                                 >
                                     {cancelTitle}
                                 </Button>
                             )}
                             {!cancelOnly && (
-                                <Button className={[okClass]} variant={okVariant} disabled={okDisabled} {...okAttribute}>
+                                <Button className={[okClass]} variant={okVariant} disabled={okDisabled} attribute={okAttribute}>
                                     {okTitle}
                                 </Button>
                             )}
@@ -203,18 +215,18 @@ const modalSize = modalSizes?.[sizes];
                     </div>
                 )
             }
-        </div>
+        </ContentTag>
     </div>
 </div>
 
 <script>
     /**
      * Modal 初始化腳本
-     * 
+     *
      * 自動初始化頁面上所有的 Modal 元素，
      * 為每個 Modal 添加事件監聽器和方法
      */
-    
+
     /** Modules */
     import { Modal } from '@js/components/common/modal/modal';
 

@@ -1,0 +1,32 @@
+---
+/** Common Components */
+/** Modal */
+import Modal from '@components/common/modal/modal.astro';
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+}
+
+const { IDName = 'UpdateEmailSendCode', className, style, attribute = {} } = Astro.props as Props;
+---
+
+<Modal
+    id={IDName}
+    title="變更信箱"
+    Modalclass={className}
+    cancelVariant="blue-outline"
+    cancelTitle="取消"
+    okVariant="blue"
+    okTitle="確認寄出"
+    okAttribute={{ type: 'submit' }}
+    sizes="xl"
+    center
+    ContentTag="form"
+    contentAttribute={{ action: '', id: `${IDName}Form` }}
+    hideColse={true}
+    attribute={attribute}
+>
+    請至原本的信箱收取驗證碼，驗證成功後才能變更信箱
+</Modal>

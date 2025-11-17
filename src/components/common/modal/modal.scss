@@ -95,16 +95,16 @@
 
     /** Modal 標題列自訂設定 */
     --modal-header-justify: center; /* 標題列對齊方式 */
-    --modal-header-padding-x: 0; /* 標題列水平內邊距 */
-    --modal-header-padding-top: 0; /* 標題列上內邊距 */
-    --modal-header-padding-bottom: 0; /* 標題列下內邊距 */
+    --modal-header-padding-x: 1.5rem; /* 標題列水平內邊距 */
+    --modal-header-padding-top: 3rem; /* 標題列上內邊距 */
+    --modal-header-padding-bottom: 0.75rem; /* 標題列下內邊距 */
 
     /** Modal 標題自訂設定 */
     --modal-title-justify: center; /* 標題對齊方式 */
-    --modal-title-padding-x: 0; /* 標題水平內邊距 */
+    --modal-title-padding-x: 1.5rem; /* 標題水平內邊距 */
     --modal-title-padding-top: 0; /* 標題上內邊距 */
     --modal-title-padding-bottom: 0; /* 標題下內邊距 */
-    --modal-title-gap: 0.5rem; /* 標題元素間距 */
+    --modal-title-gap: 0.75rem; /* 標題元素間距 */
     --modal-title-font-size: var(--fs-20, 1.25rem); /* 標題字體大小 */
     --modal-title-color: var(--color-gray-900, #181818); /* 標題文字顏色 */
     --modal-title-font-weight: 500; /* 標題字體粗細 */
@@ -113,17 +113,23 @@
     --modal-title-letter-spacing: var(--letter-spacing, 0); /* 標題字母間距 */
 
     /** Modal 底部自訂設定 */
-    --modal-footer-padding-x: 0; /* 底部水平內邊距 */
+    --modal-footer-flex-direction: column-reverse; /* 底部按鈕排列方向 */
+    --modal-footer-padding-x: 1.5rem; /* 底部水平內邊距 */
     --modal-footer-padding-top: 0; /* 底部上內邊距 */
-    --modal-footer-padding-bottom: 0; /* 底部下內邊距 */
+    --modal-footer-padding-bottom: 3rem; /* 底部下內邊距 */
     --modal-footer-justify: center; /* 底部按鈕對齊方式 */
     --modal-footer-button-max-width: 100%; /* 底部按鈕最大寬度 */
     --modal-footer-button-width: 100%; /* 底部按鈕寬度 */
 
     /** Modal 主體自訂設定 */
-    --modal-body-padding-x: 0; /* 主體水平內邊距 */
+    --modal-body-display: flex; /* 主體顯示方式 */
+    --modal-body-flex-direction: column; /* 主體排列方向 */
+    --modal-body-align-items: center; /* 主體水平對齊方式 */
+    --modal-body-justify-content: center; /* 主體垂直對齊方式 */
+    --modal-body-gap: 1rem; /* 主體元素間距 */
+    --modal-body-padding-x: 1.5rem; /* 主體水平內邊距 */
     --modal-body-padding-top: 0; /* 主體上內邊距 */
-    --modal-body-padding-bottom: 0; /* 主體下內邊距 */
+    --modal-body-padding-bottom: 1.5rem; /* 主體下內邊距 */
     --modal-hide-header-body-padding-top: 0; /* 隱藏標題時主體上內邊距 */
     --modal-hide-footer-body-padding-bottom: 0; /* 隱藏底部時主體下內邊距 */
 
@@ -139,9 +145,13 @@
     @screen md {
         --bs-modal-width: var(--bs-modal-width-lg); /* Modal 的寬度 */
         --bs-modal-padding: 4rem;
+        /** Toast Header */
+        --modal-header-padding-top: 4rem;
         /** Modal 底部自訂設定 */
+        --modal-footer-flex-direction: row; /* 底部按鈕排列方向 */
         --modal-footer-button-max-width: 9.75rem; /* 底部按鈕最大寬度 */
         --modal-footer-button-width: 9.75rem; /* 底部按鈕寬度 */
+        --modal-footer-padding-bottom: 4rem; /* 底部下內邊距 */
     }
     @screen xl {
         --bs-modal-width: var(--bs-modal-width-xl); /* Modal 的寬度 */
@@ -249,7 +259,13 @@
      * 根據標題列和底部按鈕的顯示狀態調整內邊距
      */
     &-body {
+        display: var(--modal-body-display);
+        flex-direction: var(--modal-body-flex-direction);
+        align-items: var(--modal-body-align-items);
+        justify-content: var(--modal-body-justify-content);
+        gap: var(--modal-body-gap);
         padding: var(--modal-body-padding-top) var(--modal-body-padding-x) var(--modal-body-padding-bottom);
+        text-align: center;
         @include scrollbar.scrollbar();
 
         /**
@@ -283,6 +299,7 @@
      * 使用 flexbox 佈局控制按鈕間距和排列
      */
     &-footer {
+        flex-direction: var(--modal-footer-flex-direction);
         justify-content: var(--modal-footer-justify);
         padding: var(--modal-footer-padding-top) var(--modal-footer-padding-x) var(--modal-footer-padding-bottom);
         gap: var(--bs-modal-footer-gap);
