@@ -1,0 +1,74 @@
+---
+/** Style */
+import './progress.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    progress?: progress;
+}
+
+const { IDName, className, style, attribute = {}, progress = [] } = Astro.props as Props;
+---
+
+<div id={IDName} class:list={[className, 'progress']} style={style} {...attribute}>
+    <!-- 手機版 -->
+    <div class="progress-mobile">
+        <div class="progress-mobile__steps">
+            {
+                progress.map((item) => {
+                    return <span class:list={['progress-mobile__step', { active: item.active }]}>{item.id}</span>;
+                })
+            }
+        </div>
+        <div
+            class="progress-mobile__bar"
+            style={{
+                '--progress-width': (progress.slice(1).filter((i) => i.active).length * 100) / progress.slice(1).length + '%'
+            }}
+        >
+        </div>
+        <div class="progress-mobile__content">
+            {
+                progress.map((item, index) => {
+                    return (
+                        <span
+                            class:list={[
+                                'progress-mobile__info',
+                                {
+                                    active: progress.filter((i) => i.active).findLastIndex((i) => i.active) === index
+                                }
+                            ]}
+                        >
+                            {item.title && <span class="progress-mobile__title">{item.title}</span>}
+                            {item.date && <span class="progress-mobile__date">{item.date}</span>}
+                            {item.text && <span class="progress-mobile__text">{item.text}</span>}
+                        </span>
+                    );
+                })
+            }
+        </div>
+    </div>
+    <!-- 電腦版 -->
+    <div class="progress-desktop">
+        {
+            progress.map((item, index) => (
+                <div class:list={['progress-desktop__item', { active: item.active }]}>
+                    <div
+                        class:list={['progress-desktop__bar', { first: index === 0 }, { last: index === progress.length - 1 }]}
+                    />
+                    <div class="progress-desktop__content">
+                        <span class:list={['progress-desktop__step']}>{item.id}</span>
+                        <span class="progress-desktop__info">
+                            {item.title && <span class="progress-desktop__title">{item.title}</span>}
+                            {item.date && <span class:list={['progress-desktop__date']}>{item.date}</span>}
+                            {item.text && <span class:list={['progress-desktop__text']}>{item.text}</span>}
+                        </span>
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</div>

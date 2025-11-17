@@ -1,0 +1,201 @@
+/**
+ * Progress 組件樣式
+ * @description 進度條組件，支援手機版和桌面版不同的顯示方式
+ * @author ASUS Team
+ * @version 1.0.0
+ */
+.progress {
+    /**
+     * 手機版進度條
+     * @description 垂直排列，顯示當前步驟詳細資訊
+     */
+    &-mobile {
+        @apply flex flex-col gap-0.5rem md:hidden;
+
+        /**
+         * 步驟圓圈容器
+         */
+        &__steps {
+            @apply flex items-center justify-between gap-0.5rem;
+        }
+
+        /**
+         * 步驟圓圈
+         */
+        &__step {
+            @apply size-1.25rem rounded-full flex items-center justify-center body-01-sh lh-0 bg-#8A8C8F text-white;
+
+            &.active {
+                @apply bg-blue-500 text-white;
+            }
+        }
+
+        /**
+         * 進度條
+         */
+        &__bar {
+            @apply w-full h-1 relative rounded-xl bg-#CBCDD1 overflow-hidden;
+
+            &::after {
+                @apply absolute content-[''] h-1 rounded-full bg-blue-500;
+                width: var(--progress-width, 0rem);
+            }
+        }
+
+        /**
+         * 內容容器
+         */
+        &__content {
+            @apply flex flex-col gap-0.5rem;
+        }
+
+        /**
+         * 資訊區塊
+         */
+        &__info {
+            @apply hidden flex-col gap-0.375rem text-gray-900;
+
+            &.active {
+                @apply flex;
+            }
+        }
+
+        /**
+         * 標題
+         */
+        &__title {
+            @apply block body-01-sh;
+        }
+
+        /**
+         * 日期
+         */
+        &__date {
+            @apply block text-12 lh-120;
+        }
+
+        /**
+         * 文字
+         */
+        &__text {
+            @apply block text-12 lh-120;
+        }
+    }
+
+    /**
+     * 桌面版進度條
+     * @description 水平排列，每個步驟都顯示詳細資訊
+     */
+    &-desktop {
+        @apply hidden md:flex items-stretch;
+
+        /**
+         * 進度項目
+         */
+        &__item {
+            @apply flex flex-col gap-0.75rem flex-1;
+
+            &.active {
+                .progress-desktop {
+                    /**
+                    * 進度條
+                    */
+                    &__bar {
+                        @apply bg-blue-500;
+                    }
+                    /**
+                    * 步驟圓圈
+                    */
+                    &__step {
+                        @apply bg-blue-500 text-white;
+                    }
+                    /**
+                    * 日期
+                    */
+                    &__date {
+                        @apply block;
+                    }
+                    /**
+                    * 文字
+                    */
+                    &__text {
+                        @apply block;
+                    }
+                }
+            }
+        }
+
+        /**
+         * 進度條
+         */
+        &__bar {
+            @apply w-full h-1 bg-#CBCDD1;
+
+            &.active {
+                @apply bg-blue-500;
+            }
+
+            &.first {
+                @apply rounded-l-xl;
+            }
+
+            &.last {
+                @apply rounded-r-xl;
+            }
+        }
+
+        /**
+         * 內容容器
+         */
+        &__content {
+            @apply flex items-start gap-0.5rem;
+        }
+
+        /**
+         * 步驟圓圈
+         */
+        &__step {
+            @apply size-1.25rem rounded-full flex items-center justify-center body-01-sh lh-0 bg-#8A8C8F text-white;
+
+            &.active {
+                @apply bg-blue-500 text-white;
+            }
+        }
+
+        /**
+         * 資訊區塊
+         */
+        &__info {
+            @apply flex flex-col gap-0.375rem text-gray-900;
+        }
+
+        /**
+         * 標題
+         */
+        &__title {
+            @apply block body-01-sh;
+        }
+
+        /**
+         * 日期
+         */
+        &__date {
+            @apply hidden text-12 lh-120;
+
+            &.active {
+                @apply block;
+            }
+        }
+
+        /**
+         * 文字
+         */
+        &__text {
+            @apply hidden text-12 lh-120;
+
+            &.active {
+                @apply block;
+            }
+        }
+    }
+}
