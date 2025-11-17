@@ -1,4 +1,6 @@
 ---
+/** Common Component */
+import Card from '@components/pages/solutions/card.astro';
 /** Style */
 import './list.scss';
 
@@ -12,5 +14,10 @@ export interface Props {
 const { IDName, className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
+<div id={IDName} class:list={[className, ":uno-my-wishlist-grid: grid grid-cols-1 md:grid-cols-2 gap-5"]} style={style} {...attribute}>
+    {
+        Array.from({ length: 10 }).map((_, index) => (
+            <Card linkText="移除收藏" showLinkArrow={false} showPlayBack={index % 2 === 0} />
+        ))
+    }
 </div>

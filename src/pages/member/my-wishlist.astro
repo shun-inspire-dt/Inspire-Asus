@@ -4,7 +4,9 @@ import Layouts from '@layouts/layouts.astro';
 /** Global Components */
 
 /** Common Components */
-
+import Body from '@components/pages/member/tools/body.astro';
+import Title from '@components/pages/member/tools/title.astro';
+import Sort from '@components/pages/member/tools/sort.astro';
 /** Main Components */
 import Content from '@components/pages/member/my-wishlist/content.astro';
 import List from '@components/pages/member/my-wishlist/list.astro';
@@ -13,4 +15,9 @@ import '@scss/pages/member/my-wishlist.scss';
 ---
 
 <Layouts IDName="MemberMy-wishlist" minMarginHeader isMemberFooter>
+    <Body activeTab="我的收藏清單">
+        <Title title="收藏清單" showSort />
+        <List />
+        <Sort type="bottom" />
+    </Body>
 </Layouts>
