@@ -1,0 +1,68 @@
+---
+/** Common Component */
+/** Pagination */
+import Pagination from '@components/common/pagination/pagination.astro';
+/** Select */
+import Select from '@components/common/form/select/customSelect.astro';
+/** Style */
+import './sort.scss';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    type: 'top' | 'bottom';
+    start?: number;
+    end?: number;
+    total?: number;
+    active?: number;
+    visiblePages?: number;
+    showCount?: boolean;
+    showPagination?: boolean;
+    showSelect?: boolean;
+}
+
+const {
+    IDName,
+    className,
+    style,
+    attribute = {},
+    type = 'bottom',
+    start = 1,
+    end = 10,
+    total = 20,
+    active = 1,
+    visiblePages = 7,
+    showCount = true,
+    showPagination = true,
+    showSelect = true
+} = Astro.props as Props;
+const page = total / end;
+---
+
+<div id={IDName} class:list={[className, 'member-sort', type]} style={style} {...attribute}>
+    {
+        showCount && (
+            <span class="member-page-view">
+                第 {start} 至 {end} 筆，共 {total} 筆
+            </span>
+        )
+    }
+    {showPagination && <Pagination className="member-page-pagination" total={page} active={active} visiblePages={visiblePages} />}
+    {
+        showSelect && (
+            <div class="member-page-size">
+                <span>每頁</span>
+                <Select
+                    data={Array.from({ length: end }, (_, i) => ({ text: i + 1, value: i + 1 }))}
+                    value={start}
+                    attribute={{ 'aria-label': '筆數' }}
+                    className="member-page-select"
+                    style={{ width: '2.5rem' }}
+                />
+                <span>筆</span>
+            </div>
+        )
+    }
+</div>
