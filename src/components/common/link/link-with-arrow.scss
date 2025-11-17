@@ -16,6 +16,16 @@
     /* 預設間距 */
     --link-gap: 0.3em;
 
+    &.back-link {
+        flex-direction: row-reverse;
+
+        .link-arrow {
+            margin-left: 0;
+            margin-right: var(--link-gap);
+            transform: rotate(180deg);
+        }
+    }
+
     /* 文字樣式 */
     .link-text {
         color: var(--link-color);

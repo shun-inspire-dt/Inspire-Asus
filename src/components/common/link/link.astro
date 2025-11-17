@@ -59,6 +59,7 @@ interface Props {
     weight?: 'regular' | 'medium' | 'bold';
     status?: 'default' | 'hover' | 'pressed' | 'disabled';
     Tag?: 'a' | 'span'
+    back?: boolean;
 }
 
 const {
@@ -82,7 +83,8 @@ const {
     font = 'roboto',
     weight = 'regular',
     status = 'default',
-    Tag = 'a'
+    Tag = 'a',
+    back = false
 } = Astro.props as Props;
 const href = link !== '#' && link ? (!extend ? `${Astro.url.origin}${link}${ext}` : link) : '#';
 
@@ -97,6 +99,7 @@ const linkClasses = [
     { 'btn-block': block, 'btn-round': round },
     status && status !== 'default' && status,
     disabled && 'disabled',
+    back && 'back-link',
     className
 ].filter(Boolean);
 
