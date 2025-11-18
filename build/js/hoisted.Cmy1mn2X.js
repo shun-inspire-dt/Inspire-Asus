@@ -1,1 +1,0 @@
-import"./hoisted.BnlkfU_2.js";import{m as r}from"../_astro/swiper.aUAF7HPe.js";import"../_astro/playBack.astro_astro_type_script_index_0_lang.Z9Gxws7c.js";import"./hoisted.9PbP4On5.js";r("#IndexBannerSwiper",{speed:3e3});
