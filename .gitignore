@@ -36,3 +36,4 @@ __backup__
 docs/
 *.log
 PlopJS/
+* copy.*
