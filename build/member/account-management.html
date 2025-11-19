@@ -81,8 +81,8 @@
 	</noscript>
 	<style type="text/css">
 	</style>
-	<link rel="stylesheet" href="/assets/css/aboutus.DwEfk3sT.css">
 	<link rel="stylesheet" href="/assets/css/hoisted.C1cJBNRg.css">
+	<link rel="stylesheet" href="/assets/css/aboutus.DwEfk3sT.css">
 	<link rel="stylesheet" href="/assets/css/account-management.Co3M0usr.css">
 	<link rel="stylesheet" href="/assets/css/index.CZTHotMO.css">
 	<link rel="stylesheet" href="/assets/css/login.DGTgdIOK.css">
@@ -93,7 +93,7 @@
 	<link rel="stylesheet" href="/assets/css/account-management.Bbq52hSV.css">
 	<link rel="stylesheet" href="/assets/css/_id_.DD6SczEE.css">
 	<link rel="stylesheet" href="/assets/css/login.CEiw0r2M.css">
-	<script type="module" src="/js/hoisted.BIDIlLt9.js"></script>
+	<script type="module" src="/js/hoisted.CxYbkl-v.js"></script>
 </head>
 
 <body>
@@ -294,13 +294,13 @@
 	<div id="headerOffcanvas" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="headerOffcanvasLabel">
 		<div class="offcanvas-body">
 			<div class="Collapse" style="" data-collapse>
-				<button type="button" class="Collapse-button" title="解決方案" data-bs-toggle="collapse" data-bs-target="#collapse-szj88hggp" data-bs-controls="collapse-szj88hggp"> 解決方案 <span class="collapseArrow">
+				<button type="button" class="Collapse-button" title="解決方案" data-bs-toggle="collapse" data-bs-target="#collapse-0a2l9g1yj" data-bs-controls="collapse-0a2l9g1yj"> 解決方案 <span class="collapseArrow">
 						<svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M11.5 0.5L6.00001 6.2L0.5 0.5" stroke="var(--color-gray-900, #181818)" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
 						</svg>
 					</span>
 				</button>
-				<div id="collapse-szj88hggp" class="collapse">
+				<div id="collapse-0a2l9g1yj" class="collapse">
 					<div class="header-offcanvas-link-container">
 						<div class="header-offcanvas-link-content">
 							<div class="menu-links">
@@ -330,13 +330,13 @@
 				</div>
 			</div>
 			<div class="Collapse" style="" data-collapse>
-				<button type="button" class="Collapse-button" title="合作夥伴" data-bs-toggle="collapse" data-bs-target="#collapse-tandrqwpb" data-bs-controls="collapse-tandrqwpb"> 合作夥伴 <span class="collapseArrow">
+				<button type="button" class="Collapse-button" title="合作夥伴" data-bs-toggle="collapse" data-bs-target="#collapse-g25c46uut" data-bs-controls="collapse-g25c46uut"> 合作夥伴 <span class="collapseArrow">
 						<svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M11.5 0.5L6.00001 6.2L0.5 0.5" stroke="var(--color-gray-900, #181818)" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
 						</svg>
 					</span>
 				</button>
-				<div id="collapse-tandrqwpb" class="collapse">
+				<div id="collapse-g25c46uut" class="collapse">
 					<div class="header-offcanvas-link-container">
 						<div class="header-offcanvas-link-content">
 							<div class="menu-links">
@@ -371,8 +371,8 @@
 		<div class="offcanvas-body">
 			<form class="header-search-from">
 				<div class="header-search-from-body">
-					<div id="input-wrapper-vn5ojefrq" class="input-wrapper" style="">
-						<input id="input-sp7fv5kc4" class="control-input size_lg has-search-icon" type="text" name="products" placeholder="搜尋 ASUS.com/business" inputmode="text" autocomplete="current-password" style="">
+					<div id="input-wrapper-b38wu7mc9" class="input-wrapper" style="">
+						<input id="input-sob9jy4jz" class="control-input size_lg has-search-icon" type="text" name="products" placeholder="搜尋 ASUS.com/business" inputmode="text" autocomplete="current-password" style="">
 						<div class="input-icons">
 							<button type="submit" aria-label="搜尋" style="" class="search-icon mode-light state-normal">
 								<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="search-svg">
@@ -1060,30 +1060,6 @@
 					(input) => rules.max.getDefaultMessage(input));
 			}
 			/**
-			 * 處理密碼確認驗證
-			 */
-			handlePasswordValidation() {
-				const passwordInputs = this.form.querySelectorAll('.password-input-wrapper input[required]');
-				passwordInputs.forEach((input) => {
-					const parent = input.closest('.password-input-wrapper');
-					parent.classList.toggle('is-invalid', !input.checkValidity());
-					const {
-						valid = '', target = '', validFeedback = ''
-					} = input.dataset;
-					const valids = valid.split(',');
-					const feedbacks = validFeedback.split(',');
-					if(valids.includes('confirm')) {
-						const validIndex = valids.indexOf('confirm');
-						const feedback = feedbacks[validIndex] || this.messages.passwordConfirm;
-						const targetInput = document.querySelector(target);
-						const targetPwd = targetInput?.value || '';
-						const currentPwd = input.value;
-						const isInvalid = currentPwd && targetPwd !== currentPwd;
-						this.handleValidation(input, isInvalid, feedback, parent);
-					}
-				});
-			}
-			/**
 			 * 處理複選框驗證
 			 */
 			handleCheckboxValidation() {
@@ -1148,6 +1124,16 @@
 							return value && !regex.test(value);
 						},
 						getDefaultMessage: () => this.messages.regex
+					},
+					confirm: {
+						validate: (value, input) => {
+							const target = input.dataset.target;
+							if(!target) return false;
+							const targetInput = document.querySelector(target);
+							const targetValue = targetInput?.value || '';
+							return value && targetValue !== value;
+						},
+						getDefaultMessage: () => this.messages.passwordConfirm
 					}
 				};
 			}
@@ -1183,7 +1169,13 @@
 						const validIndex = valids.indexOf(validType);
 						const isInvalid = rule.validate(value, input);
 						const feedback = feedbacks[validIndex] || rule.getDefaultMessage(input);
-						this.handleValidation(input, isInvalid, feedback);
+						// 特殊處理 confirm 驗證的元素選擇
+						if(validType === 'confirm') {
+							const parent = input.closest('.password-input-wrapper');
+							this.handleValidation(input, isInvalid, feedback, parent);
+						} else {
+							this.handleValidation(input, isInvalid, feedback);
+						}
 						if(isInvalid) return; // 一旦有驗證失敗，停止後續驗證
 					}
 				});
@@ -1197,7 +1189,6 @@
 					this.resetErrorMessages();
 					// 執行各種驗證
 					this.handleNativeValidation();
-					this.handlePasswordValidation();
 					this.handleCheckboxValidation();
 					this.handleCustomValidation();
 					// 檢查表單是否有效
