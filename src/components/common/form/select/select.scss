@@ -54,13 +54,6 @@
         --select-background-size: 0.875rem;
     }
 
-    &.status_active,
-    &.status_placeholder-active {
-        border-color: var(--color-blue-500, #006ce1);
-        border-width: 0.125rem;
-        --select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-    }
-
     &.status_sort {
         --input-color: var(--color-blue-500, #006ce1);
         --input-placeholder-color: var(--color-blue-500, #006ce1);

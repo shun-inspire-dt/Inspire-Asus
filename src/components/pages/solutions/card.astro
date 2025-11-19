@@ -100,7 +100,17 @@ const cardStyle = {
         {
             showPlayBack && (
                 <div class=":uno-solutions-card-play-back: absolute top-0 left-0 size-full bg-transparent flex items-center justify-center z-2">
-                    <PlayBack size="48" />
+                    <PlayBack
+                        size="48"
+                        attribute={{
+                            title,
+                            'data-toggle': 'video',
+                            'data-bs-toggle': 'modal',
+                            'data-bs-target': '#VideoModal',
+                            'data-auto': 'false',
+                            'data-video-id': 'EEwDOMs5Xio'
+                        }}
+                    />
                 </div>
             )
         }
@@ -130,7 +140,13 @@ const cardStyle = {
             >
                 <Picture img={logoImage} alt={title} type="svg" loading="lazy" decoding="async" noWebp />
             </div>
-            <ALink link={link} className=":uno-solutions-card-link: mt-1rem" title={linkText} size="16" showArrow={showLinkArrow} />
+            <ALink
+                link={link}
+                className=":uno-solutions-card-link: mt-1rem"
+                title={linkText}
+                size="16"
+                showArrow={showLinkArrow}
+            />
         </div>
     </div>
 </div>

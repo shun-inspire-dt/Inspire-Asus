@@ -11,9 +11,9 @@
     --btn-padding-y: 0.5rem; /* 按鈕垂直內邊距 */
     --btn-gap: 0.5rem; /* 按鈕內元素間距 (如圖標與文字) */
     --btn-font-family: var(--font-family-roboto, 'Roboto', sans-serif); /* 按鈕字體家族 */
-    --btn-font-size: 1rem; /* 按鈕字體大小 */
+    --btn-font-size: var(--fs-18, 1.125rem); /* 大按鈕字體大小 */
     --btn-font-weight: 400; /* 按鈕字體粗細 */
-    --btn-line-height: var(--line-height-16-sh, 1.375rem); /* 按鈕行高 - 預設 1rem 字體對應 1.375rem 行高 */
+    --btn-line-height: var(--line-height-18-sh, 1.5rem); /* 1.125rem 字體對應 1.5rem 行高 */
     --btn-letter-spacing: 0; /* 按鈕字母間距 */
     --btn-color: var(--color-gray-900, #181818); /* 按鈕文字顏色 */
     --btn-bg: var(--color-white, #ffffff); /* 按鈕背景顏色 */

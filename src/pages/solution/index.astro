@@ -8,6 +8,7 @@ import Layouts from '@layouts/layouts.astro';
 /** Common Components */
 import Banner from '@components/common/banner/banner.astro';
 import Follower from '@components/common/follower/follower.astro';
+import Video from '@components/modal/video.astro';
 /** Main Components */
 import ArticlesList from '@components/common/article/articlesList.astro';
 import Card from '@components/pages/solutions/card.astro';
@@ -19,18 +20,19 @@ import '@scss/pages/solution.scss';
 <Layouts IDName="Solution" footerPages={['解決方案']}>
     <Banner img="solutions-banner" title="解決方案" mode="dark" />
     <ArticlesList
-        IDName="SolutionList"
-        title="解決方案"
-        total={10}
-        sortDate={[
-            { text: '新上市', value: '0' },
-            { text: '解決方案', value: '1' }
-        ]}
+    IDName="SolutionList"
+    title="解決方案"
+    total={10}
+    sortDate={[
+        { text: '新上市', value: '0' },
+        { text: '解決方案', value: '1' }
+    ]}
         category={data}
         mode="white"
-    >
+        >
         {Array.from({ length: 10 }).map((_, index) => <Card link={`/solution/${index}`} showPlayBack={index % 2 === 0} />)}
     </ArticlesList>
     <Follower />
 </Layouts>
 <Script />
+<Video />

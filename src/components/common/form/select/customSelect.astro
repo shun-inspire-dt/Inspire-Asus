@@ -23,20 +23,15 @@ const {
     value,
     placeholder = '請選擇',
     title,
-    size = 'md',
     status,
-    validClass,
-    validType,
-    validLabel,
-    customValidText,
-    customInvalidText,
+    size,
     onchange,
     attribute = {},
     selectAttribute = {},
     style = {},
     selectStyle = {},
     custom = true,
-    prebuiltStructure = false
+    prebuiltStructure = true
 } = Astro.props as Props;
 ---
 
@@ -50,14 +45,9 @@ const {
         name={name}
         value={value}
         title={title}
-        size={size}
         status={status}
+        size={size}
         placeholder={placeholder}
-        validClass={validClass}
-        validType={validType}
-        validLabel={validLabel}
-        customValidText={customValidText}
-        customInvalidText={customInvalidText}
         onchange={onchange}
         attribute={selectAttribute}
         style={selectStyle}

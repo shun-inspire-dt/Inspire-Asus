@@ -13,9 +13,10 @@ export interface Props {
     attribute?: attribute;
     style?: { [key: string]: string };
     activeTab?: AcctSideNavProps['active'];
+    activeCollapse?: AcctSideNavProps['activeCollapse'];
 }
 
-const { IDName = 'memberNav', className, style, attribute = {}, activeTab } = Astro.props as Props;
+const { IDName = 'memberNav', className, style, attribute = {}, activeTab, activeCollapse } = Astro.props as Props;
 ---
 
 <MyOffcanvas
@@ -24,7 +25,24 @@ const { IDName = 'memberNav', className, style, attribute = {}, activeTab } = As
     hideHeader
     className={['member-nav-offcanvas', className]}
     attribute={attribute}
-    style={{ '--bs-offcanvas-height': 'calc(100vh - (var(--header-height) + 3.125rem))', ...style }}
+    style={{ '--bs-offcanvas-height': 'calc(var(--header-height) + 50px + 17rem)', ...style }}
 >
-    <AcctSideNav type="default" padding="width" active={activeTab} />
+    <AcctSideNav type="default" padding="width" active={activeTab} activeCollapse={activeCollapse} />
 </MyOffcanvas>
+
+<script>
+    const setOffcanvasHeight = () => {
+        let header = document.querySelector('.header') as HTMLElement;
+        let offcanvas = document.querySelector('#memberNavOffcanvas') as HTMLElement;
+        let offcanvasTrigger = document.querySelector('button[data-bs-target="#memberNavOffcanvas"]') as HTMLElement;
+        let collapseNav = offcanvas?.querySelector('.acct-side-nav') as HTMLElement;
+        let headerHeight = header?.getBoundingClientRect().height || 0;
+        let buttonHeight = offcanvasTrigger?.getBoundingClientRect().height || 0;
+        let navHeight = collapseNav?.getBoundingClientRect().height || 0;
+        let offcanvasHeight = headerHeight + buttonHeight + navHeight;
+        offcanvas.style.setProperty('--bs-offcanvas-height', `${offcanvasHeight}px`);
+    };
+
+    window.addEventListener('resize', setOffcanvasHeight);
+    setOffcanvasHeight();
+</script>

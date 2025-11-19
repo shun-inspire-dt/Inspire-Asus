@@ -13,6 +13,7 @@
  * @version 1.0.0
  */
 .form-input-group {
+    $group: &;
     /* CSS 變數定義 - 群組容器 */
     --form-input-group-border-width: 1px; /* 邊框寬度 */
     --form-input-group-border-color: var(--color-gray-200); /* 邊框顏色 */
@@ -58,7 +59,7 @@
     --form-input-group-content-width: 100%; /* 內容最大寬度 */
     --form-input-group-content-flex-direction: column; /* 內容排列方向 */
     --form-input-group-content-flex-wrap: nowrap; /* 內容換行設定 */
-    --form-input-group-content-align-items: center; /* 內容垂直對齊 */
+    --form-input-group-content-align-items: flex-start; /* 內容垂直對齊 */
     --form-input-group-content-justify-center: flex-start; /* 內容水平對齊 */
     --form-input-group-content-gap: 8px; /* 內容元素間距 */
 
@@ -70,7 +71,7 @@
     /* CSS 變數定義 - 驗證訊息文字（validationMessage） */
     --form-input-group-content-info-text-width: 100%; /* 驗證訊息寬度 */
     --form-input-group-content-info-text-display: flex; /* 驗證訊息顯示方式 */
-    --form-input-group-content-info-text-align-items: center; /* 驗證訊息垂直對齊 */
+    --form-input-group-content-info-text-align-items: baseline; /* 驗證訊息垂直對齊 */
     --form-input-group-content-info-text-justify-content: flex-start; /* 驗證訊息水平對齊 */
     --form-input-group-content-info-text-gap: 8px; /* 驗證訊息元素間距 */
     --form-input-group-content-info-text-color: var(--color-gray-600); /* 驗證訊息顏色 */
@@ -203,11 +204,12 @@
                 letter-spacing: var(--form-input-group-content-info-text-letter-spacing);
 
                 &.error-text {
+                    --form-input-group-content-info-text-display: none;
                     --form-input-group-content-info-text-color: var(--color-red-300); /* 錯誤提示文字顏色 */
-                }
 
-                .notification-icon {
-                    --color: var(--color-red-300);
+                    .notification-icon {
+                        --color: var(--color-red-300);
+                    }
                 }
             }
         }
@@ -216,4 +218,12 @@
 
 .modal .form-input-group {
     @apply max-w-30rem;
+}
+
+/** 驗證訊息文字樣式（Validation Message） */
+.was-validated .form-input-group input:invalid ~ .info-text.error-text {
+    --form-input-group-content-info-text-display: flex;
+}
+.was-validated .form-input-group input:invalid[data-show-error-info-only='true'] ~ .info-text:not(.error-text) {
+    --form-input-group-content-info-text-display: none;
 }

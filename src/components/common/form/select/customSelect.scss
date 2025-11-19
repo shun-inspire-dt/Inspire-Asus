@@ -41,7 +41,7 @@
     /* === 下拉箭頭圖標變數 === */
     --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 箭頭圖標 */
     --custom-select-background-position-right: 16px; /* 箭頭距離右邊的距離 */
-    --custom-select-background-size: 1.25rem; /* 箭頭尺寸 */
+    --custom-select-background-size: 1rem; /* 箭頭尺寸 */
 
     /* === 下拉選項容器變數 === */
     --custom-select-items-border-width: 0.0625rem; /* 選項容器邊框寬度 */
@@ -90,6 +90,7 @@
         @apply focus-within:outline-none;
 
         /* 基礎樣式：使用 CSS 變數控制外觀 */
+        height: 2.5rem;
         display: flex;
         align-items: center;
         padding: var(--custom-select-padding-y) var(--custom-select-padding-x);
@@ -243,10 +244,16 @@
         pointer-events: none;
         user-select: none;
 
+        /** 錯誤狀態 */
+        @at-root .was-validated &:invalid {
+            & ~ .select-selected {
+                border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
+            }
+        }
+
         /** 焦點狀態 */
-        &:focus:not(.status_error),
-        &.has-focus,
-        &.status_selected {
+        &:focus:not(:invalid),
+        &:focus-within:not(:invalid) {
             & ~ .select-selected {
                 --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                 border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
@@ -257,31 +264,15 @@
             }
         }
 
+
         /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
-        &:disabled,
-        &.status_disabled {
+        &:disabled {
             & ~ .select-selected {
                 color: var(--custom-select-disabled-color);
                 background-color: var(--custom-select-disabled-background-color);
                 border-color: var(--custom-select-disabled-border-color);
                 pointer-events: none;
                 user-select: none;
-            }
-        }
-
-        &.status_active,
-        &.status_placeholder-active {
-            & ~ .select-selected {
-                --custom-select-border-color: var(--color-blue-500, #006ce1);
-                --custom-select-border-width: 2px;
-                --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 14.7136L9.99978 7.64258L17.0708 14.7136" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-            }
-        }
-
-        /** 錯誤狀態 */
-        &.status_error {
-            & ~ .select-selected {
-                border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
             }
         }
 

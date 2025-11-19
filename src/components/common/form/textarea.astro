@@ -25,13 +25,6 @@ const {
     required,
     disabled,
     readonly,
-    validClass = 'form',
-    validType,
-    validLabel,
-    validRegex,
-    errorFeedback,
-    successFeedback,
-    FeedbackIcon,
     attribute = {},
     style,
     size,
@@ -48,21 +41,6 @@ const inputClasses = [
     { noresize: noResize }, // 是否禁止調整大小
     className // 自定義類別
 ].filter(Boolean);
-
-/**
- * 建立驗證相關的 data 屬性物件
- * 這些屬性會被 JavaScript 驗證腳本使用
- */
-const validAttribute = {
-    'data-valid-class': validClass, // 驗證成功時要套用的 CSS 類別
-    'data-valid-type': validType, // 驗證類型識別
-    'data-valid-label': validLabel, // 驗證標籤文字
-    'data-valid-regex': validRegex, // 驗證用正規表達式
-    'data-custom-feedback': errorFeedback || successFeedback ? '' : undefined, // 是否有自定義回饋訊息
-    'data-error-feedback': errorFeedback, // 錯誤回饋訊息
-    'data-success-feedback': successFeedback, // 成功回饋訊息
-    'data-feedback-icon': FeedbackIcon ? '' : undefined // 是否顯示回饋圖標
-};
 ---
 
 <textarea
@@ -80,7 +58,6 @@ const validAttribute = {
     aria-label={title}
     style={style}
     {...attribute}
-    {...validAttribute}
 >
     {(value as string)?.trim()}
 </textarea>

@@ -13,6 +13,7 @@ import Button from '@components/common/button/button.astro';
 import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
 /** Checkbox */
 import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+// import CheckboxErrorText from '@components/common/form/checkboxs/errorText.astro';
 /** Link */
 import ALink from '@components/common/link/link.astro';
 /** Style */
@@ -25,10 +26,10 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName = "Isv", className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'Isv', className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<MySectionForm type={2} title="成為 ISV 夥伴" IDName={IDName} class:list={[className]} style={style} {...attribute}>
+<MySectionForm type={2} title="成為 ISV 夥伴" IDName={IDName} className={[className]} style={style} attribute={attribute}>
     <InputGroup label="產業類別" block>
         <Select
             data={[
@@ -73,5 +74,5 @@ const { IDName = "Isv", className, style, attribute = {} } = Astro.props as Prop
             >"
         </Checkbox>
     </CheckboxGroup>
-    <Button type={'submit'} size="lg" title="送出" variant="blue" block>送出</Button>
+    <Button type={'submit'} title="送出" variant="blue" block>送出</Button>
 </MySectionForm>

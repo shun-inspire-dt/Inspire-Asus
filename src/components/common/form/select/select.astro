@@ -45,21 +45,8 @@ export interface Props {
     title?: string;
     required?: boolean;
     disabled?: boolean;
+    status?: 'sort' | null;
     size?: 'xl' | 'lg' | 'md' | 'sm';
-    status?:
-        | 'value'
-        | 'error'
-        | 'disabled'
-        | 'active'
-        | 'selected'
-        | 'placeholder'
-        | 'placeholder-active'
-        | 'sort';
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    customValidText?: string;
-    customInvalidText?: string;
     onchange?: string;
     attribute?: attribute;
     style?: { [key: string]: string };
@@ -78,29 +65,12 @@ const {
     value, // 當前選中值
     placeholder = '請選擇', // 佔位符文字，預設為「請選擇」
     title, // 無障礙標籤
-    size = 'md', // 尺寸，預設為 md
-    status, // 狀態，預設為 value
-    validClass, // 驗證類別，預設為 'form'
-    validType, // 驗證類型
-    validLabel, // 驗證標籤
-    customValidText, // 自定義驗證成功訊息
-    customInvalidText, // 自定義驗證失敗訊息
+    status, // 狀態
+    size, // 尺寸
     onchange, // 值改變事件處理
     attribute = {}, // 額外屬性，預設為空物件
     style = {} // 額外樣式，預設為空物件
 } = Astro.props as Props;
-
-/**
- * 表單驗證相關的 data 屬性
- * 用於前端表單驗證系統
- */
-const validAttribute = {
-    'data-valid-class': validClass, // 驗證類別
-    'data-valid-type': validType, // 驗證類型
-    'data-valid-label': validLabel, // 驗證標籤
-    'data-custom-valid-text': customValidText, // 自定義成功訊息
-    'data-custom-invalid-text': customInvalidText // 自定義失敗訊息
-};
 
 /**
  * 動態生成 CSS 類別
@@ -126,7 +96,6 @@ const selectClasses = [
     onchange={onchange}
     aria-label={title}
     {...attribute}
-    {...validAttribute}
 >
     <slot name="index">
         <option class="control-select-placeholder" value="" disabled={!!value} {...!value ? { selected: '' } : {}}>

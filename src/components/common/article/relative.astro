@@ -43,12 +43,13 @@ const { IDName, className, style, attribute = {}, title = 'Title', count = 1, ty
             attribute={{
                 'data-slides-per-group': '1,2,3',
                 'data-total-slides': count,
-                'data-target-pagination': `#${IDName}-pagination`
+                'data-target-pagination': `#${IDName}-pagination`,
+                'data-visible': '6'
             }}
         >
             {
-                Array.from({ length: count }).map(() => (
-                    <div class="swiper-slide">
+                Array.from({ length: count }).map((_, index) => (
+                    <div class="swiper-slide" data-index={index + 1}>
                         <slot />
                     </div>
                 ))

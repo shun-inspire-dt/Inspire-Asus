@@ -89,18 +89,23 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
                 let selectOption, optionIndex, selectOptionIndex, select, optionAmount, selectOptionAmount;
                 const ItemsParent = this.parentNode as HTMLElement;
                 const containerParent = ItemsParent.parentNode as HTMLElement;
-                const selectParent = this.parentNode?.previousSibling as HTMLElement;
+                // 使用更可靠的方法找到 select-selected 元素
+                const selectParent = containerParent.querySelector('.select-selected') as HTMLElement;
 
                 select = containerParent.getElementsByTagName('select')[0];
                 optionAmount = select.length;
 
-                selectParent.classList.remove('select-selected-placeholder');
+                if (selectParent) {
+                    selectParent.classList.remove('select-selected-placeholder');
+                }
 
                 for (optionIndex = 0; optionIndex < optionAmount; optionIndex++) {
                     if (select.options[optionIndex].innerHTML == this.innerHTML) {
                         /** trigger 原本的 select */
                         select.selectedIndex = optionIndex;
-                        selectParent.innerHTML = this.innerHTML;
+                        if (selectParent) {
+                            selectParent.innerHTML = this.innerHTML;
+                        }
 
                         // 觸發 change 事件，讓 URL 同步功能可以正常運作
                         select.dispatchEvent(new Event('change', { bubbles: true }));
@@ -118,7 +123,7 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
                 }
 
                 // 如果是連結選擇器，不要關閉下拉選單，讓連結正常跳轉
-                if (!isLinkSelect) {
+                if (!isLinkSelect && selectParent) {
                     selectParent.click();
                 }
             });
@@ -135,8 +140,8 @@ export const setSelect = (__containers__?: HTMLElement[]) => {
             e.stopPropagation();
             closeAllSelect(this);
             /** 下拉選單 */
-            const nextSibling = this.nextSibling as HTMLElement;
-            nextSibling.classList.toggle('select-hide');
+            const selectItems = container.querySelector('.select-items') as HTMLDivElement;
+            selectItems.classList.toggle('select-hide');
             this.classList.toggle('select-arrow-active');
         });
 

@@ -71,6 +71,7 @@ export interface Props {
     required?: boolean;
     inputSize?: 'xl' | 'lg' | 'md' | 'sm';
     infoText?: string;
+    errorText?: string;
     subTitle?: string;
     error?: boolean;
 }
@@ -108,6 +109,7 @@ const {
     inputSize, // 輸入框尺寸
     infoText, // 小字說明文字
     subTitle, // 副標題文字
+    errorText, // 錯誤提示文字
     error // 是否已錯誤顯示並提示
 } = Astro.props as Props;
 ---
@@ -172,12 +174,21 @@ const {
         style={contentStyle}
     >
         <slot />
-        <slot name="content-text">
+        <slot name="info-text">
             {
                 infoText && (
-                    <span class:list={['info-text', { 'error-text': error }]}>
-                        {error && <ErrorIcon />}
+                    <span class="info-text">
                         <span>{infoText}</span>
+                    </span>
+                )
+            }
+        </slot>
+        <slot name="info-text">
+            {
+                Boolean(error && errorText) && (
+                    <span class="info-text error-text">
+                        <ErrorIcon />
+                        <span>{errorText}</span>
                     </span>
                 )
             }

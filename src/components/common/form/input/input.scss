@@ -41,6 +41,7 @@
     /* === 基礎樣式套用 === */
 
     width: 100%; /* 寬度 100% */
+    height: 2.5rem;
     transition: var(--input-transition); /* 平滑過渡效果 */
 
     /* 使用 CSS 變數套用樣式 */
@@ -58,15 +59,19 @@
 
     /* === 狀態樣式 === */
 
+    /** 錯誤狀態 */
+    @at-root .was-validated &:invalid {
+        border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
+    }
+
     /** 佔位符樣式 */
     &::placeholder {
         color: var(--input-placeholder-color); /* 佔位符文字顏色 */
     }
 
     /** 焦點狀態 */
-    &:focus:not(.status_error),
-    &.has-focus,
-    &.status_selected {
+    &:focus:not(:invalid),
+    &:focus-within:not(:invalid) {
         --input-border-width: 0.125rem; /* 焦點邊框寬度 */
         border-color: var(--input-focus-border-color); /* 焦點邊框顏色 */
 
@@ -76,8 +81,7 @@
     }
 
     /** 禁用狀態樣式 */
-    &:disabled,
-    &.status_disabled {
+    &:disabled {
         color: var(--input-disabled-color); /* 禁用時的文字顏色 */
         background-color: var(--input-disabled-background-color); /* 禁用時的背景顏色 */
         border-color: var(--input-disabled-border-color); /* 禁用時的邊框顏色 */
@@ -91,11 +95,6 @@
             --input-icon-color: var(--color-gray-300, #b3b3b3); /* 禁用時圖標顏色 */
             pointer-events: none;
         }
-    }
-
-    /** 錯誤狀態 */
-    &.status_error {
-        border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
     }
 
     /* === 尺寸變體 === */

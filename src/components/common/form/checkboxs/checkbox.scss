@@ -17,6 +17,7 @@
     /* 背景色變數 */
     --checkbox-background-color: var(--color-white, #ffffff); /* 預設背景色 */
     --checkbox-disabled-background-color: var(--color-gray-300-10, rgba(179, 179, 179, 0.1)); /* 禁用狀態背景色 */
+    --checkbox-error-background-color: var(--color-red-300, #b42d18); /* 錯誤狀態背景色 */
     --checkbox-checked-background-color: var(--color-blue-500, #006ce1); /* 選中狀態背景色 */
     --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.875 8.16071L6.74457 11.375L12.125 4.625" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 選中狀態背景圖片 (勾選標記) */
 
@@ -26,11 +27,12 @@
     --checkbox-border-radius: 4px; /* 邊框圓角 */
     --checkbox-checked-border-color: var(--color-blue-500, #006ce1); /* 選中狀態邊框色 */
     --checkbox-disabled-border-color: var(--color-gray-300, #b3b3b3); /* 禁用狀態邊框色 */
+    --checkbox-error-border-color: var(--color-red-300, #b42d18); /* 錯誤狀態邊框色 */
 
     /* Focus outline 相關屬性 */
-    --checkbox-outline-width: 2px; /* 焦點外框寬度 */
-    --checkbox-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
-    --checkbox-outline-offset: 2px; /* 焦點外框偏移 */
+    --checkbox-outline-width: 0; /* 焦點外框寬度 */
+    --checkbox-outline-color: transparent; /* 焦點外框顏色 */
+    --checkbox-outline-offset: 0; /* 焦點外框偏移 */
 
     /* 文字顏色變數 */
     --checkbox-color: var(--color-gray-900, #181818); /* 預設文字顏色 */
@@ -112,6 +114,16 @@
                 color: var(--checkbox-disabled-color);
             }
         }
+
+        /** 錯誤狀態 */
+        @at-root .was-validated &:invalid:not(:checked) {
+            border-color: var(--checkbox-error-border-color); /* 錯誤邊框顏色 */
+            background-color: var(--checkbox-background-color); /* 錯誤背景顏色 */
+        }
+        @at-root .was-validated &:invalid:checked {
+            border-color: var(--checkbox-error-border-color); /* 錯誤邊框顏色 */
+            background-color: var(--checkbox-error-background-color); /* 錯誤背景顏色 */
+        }
     }
 
     /* 標籤文字樣式 */
@@ -164,6 +176,49 @@
                 --checkbox-disabled-background-color: var(--color-white, #ffffff); /** 選中狀態背景色 */
                 --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="8" height="8" rx="2" fill="%23B3B3B3"/></svg>'); /** 禁用&選中狀態背景圖片 */
             }
+        }
+    }
+}
+
+.form-check {
+    @at-root .was-validated .form-input-group &.is-invalid {
+        & ~ .info-text.error-text {
+            --form-input-group-content-info-text-display: flex;
+        }
+        & ~ .info-text:not(.error-text) {
+            --form-input-group-content-info-text-display: none;
+        }
+    }
+    @at-root .was-validated &.is-invalid {
+        & + .form-check-feedback-text.error-text {
+            display: flex;
+        }
+        & + .form-check-feedback-text:not(.error-text) {
+            display: none;
+        }
+    }
+}
+
+/* 驗證訊息文字樣式（validationMessage） */
+.form-check-feedback-text {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    color: var(--color-gray-600, #666666);
+    font-size: var(--fs-14);
+    font-weight: 400;
+    font-family: var(--line-height-14-sh);
+    line-height: 0.16px;
+    letter-spacing: var(--font-family-roboto);
+
+    &.error-text {
+        display: none;
+        color: var(--color-red-300); /* 錯誤提示文字顏色 */
+
+        .notification-icon {
+            --color: var(--color-red-300);
         }
     }
 }

@@ -33,19 +33,7 @@ import './input.scss';
  * @property {string} [title] - 輸入框標題，用於無障礙標籤
  * @property {boolean} [transparent] - 是否使用透明樣式（無背景、無邊框）
  * @property {'xl' | 'lg' | 'md' | 'sm'} [size] - 輸入框尺寸
- * @property {'value' | 'error' | 'disabled' | 'placeholder' | 'selected' | 'placeholder-selected'} [status] - 輸入框狀態
  * @property {boolean} [focus] - 是否顯示焦點邊框
- * @property {boolean} [pwdShowIcon] - 是否顯示密碼顯示圖標（眼睛開啟）
- * @property {boolean} [pwdHideIcon] - 是否顯示密碼隱藏圖標（眼睛關閉）
- * @property {boolean} [closeIcon] - 是否顯示清除圖標
- * @property {boolean} [searchIcon] - 是否顯示搜尋圖標
- * @property {string} [validClass] - 驗證相關屬性 - CSS 類別名稱
- * @property {string} [validType] - 驗證類型
- * @property {string} [validLabel] - 驗證標籤
- * @property {string} [validRegex] - 驗證用的正規表達式
- * @property {string} [errorFeedback] - 錯誤訊息回饋文字
- * @property {string} [successFeedback] - 成功訊息回饋文字
- * @property {boolean} [FeedbackIcon] - 是否顯示回饋圖標
  * @property {aria} [aria] - ARIA 無障礙屬性
  * @property {attribute} [attribute] - 其他自定義 HTML 屬性
  */
@@ -64,19 +52,12 @@ export interface Props {
     required?: boolean;
     disabled?: boolean;
     readonly?: 'readonly';
+    pattern?: HTMLAttributes<'input'>['pattern'];
     autocomplete?: autocomlete;
     title?: string;
     transparent?: boolean;
     size?: 'xl' | 'lg' | 'md' | 'sm';
-    status?: 'value' | 'error' | 'disabled' | 'placeholder' | 'selected' | 'placeholder-selected';
     focus?: boolean;
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    validRegex?: string;
-    errorFeedback?: string;
-    successFeedback?: string;
-    FeedbackIcon?: boolean;
     aria?: aria;
     attribute?: attribute;
     style?: { [key: string]: string };
@@ -101,19 +82,12 @@ const {
     required, // 是否必填
     disabled, // 是否禁用
     readonly, // 是否唯讀
+    pattern, // 驗證樣式
     autocomplete, // 自動完成
     title, // 標題（用於無障礙）
     transparent, // 是否透明樣式
-    size = 'md', // 尺寸，預設為 md
-    status, // 輸入框狀態，預設為 value
+    size, // 尺寸
     focus = false, // 是否顯示焦點邊框，預設為 false
-    validClass, // 驗證 CSS 類別
-    validType, // 驗證類型
-    validLabel, // 驗證標籤
-    validRegex, // 驗證正規表達式
-    errorFeedback, // 錯誤回饋訊息
-    successFeedback, // 成功回饋訊息
-    FeedbackIcon, // 是否顯示回饋圖標
     attribute = {}, // 其他 HTML 屬性，預設為空物件
     aria = {}, // ARIA 屬性，預設為空物件
     style = {}, // 自定義樣式
@@ -126,26 +100,10 @@ const {
 const inputClasses = [
     'control-input', // 基礎輸入框類別
     { [`size_${size}`]: size }, // 尺寸類別
-    { [`status_${status}`]: status }, // 狀態類別
     { 'input-transparent': transparent }, // 透明樣式
     { 'has-focus': focus }, // 焦點狀態
     className // 自定義類別
 ].filter(Boolean);
-
-/**
- * 建立驗證相關的 data 屬性物件
- * 這些屬性會被 JavaScript 驗證腳本使用
- */
-const validAttribute = {
-    'data-valid-class': validClass, // 驗證成功時要套用的 CSS 類別
-    'data-valid-type': validType, // 驗證類型識別
-    'data-valid-label': validLabel, // 驗證標籤文字
-    'data-valid-regex': validRegex, // 驗證用正規表達式
-    'data-custom-feedback': errorFeedback || successFeedback ? '' : undefined, // 是否有自定義回饋訊息
-    'data-error-feedback': errorFeedback, // 錯誤回饋訊息
-    'data-success-feedback': successFeedback, // 成功回饋訊息
-    'data-feedback-icon': FeedbackIcon ? '' : undefined // 是否顯示回饋圖標
-};
 ---
 
 <input
@@ -165,8 +123,8 @@ const validAttribute = {
     readonly={readonly}
     autocomplete={autocomplete}
     aria-label={title}
+    pattern={pattern}
     {...attribute}
     {...aria}
-    {...validAttribute}
     style={style}
 />

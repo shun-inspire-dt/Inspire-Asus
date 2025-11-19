@@ -67,15 +67,7 @@ const {
     title, // 標題（用於無障礙）
     transparent, // 是否透明樣式
     size, // 輸入框尺寸，預設為 xl
-    status, // 輸入框狀態，預設為 value
     focus, // 是否顯示焦點邊框，預設為 false
-    validClass, // 驗證 CSS 類別
-    validType, // 驗證類型
-    validLabel, // 驗證標籤
-    validRegex, // 驗證正規表達式
-    errorFeedback, // 錯誤回饋訊息
-    successFeedback, // 成功回饋訊息
-    FeedbackIcon, // 是否顯示回饋圖標
     aria = {}, // ARIA 屬性，預設為空物件
     inputAttribute = {}, // Input 屬性，預設為空物件
     inputStyle = {} // Input 樣式，預設為空物件
@@ -121,15 +113,7 @@ const inputID = inputId || `input-${Math.random().toString(36).substr(2, 9)}`;
         title={title}
         transparent={transparent}
         size={size}
-        status={status}
         focus={focus}
-        validClass={validClass}
-        validType={validType}
-        validLabel={validLabel}
-        validRegex={validRegex}
-        errorFeedback={errorFeedback}
-        successFeedback={successFeedback}
-        FeedbackIcon={FeedbackIcon}
         aria={aria}
         attribute={inputAttribute}
         style={inputStyle}

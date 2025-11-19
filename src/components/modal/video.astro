@@ -10,23 +10,228 @@ export interface Props {
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
+    defaultVideoId?: string;
 }
 
-const { IDName = 'Video', className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = Astro.props as Props;
 ---
 
 <Modal id={IDName} sizes="xl" Modalclass={className} center hideFooter attribute={attribute}>
-    <iframe
-        id="youtube-player"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/3vDjjvBYOLM?si=zo0wzAeuYuy8O7BT&enablejsapi=1"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen></iframe>
+    <div id="youtube-player-container" data-default-video-id={defaultVideoId}>
+        {defaultVideoId && (
+            <iframe
+                id="youtube-player"
+                width="560"
+                height="315"
+                src={`https://www.youtube.com/embed/${defaultVideoId}?enablejsapi=1`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        )}
+    </div>
 </Modal>
 
 <script>
     import { Modal } from 'bootstrap';
+</script>
+<script is:inline>
+    /**
+     * YouTube 動態播放器管理器
+     */
+    class YouTubePlayerManager {
+        constructor() {
+            this.player = null;
+            this.triggerButton = null;
+            this.currentVideoId = null;
+            this.isAPIReady = false;
+            this.defaultVideoId = null;
+            this.modal = document.getElementById('VideoModal');
+            
+            this.init();
+        }
+
+        /**
+         * 初始化 YouTube API
+         */
+        init() {
+            // 取得預設影片 ID
+            const container = document.getElementById('youtube-player-container');
+            this.defaultVideoId = container?.dataset?.defaultVideoId;
+
+            // 載入 YouTube IFrame API
+            if (!window.YT) {
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                const firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            }
+
+            // 設置 API 準備完成回調
+            window.onYouTubeIframeAPIReady = () => {
+                this.isAPIReady = true;
+                // 如果有預設影片且已經有 iframe，初始化播放器
+                this.initializeDefaultPlayer();
+            };
+
+            this.setupModalEvents();
+        }
+
+        /**
+         * 初始化預設播放器
+         */
+        initializeDefaultPlayer() {
+            const existingPlayer = document.getElementById('youtube-player');
+            if (existingPlayer && this.defaultVideoId) {
+                this.currentVideoId = this.defaultVideoId;
+                this.player = new YT.Player('youtube-player', {
+                    events: {
+                        'onReady': (event) => {
+                            // 預設不自動播放
+                        },
+                        'onError': (event) => {
+                            console.error('YouTube Player Error:', event.data);
+                        }
+                    }
+                });
+            }
+        }
+
+        /**
+         * 設置 Modal 事件監聽器
+         */
+        setupModalEvents() {
+            
+            this.modal.addEventListener('show.bs.modal', (e) => {
+                this.triggerButton = e.relatedTarget;
+                
+                // 取得 video-id
+                const videoId = this.triggerButton?.dataset?.videoId || this.triggerButton?.getAttribute('data-video-id');
+                
+                if (videoId) {
+                    this.loadVideo(videoId);
+                } else if (this.defaultVideoId && this.player) {
+                    // 如果沒有指定影片 ID，但有預設影片，就播放預設影片
+                    this.playVideo();
+                }
+                
+                if (this.triggerButton && !this.triggerButton.classList.contains('active')) {
+                    this.triggerButton.classList.add('active');
+                }
+            });
+            
+            this.modal.addEventListener('hidden.bs.modal', (e) => {
+                if (this.triggerButton && this.triggerButton.classList.contains('active')) {
+                    this.triggerButton.classList.remove('active');
+                }
+                
+                this.triggerButton = null;
+                
+                // 如果當前播放的不是預設影片，就銷毀播放器並回到預設影片
+                if (this.currentVideoId !== this.defaultVideoId) {
+                    this.destroyPlayer();
+                    if (this.defaultVideoId) {
+                        // 重新載入預設影片但不自動播放
+                        setTimeout(() => this.initializeDefaultPlayer(), 100);
+                    }
+                } else {
+                    // 如果是預設影片，只暫停不銷毀
+                    this.pauseVideo();
+                }
+            });
+        }
+
+        /**
+         * 載入指定的 YouTube 影片
+         */
+        loadVideo(videoId) {
+            if (!videoId || this.currentVideoId === videoId) return;
+            
+            this.currentVideoId = videoId;
+            
+            // 如果 API 還沒準備好，等待一下再試
+            if (!this.isAPIReady) {
+                setTimeout(() => this.loadVideo(videoId), 100);
+                return;
+            }
+
+            // 銷毀現有播放器
+            this.destroyPlayer();
+
+            // 建立新的播放器
+            this.createPlayer(videoId);
+        }
+
+        /**
+         * 建立 YouTube 播放器
+         */
+        createPlayer(videoId) {
+            const container = document.getElementById('youtube-player-container');
+            if (!container) return;
+
+            // 清空容器並建立新的 div
+            container.innerHTML = '<div id="youtube-player"></div>';
+
+            this.player = new YT.Player('youtube-player', {
+                height: '315',
+                width: '560',
+                videoId: videoId,
+                playerVars: {
+                    'enablejsapi': 1,
+                    'origin': window.location.origin
+                },
+                events: {
+                    'onReady': (event) => {
+                        // 播放器準備完成，可以自動播放
+                        event.target.playVideo();
+                    },
+                    'onError': (event) => {
+                        console.error('YouTube Player Error:', event.data);
+                    }
+                }
+            });
+        }
+
+        /**
+         * 銷毀播放器
+         */
+        destroyPlayer() {
+            if (this.player && typeof this.player.destroy === 'function') {
+                this.player.destroy();
+                this.player = null;
+            }
+            
+            // 清空容器
+            const container = document.getElementById('youtube-player-container');
+            if (container) {
+                container.innerHTML = '';
+            }
+            
+            this.currentVideoId = null;
+        }
+
+        /**
+         * 暫停影片
+         */
+        pauseVideo() {
+            if (this.player && typeof this.player.pauseVideo === 'function') {
+                this.player.pauseVideo();
+            }
+        }
+
+        /**
+         * 播放影片
+         */
+        playVideo() {
+            if (this.player && typeof this.player.playVideo === 'function') {
+                this.player.playVideo();
+            }
+        }
+    }
+
+    // 初始化 YouTube 播放器管理器
+    document.addEventListener('DOMContentLoaded', () => {
+        window.youtubeManager = new YouTubePlayerManager();
+    });
 </script>

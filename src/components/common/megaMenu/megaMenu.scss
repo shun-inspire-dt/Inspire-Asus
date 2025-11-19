@@ -37,7 +37,7 @@
 
     /* === Base Menu Styles - 選單基礎樣式 === */
     /* 預設狀態：絕對定位、隱藏、垂直排列 */
-    @apply container flex flex-col items-center justify-start fixed inset-x-0 z-11 opacity-0 invisible;
+    @apply container-fluid flex flex-col items-center justify-start fixed inset-x-0 z-11 opacity-0 invisible;
     top: var(--megaMenu-top);
     left: var(--megaMenu-left);
     width: var(--megaMenu-width);

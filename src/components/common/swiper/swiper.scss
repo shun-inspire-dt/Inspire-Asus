@@ -13,12 +13,15 @@
         // --swiper-pagination-bullet-width: ;
         // --swiper-pagination-bullet-height: ;
         // --swiper-pagination-top: ;
-        // --swiper-pagination-bottom: ;
+        // --swiper-pagination-bottom: ;uto
         // --swiper-pagination-color: ;
         // --swiper-pagination-bullet-inactive-color: ;
         // --swiper-pagination-bullet-inactive-opacity: ;
 
         &.has-indicator {
+            .swiper-pagination-container {
+                @apply h-1rem flex items-center justify-center gap-0.75rem absolute bottom-1rem left-1/2 -translate-x-1/2 z-1 px-0.25rem bg-#ffffffb3 rounded-xl;
+            }
             .swiper-pagination {
                 /** pagination */
                 --swiper-pagination-bullet-horizontal-gap: 0.5rem;
@@ -27,15 +30,23 @@
                 --swiper-pagination-bullet-width: 8px;
                 --swiper-pagination-bullet-height: 8px;
                 --swiper-pagination-top: auto;
-                --swiper-pagination-bottom: 1rem;
+                --swiper-pagination-bottom: auto;
                 --swiper-pagination-color: var(--color-gray-500, #818181);
                 --swiper-pagination-bullet-inactive-color: transparent;
                 --swiper-pagination-bullet-inactive-opacity: 1;
 
-                @apply h-1rem w-a flex items-center justify-center left-1/2 -translate-x-1/2 px-4px bg-white rounded-xl;
+                @apply h-full w-a flex items-center justify-center static rounded-xl;
 
                 .swiper-pagination-bullet {
-                    @apply border border-transparent transition-colors duration-200 ease-in-out;
+                    --swiper-pagination-progress-size: 0%;
+                    @apply relative border border-transparent overflow-hidden transition-all duration-200 ease-in-out;
+                    @apply after:absolute after:left-0 after:top-0 after:content-[''] after:w-[var(--swiper-pagination-progress-size)] after:h-full after:rounded-full after:bg-blue-500;
+                    &.swiper-pagination-bullet-active {
+                        @apply w-6rem;
+                    }
+                    &:hover {
+                        --swiper-pagination-bullet-inactive-color: var(--color-blue-500, #006ce1);
+                    }
                     &:focus,
                     &:active,
                     &:focus-within {

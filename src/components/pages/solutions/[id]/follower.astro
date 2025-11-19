@@ -37,14 +37,14 @@ const {
         class=":uno-solutions-follower-form: container-fluid h-full flex flex-col md:flex-row md:items-center md:justify-between gap-0.5rem md:gap-0.5rem py-0.375rem md:py-0.5rem"
     >
         <h2
-            class=":uno-solutions-follower-product-title: flex-1 text-gray-900 font-tt-medium text-base md:text-18 lh-120 md:lh-125 font-medium"
+            class=":uno-solutions-follower-product-title: flex-1 text-gray-900 font-tt-medium text-base md:text-18 lh-120 md:lh-2rem font-medium"
         >
             {title}
         </h2>
         <div class=":uno-solutions-follower-product-controller: flex items-center justify-end gap-0.5rem flex-none">
             <div>
                 <input type="hidden" value={value} data-option />
-                <span class=":uno-solutions-follower-product-price: text-gray-900 font-roboto text-sm md:text-base lh-120 font-medium text-right">{option}</span>
+                <span class=":uno-solutions-follower-product-price: inline-block text-gray-900 font-roboto text-sm md:text-base lh-120 md:lh-2rem font-medium text-right">{option}</span>
             </div>
             <Button type={'submit'} title="立即諮詢" variant="blue" size="xs">立即諮詢</Button>
             <Button type={'button'} title="立即諮詢" variant="blue-outline" size="sm" attribute={{ 'data-favorite': 'true' }}>

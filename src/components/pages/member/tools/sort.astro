@@ -4,6 +4,7 @@
 import Pagination from '@components/common/pagination/pagination.astro';
 /** Select */
 import Select from '@components/common/form/select/customSelect.astro';
+import MySelect from '@components/common/form/select/select.astro';
 /** Style */
 import './sort.scss';
 
@@ -39,6 +40,7 @@ const {
     showSelect = true
 } = Astro.props as Props;
 const page = total / end;
+const pages = Array.from({ length: end }, (_, i) => ({ text: i + 1, value: i + 1 }));
 ---
 
 <div id={IDName} class:list={[className, 'member-sort', type]} style={style} {...attribute}>
@@ -55,14 +57,17 @@ const page = total / end;
             <div class="member-page-size">
                 <span>每頁</span>
                 <Select
-                    data={Array.from({ length: end }, (_, i) => ({ text: i + 1, value: i + 1 }))}
+                    data={pages}
                     value={start}
                     attribute={{ 'aria-label': '筆數' }}
                     className="member-page-select"
                     style={{ width: '2.5rem' }}
+                    prebuiltStructure
                 />
                 <span>筆</span>
             </div>
         )
     }
+    <!-- 不用客製化 select 可以用這個 -->
+    {showSelect && <MySelect className="member-page-select" data={pages} value={start} name="page" style={{ display: 'none' }} />}
 </div>

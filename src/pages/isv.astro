@@ -21,6 +21,7 @@ import '@scss/pages/isv.scss';
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        if (!form.checkValidity()) return;
         toast.dispatchEvent(
             new CustomEvent('fire', {
                 detail: {

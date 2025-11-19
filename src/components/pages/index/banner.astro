@@ -25,12 +25,27 @@ const image = bannerImage('index-banner');
 
 <Swiper
     IDName={IDName}
-    pagination="inside"
     className={['index-banner', className]}
     swiperClassName="has-indicator"
     style={style}
     {...attribute}
 >
+    <Fragment slot="outside">
+        <div class="swiper-pagination-container">
+            <div class="swiper-pagination" />
+            <button type="button" class="swiper-button-play" title="Play">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8L6 11.4641L6 4.5359L12 8Z" fill="var(--color-gray-900, #818181)"/>
+                </svg>
+            </button>
+            <button type="button" class="swiper-button-pause" style="display: none;" title="Pause">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="9" y="4.66602" width="1.66667" height="6.66667" rx="0.833333" fill="var(--color-gray-900, #818181)"/>
+                    <rect x="5.3335" y="4.66602" width="1.66667" height="6.66667" rx="0.833333" fill="var(--color-gray-900, #818181)"/>
+                </svg>
+            </button>
+        </div>
+    </Fragment>
     {
         Array.from({ length: 5 }).map(() => (
             <div class="swiper-slide index-banner-slide">
@@ -64,8 +79,101 @@ const image = bannerImage('index-banner');
 
 <script>
     import { mySwiper } from '@js/components/common/swiper/swiper';
+    import { Autoplay } from 'swiper/modules';
 
     mySwiper('#IndexBannerSwiper', {
+        modules: [Autoplay],
         speed: 3000,
+        autoplay: {
+            delay: 3000,
+            pauseOnMouseEnter: true,
+        },
+        on: {
+            autoplayTimeLeft(swiper, time, progress) {
+                // 計算進度百分比 (progress 是從 1 到 0，所以要用 1 - progress)
+                const progressPercent = (1 - progress) * 100;
+                
+                // 取得所有分頁按鈕
+                const allBullets = swiper.pagination.el?.querySelectorAll('.swiper-pagination-bullet') as NodeListOf<HTMLElement>;
+                const activeBullet = swiper.pagination.el?.querySelector('.swiper-pagination-bullet-active') as HTMLElement;
+                
+                // 重置所有非活躍按鈕的進度
+                allBullets?.forEach(bullet => {
+                    if (!bullet.classList.contains('swiper-pagination-bullet-active')) {
+                        bullet.style.setProperty('--swiper-pagination-progress-size', '0%');
+                    }
+                });
+                
+                // 更新活躍按鈕的進度
+                if (activeBullet) {
+                    activeBullet.style.setProperty('--swiper-pagination-progress-size', `${progressPercent}%`);
+                }
+            },
+            slideChange(swiper) {
+                // 當切換 slide 時，重置所有按鈕的進度
+                const allBullets = swiper.pagination.el?.querySelectorAll('.swiper-pagination-bullet') as NodeListOf<HTMLElement>;
+                allBullets?.forEach(bullet => {
+                    bullet.style.setProperty('--swiper-pagination-progress-size', '0%');
+                });
+            },
+            autoplayStart(swiper) {
+                // 當 autoplay 開始時，顯示暫停按鈕，隱藏播放按鈕
+                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
+                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
+                
+                if (playButton) playButton.style.display = 'none';
+                if (pauseButton) pauseButton.style.display = 'block';
+            },
+            autoplayStop(swiper) {
+                // 當 autoplay 停止時，顯示播放按鈕，隱藏暫停按鈕
+                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
+                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
+                
+                if (playButton) playButton.style.display = 'block';
+                if (pauseButton) pauseButton.style.display = 'none';
+                
+                // 重置當前活躍按鈕的進度
+                const activeBullet = swiper.pagination.el?.querySelector('.swiper-pagination-bullet-active') as HTMLElement;
+                if (activeBullet) {
+                    activeBullet.style.setProperty('--swiper-pagination-progress-size', '0%');
+                }
+            },
+            autoplayPause(swiper) {
+                // 當 autoplay 暫停時（如滑鼠懸停），顯示播放按鈕，隱藏暫停按鈕
+                // 使用 setTimeout 來避免 slide 切換時的短暫暫停導致按鈕閃爍
+                setTimeout(() => {
+                    if (swiper.autoplay.paused) {
+                        const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
+                        const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
+                        
+                        if (playButton) playButton.style.display = 'block';
+                        if (pauseButton) pauseButton.style.display = 'none';
+                    }
+                }, 100);
+            },
+            autoplayResume(swiper) {
+                // 當 autoplay 恢復時（如滑鼠離開），顯示暫停按鈕，隱藏播放按鈕
+                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
+                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
+                
+                if (playButton) playButton.style.display = 'none';
+                if (pauseButton) pauseButton.style.display = 'block';
+            },
+            init(swiper) {
+                // 當 Swiper 初始化完成後，綁定播放/暫停按鈕事件
+                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
+                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
+
+                if (playButton && pauseButton) {
+                    playButton.addEventListener('click', () => {
+                        swiper.autoplay.start();
+                    });
+
+                    pauseButton.addEventListener('click', () => {
+                        swiper.autoplay.stop();
+                    });
+                }
+            }
+        }
     });
 </script>

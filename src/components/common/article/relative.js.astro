@@ -37,7 +37,7 @@
     };
 
     // 更新 pagination 組件的總頁數和顯示
-    const updatePaginationDisplay = ({ totalSlides, slidesPerGroup, activePage, paginationElement }) => {
+    const updatePaginationDisplay = ({ totalSlides, slidesPerGroup, activePage, paginationElement, visible = 999 }) => {
         const totalPages = calculateTotalPages(totalSlides, slidesPerGroup);
 
         if (paginationElement) {
@@ -50,8 +50,8 @@
 
                 if (pageIndex <= totalPages) {
                     // 頁碼在範圍內，根據邏輯決定顯示/隱藏
-                    const shouldShow = shouldShowPage(pageIndex, activePage, totalPages, 999) || pageIndex === totalPages;
-                    // && shouldShowEndEllipsis(activePage, totalPages, 999)
+                    const shouldShow = shouldShowPage(pageIndex, activePage, totalPages, visible) || pageIndex === totalPages;
+                    // && shouldShowEndEllipsis(activePage, totalPages, visible)
                     item.style.display = shouldShow ? 'flex' : 'none';
                 } else {
                     // 頁碼超出範圍，隱藏
@@ -63,7 +63,7 @@
             const endEllipsis = paginationElement.querySelector('.pagination__ellipsis:last-of-type');
 
             if (endEllipsis) {
-                const needsEndEllipsis = shouldShowEndEllipsis(activePage, totalPages, 999);
+                const needsEndEllipsis = shouldShowEndEllipsis(activePage, totalPages, visible);
 
                 if (needsEndEllipsis) {
                     // 找到最後一個顯示的頁碼按鈕
@@ -171,6 +171,36 @@
         return end < total - 1;
     };
 
+    /**
+     * 更新分頁按鈕的 active 狀態
+     * @param paginationEl - 分頁元素
+     * @param activeIndex - Swiper 的當前 activeIndex
+     * @param slidesPerGroup - 每組幻燈片數量
+     */
+    const updatePaginationActiveState = (paginationEl, activeIndex, slidesPerGroup) => {
+        // 檢查 paginationEl 是否存在
+        if (!paginationEl) return;
+
+        // 計算當前頁碼
+        const currentPage = Math.floor(activeIndex / slidesPerGroup) + 1;
+
+        // 取得當前的分頁按鈕
+        const currentPaginationItems = paginationEl.querySelectorAll('.pagination__item[data-index]');
+
+        // 移除所有按鈕的 active 狀態
+        currentPaginationItems?.forEach((item) => {
+            item.classList.remove('pagination__item--active');
+            item.removeAttribute('aria-current');
+        });
+
+        // 為當前頁面的按鈕添加 active 狀態
+        const currentPageButton = paginationEl.querySelector(`.pagination__item[data-index="${currentPage}"]`);
+        if (currentPageButton) {
+            currentPageButton.classList.add('pagination__item--active');
+            currentPageButton.setAttribute('aria-current', 'page');
+        }
+    };
+
     // 綁定分頁按鈕事件監聽器的函數
     const bindPaginationEvents = ({ swiperInstance, paginationElement, slidesPerGroupArray }) => {
         // 檢查 paginationElement 是否存在
@@ -187,7 +217,7 @@
                 const pageIndex = parseInt(item.getAttribute('data-index') || '1');
                 // 直接從 Swiper 實例取得當前的 slidesPerGroup
                 const currentSlidesPerGroup = getInitialSlidesPerGroup(slidesPerGroupArray);
-                const targetSlideIndex = (pageIndex * currentSlidesPerGroup) - (currentSlidesPerGroup - 1) - 1;
+                const targetSlideIndex = pageIndex * currentSlidesPerGroup - (currentSlidesPerGroup - 1) - 1;
                 console.log(targetSlideIndex);
 
                 // 滑動到指定的 slide
@@ -216,7 +246,13 @@
     swipers.forEach((swiper) => {
         // 從 pagination 元素的 data 屬性取得配置
         const container = swiper.parentElement;
-        const { slidesPerGroup: slidesPerGroupData = '1,2,3', totalSlides = '0', targetPagination = '' } = container.dataset;
+        const {
+            slidesPerGroup: slidesPerGroupData = '1,2,3',
+            totalSlides = '0',
+            targetPagination = '',
+            visible: visibleString = '999'
+        } = container.dataset || {};
+        const visible = parseInt(visibleString);
         const slidesPerGroupArray = slidesPerGroupData
             .split(',')
             .map((num) => (isNaN(parseInt(num.trim())) ? 1 : parseInt(num.trim())));
@@ -243,7 +279,8 @@
                         slidesPerGroup: slidesPerGroupArray[0],
                         breakpoints: {
                             0: {
-                                slidesPerView: 1
+                                slidesPerView: 1,
+                                slidesPerGroup: slidesPerGroupArray[0]
                             },
                             768: {
                                 slidesPerView: 2,
@@ -256,17 +293,23 @@
                         },
                         navigation,
                         on: {
-                            breakpoint(swiperInstance) {
-                                // 檢查 slides 是否存在
-                                // if(!swiperInstance.slides.length) return;
-
+                            breakpoint(swiperInstance, breakpoint) {
+                                // 直接從 Swiper 實例取得當前的 slidesPerGroup
+                                const activeIndex = swiperInstance.activeIndex;
+                                const currentSlidesPerGroup =
+                                    breakpoint.slidesPerGroup || getInitialSlidesPerGroup(slidesPerGroupArray);
+                                const currentPage = Math.floor(activeIndex / currentSlidesPerGroup) + 1; // 根據 slidesPerGroup 計算頁碼
                                 // 更新 pagination 顯示
                                 updatePaginationDisplay({
                                     totalSlides,
-                                    slidesPerGroup: getInitialSlidesPerGroup(slidesPerGroupArray),
-                                    activePage: swiperInstance.activeIndex,
-                                    paginationElement
+                                    slidesPerGroup: currentSlidesPerGroup,
+                                    activePage: currentPage,
+                                    paginationElement,
+                                    visible
                                 });
+
+                                // 更新分頁按鈕的 active 狀態
+                                updatePaginationActiveState(paginationElement, activeIndex, currentSlidesPerGroup);
 
                                 // 重新綁定事件監聽器
                                 bindPaginationEvents({
@@ -276,8 +319,8 @@
                                 });
                             },
                             slideChange(swiperInstance) {
-                                const activeIndex = swiperInstance.activeIndex;
                                 // 直接從 Swiper 實例取得當前的 slidesPerGroup
+                                const activeIndex = swiperInstance.activeIndex;
                                 const currentSlidesPerGroup = getInitialSlidesPerGroup(slidesPerGroupArray);
                                 const currentPage = Math.floor(activeIndex / currentSlidesPerGroup) + 1; // 根據 slidesPerGroup 計算頁碼
 
@@ -286,30 +329,12 @@
                                     totalSlides,
                                     slidesPerGroup: currentSlidesPerGroup,
                                     activePage: currentPage,
-                                    paginationElement
+                                    paginationElement,
+                                    visible
                                 });
 
-                                // 檢查 paginationElement 是否存在
-                                if (!paginationElement) return;
-
-                                // 取得當前的分頁按鈕
-                                const currentPaginationItems =
-                                    paginationElement.querySelectorAll('.pagination__item[data-index]');
-
-                                // 移除所有按鈕的 active 狀態
-                                currentPaginationItems?.forEach((item) => {
-                                    item.classList.remove('pagination__item--active');
-                                    item.removeAttribute('aria-current');
-                                });
-
-                                // 為當前頁面的按鈕添加 active 狀態
-                                const currentPageButton = paginationElement.querySelector(
-                                    `.pagination__item[data-index="${currentPage}"]`
-                                );
-                                if (currentPageButton) {
-                                    currentPageButton.classList.add('pagination__item--active');
-                                    currentPageButton.setAttribute('aria-current', 'page');
-                                }
+                                // 更新分頁按鈕的 active 狀態
+                                updatePaginationActiveState(paginationElement, activeIndex, currentSlidesPerGroup);
                             }
                         }
                     }

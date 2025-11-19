@@ -25,28 +25,32 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
 
 <form
     id={IDName}
-    class:list={[className, ':uno-basic-info-form: grid grid-cols-1 md:grid-cols-2 gap-2rem md:gap-1.25rem xl:gap-1.5rem']}
+    class:list={[
+        className,
+        ':uno-basic-info-form: grid grid-cols-1 md:grid-cols-2 gap-2rem md:gap-1.25rem xl:gap-1.5rem needs-validation'
+    ]}
     style={style}
     {...attribute}
+    novalidate
 >
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">基本資料</strong>
-        <InputGroup label="姓名" infoText='請輸入您的姓名' error block>
+        <InputGroup label="姓名" errorText="請輸入您的姓名" error block>
             <Input />
         </InputGroup>
-        <InputGroup label="手機號碼" infoText='請輸入公司名稱' error block>
-            <Input type="tel" inputmode="tel" />
+        <InputGroup label="手機號碼" errorText="請輸入您的手機號碼" error block>
+            <Input type="tel" inputmode="tel" maxLength={10} />
         </InputGroup>
-        <InputGroup label="電子信箱" infoText='請輸入您的手機號碼' error block>
+        <InputGroup label="電子信箱" errorText="請輸入您的電子郵件" error block>
             <Input type="email" inputmode="email" />
         </InputGroup>
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
-        <InputGroup label="公司名稱" infoText='請輸入公司的統編' error block>
+        <InputGroup label="公司名稱" errorText="請輸入公司的名稱" error block>
             <Input />
         </InputGroup>
-        <InputGroup label="公司統編" infoText='請輸入您的電子郵件' error block>
+        <InputGroup label="公司統編" errorText="請輸入公司的統編" error block>
             <Input type="text" inputmode="numeric" minLength={8} maxLength={8} />
         </InputGroup>
         <InputGroup label="公司部門" block>
@@ -58,7 +62,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
                 value="IT部門"
             />
         </InputGroup>
-        <InputGroup label="公司職稱" infoText='請輸入在公司的職稱' error block>
+        <InputGroup label="公司職稱" errorText="請輸入在公司的職稱" error block>
             <Input />
         </InputGroup>
         <InputGroup label="產業類別" block>
@@ -75,7 +79,14 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
             />
         </InputGroup>
         <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
-            <Button type={'submit'} className=":uno-basic-info-form-button: md:max-w-9.75rem" size="lg" title="送出" variant="blue" block>
+            <Button
+                type={'submit'}
+                className=":uno-basic-info-form-button: md:max-w-9.75rem"
+                size="lg"
+                title="送出"
+                variant="blue"
+                block
+            >
                 確認修改
             </Button>
         </div>

@@ -17,11 +17,6 @@ export interface Props {
     disabled?: boolean;
     readonly?: 'readonly';
     checked?: boolean;
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    customValidText?: string;
-    customInvalidText?: string;
     attribute?: attribute;
     aria?: aria;
 }
@@ -39,21 +34,9 @@ const {
     required,
     disabled,
     readonly,
-    validClass,
-    validType,
-    validLabel,
-    customValidText,
-    customInvalidText,
     attribute = {},
     aria = {}
 } = Astro.props as Props;
-const validAttribute = {
-    'data-valid-class': validClass,
-    'data-valid-type': validType ? `${validType}|${type}` : undefined,
-    'data-valid-label': validLabel,
-    'data-custom-valid-text': customValidText,
-    'data-custom-invalid-text': customInvalidText
-};
 ---
 
 <div id={id ? `${id}FromChoiceButton` : undefined} class:list={['form-choice-button', className]} data-name={name}>
@@ -71,7 +54,6 @@ const validAttribute = {
         aria-label={title}
         {...attribute}
         {...aria}
-        {...validAttribute}
     />
     <label class:list={['btn-choice-label', labelClassName]} for={id}>
         <slot />

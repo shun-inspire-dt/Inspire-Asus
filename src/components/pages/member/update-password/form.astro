@@ -16,24 +16,45 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'UpdatePasswordForm', className, style, attribute = {} } = Astro.props as Props;
 ---
 
 <form
     id={IDName}
-    class:list={[className, ':uno-update-password-form: flex flex-col gap-2rem md:gap-1.25rem xl:gap-1.5rem']}
+    class:list={[className, ':uno-update-password-form: flex flex-col gap-2rem md:gap-1.25rem xl:gap-1.5rem needs-validation']}
     style={style}
     {...attribute}
+    action="/member/order-aocc"
+    novalidate
 >
     <div class=":uno-section-half-form-grid-item: xl:w-1/2 flex flex-col gap-1.5rem">
-        <InputGroup label="舊密碼" infoText="請輸入您的舊密碼" block>
-            <PasswordInput />
+        <InputGroup
+            label="舊密碼"
+            infoText="請輸入您的舊密碼"
+            errorText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
+            block
+            error
+        >
+            <PasswordInput inputId="old-password" required />
         </InputGroup>
-        <InputGroup label="新密碼" infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。" block>
-            <PasswordInput />
+        <InputGroup
+            label="新密碼"
+            infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
+            errorText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
+            block
+            error
+        >
+            <PasswordInput inputId="password" required />
         </InputGroup>
-        <InputGroup label="再次輸入您的新密碼" infoText="請您再次輸入您的新密碼" block>
-            <PasswordInput />
+        <InputGroup label="再次輸入您的新密碼" infoText="請您再次輸入您的新密碼" errorText="與新密碼不符合" block error>
+            <PasswordInput
+                inputId="confirm-password"
+                required
+                inputAttribute={{
+                    'data-valid': 'confirm',
+                    'data-target': '#password'
+                }}
+            />
         </InputGroup>
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
@@ -51,3 +72,14 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
         </div>
     </div>
 </form>
+
+<script>
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const form = document.getElementById('UpdatePasswordForm') as HTMLFormElement;
+    //     form.addEventListener('submit', (event) => {
+    //         event.preventDefault();
+    //         if (!form.checkValidity()) return;
+    //         console.log("submit !!");
+    //     });
+    // });
+</script>

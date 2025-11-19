@@ -11,7 +11,7 @@
     &.top {
         @apply flex md:hidden items-start justify-between;
         .member-page-pagination {
-            display: none !important;
+            display: none;
         }
         .member-page-view,
         .member-page-size {
@@ -28,8 +28,7 @@
 .member-page-size {
     @apply max-w-8.5rem sm:max-w-none items-center justify-end flex-wrap flex-1 gap-0.5rem text-gray-900 body-02-sh text-right;
 }
-.member-page-select,
-.member-page-select.size_md {
+.member-sort .member-page-select.custom-select {
     /* === 基礎樣式變數 === */
     --input-padding-x: 0; /* 水平內邊距 */
     --input-padding-y: 0; /* 垂直內邊距 */
@@ -79,20 +78,15 @@
     --custom-select-item-height: 22rem; /* 選項高度 */
 
     /* 右側內邊距：為自定義箭頭圖標預留空間 */
-    padding-right: calc(var(--select-background-position-right) + var(--select-background-size) + 0.5rem);
+    padding-right: 0px;
 
     display: inline-block;
     width: auto;
     height: auto;
 
-    &.status_active,
-    &.status_placeholder-active {
-        --select-background-image: url('data:image/svg+xml,<svg width="10" height="22" viewBox="0 0 10 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.24219 9.31239C9.36719 9.43219 9.43229 9.57802 9.4375 9.74989C9.44792 9.92177 9.39844 10.0728 9.28906 10.203L9.24219 10.2499L5.47656 14.0233C5.34635 14.1535 5.1875 14.2186 5 14.2186C4.81771 14.2186 4.66146 14.1535 4.53125 14.0233L0.757812 10.2499C0.627604 10.1197 0.5625 9.96344 0.5625 9.78114C0.5625 9.59885 0.627604 9.4426 0.757812 9.31239C0.888021 9.18219 1.04427 9.11708 1.22656 9.11708C1.41406 9.11708 1.57292 9.18219 1.70312 9.31239L5 12.6093L8.30469 9.31239L8.35156 9.26552C8.48177 9.15614 8.63281 9.10666 8.80469 9.11708C8.97656 9.12229 9.1224 9.18739 9.24219 9.31239Z" fill="%23181818"/></svg>');
-    }
     /** 焦點狀態 */
-    &:focus:not(.status_error),
-    &.has-focus,
-    &.status_selected {
+    &:focus:not(:invalid),
+    &:focus-within:not(:invalid) {
         --input-border-width: 0rem; /* 焦點邊框寬度 */
     }
     /* 展開狀態 - 通過 JavaScript 動態切換 */
@@ -100,7 +94,7 @@
         --select-background-image: url('data:image/svg+xml,<svg width="10" height="22" viewBox="0 0 10 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.24219 9.31239C9.36719 9.43219 9.43229 9.57802 9.4375 9.74989C9.44792 9.92177 9.39844 10.0728 9.28906 10.203L9.24219 10.2499L5.47656 14.0233C5.34635 14.1535 5.1875 14.2186 5 14.2186C4.81771 14.2186 4.66146 14.1535 4.53125 14.0233L0.757812 10.2499C0.627604 10.1197 0.5625 9.96344 0.5625 9.78114C0.5625 9.59885 0.627604 9.4426 0.757812 9.31239C0.888021 9.18219 1.04427 9.11708 1.22656 9.11708C1.41406 9.11708 1.57292 9.18219 1.70312 9.31239L5 12.6093L8.30469 9.31239L8.35156 9.26552C8.48177 9.15614 8.63281 9.10666 8.80469 9.11708C8.97656 9.12229 9.1224 9.18739 9.24219 9.31239Z" fill="%23181818"/></svg>');
     }
 
-    select.size_md ~ .select-selected {
+    select ~ .select-selected {
         --custom-select-padding-x: 0rem;
         --custom-select-padding-y: 0rem;
         --custom-select-background-size: 0.625rem;

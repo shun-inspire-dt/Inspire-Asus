@@ -1,0 +1,20 @@
+---
+/** Common Component */
+import ErrorIcon from '@components/common/icons/notification/notificationIcon.astro';
+
+export interface Props {
+    IDName?: string;
+    className?: any;
+    attribute?: attribute;
+    style?: { [key: string]: string };
+    error?: boolean;
+    Tag?: 'div' | 'span';
+}
+
+const { IDName, className, style, attribute = {}, error = false, Tag = 'span' } = Astro.props as Props;
+---
+
+<Tag id={IDName} class:list={[className, 'form-check-feedback-text', { 'error-text': error }]} style={style} {...attribute}>
+    {error && <ErrorIcon />}
+    <span><slot /></span>
+</Tag>

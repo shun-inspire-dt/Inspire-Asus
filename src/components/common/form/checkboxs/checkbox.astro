@@ -53,11 +53,6 @@ export interface Props {
     value?: string | number;
     title?: string;
     rounded?: boolean;
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    customValidText?: string;
-    customInvalidText?: string;
     setRequired?: string;
     attribute?: attribute;
     aria?: aria;
@@ -81,11 +76,6 @@ const {
     checked,
     title,
     rounded,
-    validClass,
-    validType,
-    validLabel,
-    customValidText,
-    customInvalidText,
     setRequired,
     attribute = {},
     aria = {},
@@ -93,18 +83,6 @@ const {
     indeterminate,
     alignment
 } = Astro.props as Props;
-
-/**
- * 建構表單驗證相關的 data 屬性
- * 這些屬性會被前端驗證腳本使用
- */
-const validAttribute = {
-    'data-valid-class': validClass,
-    'data-valid-type': validType ? `${validType}|checkbox` : undefined,
-    'data-valid-label': validLabel,
-    'data-custom-valid-text': customValidText,
-    'data-custom-invalid-text': customInvalidText
-};
 /** 組件 ID */
 const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
 ---
@@ -128,7 +106,6 @@ const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
             {...attribute}
             {...aria}
             aria-label={title}
-            {...validAttribute}
         />
     </div>
     {/** 標籤文字 - 支援插槽內容或 label 屬性 */}

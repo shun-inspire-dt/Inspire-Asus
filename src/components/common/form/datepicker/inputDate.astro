@@ -16,12 +16,6 @@ export interface Props {
     required?: boolean;
     disabled?: boolean;
     readonly?: 'readonly';
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    errorFeedback?: string;
-    successFeedback?: string;
-    FeedbackIcon?: boolean;
     attribute?: attribute;
     aria?: aria;
 }
@@ -38,12 +32,6 @@ const {
     required = undefined,
     disabled = undefined,
     readonly,
-    validClass,
-    validType,
-    validLabel,
-    errorFeedback,
-    successFeedback,
-    FeedbackIcon,
     attribute = {},
     aria = {}
 } = Astro.props as Props;
@@ -61,12 +49,6 @@ const {
         required={required}
         disabled={disabled}
         readonly={readonly}
-        validClass={validClass}
-        validType={validType}
-        validLabel={validLabel}
-        errorFeedback={errorFeedback}
-        successFeedback={successFeedback}
-        FeedbackIcon={FeedbackIcon}
         attribute={{ ...attribute, ...{ autocomplete: 'off' } }}
         aria={aria}
     />

@@ -17,7 +17,7 @@
 
     /* 標籤區域上下邊距調整 */
     &.input-group-padding-label {
-        --form-input-group-label-padding-top: 7px;
+        --form-input-group-label-padding-top: calc(7px + (var(--line-height-16-sh) - var(--fs-16)) / 2);
         --form-input-group-label-padding-bottom: 0px;
 
         /* === 尺寸變體 === */

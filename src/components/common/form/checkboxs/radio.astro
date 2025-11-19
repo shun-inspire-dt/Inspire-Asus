@@ -11,11 +11,6 @@ export interface Props {
     required?: boolean;
     disabled?: boolean;
     readonly?: 'readonly';
-    validClass?: string;
-    validType?: string;
-    validLabel?: string;
-    customValidText?: string;
-    customInvalidText?: string;
     attribute?: attribute;
     aria?: aria;
 }
@@ -30,21 +25,9 @@ const {
     required,
     disabled,
     readonly,
-    validClass = 'form',
-    validType,
-    validLabel,
-    customValidText,
-    customInvalidText,
     attribute = {},
     aria = {}
 } = Astro.props as Props;
-const validAttribute = {
-    'data-valid-class': validClass,
-    'data-valid-type': validType ? `${validType}|radio` : undefined,
-    'data-valid-label': validLabel,
-    'data-custom-valid-text': customValidText,
-    'data-custom-invalid-text': customInvalidText
-};
 ---
 
 <div class="form-check form-radio">
@@ -62,7 +45,6 @@ const validAttribute = {
         aria-label={title}
         {...attribute}
         {...aria}
-        {...validAttribute}
     />
     <label class="form-check-label" for={id}>
         <slot>{label}</slot>
