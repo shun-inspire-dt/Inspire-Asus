@@ -99,6 +99,7 @@ const appleTouchIcon = [
         href: `${site}/assets/meta/apple-icon-180x180.png`
     }
 ];
+const googleFont = "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
 const customFont = {
     css: `${Astro.url.origin}/assets/fonts/fonts.css`,
     fonts: [
@@ -178,6 +179,7 @@ const {
                 content: 'all'
             }}
             font={{
+                google: googleFont,
                 custom: customFont
             }}
             schemas={[
@@ -210,6 +212,8 @@ const {
             ]}
         />
         <CssVariable />
+        <link rel="preload" href="https://dlcdnimgs.asus.com/vendor/public/fonts/js/roboto.js" as="script">
+        <link rel="preload" href="https://dlcdnimgs.asus.com/vendor/public/fonts/js/roboto-condensed.js" as="script">
         <slot name="link" />
     </head>
     <body class:list={bodyClassName}>

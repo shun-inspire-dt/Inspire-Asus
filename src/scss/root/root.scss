@@ -261,9 +261,9 @@
     --font-style-sb-italic: 'SemiBold Italic';
 
     /* === 字體家族 === */
-    --font-family-tt-norms-pro-normal: TTNormsProNormal, Roboto, sans-serif;
-    --font-family-tt-norms-pro-medium: TTNormsProMedium, Roboto, sans-serif;
-    --font-family-roboto: Roboto, sans-serif;
+    --font-family-tt-norms-pro-normal: TTNormsProNormal, Roboto, "Noto Sans TC", sans-serif;
+    --font-family-tt-norms-pro-medium: TTNormsProMedium, Roboto, "Noto Sans TC", sans-serif;
+    --font-family-roboto: Roboto, "Noto Sans TC", sans-serif;
 
     /** Scrollbar 元件顏色 */
     --scrollbar-width: 0.25rem;
@@ -305,7 +305,6 @@
     --underline-offset: 3px;
 }
 
-body,
 body:lang(tw),
 body:lang(zh),
 body:lang(zh-TW),
@@ -316,6 +315,7 @@ body:lang(zh-tw) {
 html,
 body {
     font-family: var(--font-family-roboto);
+    font-synthesis: none; // 禁用字體合成
     @include scrollbar.scrollbar();
 }
 
