@@ -1,4 +1,7 @@
 ---
+/** Common Component */
+/** Link */
+import A from '@components/common/link/a.astro';
 /** Style */
 import './follower.scss';
 
@@ -12,5 +15,33 @@ export interface Props {
 const { IDName, className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className]} style={style} {...attribute}>
+<div
+    id={IDName}
+    class:list={[className, ':uno-ivy-follower: w-2.25rem md:w-3.75rem h-full absolute top-0 right-0 z-1050 pointer-events-none']}
+    style={style}
+    {...attribute}
+>
+    <A
+        link=""
+        className=":uno-ivy-follower-button: w-full min-h-8.75rem md:min-h-9rem bg-blue-500 hover:bg-blue-600 flex flex-col items-center justify-center gap-0.25rem pt-0.75rem pb-1rem md:py-1rem sticky top-[calc(100%-3rem)] md:top-[calc(100%-3rem)] -translate-y-full right-0 pointer-events-auto text-white font-roboto leading-[1.1875] font-normal transition-colors duration-200 ease-in-out"
+        title="立即諮詢"
+    >
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M17 7H7C5.89543 7 5 7.89543 5 9V25C5 26.1046 5.89543 27 7 27H22C23.1046 27 24 26.1046 24 25V16.7561"
+                stroke="var(--color-white, #fff)"
+                stroke-width="1.5"
+                stroke-linecap="round"></path>
+            <path
+                d="M12.0661 16.8265L23.5661 5.32653C23.5661 5.32653 25.0661 4.32653 26.5661 5.82653C28.0661 7.32653 27.0661 8.82653 27.0661 8.82653L15.5661 20.3265C15.5661 20.3265 10.5657 22.3265 10.0661 21.8265C9.5664 21.3265 12.0661 16.8265 12.0661 16.8265Z"
+                stroke="var(--color-white, #fff)"
+                stroke-width="1.5"></path>
+        </svg>
+        <span class=":uno-ivy-follower-button-text: flex flex-col items-center justify-center">
+            <span>立</span>
+            <span>即</span>
+            <span>諮</span>
+            <span>詢</span>
+        </span>
+    </A>
 </div>

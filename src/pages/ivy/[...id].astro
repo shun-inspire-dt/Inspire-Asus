@@ -31,7 +31,7 @@ const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
         data={[
             { title: '公司介紹', link: '#IvyInformation' },
             { title: '解決方案', link: '#IvyArticle' },
-            { title: '最新消息', link: '#IvyRelativeSwiperContainer' },
+            { title: '最新消息', link: '#IvyRelativeSwiperContainer' }
         ]}
     />
     <div data-bs-spy="scroll" data-bs-root-margin="0px 0px 0px" data-bs-target={`#${navId}`} data-bs-smooth-scroll="true">
@@ -39,7 +39,7 @@ const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
         <Article />
         <Relative />
     </div>
+    <Follower />
 </Layouts>
 <Script />
 <Video />
-
