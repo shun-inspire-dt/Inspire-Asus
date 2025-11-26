@@ -19,7 +19,7 @@ const { IDName = "SolutionsRight", className, style, attribute = {} } = Astro.pr
 ---
 
 <div id={IDName} class:list={[className, ':uno-solutions-right:']} style={style} {...attribute}>
-    <Head />
+    <Head className=":uno-solutions-right-head: lt-md:hidden" />
     <div class=":uno-solutions-right-content: flex flex-col md:flex-col-reverse">
         <Config />
         <Collapse title='產品資訊' show>
