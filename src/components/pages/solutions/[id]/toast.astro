@@ -14,7 +14,7 @@ const { IDName = "addToCartToast", className, style, attribute = {} } = Astro.pr
 
 <div class:list={[":uno-add-to-cart-toast-container: fixed bottom-2.5rem md:bottom-5rem left-1/2 translate-x-[-50%] z-[1090]", className]} {...attribute} style={style}>
     <div id={IDName} class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body :uno-add-to-cart-toast-body: flex items-center justify-center gap-1.25rem rounded-lg text-white body-02-sh xl:body-03-sh">
+        <div class="toast-body :uno-add-to-cart-toast-body: flex items-center justify-center gap-1.25rem rounded-lg whitespace-nowrap text-white body-02-sh xl:body-03-sh">
             已加入詢問清單
             <button type="button" data-bs-dismiss="toast" aria-label="Close">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
