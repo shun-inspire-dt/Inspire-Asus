@@ -24,7 +24,7 @@ export interface Props {
 const { IDName = 'ProductsSwipers', className, style, attribute = {}, title, images } = Astro.props as Props;
 ---
 
-<Head className=":uno-solutions-left-head: md:hidden" />
+<Head className=":uno-solutions-left-head: md:hidden lt-md:mb-1.25rem" />
 <div id={IDName} class:list={[className]} style={style} {...attribute}>
     <Swiper IDName="ProductsMain">
         {
