@@ -16,7 +16,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
 const images = [...new Array(12).keys()].map(() => '/assets/images/pages/desktop-product-1')
 ---
 
-<div id={IDName} class:list={[className, ":uno-solutions-top: container-fluid flex flex-col md:flex-row md:items-start md:gap-2.5rem sect-p-sm md:sect-p-md xl:sect-p-lg bg-white"]} style={style} {...attribute}>
+<div id={IDName} class:list={[className, ":uno-solutions-top: container-fluid flex flex-col md:flex-row md:items-start md:gap-2.5rem sect-p-lg-t sect-p-sm-b md:sect-p-md xl:sect-p-lg bg-white"]} style={style} {...attribute}>
     <Left title='智慧採購叫貨系統' images={images} className=":uno-solutions-product-swipers: md:w-[calc(50%-1.25rem)] mb-1.25rem md:mb-3rem xl:mb-5rem md:sticky md:top-[calc(48px+var(--header-height))]" />
     <Right className=":uno-solutions-top-right: md:w-[calc(50%-1.25rem)]" />
 </div>
