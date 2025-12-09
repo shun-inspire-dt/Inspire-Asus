@@ -1,5 +1,5 @@
 #headerLogo {
-    @apply xl:max-w-[11.875rem] flex items-center;
+    @apply max-w-[9.375rem] xl:max-w-[11.875rem] flex items-center;
     & > svg {
         &:first-child {
             @apply hidden xl:block;
