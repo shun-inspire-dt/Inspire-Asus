@@ -261,9 +261,9 @@
     --font-style-sb-italic: 'SemiBold Italic';
 
     /* === 字體家族 === */
-    --font-family-tt-norms-pro-normal: TTNormsProNormal, Roboto, "Noto Sans TC", sans-serif;
-    --font-family-tt-norms-pro-medium: TTNormsProMedium, Roboto, "Noto Sans TC", sans-serif;
-    --font-family-roboto: Roboto, "Noto Sans TC", sans-serif;
+    --font-family-tt-norms-pro-normal: TTNormsProNormal, Roboto, 'Noto Sans TC', sans-serif;
+    --font-family-tt-norms-pro-medium: TTNormsProMedium, Roboto, 'Noto Sans TC', sans-serif;
+    --font-family-roboto: Roboto, 'Noto Sans TC', sans-serif;
 
     /** Scrollbar 元件顏色 */
     --scrollbar-width: 0.25rem;
@@ -323,5 +323,11 @@ main {
     position: relative;
     &.margin-top {
         margin-top: var(--header-height);
+    }
+}
+
+:where(a, button, [role='button'], [role='link']) {
+    &:not(.btn) {
+        @apply outline-blue-500;
     }
 }
