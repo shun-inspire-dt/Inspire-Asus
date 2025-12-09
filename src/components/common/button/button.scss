@@ -94,6 +94,7 @@
 
     /* 聚焦狀態樣式 - 鍵盤聚焦和手動聚焦 */
     &:focus:not(.no-focus),      /* 鍵盤聚焦 */
+    &:focus-within:not(.no-focus), /* 內部元素聚焦 */
     &.focus {
         /* 手動添加的聚焦類別 */
         color: var(--btn-focus-color); /* 聚焦時文字顏色 */
@@ -111,7 +112,6 @@
 
     /* 按壓狀態樣式 - 點擊激活和內部元素聚焦 (Pressed Status) */
     &:active:not(.no-focus),     /* 點擊激活 */
-    &:focus-within:not(.no-focus), /* 內部元素聚焦 */
     &.active {
         /* 手動添加的激活類別 */
         color: var(--btn-focus-within-color); /* 按壓時文字顏色 */
