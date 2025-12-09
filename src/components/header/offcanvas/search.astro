@@ -45,13 +45,25 @@ const { IDName = 'headerSearch', className, style, attribute = {} } = Astro.prop
 </MyOffcanvas>
 
 <script>
+    /** Modules */
+    import { Offcanvas } from '@js/components/common/offcanvas/offcanvas';
+
     const offcanvas = document.querySelector('#headerSearchOffcanvas') as HTMLElement;
+    const offcanvasInstance = new Offcanvas(offcanvas);
     let button: HTMLElement;
     offcanvas.addEventListener('show.bs.offcanvas', (e) => {
         // @ts-ignore
         button = e.relatedTarget as HTMLElement;
         button.setAttribute('data-bs-expended', 'true');
         button.classList.add('active');
+
+        /**  */
+        const dropdownButtons = document.querySelectorAll('header [data-bs-toggle="dropdown"]') as NodeListOf<HTMLButtonElement>;
+        dropdownButtons.forEach((button) => {
+            button.addEventListener('shown.bs.dropdown', () => {
+                offcanvasInstance.hide();
+            }, { once: true });
+        });
     });
     offcanvas.addEventListener('hide.bs.offcanvas', () => {
         if (!button) return;
