@@ -19,6 +19,8 @@ import type { NavsData } from '@js/data/navs';
 /** Offcanvas Base Component - Offcanvas 基礎組件 */
 import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
 /** Link Component - 連結組件 */
+/** Link */
+import ALink from '@components/common/link/link.astro';
 import A from '@components/common/link/a.astro';
 /** Collapse Component - 折疊組件 */
 import Collapse from '@components/common/collapse/collapse.astro';
@@ -64,9 +66,7 @@ const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro
                                     ?.flatMap((y) => y.children)
                                     .map((y) => (
                                         <div class="menu-links">
-                                            <span class="menu-link-title">
-                                                {y?.title}
-                                            </span>
+                                            <span class="menu-link-title">{y?.title}</span>
                                             <div class="menu-link-list">
                                                 {y?.links.map((z) => (
                                                     <div class="menu-link-ul">
@@ -79,10 +79,19 @@ const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro
                                         </div>
                                     ))}
                             </div>
+                            {x.children?.[0].link && (
+                                <div class=":uno-header-offcanvas-main-link: container-fluid pt-2rem pb-0.75rem">
+                                    <ALink link={x.children?.[0].link} title={x.children?.[0].linkText} showArrow />
+                                </div>
+                            )}
                         </div>
                     </Collapse>
                 ) : (
-                    <A link={x.link} className=":uno-header-offcanvas-link: container-fluid flex items-center py-0.75rem text-gray-900 font-tt-normal text-base lh-125 font-normal" title={x.title} />
+                    <A
+                        link={x.link}
+                        className=":uno-header-offcanvas-link: container-fluid flex items-center py-0.75rem text-gray-900 font-tt-normal text-base lh-125 font-normal"
+                        title={x.title}
+                    />
                 )}
             </Fragment>
         ))
