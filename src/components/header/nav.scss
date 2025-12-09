@@ -115,10 +115,10 @@
             &[data-mega-menu-trigger]:is(:hover, :focus-within)::after {
                 content: '';
                 position: fixed;
-                top: var(--header-height);
+                top: calc(var(--header-height) + 0.0625rem);
                 left: 0;
                 width: 100%;
-                height: calc(100vh - var(--header-height));
+                height: calc(100vh - var(--header-height) - 0.0625rem);
                 z-index: 10;
                 background-color: var(--backdrop-color);
                 opacity: var(--backdrop-opacity);
