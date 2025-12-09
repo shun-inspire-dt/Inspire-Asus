@@ -316,6 +316,7 @@ html,
 body {
     font-family: var(--font-family-roboto);
     font-synthesis: none; // 禁用字體合成
+    position: relative;
     @include scrollbar.scrollbar();
 }
 
