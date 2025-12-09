@@ -11,10 +11,11 @@ export interface Props {
     style?: { [key: string]: string };
     title?: string;
     show?: boolean;
+    parent?: string;
     data?: { label: string; value: string; checked?: boolean }[];
 }
 
-const { IDName, className, buttonClassName, style, attribute = {}, title, show, data = [] } = Astro.props as Props;
+const { IDName, className, buttonClassName, style, attribute = {}, title, show, parent, data = [] } = Astro.props as Props;
 const componentId = IDName || `collapse-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
@@ -42,7 +43,7 @@ const componentId = IDName || `collapse-${Math.random().toString(36).substr(2, 9
         <slot name="title">{title}</slot>
         <CollapseArrow />
     </button>
-    <div id={componentId} class:list={['collapse', { show: show }]}>
+    <div id={componentId} class:list={['collapse', { show: show }]} data-bs-parent={parent}>
         <slot />
     </div>
 </div>
