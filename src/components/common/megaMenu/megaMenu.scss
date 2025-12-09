@@ -89,7 +89,7 @@
  */
 [data-mega-menu-trigger] {
     /* === Hover Activation - 懸停啟動 === */
-    &:hover [data-mega-menu] {
+    &:is(:hover, :focus-within) [data-mega-menu] {
         /* 懸停時顯示選單：完全不透明、可見、回到原位 */
         @apply opacity-100 visible translate-y-0;
 

@@ -112,7 +112,7 @@
                 padding-right: 0;
             }
             /** */
-            &[data-mega-menu-trigger]:hover::after {
+            &[data-mega-menu-trigger]:is(:hover, :focus-within)::after {
                 content: '';
                 position: fixed;
                 top: var(--header-height);
