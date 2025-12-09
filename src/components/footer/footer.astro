@@ -56,13 +56,14 @@ const { IDName = 'footer', className, style, attribute = {}, pages = [], showBor
                     ))
                 }
             </div>
-            <div class=":uno-footer-mobile: md:hidden">
+            <div id="FooterMobile" class=":uno-footer-mobile: md:hidden">
                 {
                     data.map((item, i) => (
                         <Collapse
                             title={item.title}
                             buttonClassName=":uno-footer-mobile-title: !text-sm !lh-125"
                             style={{ ...(i === 0 ? { '--collapse-border-width': '0' } : {}) }}
+                            parent='#FooterMobile'
                         >
                             <div class=":uno-footer-mobile-body: flex flex-col gap-0.75rem pb-0.75rem">
                                 {item.links.map((x) => (
