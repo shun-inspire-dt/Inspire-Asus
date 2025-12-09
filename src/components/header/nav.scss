@@ -95,17 +95,17 @@
             /** */
             $item: &;
             /* 響應式顯示：小螢幕隱藏，大螢幕顯示 */
-            @apply relative cursor-pointer;
+            @apply relative cursor-default;
             display: var(--headerNav-item-display);
             height: var(--headerNav-link-height);
             padding-right: var(--headerNav-gap);
 
             /* 懸停時添加底部線條 */
-            &:hover > a::after {
+            &:hover > .headerNavLink::after {
                 background-color: var(--headerNav-active-bottom-line-color);
             }
             /* 第一個導航項目添加左邊框 */
-            &:first-child > a {
+            &:first-child > .headerNavLink {
                 border-left: var(--headerNav-border-x-width) solid var(--headerNav-border-x-color);
             }
             &:last-child {
@@ -126,7 +126,7 @@
             }
 
             /* === Navigation Link - 導航連結樣式 === */
-            & > a {
+            & > .headerNavLink {
                 /* 連結基礎佈局：垂直排列，副標題在上，主標題在下 */
                 @apply flex flex-col-reverse items-center justify-center relative;
                 height: var(--headerNav-link-height);
@@ -143,6 +143,10 @@
                     transition-property: var(--headerNav-link-transition-property);
                     transition-timing-function: var(--headerNav-link-transition-timing-function);
                     transition-duration: var(--headerNav-link-transition-duration);
+                }
+                /* 只有連結才需要 pointer cursor */
+                &:is(a, button) {
+                    @apply cursor-pointer;
                 }
 
                 /* === Main Title Styles - 主標題樣式 === */

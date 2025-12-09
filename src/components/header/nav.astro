@@ -69,10 +69,17 @@ const { IDName = 'headerNav', className, style, attribute = {}, data = [], type 
                     {...(x.hasOwnProperty('children') ? { 'data-mega-menu-trigger': '', 'data-mega-menu-type': type } : {})}
                 >
                     {/* 主導航連結 - 包含主標題和副標題 */}
-                    <ALink link={x.link} className="headerNavLink">
-                        <p>{x.title}</p>
-                        <span>{x.subTitle}</span>
-                    </ALink>
+                    {x.hasOwnProperty('children') ? (
+                        <div class="headerNavLink" role="button" tabindex="0">
+                            <p>{x.title}</p>
+                            {x.subTitle && <span>{x.subTitle}</span>}
+                        </div>
+                    ) : (
+                        <ALink link={x.link} className="headerNavLink" attribute={{ tabindex: '0', role: 'link' }}>
+                            <p>{x.title}</p>
+                            {x.subTitle && <span>{x.subTitle}</span>}
+                        </ALink>
+                    )}
 
                     {/* 如果有子選單，渲染 MegaMenu 組件 */}
                     {x.hasOwnProperty('children') && (
