@@ -43,6 +43,7 @@
         --bs-offcanvas-padding-y: 0; /* 主體垂直內距 */
         --bs-offcanvas-padding-x: 0; /* 主體水平內距 */
         height: 100%; /* 計算高度，扣除頭部空間 */
+        padding-block: 1rem; /* 增加 padding 高度 */
     }
 
     [data-collapse] {
