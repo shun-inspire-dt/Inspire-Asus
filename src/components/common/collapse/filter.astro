@@ -29,13 +29,17 @@ const inputId = `filter-input-${Math.random().toString(36).substr(2, 9)}`;
             data?.map((item, index) => (
                 <Checkbox
                     id={`${inputId}-${index}`}
-                    label={item.label}
+                    label={`${item.label}${item.count ? `(${item.count})` : ''}`}
                     name={item.name}
                     value={item.value}
                     checked={item.checked}
                     disabled={item.disabled}
                     style={{
                         ...(more && index > 4 ? { display: 'none' } : {})
+                    }}
+                    attribute={{
+                        'data-count': item.count,
+                        'data-title': item.label
                     }}
                 />
             ))
@@ -61,7 +65,9 @@ const inputId = `filter-input-${Math.random().toString(36).substr(2, 9)}`;
 </Collapse>
 
 <script>
-    const filterBtn = document.querySelectorAll('[data-toggle="toggle"][data-target="filter-collapse"]') as NodeListOf<HTMLButtonElement>;
+    const filterBtn = document.querySelectorAll(
+        '[data-toggle="toggle"][data-target="filter-collapse"]'
+    ) as NodeListOf<HTMLButtonElement>;
     filterBtn.forEach((item) => {
         item.addEventListener('click', () => {
             const btnParent = item?.parentElement as HTMLElement;
