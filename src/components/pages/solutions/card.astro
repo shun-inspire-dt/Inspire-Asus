@@ -103,7 +103,10 @@ const cardStyle = {
         />
         {
             showPlayBack && (
-                <div class=":uno-solutions-card-play-back: absolute top-0 left-0 size-full bg-transparent flex items-center justify-center z-2">
+                <div
+                    class=":uno-solutions-card-play-back: absolute top-0 left-0 size-full bg-transparent flex items-center justify-center z-2"
+                    data-play-back-overlay
+                >
                     <PlayBack
                         size="48"
                         attribute={{
@@ -148,3 +151,14 @@ const cardStyle = {
         </div>
     </div>
 </A>
+
+<script>
+    const playBackOverlays = document.querySelectorAll('[data-play-back-overlay]') as NodeListOf<HTMLElement>;
+    playBackOverlays.forEach((overlay) => {
+        overlay.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        });
+    });
+</script>
