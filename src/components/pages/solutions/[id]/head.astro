@@ -33,7 +33,7 @@ const {
     <div class=":uno-solutions-tags: w-full flex flex-wrap gap-0.5rem">
         {
             badges.map((x) => (
-                <Badge Tag="a" attribute={{ href: Astro.url.href, title }}>
+                <Badge Tag="a" attribute={{ href: Astro.url.href, title }} status="link">
                     {x}
                 </Badge>
             ))
