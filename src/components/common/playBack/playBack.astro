@@ -40,6 +40,7 @@ const cardStyle = (size: '48' | '32') => {
     style={cardStyle(size)}
     title="play-back"
     aria-label="play-back"
+    tabindex={-1}
     {...attribute}
 >
     {/** 48 */}
@@ -161,11 +162,12 @@ const cardStyle = (size: '48' | '32') => {
 </Tag>
 
 <script>
-    const button = document.querySelectorAll(
-        '[aria-label="play-back"]:not([data-auto="false"])'
-    ) as NodeListOf<HTMLButtonElement>;
+    const button = document.querySelectorAll('[aria-label="play-back"]') as NodeListOf<HTMLButtonElement>;
     button.forEach((item) => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
             item.classList.toggle('active');
         });
     });

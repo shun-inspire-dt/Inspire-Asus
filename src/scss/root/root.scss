@@ -328,7 +328,7 @@ main {
 }
 
 :where(a, button, [role='button'], [role='link']) {
-    &:not(.btn):is(:focus-within, :focus-visible) {
+    &:not(.btn):focus:focus-visible {
         @apply outline-offset-1 outline-0.125rem outline-blue-500;
     }
 }

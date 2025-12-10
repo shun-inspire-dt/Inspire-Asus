@@ -16,6 +16,7 @@ export interface Props {
     title?: string;
     breif?: string;
     logoImage?: string;
+    logoImageType?: string;
     img?: string;
     link?: string;
     linkText?: string;
@@ -33,6 +34,7 @@ const {
     title = 'iShops - 開店平台！',
     breif = '一站式開店平台，全面強化您的商業運營，增加企業營收，讓企業變得更好，仿造IG的限時動態風格。',
     logoImage = '/assets/logos/Business-Vertical-Light',
+    logoImageType = 'svg',
     img = '/assets/images/pages/solutions-bg-1',
     link = '',
     linkText = '了解更多',
@@ -78,16 +80,18 @@ const cardStyle = {
 };
 ---
 
-<div
+<A
     id={IDName}
-    class:list={[
+    link={link}
+    title={title}
+    className={[
         className,
-        ':uno-solutions-card: max-w-[var(--card-width,100%)] border border-gray-500 rounded-xl overflow-hidden group'
+        ':uno-solutions-card: max-w-[var(--card-width,100%)] flex flex-col border border-gray-500 rounded-xl overflow-hidden group focus:focus-visible:outline-blue-500 focus:focus-visible:outline-0.125rem focus:focus-visible:outline-offset-2'
     ]}
     style={cardStyle}
     {...attribute}
 >
-    <div class=":uno-solutions-card-image-container: relative aspect-190/107 overflow-hidden">
+    <div class=":uno-solutions-card-image-container: flex-none relative aspect-190/107 overflow-hidden">
         <Picture
             img={img}
             className=":uno-solutions-card-image: size-full absolute inset-0 object-center object-cover group-hover:scale-110 transition-transform duration-300 origin-center"
@@ -115,15 +119,13 @@ const cardStyle = {
             )
         }
     </div>
-    <div class=":uno-solutions-card-content: flex flex-col p-1.5rem bg-white rounded-b-xl">
-        <div class=":uno-solutions-card-head: flex flex-col">
+    <div class=":uno-solutions-card-content: flex flex-col grow p-1.5rem bg-white rounded-b-xl">
+        <div class=":uno-solutions-card-head:">
             {
                 title && (
-                    <A link={link} title={title}>
-                        <strong class=":uno-solutions-card-title: text-gray-900 font-tt-medium text-subtitle leading-125 font-medium hover:underline-0.0625rem hover:underline hover:underline-offset-3">
-                            {title}
-                        </strong>
-                    </A>
+                    <strong class=":uno-solutions-card-title: text-gray-900 font-tt-medium text-subtitle leading-125 font-medium hover:underline-0.0625rem hover:underline hover:underline-offset-3">
+                        {title}
+                    </strong>
                 )
             }
             {
@@ -134,19 +136,15 @@ const cardStyle = {
                 )
             }
         </div>
-        <div class=":uno-solutions-card-footer: flex flex-col">
+        <div class=":uno-solutions-card-footer: flex flex-col mt-auto">
             <div
                 class=":uno-solutions-card-logo: w-5.25rem h-2.625rem aspect-2/1 mt-0.75rem [&_img]:size-full [&_img]:object-center-left [&_img]:object-contain"
             >
-                <Picture img={logoImage} alt={title} type="svg" loading="lazy" decoding="async" noWebp />
+                <Picture img={logoImage} alt={title} type={logoImageType} loading="lazy" decoding="async" noWebp />
             </div>
-            <ALink
-                link={link}
-                className=":uno-solutions-card-link: mt-1rem"
-                title={linkText}
-                size="16"
-                showArrow={showLinkArrow}
-            />
+            <div class=":uno-solutions-card-link: mt-1rem">
+                <ALink link={link} className="" title={linkText} size="16" showArrow={showLinkArrow} Tag="span" />
+            </div>
         </div>
     </div>
-</div>
+</A>

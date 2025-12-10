@@ -1,6 +1,7 @@
 ---
 /** Data */
-import { data } from '@components/pages/solutions/filter';
+import { data as FilterData } from '@components/pages/solutions/filter';
+import { data } from '@components/pages/solutions/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -20,17 +21,30 @@ import '@scss/pages/solution.scss';
 <Layouts IDName="Solution" footerPages={['解決方案']}>
     <Banner img="solutions-banner" title="解決方案" mode="dark" />
     <ArticlesList
-    IDName="SolutionList"
-    title="解決方案"
-    total={10}
-    sortDate={[
-        { text: '新上市', value: '0' },
-        { text: '解決方案', value: '1' }
-    ]}
-        category={data}
+        IDName="SolutionList"
+        title="解決方案"
+        total={10}
+        sortDate={[
+            { text: '新上市', value: '0' },
+            { text: '解決方案', value: '1' }
+        ]}
+        category={FilterData}
         mode="white"
-        >
-        {Array.from({ length: 10 }).map((_, index) => <Card link={`/solution/${index}`} showPlayBack={index % 2 === 0} />)}
+    >
+        {
+            data.map((x, index) => (
+                <Card
+                    title={x.title}
+                    breif={x.breif}
+                    img={x.img}
+                    logoImage={x.logoImage}
+                    logoImageType={x.logoImageType}
+                    link={x.link}
+                    linkText={x.linkText}
+                    showPlayBack={index % 2 === 0}
+                />
+            ))
+        }
     </ArticlesList>
 </Layouts>
 <Follower />
