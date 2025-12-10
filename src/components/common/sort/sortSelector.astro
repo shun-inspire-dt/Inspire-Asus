@@ -1,6 +1,8 @@
 ---
 /** Select */
 import Select from '@components/common/form/select/customSelect.astro';
+/** Style */
+import './sortSelector.scss';
 
 export interface Props {
     IDName?: string;
@@ -29,8 +31,9 @@ const componentId = IDName || `sort-${Math.random().toString(36).substr(2, 9)}`;
         status="sort"
         className=":uno-sort-selector-select: grow"
         size="sm"
-        name='sort'
+        name="sort"
         data={data}
+        value={data && data?.[0] ? (data[0].value as string) : undefined}
         selectAttribute={{ 'data-sort': '' }}
         style={{ minWidth: '9.5rem' }}
     />

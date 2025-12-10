@@ -20,8 +20,8 @@
     --custom-select-placeholder-color: var(--color-gray-600, #666666); /* 佔位符文字顏色 */
     --custom-select-line-height: var(--line-height-16-sh, 1.375rem); /* 行高 */
     --custom-select-letter-spacing: 0rem; /* 字元間距 */
-    --custom-select-text-align: center; /* 文字對齊方式 */
-    --custom-select-border-width: var(--input-border-width, 0.0625rem); /* 邊框寬度 */
+    --custom-select-text-align: left; /* 文字對齊方式 */
+    --custom-select-border-width: 0.0625rem; /* 邊框寬度 */
     --custom-select-border-radius: 0.5rem; /* 邊框圓角 */
 
     /** === 狀態變數 === */
@@ -39,8 +39,8 @@
     --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
 
     /* === 下拉箭頭圖標變數 === */
-    --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 箭頭圖標 */
-    --custom-select-background-position-right: 16px; /* 箭頭距離右邊的距離 */
+    --custom-select-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34302 6.11439L7.99987 11.7712L13.6567 6.11439" stroke="%23181818" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 箭頭圖標 */
+    --custom-select-background-position-right: 1rem; /* 箭頭距離右邊的距離 */
     --custom-select-background-size: 1rem; /* 箭頭尺寸 */
 
     /* === 下拉選項容器變數 === */
@@ -51,11 +51,16 @@
     --custom-select-items-padding-y: 0.5rem; /* 選項容器垂直內邊距 */
     --custom-select-items-padding-x: 0rem; /* 選項容器水平內邊距 */
     --custom-select-items-box-shadow: 0rem 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
-    --custom-select-item-top: calc(100% + 0.3125rem); /* 選項容器頂部位置 */
+    --custom-select-item-top: calc(100% + 0.25rem); /* 選項容器頂部位置 */
     --custom-select-item-height: 15.625rem; /* 選項容器最大高度 */
 
+    /** 下拉選項容器 Focus outline 相關屬性 */
+    --custom-select-items-outline-width: 0.125rem; /* 焦點外框寬度 */
+    --custom-select-items-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+    --custom-select-items-outline-offset: 0rem; /* 焦點外框偏移 *
+    
     /* === 選項容器 Transition Variables === */
-    --custom-select-transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
+    --custom-select-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
     --custom-select-transition-timing-function: ease-in-out; /* 連結過渡動畫 */
     --custom-select-transition-duration: 200ms; /* 連結過渡時間 */
 
@@ -69,10 +74,18 @@
     --custom-select-hover-item-color: var(--color-blue-500, #006ce1); /* 懸停選項文字顏色 */
     --custom-select-active-item-background-color: var(--color-blue-500, #006ce1); /* 選中選項背景顏色 */
     --custom-select-active-item-color: var(--color-white, #ffffff); /* 選中選項文字顏色 */
+    --custom-select-disabled-item-background-color: var(--color-white, #ffffff); /* disabled 選項背景顏色 */
+    --custom-select-disabled-item-color: var(--color-gray-300, #b3b3b3); /* disabled 選項文字顏色 */
     --custom-select-item-zindex: 1000; /* 選項容器層級 */
 
+    /** 下拉選項單個選項 Focus outline 相關屬性 */
+    --custom-select-item-outline-width: 0.125rem; /* 焦點外框寬度 */
+    --custom-select-item-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+    --custom-select-item-outline-offset: -0.125rem; /* 焦點外框偏移 */
+    --custom-select-item-outline-border-radius: 0.5rem; /* 焦點外框圓角 */
+
     /* === 單個選項 Transition Variables === */
-    --custom-select-item-transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill,
+    --custom-select-item-transition-property: color, background-color, border-color, text-decoration-color, fill,
         stroke; /* 連結過渡屬性 */
     --custom-select-item-transition-timing-function: ease-in-out; /* 連結過渡動畫 */
     --custom-select-item-transition-duration: 200ms; /* 連結過渡時間 */
@@ -102,6 +115,7 @@
         background-color: var(--custom-select-background-color);
         border: var(--custom-select-border-width) solid var(--custom-select-border-color);
         border-radius: var(--custom-select-border-radius);
+        cursor: pointer;
 
         /* 佔位符狀態：當沒有選中值時顯示的樣式 */
         &.select-selected-placeholder {
@@ -169,6 +183,13 @@
 
         /* 自定義滾動條樣式 */
         @include scrollbar.scrollbar;
+
+        /** 焦點狀態 */
+        &:focus-visible:focus {
+            /* Focus outline 相關屬性 */
+            outline: var(--custom-select-items-outline-width) solid var(--custom-select-items-outline-color); /* 焦點外框 */
+            outline-offset: var(--custom-select-items-outline-offset); /* 焦點外框偏移 */
+        }
     }
 
     /*
@@ -178,6 +199,7 @@
      */
     .select-items > :where(div, a) {
         /* 選項內容樣式：使用與選擇器相同的字體設定 */
+        position: relative;
         display: block;
         padding: var(--custom-select-item-padding-y) var(--custom-select-item-padding-x);
         border-bottom: var(--custom-select-item-border-width) solid var(--custom-select-item-border-color);
@@ -197,6 +219,50 @@
         &:last-child {
             border-bottom: none;
         }
+        /*
+        * 選項互動狀態
+        * 懸停狀態的樣式
+        */
+        &:hover {
+            color: var(--custom-select-hover-item-color);
+            background-color: var(--custom-select-hover-item-background-color);
+        }
+        /** 焦點狀態 */
+        &:focus:focus-visible {
+            outline: none;
+
+            &::after {
+                content: "";
+                display: block;
+                height: calc(100% - 0.5rem);
+                position: absolute;
+                top: 0.25rem;
+                left: 0;
+                width: 100%;
+                /* Focus outline 相關屬性 */
+                outline: var(--custom-select-item-outline-width) solid var(--custom-select-item-outline-color); /* 焦點外框 */
+                outline-offset: var(--custom-select-item-outline-offset); /* 焦點外框偏移 */
+                border-radius: var(--custom-select-item-outline-border-radius); /* 焦點外框圓角 */
+            }
+
+            &.same-as-selected {
+                --custom-select-item-outline-color: var(--color-white, #FFFFFF); /* 焦點外框顏色 */
+            }
+        }
+        /*
+        * 選項互動狀態
+        * 選中狀態的樣式
+        */
+        &.same-as-selected {
+            /* 當前選中的選項 */
+            color: var(--custom-select-active-item-color);
+            background-color: var(--custom-select-active-item-background-color);
+        }
+        /* Disabled 狀態 */
+        &[data-disabled] {
+            color: var(--custom-select-disabled-item-color); /* disabled 選項文字顏色 */
+            background-color: var(--custom-select-disabled-item-background-color); /* disabled 選項背景顏色 */
+        }
     }
 
     /*
@@ -205,24 +271,6 @@
      */
     .select-hide {
         display: none;
-    }
-
-    /*
-     * 選項互動狀態
-     * 懸停狀態的樣式
-     */
-    .select-items :where(div, a):hover {
-        color: var(--custom-select-hover-item-color);
-        background-color: var(--custom-select-hover-item-background-color);
-    }
-    /*
-    * 選項互動狀態
-    * 選中狀態的樣式
-    */
-    .select-items :where(div, a).same-as-selected {
-        /* 當前選中的選項 */
-        color: var(--custom-select-active-item-color);
-        background-color: var(--custom-select-active-item-background-color);
     }
 
     /* 
@@ -264,7 +312,6 @@
             }
         }
 
-
         /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
         &:disabled {
             & ~ .select-selected {
@@ -273,14 +320,6 @@
                 border-color: var(--custom-select-disabled-border-color);
                 pointer-events: none;
                 user-select: none;
-            }
-        }
-
-        &.status_sort {
-            & ~ .select-selected {
-                --custom-select-color: var(--color-blue-500, #006ce1);
-                --custom-select-placeholder-color: var(--color-blue-500, #006ce1);
-                --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.9" d="M2.92871 7.6428L9.99978 14.7139L17.0708 7.6428" stroke="%23006ce1" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
             }
         }
 
@@ -293,6 +332,7 @@
             --custom-select-font-size: var(--fs-20, 1.25rem); /* 字體大小 */
             --custom-select-line-height: var(--line-height-20-sh, 1.625rem); /* 行高 */
             --custom-select-letter-spacing: 0rem; /* 字元間距 */
+            --custom-select-background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.92896 7.64304L10 14.7141L17.0711 7.64304" stroke="%23181818" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
             --custom-select-background-size: 1.25rem;
             height: 3.5rem;
         }
@@ -304,6 +344,7 @@
             --custom-select-font-size: var(--fs-18, 1.125rem); /* 字體大小 */
             --custom-select-line-height: var(--line-height-18-sh, 1.5rem); /* 行高 */
             --custom-select-letter-spacing: 0rem; /* 字元間距 */
+            --custom-select-background-image: url('data:image/svg+xml,<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.63599 6.87872L8.99995 13.2427L15.3639 6.87871" stroke="%23181818" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
             --custom-select-background-size: 1.125rem;
             height: 3rem;
         }
@@ -315,6 +356,7 @@
             --custom-select-font-size: var(--fs-16, 1rem); /* 字體大小 */
             --custom-select-line-height: var(--line-height-16-sh, 1.375rem); /* 行高 */
             --custom-select-letter-spacing: 0rem; /* 字元間距 */
+            --custom-select-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34302 6.11439L7.99987 11.7712L13.6567 6.11439" stroke="%23181818" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>');
             --custom-select-background-size: 1rem;
             height: 2.5rem;
         }
@@ -326,6 +368,7 @@
             --custom-select-font-size: var(--fs-14, 0.875rem); /* 字體大小 */
             --custom-select-line-height: var(--line-height-14-sh, 1.125rem); /* 行高 */
             --custom-select-letter-spacing: 0.01rem; /* 字元間距 */
+            --custom-select-background-image: url('data:image/svg+xml,<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 5.35006L6.94975 10.2998L11.8995 5.35006" stroke="%23181818" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/></svg>');
             --custom-select-background-size: 0.875rem;
             height: 2.25rem;
         }
