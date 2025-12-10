@@ -7,12 +7,35 @@ export interface Props {
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
-    Tag?: 'div' | 'span' | 'a';
+    Tag?: 'div' | 'span' | 'a' | 'button';
+    showCross?: boolean;
+    status?: 'link' | 'filter';
 }
 
-const { IDName, className, style, attribute = {}, Tag = 'span' } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, Tag = 'span', showCross, status } = Astro.props as Props;
 ---
 
-<Tag id={IDName} class:list={[className, 'badge']} style={style} {...attribute}>
+<Tag id={IDName} class:list={[className, 'badge', { [`badge-${status}`]: status }]} style={style} {...attribute}>
     <slot />
+    {
+        showCross && (
+            <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="presentation"
+                aria-hidden="true"
+                class="badge-close"
+            >
+                <path
+                    d="M1.16992 1.1698L8.83025 8.83012M1.16992 8.83012L8.83025 1.1698"
+                    stroke="var(--color-neutral-800, #4b4b4d)"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        )
+    }
 </Tag>

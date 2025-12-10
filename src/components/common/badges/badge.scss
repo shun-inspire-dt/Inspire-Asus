@@ -1,17 +1,17 @@
 .badge {
     /* === Badge 顏色 === */
-    --badge-light-outline: rgba(0, 0, 0, 0.1622);
-    --badge-dark-standard-bg: rgba(255, 255, 255, 0.0419);
-    --badge-dark-outline: rgba(255, 255, 255, 0.093);
-    --badge-danger-bg: #fde7e9;
-    --badge-danger-stroke: #c42b1c;
-    --badge-danger-text: #c42b1c;
-    --badge-dark-danger-stroke: #ff99a4;
-    --badge-dark-danger-bg: #442726;
-    --badge-dark-accent-bg: #60cdff;
+    // --badge-light-outline: rgba(0, 0, 0, 0.1622);
+    // --badge-dark-standard-bg: rgba(255, 255, 255, 0.0419);
+    // --badge-dark-outline: rgba(255, 255, 255, 0.093);
+    // --badge-danger-bg: #fde7e9;
+    // --badge-danger-stroke: #c42b1c;
+    // --badge-danger-text: #c42b1c;
+    // --badge-dark-danger-stroke: #ff99a4;
+    // --badge-dark-danger-bg: #442726;
+    // --badge-dark-accent-bg: #60cdff;
 
     /** === Badge 樣式 === */
-    --badge-gap: 0.5rem;
+    --badge-gap: 0.25rem;
     --badge-padding-y: 0.25rem;
     --badge-padding-x: 0.75rem;
     --badge-font-size: var(--fs-14, 0.875rem);
@@ -19,9 +19,9 @@
     --badge-font-family: var(--font-family-roboto);
     --badge-line-height: 100%;
     --badge-letter-spacing: var(--letter-spacing, 0);
-    --badge-color: var(--color-gray-900, #181818);
-    --badge-bg-color: transparent;
-    --badge-border-color: var(--badge-light-outline);
+    --badge-color: var(--color-gray-700, #4d4d4d);
+    --badge-bg-color: var(--color-white, #ffffff);
+    --badge-border-color: var(--color-white, #ffffff);
     --badge-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     --badge-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --badge-transition-duration: 200ms;
@@ -46,9 +46,29 @@
     transition-duration: var(--badge-transition-duration);
     cursor: pointer;
 
-    &:hover, &:focus, &.active {
-        --badge-color: var(--color-white, #ffffff);
-        --badge-bg-color: var(--color-blue-500, #006ce1);
-        --badge-border-color: var(--color-blue-500, #006ce1);
+    &.badge-filter {
+        --badge-border-color: var(--color-gray-700, #4d4d4d);
+        &:hover,
+        &:focus,
+        &.active {
+            --badge-border-color: var(--color-gray-900, #181818);
+        }
+    }
+
+    &.badge-link {
+        --badge-color: var(--color-gray-900, #181818);
+        --badge-bg-color: transparent;
+        --badge-border-color: rgba(0, 0, 0, 0.1622);
+        &:hover,
+        &:focus,
+        &.active {
+            --badge-color: var(--color-white, #ffffff);
+            --badge-bg-color: var(--color-blue-500, #006ce1);
+            --badge-border-color: var(--color-blue-500, #006ce1);
+        }
+    }
+
+    .badge-close {
+        @apply size-0.5rem shrink-0;
     }
 }
