@@ -1,5 +1,4 @@
 .member-sort {
-
     &.bottom {
         @apply flex justify-center;
         .member-page-view,
@@ -85,8 +84,7 @@
     height: auto;
 
     /** 焦點狀態 */
-    &:focus:not(:invalid),
-    &:focus-within:not(:invalid) {
+    &:focus:focus-visible:not(:invalid) {
         --input-border-width: 0rem; /* 焦點邊框寬度 */
     }
     /* 展開狀態 - 通過 JavaScript 動態切換 */

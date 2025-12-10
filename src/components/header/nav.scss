@@ -112,17 +112,23 @@
                 padding-right: 0;
             }
             /** */
-            &[data-mega-menu-trigger]:is(:hover, :focus-within)::after {
-                content: '';
-                position: fixed;
-                top: calc(var(--header-height) + 0.0625rem);
-                left: 0;
-                width: 100%;
-                height: calc(100vh - var(--header-height) - 0.0625rem);
-                z-index: 10;
-                background-color: var(--backdrop-color);
-                opacity: var(--backdrop-opacity);
-                pointer-events: none;
+            &[data-mega-menu-trigger]:is(:hover, :focus-within) {
+                &::after {
+                    content: '';
+                    position: fixed;
+                    top: calc(var(--header-height) + 0.0625rem);
+                    left: 0;
+                    width: 100%;
+                    height: calc(100vh - var(--header-height) - 0.0625rem);
+                    z-index: 10;
+                    background-color: var(--backdrop-color);
+                    opacity: var(--backdrop-opacity);
+                    pointer-events: none;
+                }
+                /* 懸停時添加底部線條 */
+                .headerNavLink::after {
+                    background-color: var(--headerNav-active-bottom-line-color);
+                }
             }
 
             /* === Navigation Link - 導航連結樣式 === */

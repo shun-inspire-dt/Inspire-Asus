@@ -93,9 +93,7 @@
     }
 
     /* 聚焦狀態樣式 - 鍵盤聚焦和手動聚焦 */
-    &:focus:not(.no-focus),      /* 鍵盤聚焦 */
-    &:focus-within:not(.no-focus), /* 內部元素聚焦 */
-    &.focus {
+    &:focus:focus-visible:not(.no-focus) {
         /* 手動添加的聚焦類別 */
         color: var(--btn-focus-color); /* 聚焦時文字顏色 */
         background-color: var(--btn-focus-bg); /* 聚焦時背景顏色 */

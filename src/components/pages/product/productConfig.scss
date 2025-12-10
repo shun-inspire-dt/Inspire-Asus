@@ -49,10 +49,10 @@
             }
         }
     }
-    &:focus-within + .btn-choice-label > [role='button'] {
+    &:focus:focus-visible + .btn-choice-label > [role='button'] {
         @apply border-gray-200 outline outline-2px outline-blue-500 outline-offset-2px;
     }
-    &:checked:focus-within + .btn-choice-label > [role='button'] {
+    &:checked:focus:focus-visible + .btn-choice-label > [role='button'] {
         @apply border-blue-500;
     }
     &:checked + .btn-choice-label > [role='button'] {

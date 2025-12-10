@@ -47,9 +47,8 @@
                     &:hover {
                         --swiper-pagination-bullet-inactive-color: var(--color-blue-500, #006ce1);
                     }
-                    &:focus,
-                    &:active,
-                    &:focus-within {
+                    &:focus:focus-visible,
+                    &:active {
                         @apply outline outline-2 outline-blue-500;
                     }
                     &:not(.swiper-pagination-bullet-active) {

@@ -278,6 +278,11 @@
      * 保留用於表單提交和無障礙功能，但在視覺上完全隱藏
      */
     select {
+        /** 原 Select Focus outline 相關屬性 */
+        --input-outline-width: 0rem; /* 焦點外框寬度 */
+        --input-outline-color: transparent; /* 焦點外框顏色 */
+        --input-outline-offset: 0rem; /* 焦點外框偏移 */
+        
         /* 將原生 select 隱藏但保持可訪問性 */
         position: absolute;
         top: 100%;
@@ -300,8 +305,7 @@
         }
 
         /** 焦點狀態 */
-        &:focus:not(:invalid),
-        &:focus-within:not(:invalid) {
+        &:focus:focus-visible:not(:invalid) {
             & ~ .select-selected {
                 --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                 border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */

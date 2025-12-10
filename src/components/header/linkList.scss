@@ -18,7 +18,7 @@
     --text-underline-offset: var(--underline-offset); /* 連結文字下劃線偏移 */
 
     /* === Link Transition Variables - 連結過渡變數 === */
-    --transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
+    --transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
     --transition-timing-function: ease-in-out; /* 連結過渡動畫 */
     --transition-duration: 200ms; /* 連結過渡時間 */
 

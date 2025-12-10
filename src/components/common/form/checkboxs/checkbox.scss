@@ -30,9 +30,9 @@
     --checkbox-error-border-color: var(--color-red-300, #b42d18); /* 錯誤狀態邊框色 */
 
     /* Focus outline 相關屬性 */
-    --checkbox-outline-width: 0; /* 焦點外框寬度 */
-    --checkbox-outline-color: transparent; /* 焦點外框顏色 */
-    --checkbox-outline-offset: 0; /* 焦點外框偏移 */
+    --checkbox-outline-width: 0.125rem; /* 焦點外框寬度 */
+    --checkbox-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+    --checkbox-outline-offset: 0.125rem; /* 焦點外框偏移 */
 
     /* 文字顏色變數 */
     --checkbox-color: var(--color-gray-900, #181818); /* 預設文字顏色 */
@@ -96,7 +96,7 @@
         }
 
         /* Focus outline 相關屬性 */
-        &:focus {
+        &:focus:focus-visible {
             outline: var(--checkbox-outline-width) solid var(--checkbox-outline-color);
             outline-offset: var(--checkbox-outline-offset);
         }
