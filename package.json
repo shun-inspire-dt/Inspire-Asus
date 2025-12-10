@@ -14,6 +14,7 @@
         "netlify": "MODE=deploy astro --config netlify.astro.config.mjs build",
         "prettier": "npx prettier -w --plugin-search-dir=. ./src ./*.mjs ./*.ts ./src/**/*.astro",
         "tsc:check": "tsc --noEmit",
+        "dev:check": "pnpm run build.local && pnpm run preview.local",
         "astro": "astro",
         "plop": "plop --plopfile ./PlopJS/plopfile.js"
     },
