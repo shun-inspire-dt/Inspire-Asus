@@ -59,7 +59,7 @@ const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro
         data.map((x) => (
             <Fragment>
                 {Boolean(x.children && x.children.length > 0) ? (
-                    <Collapse title={x.title} parent={IDName ? `#${IDName}Offcanvas` : undefined} buttonClassName="font-normal">
+                    <Collapse title={x.title} parent={IDName ? `#${IDName}Offcanvas` : undefined} buttonClassName=":uno-header-offcanvas-collapse-button: font-normal">
                         <div class=":uno-header-offcanvas-link-container: py-1rem bg-neutral-100">
                             <div class=":uno-header-offcanvas-link-content: container-fluid flex items-stretch gap-2rem">
                                 {x.children
