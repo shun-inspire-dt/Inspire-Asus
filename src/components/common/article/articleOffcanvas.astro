@@ -6,6 +6,8 @@ import MyOffcanvas from '@components/common/offcanvas/offcanvas.astro';
 import Button from '@components/common/button/button.astro';
 /** Link */
 import ALink from '@components/common/link/link.astro';
+/** Badge */
+import Badge from '@components/common/badges/badge.astro';
 /** Filter */
 import Filter from '../collapse/filter.astro';
 /** Style */
@@ -31,11 +33,24 @@ const { IDName = 'sectionArticle', className, style, attribute = {}, category } 
     style={style}
 >
     <form action="" class=":uno-article-offcanvas-form: w-full h-full flex flex-col">
-        <div class=":uno-article-offcanvas-form-header: w-full flex items-baseline justify-between flex-none shrink-0 py-0.625rem px-1rem bg-white border-b border-gray-200">
-            <strong class=":uno-article-offcanvas-form-header-title: font-roboto text-20 lh-125 font-medium">篩選結果</strong>
-            <ALink title={'清除全部'}>清除全部</ALink>
+        <div
+            class=":uno-article-offcanvas-form-header: w-full flex flex-col gap-0.75rem flex-none shrink-0 py-0.625rem px-1rem bg-white border-b border-gray-200"
+        >
+            <div class=":uno-article-offcanvas-form-header-top: flex items-baseline justify-between">
+                <strong class=":uno-article-offcanvas-form-header-title: font-roboto text-20 lh-125 font-medium">篩選結果</strong>
+                <ALink title={'清除全部'} attribute={{ 'data-category-clear': '' }}>清除全部</ALink>
+            </div>
+            <div data-filter-badges>
+                <template>
+                    <Badge Tag="span" status="filter" showCross><span></span></Badge>
+                </template>
+                <div class=":uno-category-badges-list: flex flex-wrap gap-y-0.75rem gap-x-0.5rem" data-filter-badges-list></div>
+            </div>
         </div>
-        <div class=":uno-article-offcanvas-form-body: w-full flex-1 grow py-0.5rem px-1rem h-6.9375rem bg-white overflow-auto scrollbar" data-filter>
+        <div
+            class=":uno-article-offcanvas-form-body: w-full flex-1 grow py-0.5rem px-1rem h-6.9375rem bg-white overflow-auto scrollbar"
+            data-filter
+        >
             {
                 category?.map((item, index) => (
                     <Filter
@@ -61,7 +76,16 @@ const { IDName = 'sectionArticle', className, style, attribute = {}, category } 
                 block
                 attribute={{ 'data-bs-dismiss': 'offcanvas' }}>取消</Button
             >
-            <Button type={'submit'} size="sm" variant="blue" title={'提交'} block>提交</Button>
+            <Button
+                type={'submit'}
+                size="sm"
+                variant="blue"
+                title={'提交'}
+                block
+                attribute={{ 'data-title': '提交', 'data-category-button': '' }}
+            >
+                提交
+            </Button>
         </div>
     </form>
 </MyOffcanvas>

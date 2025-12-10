@@ -1,6 +1,7 @@
 ---
 /** Common Component */
 import Notice from '../notice/notice.astro';
+import Badges from './badges.astro';
 import Filter from './filter.astro';
 import Button from '@components/common/button/button.astro';
 
@@ -17,6 +18,7 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
 
 <div id={IDName} class:list={[className, ':uno-category: [&>div:last-child]:pb-0 relative']} style={style} {...attribute}>
     <Notice />
+    <Badges />
     <div data-filter>
         {data?.map((item) => <Filter title={item.title} show={item.show} more={item.more} data={item.children} />)}
     </div>
