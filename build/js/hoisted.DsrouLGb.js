@@ -1,0 +1,1 @@
+import"./hoisted.QaUBZxYP.js";import"./hoisted.2mYs3230.js";import{m as t}from"../_astro/swiper.D3rDakH6.js";import"../_astro/playBack.astro_astro_type_script_index_0_lang.Z9Gxws7c.js";t("#IvyInformationSwiper",{slidesPerView:"auto",spaceBetween:20,autoHeight:!0,navigation:{nextEl:"[data-swiper-button-next]",prevEl:"[data-swiper-button-prev]"}});
