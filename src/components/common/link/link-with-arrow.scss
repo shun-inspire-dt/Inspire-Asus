@@ -26,6 +26,9 @@
             transform-origin: center;
         }
     }
+    &[data-variant="light-blue"] {
+        --link-color: var(--color-blue-400, #248dff);
+    }
 
     /* 文字樣式 */
     .link-text {
