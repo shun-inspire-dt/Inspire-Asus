@@ -3,7 +3,7 @@ import { useSameInfo } from '@js/helpers/hook/useSameInfo.ts';
 import { useAddress, useAddressByCustomSelect } from '@js/helpers/hook/useAddress';
 import { useCollapse } from '@js/helpers/hook/useCollapse';
 import { useToggleBlocks } from '@js/helpers/hook/useToggleBlocks';
-import { useScrollToTop } from '@js/helpers/hook/useScrollToTop';
+import { useScrollSpy } from '@js/helpers/hook/useScrollSpy';
 import { useWebpDetect } from '@js/helpers/hook/useWebpDetect';
 import { useClassWatcher } from '@js/helpers/hook/useClassWatcher';
 
@@ -11,7 +11,7 @@ export {
     useNumber,
     useSameInfo,
     useCollapse,
-    useScrollToTop,
+    useScrollSpy,
     useWebpDetect,
     useAddress,
     useAddressByCustomSelect,
