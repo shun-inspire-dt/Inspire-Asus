@@ -16,7 +16,7 @@ import Section03 from '@components/pages//aboutus/section03.astro';
 /** Style */
 import '@scss/pages//aboutus.scss';
 
-const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
+const navId = `scroll-spy-aboutus`;
 ---
 
 <Layouts IDName="Aboutus" footerPages={['關於我們']}>
@@ -24,13 +24,24 @@ const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
     <Nav
         IDName={navId}
         data={[
-            { title: '跨產業合作生態', link: '#section01' },
-            { title: '競爭優勢', link: '#section02' }
+            { title: '跨產業合作生態', link: '#section01', offset: '#scroll-spy-aboutus' },
+            { title: '競爭優勢', link: '#section02', offset: '#scroll-spy-aboutus' }
         ]}
     />
-    <div data-bs-spy="scroll" data-bs-root-margin="0px 0px 0px" data-bs-target={`#${navId}`} data-bs-smooth-scroll="true">
+    <div>
         <Section01 IDName="section01" data={data01} />
         <Section02 IDName="section02" data={data02} />
         <Section03 IDName="section03" />
     </div>
 </Layouts>
+
+
+<script>
+    /** Modules */
+    import { useScrollSpy } from '@js/helpers/hook/useScrollSpy';
+    /** Events */
+    window.addEventListener('DOMContentLoaded', () => {
+        const { spy } = useScrollSpy({ includeHeaderHeight: true });
+        spy();
+    });
+</script>

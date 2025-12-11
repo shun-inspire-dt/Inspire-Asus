@@ -8,7 +8,7 @@ export interface Props {
     className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
-    data?: { title?: string; link?: string }[];
+    data?: { title?: string; link?: string; offset?: string | number | HTMLElement }[];
 }
 
 const { IDName, className, style, attribute = {}, data = [] } = Astro.props as Props;
@@ -30,6 +30,10 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
                 className=":uno-section-nav-link: h-full flex items-center justify-center text-center lt-md:flex-1 border-b-0.125rem border-transparent transition-colors duration-200 ease-in-out hover:border-blue-500 [&.active]:border-blue-500"
                 title={item.title}
                 extend
+                attribute={{
+                    'data-spy': true,
+                    'data-offset': item.offset
+                }}
             >
                 {item.title}
             </A>
@@ -38,5 +42,11 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
 </div>
 
 <script>
-    import { ScrollSpy } from 'bootstrap';
+    /** Modules */
+    import { useScrollSpy } from '@js/helpers/hook/useScrollSpy';
+    /** Events */
+    window.addEventListener('DOMContentLoaded', () => {
+        const { trigger } = useScrollSpy({ includeHeaderHeight: true });
+        trigger();
+    });
 </script>

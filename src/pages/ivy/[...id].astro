@@ -22,19 +22,19 @@ const { id } = Astro.params;
 
 export const prerender = true;
 
-const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
+const navId = `scroll-spy-IvyDetail`;
 ---
 
 <Layouts IDName="IvyDetail" minMarginHeader footerPages={['合作夥伴']}>
     <Nav
         IDName={navId}
         data={[
-            { title: '公司介紹', link: '#IvyInformation' },
-            { title: '解決方案', link: '#IvyArticle' },
-            { title: '最新消息', link: '#IvyRelativeSwiperContainer' }
+            { title: '公司介紹', link: '#IvyInformation', offset: '#scroll-spy-IvyDetail' },
+            { title: '解決方案', link: '#IvyArticle', offset: '#scroll-spy-IvyDetail' },
+            { title: '最新消息', link: '#IvyRelativeSwiperContainer', offset: '#scroll-spy-IvyDetail' }
         ]}
     />
-    <div data-bs-spy="scroll" data-bs-root-margin="0px 0px 0px" data-bs-target={`#${navId}`} data-bs-smooth-scroll="true">
+    <div>
         <Info />
         <Article />
         <Relative />
@@ -43,3 +43,13 @@ const navId = `scroll-spy-${Math.random().toString(36).substr(2, 9)}`;
 <Follower />
 <Script />
 <Video />
+
+<script>
+    /** Modules */
+    import { useScrollSpy } from '@js/helpers/hook/useScrollSpy';
+    /** Events */
+    window.addEventListener('DOMContentLoaded', () => {
+        const { spy } = useScrollSpy({ includeHeaderHeight: true });
+        spy();
+    });
+</script>
