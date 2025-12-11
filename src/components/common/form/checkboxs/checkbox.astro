@@ -109,7 +109,7 @@ const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
         />
     </div>
     {/** 標籤文字 - 支援插槽內容或 label 屬性 */}
-    <label class="form-check-label" for={inputId}>
+    <label class="form-check-label" for={inputId} data-disabled={disabled}>
         <slot>{label}</slot>
     </label>
 </div>

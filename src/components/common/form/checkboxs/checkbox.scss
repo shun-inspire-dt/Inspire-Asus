@@ -105,6 +105,7 @@
         &:disabled {
             background-color: var(--checkbox-disabled-background-color);
             border-color: var(--checkbox-disabled-border-color);
+            cursor: default;
 
             &:checked {
                 --checkbox-disabled-background-color: var(--color-gray-300, #b3b3b3);
@@ -142,6 +143,10 @@
         letter-spacing: var(--checkbox-letter-spacing);
         gap: var(--checkbox-label-gap);
 
+        &[data-disabled] {
+            color: var(--checkbox-disabled-color);
+            cursor: default;
+        }
         a {
             color: var(--color-blue-500, #006ce1);
             text-decoration: underline;
