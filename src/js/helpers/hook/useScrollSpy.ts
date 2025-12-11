@@ -77,7 +77,20 @@ export const useScrollSpy = (options?: options) => {
                     
                     // 取得目標元素的 selector（優先使用 href，其次 data-target）
                     const target = (button.getAttribute('href') as string) || (button.getAttribute('data-target') as string);
+                    
+                    // 防呆：檢查是否有有效的 target selector
+                    if (!target) {
+                        console.warn('ScrollSpy: 按鈕缺少 href 或 data-target 屬性', button);
+                        return;
+                    }
+                    
                     const targetElement = document.querySelector(target) as HTMLElement;
+                    
+                    // 防呆：檢查目標元素是否存在
+                    if (!targetElement) {
+                        console.warn(`ScrollSpy: 找不到目標元素 "${target}"`, button);
+                        return;
+                    }
                     
                     // 取得按鈕的 offset 設定
                     const offsetString = button.getAttribute('data-offset') as string;
@@ -114,6 +127,12 @@ export const useScrollSpy = (options?: options) => {
 
             // 確定目標元素（優先使用參數，其次使用 options 中的預設元素）
             const element = (target as HTMLElement) || (Element as HTMLElement);
+            
+            // 防呆：檢查是否有有效的目標元素
+            if (!element) {
+                console.warn('ScrollSpy: 沒有指定有效的目標元素');
+                return;
+            }
             
             // 計算元素在文檔中的位置
             const top =
