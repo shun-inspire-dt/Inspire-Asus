@@ -385,6 +385,16 @@ const initializeCustomSelect = (container: HTMLElement): void => {
         container.appendChild(selectItemsContainer);
     }
 
+    // 設定初始選中狀態的 .same-as-selected 類別
+    const allOptions = selectItemsContainer.querySelectorAll('*') as NodeListOf<HTMLElement>;
+    allOptions.forEach((option, index) => {
+        option.classList.remove(CSS_CLASSES.SAME_AS_SELECTED);
+        // index + 1 因為自定義選項從第二個開始（跳過 placeholder）
+        if (index + 1 === nativeSelect.selectedIndex) {
+            option.classList.add(CSS_CLASSES.SAME_AS_SELECTED);
+        }
+    });
+
     // 添加事件監聽器
     addSelectDisplayClickEvent(selectDisplay, container);
     addNativeSelectKeyboardEvents(nativeSelect, container);
