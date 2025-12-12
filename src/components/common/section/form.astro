@@ -29,12 +29,13 @@ const normalStyle = '';
 ---
 
 <div
+    id="section-form-container"
     class:list={[
-        ':uno-section-form-container: xl:sect-p-lg md:sect-p-md sect-p-sm',
+        ':uno-section-form-container: flex flex-col items-center justify-center xl:sect-p-lg md:sect-p-md sect-p-sm min-h-[calc(100vh-var(--footer-height)-var(--header-height))]',
         { ':uno-section-form-container-BG: bg-gray-50': type === 1 },
         { ':uno-section-form-container-BG-Image: bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat': type === 2 }
     ]}
-    style={{ ...(type === 2 ? { '--bg-image': `url("/assets/images/pages/feature-BG-2.png")` } : {}), ...style }}
+    style={{ ...(type === 2 ? { '--bg-image': `url("/assets/images/pages/feature-BG-2.png")` } : {}), ...style, '--footer-height': '4.1875rem' }}
 >
     <form
         id={IDName ? `${IDName}Form` : undefined}
@@ -70,3 +71,13 @@ const normalStyle = '';
         </div>
     </form>
 </div>
+
+<script>
+    const footerHeight = document.querySelector('footer')?.offsetHeight || 0;
+    const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+    const sectionFormContainer = document.getElementById('section-form-container') as HTMLElement;
+    if (sectionFormContainer) {
+        sectionFormContainer.style.setProperty('--footer-height', `${footerHeight}px`);
+        sectionFormContainer.style.setProperty('--header-height', `${headerHeight}px`);
+    }
+</script>
