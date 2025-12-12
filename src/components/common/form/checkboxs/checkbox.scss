@@ -157,6 +157,10 @@
                 color: var(--color-blue-600, #006ce1);
             }
         }
+        b,
+        strong {
+            font-weight: 500;
+        }
     }
 }
 
@@ -169,12 +173,19 @@
     --checkbox-border-radius: 50%; /* 圓角半徑 (通常設為 50% 或較大值) */
 }
 
-.form-check.indeterminate-check {
+/** 不確定狀態變體 */
+.form-check[data-indeterminate] {
     --checkbox-checked-background-color: var(--color-white, #ffffff); /** 選中狀態背景色 */
     --checkbox-checked-border-color: var(--color-gray-500, #818181); /** 選中狀態邊框色 */
     --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="8" height="8" rx="2" fill="%23006CE1"/></svg>'); /** 選中狀態背景圖片 */
 
-    .form-check-input {
+    /** 初始狀態就是藍方塊圖案顯示 */
+    .form-check-input,
+    .form-radio-input {
+        background-color: var(--checkbox-checked-background-color);
+        border-color: var(--checkbox-checked-border-color);
+        background-image: var(--checkbox-checked-background-image);
+
         /* 禁用狀態樣式 */
         &:disabled {
             &:checked {
@@ -198,7 +209,7 @@
         & + .form-check-feedback-text.error-text {
             display: flex;
         }
-        & + .form-check-feedback-text:not(.error-text) {
+        &[data-show-error-info-only='true'] + .form-check-feedback-text:not(.error-text) {
             display: none;
         }
     }
@@ -207,20 +218,29 @@
 /* 驗證訊息文字樣式（validationMessage） */
 .form-check-feedback-text {
     width: 100%;
-    display: flex;
+    display: none;
     align-items: baseline;
     justify-content: flex-start;
     gap: 0.5rem;
+    margin-top: 0.5rem;
     color: var(--color-gray-600, #666666);
     font-size: var(--fs-14);
     font-weight: 400;
-    font-family: var(--line-height-14-sh);
-    line-height: 0.16px;
-    letter-spacing: var(--font-family-roboto);
+    font-family: var(--font-family-roboto);
+    line-height: var(--line-height-14-sh);
+    letter-spacing: var(--letter-spacing);
 
     &.error-text {
         display: none;
         color: var(--color-red-300); /* 錯誤提示文字顏色 */
+
+        &:not(:empty, .has-error-icon) {
+            background-image: url('data:image/svg+xml,<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="6.5" fill="%23B42D18" stroke="%23B42D18"/><rect x="7.75" y="8" width="1.5" height="5.5" rx="0.75" transform="rotate(-180 7.75 8)" fill="white"/><rect x="8" y="11" width="2" height="2" rx="1" transform="rotate(-180 8 11)" fill="white"/></svg>');
+            background-repeat: no-repeat;
+            background-position: 0.0625rem 0.0625rem;
+            background-size: 0.875rem;
+            padding-left: 1.5rem;
+        }
 
         .notification-icon {
             --color: var(--color-red-300);
