@@ -2,6 +2,18 @@
 /** Common Component */
 import ErrorIcon from '@components/common/icons/notification/notificationIcon.astro';
 
+/**
+ * 錯誤提示文字組件
+ *
+ * @interface Props
+ * @property {string} [IDName] - 群組容器的唯一識別碼
+ * @property {any} [className] - 表單群組的額外 CSS 類別
+ * @property {attribute} [attribute] - 額外的 HTML 屬性
+ * @property {Object} [style] - 群組容器的自定義 CSS 樣式
+ * @property {boolean} [error=false] - 是否顯示錯誤狀態
+ * @property {boolean} [Tag='span'] - 使用的 HTML 標籤
+ * @property {boolean} [showSolidErrorIcon=false] - 是否以 solid-error-icon 的方式顯示錯誤圖示在 html 中
+ */
 export interface Props {
     IDName?: string;
     className?: any;
@@ -9,12 +21,21 @@ export interface Props {
     style?: { [key: string]: string };
     error?: boolean;
     Tag?: 'div' | 'span';
+    showSolidErrorIcon?: boolean;
 }
 
-const { IDName, className, style, attribute = {}, error = false, Tag = 'span' } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, error, Tag = 'span', showSolidErrorIcon = false } = Astro.props as Props;
 ---
 
 <Tag id={IDName} class:list={[className, 'form-check-feedback-text', { 'error-text': error }]} style={style} {...attribute}>
-    {error && <ErrorIcon />}
-    <span><slot /></span>
+    {
+        showSolidErrorIcon ? 
+        (
+            <ErrorIcon />
+            <span><slot /></span>
+        )
+        : (
+            <Fragment><slot /></Fragment>
+        )
+    }
 </Tag>
