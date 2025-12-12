@@ -43,6 +43,7 @@
     }
 
     @if $focus-outline-color != null {
-        --btn-focus-outline: 2px solid #{$focus-outline-color};
+        --btn-focus-outline-width: 0.125rem;
+        --btn-focus-outline-color: #{$focus-outline-color};
     }
 }
