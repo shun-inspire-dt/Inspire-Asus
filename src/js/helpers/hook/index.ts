@@ -6,6 +6,7 @@ import { useToggleBlocks } from '@js/helpers/hook/useToggleBlocks';
 import { useScrollSpy } from '@js/helpers/hook/useScrollSpy';
 import { useWebpDetect } from '@js/helpers/hook/useWebpDetect';
 import { useClassWatcher } from '@js/helpers/hook/useClassWatcher';
+import { useCheckboxGroup } from '@js/helpers/hook/useCheckboxGroup';
 
 export {
     useNumber,
@@ -16,5 +17,6 @@ export {
     useAddress,
     useAddressByCustomSelect,
     useToggleBlocks,
-    useClassWatcher
+    useClassWatcher,
+    useCheckboxGroup
 };

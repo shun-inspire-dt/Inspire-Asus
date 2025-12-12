@@ -29,29 +29,20 @@ const TopId = IDName || `main-checkbox-${Math.random().toString(36).substr(2, 9)
 >
     {
         showTop && (
-            <Checkbox id={TopId} title={'Main Term'} indeterminate={indeterminate} attribute={{ 'data-checkbox-main': true }}>
+            <Checkbox id={TopId} title={'Main Term'} attribute={{ 'data-checkbox-main': true }}>
                 <slot name="title" />
             </Checkbox>
         )
     }
-    <div class=":uno-checkbox-group-inner: w-full flex flex-col gap-0.75rem">
+    <div class=":uno-checkbox-group-inner: w-full flex flex-col [&>.form-check:not(:first-child)]:mt-0.75rem">
         <slot />
     </div>
 </div>
 
 <script>
-    ['checkbox', 'radio'].forEach((type) => {
-        const mainCheckbox = document.querySelector(`input[type=${type}][data-checkbox-main]`) as HTMLInputElement;
-        mainCheckbox?.addEventListener('change', () => {
-            ['checkbox', 'radio'].forEach((type) => {
-                const childrens = mainCheckbox
-                    .closest('[data-checkbox-group]')
-                    ?.querySelectorAll(`input[type=${type}]:not([data-checkbox-main])`) as NodeListOf<HTMLInputElement>;
-                childrens.forEach((child) => {
-                    child.checked = mainCheckbox.checked;
-                    child.dispatchEvent(new Event('change'));
-                });
-            });
-        });
-    });
+    /** Modules */
+    import { useCheckboxGroup } from '@js/helpers/hook/useCheckboxGroup';
+    
+    /** Events */
+    useCheckboxGroup();
 </script>
