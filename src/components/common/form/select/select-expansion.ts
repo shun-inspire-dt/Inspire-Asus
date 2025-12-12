@@ -52,47 +52,85 @@ interface SelectExpansionAPI {
         // 標記已初始化，避免重複綁定
         select.dataset.selectInitialized = 'true';
 
+        function handleGlobalEscape(e: KeyboardEvent): void {
+            if (e.key !== 'Escape') return;
+            setExpanded(false);
+        }
+
+        function attachGlobalEscapeListener(): void {
+            window.addEventListener('keydown', handleGlobalEscape, true);
+            window.addEventListener('keyup', handleGlobalEscape, true);
+        }
+
+        function detachGlobalEscapeListener(): void {
+            window.removeEventListener('keydown', handleGlobalEscape, true);
+            window.removeEventListener('keyup', handleGlobalEscape, true);
+        }
+
+        function setExpanded(expanded: boolean): void {
+            if (expanded) {
+                if (!select.classList.contains(EXPANSION_CSS_CLASSES.EXPANDED)) {
+                    select.classList.add(EXPANSION_CSS_CLASSES.EXPANDED);
+                    attachGlobalEscapeListener();
+
+                    // 觸發自定義事件
+                    const event = new CustomEvent<ExpansionEventDetail>('selectExpanded', {
+                        detail: { selectId: select.id, expanded: true },
+                        bubbles: true
+                    });
+                    select.dispatchEvent(event);
+                }
+                return;
+            }
+
+            if (select.classList.contains(EXPANSION_CSS_CLASSES.EXPANDED)) {
+                select.classList.remove(EXPANSION_CSS_CLASSES.EXPANDED);
+                detachGlobalEscapeListener();
+
+                // 觸發自定義事件
+                const event = new CustomEvent<ExpansionEventDetail>('selectCollapsed', {
+                    detail: { selectId: select.id, expanded: false },
+                    bubbles: true
+                });
+                select.dispatchEvent(event);
+            }
+        }
+
         /**
          * 處理 select 獲得焦點時的展開狀態
          */
         function handleFocus(): void {
-            select.classList.add(EXPANSION_CSS_CLASSES.EXPANDED);
             select.classList.add(EXPANSION_CSS_CLASSES.FOCUSED);
-
-            // 觸發自定義事件
-            const event = new CustomEvent<ExpansionEventDetail>('selectExpanded', {
-                detail: { selectId: select.id, expanded: true },
-                bubbles: true
-            });
-            select.dispatchEvent(event);
         }
 
         /**
          * 處理 select 失去焦點時的收合狀態
          */
         function handleBlur(): void {
-            select.classList.remove(EXPANSION_CSS_CLASSES.EXPANDED);
             select.classList.remove(EXPANSION_CSS_CLASSES.FOCUSED);
 
-            // 觸發自定義事件
-            const event = new CustomEvent<ExpansionEventDetail>('selectCollapsed', {
-                detail: { selectId: select.id, expanded: false },
-                bubbles: true
-            });
-            select.dispatchEvent(event);
+            setExpanded(false);
+        }
+
+        function handlePointerDown(): void {
+            setExpanded(true);
         }
 
         /**
          * 處理鍵盤事件（Space 或 Enter 鍵展開）
          */
         function handleKeydown(e: KeyboardEvent): void {
-            if (e.key === ' ' || e.key === 'Enter') {
-                if (!select.classList.contains(EXPANSION_CSS_CLASSES.EXPANDED)) {
-                    select.classList.add(EXPANSION_CSS_CLASSES.EXPANDED);
-                }
-            }
+            const shouldExpand =
+                e.key === ' ' ||
+                e.key === 'Enter' ||
+                e.key === 'F4' ||
+                e.key === 'ArrowDown' ||
+                e.key === 'ArrowUp';
+
+            if (shouldExpand) setExpanded(true);
 
             if (e.key === 'Escape') {
+                setExpanded(false);
                 select.blur();
             }
         }
@@ -100,12 +138,13 @@ interface SelectExpansionAPI {
         // 綁定事件
         select.addEventListener('focus', handleFocus);
         select.addEventListener('blur', handleBlur);
+        select.addEventListener('pointerdown', handlePointerDown);
         select.addEventListener('keydown', handleKeydown);
 
         // 處理 change 事件（選擇完成後收合）
         select.addEventListener('change', () => {
             setTimeout(() => {
-                select.classList.remove(EXPANSION_CSS_CLASSES.EXPANDED);
+                setExpanded(false);
             }, 100);
         });
     }
