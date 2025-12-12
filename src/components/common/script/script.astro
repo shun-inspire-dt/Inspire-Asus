@@ -5,7 +5,7 @@
          */
         const I18N_MESSAGES = {
             'zh-TW': {
-                required: '填寫這個欄位',
+                required: '此欄位為必填',
                 pattern: '請符合要求格式',
                 tel: '請輸入正確的電話號碼',
                 phone: '請輸入正確的電話號碼',
@@ -16,15 +16,17 @@
                         return `請輸入「@」後面的部分。「${value}」不是完整值。`;
                     }
                 },
-                minLength: (minLength, currentLength) => `請將這段文字加長到 ${minLength} 個字元以上 (目前已有 ${currentLength} 個字元數)`,
-                maxLength: (maxLength, currentLength) => `請將這段文字縮短到 ${maxLength} 個字元以下 (目前已有 ${currentLength} 個字元數)`,
+                minLength: (minLength, currentLength) =>
+                    `請將這段文字加長到 ${minLength} 個字元以上 (目前已有 ${currentLength} 個字元數)`,
+                maxLength: (maxLength, currentLength) =>
+                    `請將這段文字縮短到 ${maxLength} 個字元以下 (目前已有 ${currentLength} 個字元數)`,
                 min: (min) => `值必須大於或等於 ${min}。`,
                 max: (max) => `值必須小於或等於 ${max}。`,
                 regex: '',
                 passwordConfirm: '與密碼不符合'
             },
             'en-US': {
-                required: 'Please fill out this field',
+                required: 'This field is required',
                 pattern: 'Please match the required format',
                 tel: 'Please enter a valid phone number',
                 phone: 'Please enter a valid phone number',
@@ -35,8 +37,10 @@
                         return `Please enter the part following '@'. '${value}' is not a complete value.`;
                     }
                 },
-                minLength: (minLength, currentLength) => `Please lengthen this text to ${minLength} characters or more (you are currently using ${currentLength} characters)`,
-                maxLength: (maxLength, currentLength) => `Please shorten this text to ${maxLength} characters or less (you are currently using ${currentLength} characters)`,
+                minLength: (minLength, currentLength) =>
+                    `Please lengthen this text to ${minLength} characters or more (you are currently using ${currentLength} characters)`,
+                maxLength: (maxLength, currentLength) =>
+                    `Please shorten this text to ${maxLength} characters or less (you are currently using ${currentLength} characters)`,
                 min: (min) => `Value must be greater than or equal to ${min}.`,
                 max: (max) => `Value must be less than or equal to ${max}.`,
                 regex: '',
@@ -54,8 +58,10 @@
                         return `「@」の後の部分を入力してください。「${value}」は完全な値ではありません。`;
                     }
                 },
-                minLength: (minLength, currentLength) => `このテキストを${minLength}文字以上にしてください（現在${currentLength}文字です）`,
-                maxLength: (maxLength, currentLength) => `このテキストを${maxLength}文字以下にしてください（現在${currentLength}文字です）`,
+                minLength: (minLength, currentLength) =>
+                    `このテキストを${minLength}文字以上にしてください（現在${currentLength}文字です）`,
+                maxLength: (maxLength, currentLength) =>
+                    `このテキストを${maxLength}文字以下にしてください（現在${currentLength}文字です）`,
                 min: (min) => `値は${min}以上である必要があります。`,
                 max: (max) => `値は${max}以下である必要があります。`,
                 regex: '',
@@ -75,18 +81,62 @@
                     reportValidity: true, // 預設啟用原生驗證提示
                     ...options
                 };
+                this.cacheOriginFeedbackText();
                 this.setupEventListeners();
+            }
+
+            /**
+             * 是否啟用即時驗證
+             * 當表單未通過 checkValidity 時，input/select 的變更會觸發驗證
+             */
+            isLiveValidateEnabled() {
+                const value = this.form.dataset.liveValidate;
+                // 只要有 data-live-validate，或值為 'true' 都視為啟用
+                return value === '' || value === 'true';
+            }
+
+            /**
+             * 快取頁面上預設的錯誤文案
+             * 避免 resetErrorMessages 將「原本就存在的提示文字」清空
+             */
+            cacheOriginFeedbackText() {
+                const errorTextEls = this.form.querySelectorAll('.error-text');
+                errorTextEls.forEach((errorTextEl) => {
+                    if (errorTextEl.hasAttribute('data-valid-origin-feedback')) return;
+                    const originText = (errorTextEl.textContent || '').trim();
+                    if (originText) {
+                        errorTextEl.setAttribute('data-valid-origin-feedback', originText);
+                    }
+                });
             }
 
             /**
              * 重置所有錯誤訊息
              */
             resetErrorMessages() {
-                const errorTextEls = this.form.querySelectorAll('.error-text > span[data-feedback]');
+                const errorTextEls = this.form.querySelectorAll('.error-text');
                 errorTextEls.forEach((errorTextEl) => {
-                    const feedback = errorTextEl.getAttribute('data-feedback');
-                    if (feedback) errorTextEl.textContent = feedback;
+                    const originFeedback = errorTextEl.getAttribute('data-valid-origin-feedback');
+                    errorTextEl.textContent = originFeedback || '';
                 });
+            }
+
+            /**
+             * 執行表單的所有驗證流程
+             * - 先重置錯誤訊息（依 data-valid-origin-feedback 還原或清空）
+             * - 依序執行原生驗證、checkbox/radio 驗證、客製化驗證與 wrapper 狀態更新
+             */
+            runAllValidations() {
+                /** 重置錯誤訊息 */
+                this.resetErrorMessages();
+                /** 執行原生驗證 */
+                this.handleNativeValidation();
+                /** 執行 checkbox/radio 驗證 */
+                this.handleCheckboxValidation();
+                /** 執行客製化驗證 */
+                this.handleCustomValidation();
+                /** 更新 wrapper 狀態 */
+                this.handleWrapperValidation();
             }
 
             /**
@@ -95,37 +145,43 @@
             getErrorElement(input, isSpecialInput = false) {
                 if (isSpecialInput) {
                     const parent = input.closest('.form-check, .password-input-wrapper');
-                    return parent?.closest('.form-input-group')?.querySelectorAll('.error-text > span')?.[1] ||
-                           parent?.parentElement?.querySelectorAll('.form-check-feedback-text.error-text > span')?.[1];
+                    return (() => {
+                        let errorTextEl = parent?.closest('.form-input-group')?.querySelector('.error-text');
+                        if (errorTextEl) return errorTextEl || null;
+                        else {
+                            const nextSibling = parent?.nextElementSibling;
+                            if (nextSibling?.matches('.form-check-feedback-text.error-text')) return nextSibling;
+                            else return parent?.parentElement?.querySelector('.form-check-feedback-text.error-text') || null;
+                        }
+                    })();
                 }
-                return input?.closest('.form-input-group')?.querySelectorAll('.error-text > span')?.[1];
+                return input?.closest('.form-input-group')?.querySelector('.error-text') || null;
+            }
+
+            /**
+             * 判斷元素的文字內容是否為空
+             * 供錯誤訊息更新流程共用，避免重複的 textContent/trim 判斷
+             */
+            isEmptyTextContent(element) {
+                const text = element?.textContent;
+                return !text || text.trim() === '';
             }
 
             /**
              * 更新錯誤訊息
+             * 僅在錯誤訊息元素原本為空時，才寫入 feedback
+             * 若錯誤訊息元素本來就有文案，則永遠不覆蓋（保留設計稿/頁面原始文案）
              */
-            updateErrorMessage(errorTextEl, feedback, isRequired = false) {
+            updateErrorMessage(errorTextEl, feedback) {
                 if (!errorTextEl) return;
-                
-                // 如果是 required 驗證
-                if (isRequired) {
-                    // 如果 errorTextEl 沒有 textContent，才使用預設訊息取代
-                    if (!errorTextEl.textContent || errorTextEl.textContent.trim() === '') {
-                        errorTextEl.textContent = feedback || this.messages.required;
-                    }
-                    // 如果有 textContent，保持原始內容不變
-                    return;
-                }
-                
-                // 其他驗證規則的處理
+
+                // 如果頁面本來就有錯誤文案，永遠不覆蓋
+                if (!this.isEmptyTextContent(errorTextEl)) return;
+
+                // 沒有 feedback 直接略過
                 if (!feedback) return;
-                
-                if (feedback !== errorTextEl.textContent) {
-                    if (!errorTextEl.getAttribute('data-feedback')) {
-                        errorTextEl.setAttribute('data-feedback', errorTextEl.textContent);
-                    }
-                    errorTextEl.textContent = feedback;
-                }
+
+                errorTextEl.textContent = feedback;
             }
 
             /**
@@ -133,15 +189,15 @@
              */
             setValidationState(input, isInvalid, feedback = '', element = null) {
                 const targetElement = element || input;
-                
+
                 if (!this.form.classList.contains('was-validated')) {
                     this.form.classList.toggle('was-validated', isInvalid);
                 }
-                
+
                 if (!targetElement.classList.contains('is-invalid')) {
                     targetElement.classList.toggle('is-invalid', !isInvalid);
                 }
-                
+
                 if (input.setCustomValidity) {
                     input.setCustomValidity(isInvalid ? feedback : '');
                 }
@@ -150,12 +206,12 @@
             /**
              * 通用驗證處理器
              */
-            handleValidation(input, isInvalid, feedback, element = null, isRequired = false) {
+            handleValidation(input, isInvalid, feedback, element = null) {
                 this.setValidationState(input, isInvalid, feedback, element);
-                
+
                 if (isInvalid) {
                     const errorTextEl = this.getErrorElement(input, !!element);
-                    this.updateErrorMessage(errorTextEl, feedback, isRequired);
+                    this.updateErrorMessage(errorTextEl, feedback);
                 }
             }
 
@@ -166,11 +222,15 @@
                 const inputs = this.form.querySelectorAll(selector);
                 inputs.forEach((input) => {
                     if (input.value) {
-                        input.addEventListener('invalid', () => {
-                            const feedback = feedbackGenerator(input);
-                            const errorTextEl = this.getErrorElement(input);
-                            this.updateErrorMessage(errorTextEl, feedback);
-                        }, { once: true });
+                        input.addEventListener(
+                            'invalid',
+                            () => {
+                                const feedback = feedbackGenerator(input);
+                                const errorTextEl = this.getErrorElement(input);
+                                this.updateErrorMessage(errorTextEl, feedback);
+                            },
+                            { once: true }
+                        );
                     }
                 });
             }
@@ -179,12 +239,15 @@
              * 處理原生 HTML5 驗證
              */
             handleNativeValidation() {
-                const nativeInputs = this.form.querySelectorAll('input[required]:not([data-valid])');
+                const nativeInputs = this.form.querySelectorAll(
+                    'input[required]:not([data-valid]):not([type="checkbox"], [type="radio"])',
+                    'select[required]:not([data-valid])'
+                );
                 const rules = this.getValidationRules();
-                
+
                 nativeInputs.forEach((input) => {
                     const value = input.value;
-                    
+
                     // 定義驗證順序（優先順序從高到低）
                     const validationOrder = [
                         {
@@ -223,7 +286,7 @@
                             getDefaultMessage: () => rules.pattern.getDefaultMessage()
                         }
                     ];
-                    
+
                     // 按順序檢查驗證規則，只處理第一個失敗的規則
                     for (let i = 0; i < validationOrder.length; i++) {
                         const validation = validationOrder[i];
@@ -234,7 +297,7 @@
                             return; // 找到第一個失敗的驗證就停止
                         }
                     }
-                    
+
                     // 如果所有驗證都通過，清除錯誤狀態
                     this.handleValidation(input, false, '');
                 });
@@ -245,10 +308,12 @@
              * 針對 .form-check 和 .password-input-wrapper 底下的 input
              */
             handleWrapperValidation() {
-                const wrapperInputs = this.form.querySelectorAll('.form-check input, .password-input-wrapper input');
+                const wrapperInputs = this.form.querySelectorAll(
+                    '.form-check input[required], .password-input-wrapper input[required]'
+                );
                 wrapperInputs.forEach((input) => {
                     const isInvalid = !input.checkValidity();
-                    
+
                     // 找到最近的包裝容器
                     const wrapper = input.closest('.form-check, .password-input-wrapper');
                     if (wrapper) {
@@ -261,14 +326,16 @@
              * 處理複選框驗證
              */
             handleCheckboxValidation() {
-                const checkboxInputs = this.form.querySelectorAll('input.form-check-input[required]');
+                const checkboxInputs = this.form.querySelectorAll(
+                    'input[type="checkbox"][required], input[type="radio"][required]'
+                );
                 checkboxInputs.forEach((input) => {
-                    const { valid = '', validFeedback: feedback = '' } = input.dataset;
+                    const { validFeedback: feedback = '' } = input.dataset;
                     const isInvalid = !input.checkValidity();
-                    
-                    if (valid && isInvalid) {
+
+                    if (isInvalid) {
                         const errorTextEl = this.getErrorElement(input, true);
-                        this.updateErrorMessage(errorTextEl, feedback);
+                        this.updateErrorMessage(errorTextEl, errorTextEl.textContent || feedback || this.messages.required);
                     }
                 });
             }
@@ -296,33 +363,32 @@
                     },
                     email: {
                         validate: (value) => value && !/^\S+@\S+\.\S+$/.test(value),
-                        getDefaultMessage: (input) => typeof this.messages.email === 'function' 
-                            ? this.messages.email(input.value) 
-                            : this.messages.email
+                        getDefaultMessage: (input) =>
+                            typeof this.messages.email === 'function' ? this.messages.email(input.value) : this.messages.email
                     },
                     minLength: {
                         validate: (value, input) => value && value.length < parseInt(input.minLength),
-                        getDefaultMessage: (input) => typeof this.messages.minLength === 'function'
-                            ? this.messages.minLength(input.minLength, input.value.length)
-                            : this.messages.minLength
+                        getDefaultMessage: (input) =>
+                            typeof this.messages.minLength === 'function'
+                                ? this.messages.minLength(input.minLength, input.value.length)
+                                : this.messages.minLength
                     },
                     maxLength: {
                         validate: (value, input) => value && value.length > parseInt(input.maxLength),
-                        getDefaultMessage: (input) => typeof this.messages.maxLength === 'function'
-                            ? this.messages.maxLength(input.maxLength, input.value.length)
-                            : this.messages.maxLength
+                        getDefaultMessage: (input) =>
+                            typeof this.messages.maxLength === 'function'
+                                ? this.messages.maxLength(input.maxLength, input.value.length)
+                                : this.messages.maxLength
                     },
                     min: {
                         validate: (value, input) => value && parseFloat(value) < parseFloat(input.min),
-                        getDefaultMessage: (input) => typeof this.messages.min === 'function'
-                            ? this.messages.min(input.min)
-                            : this.messages.min
+                        getDefaultMessage: (input) =>
+                            typeof this.messages.min === 'function' ? this.messages.min(input.min) : this.messages.min
                     },
                     max: {
                         validate: (value, input) => value && parseFloat(value) > parseFloat(input.max),
-                        getDefaultMessage: (input) => typeof this.messages.max === 'function'
-                            ? this.messages.max(input.max)
-                            : this.messages.max
+                        getDefaultMessage: (input) =>
+                            typeof this.messages.max === 'function' ? this.messages.max(input.max) : this.messages.max
                     },
                     regex: {
                         validate: (value, input) => {
@@ -348,7 +414,10 @@
              * 處理客製化驗證
              */
             handleCustomValidation() {
-                const validInputs = this.form.querySelectorAll('input[data-valid][required]');
+                const validInputs = this.form.querySelectorAll(
+                    'input[data-valid][required]:not([type="checkbox"], [type="radio"])',
+                    'select[data-valid][required]'
+                );
                 const rules = this.getValidationRules();
 
                 validInputs.forEach((input) => {
@@ -358,12 +427,12 @@
                     const value = input.value;
 
                     // 處理 required 驗證（優先處理）
-                    if (valids.includes('required')) {
+                    if (valids.includes('required') || input.required) {
                         const validIndex = valids.indexOf('required');
                         const rule = rules.required;
                         const isInvalid = rule.validate(value);
                         const feedback = feedbacks[validIndex] || rule.getDefaultMessage();
-                        
+
                         this.handleValidation(input, isInvalid, feedback);
                         if (isInvalid) return; // 如果 required 驗證失敗，不繼續其他驗證
                     }
@@ -374,14 +443,14 @@
                     // 處理其他驗證規則
                     for (const validType of valids) {
                         if (validType === 'required') continue; // 已處理過
-                        
+
                         const rule = rules[validType];
                         if (!rule) continue;
 
                         const validIndex = valids.indexOf(validType);
                         const isInvalid = rule.validate(value, input);
                         const feedback = feedbacks[validIndex] || rule.getDefaultMessage(input);
-                        
+
                         // 特殊處理 confirm 驗證的元素選擇
                         if (validType === 'confirm') {
                             const parent = input.closest('.password-input-wrapper');
@@ -389,7 +458,7 @@
                         } else {
                             this.handleValidation(input, isInvalid, feedback);
                         }
-                        
+
                         if (isInvalid) return; // 一旦有驗證失敗，停止後續驗證
                     }
                 });
@@ -400,27 +469,38 @@
              */
             setupEventListeners() {
                 this.form.addEventListener('submit', (event) => {
-                    // 重置錯誤訊息
-                    this.resetErrorMessages();
-                    
-                    // 執行各種驗證
-                    this.handleNativeValidation();
-                    this.handleWrapperValidation();
-                    this.handleCheckboxValidation();
-                    this.handleCustomValidation();
+                    this.runAllValidations();
 
                     // 檢查表單是否有效
                     if (!this.form.checkValidity()) {
                         event.preventDefault();
                         event.stopPropagation();
                         this.form.classList.add('was-validated');
-                        
+
                         // 可選的原生驗證提示
                         if (this.options.reportValidity) {
                             this.form.reportValidity();
                         }
                     }
                 });
+
+                // 即時驗證：當表單仍無效時，input/select 的變更會立即觸發驗證
+                if (this.isLiveValidateEnabled()) {
+                    const handleLiveValidate = (event) => {
+                        const target = event.target;
+                        if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) return;
+
+                        // 只有在表單仍然無效時才觸發，避免過度干擾
+                        if (this.form.checkValidity()) return;
+
+                        this.runAllValidations();
+                    };
+
+                    // input：文字輸入即時
+                    this.form.addEventListener('input', handleLiveValidate);
+                    // change：select/checkbox/radio
+                    this.form.addEventListener('change', handleLiveValidate);
+                }
             }
         }
 
@@ -430,23 +510,20 @@
         function getCurrentLocale() {
             // 優先順序：data-locale 屬性 > html lang 屬性 > navigator.language > 預設值
             const htmlElement = document.documentElement;
-            return htmlElement.dataset.locale || 
-                   htmlElement.lang || 
-                   navigator.language || 
-                   'zh-TW';
+            return htmlElement.dataset.locale || htmlElement.lang || navigator.language || 'zh-TW';
         }
 
         // 初始化所有需要驗證的表單
         const needsValidationForms = document.querySelectorAll('form.needs-validation[novalidate]');
         const currentLocale = getCurrentLocale();
-        
+
         needsValidationForms.forEach((form) => {
             // 可以透過 form 的 data-locale 屬性覆蓋全域語系設定
             const formLocale = form.dataset.locale || currentLocale;
-            
+
             // 可以透過 form 的 data-report-validity 屬性控制是否顯示原生驗證提示
             const reportValidity = form.dataset.reportValidity !== 'false';
-            
+
             new FormValidator(form, formLocale, { reportValidity });
         });
     });

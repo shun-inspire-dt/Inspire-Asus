@@ -42,7 +42,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
         <LoginButton type="google" status="registed" />
     </div>
     <InputGroup label="帳號" block>
-        <Input type="email" value="service@gmail.com" inputmode="email" disabled />
+        <Input type="email" value="service@gmail.com" inputmode="email" readonly />
     </InputGroup>
     <InputGroup label="密碼" infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。" block>
         <PasswordInput />
@@ -53,10 +53,10 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
     <CheckboxGroup>
         <Fragment slot="title">我同意以下所有條款和隱私權政策</Fragment>
         <Checkbox>
-            我已閱讀並同意華碩MarketPlace "<ALink link="" showArrow={false} extend>隱私權條款</ALink>"
+            我已閱讀並同意華碩 <b>ASUS EXPERTHUB</b> "<ALink link="https://asusexperthub.com/service/terms" showArrow={false} extend>使用者條款</ALink>"
         </Checkbox>
         <Checkbox>
-            我已閱讀並同意華碩雲端 "<ALink link="" showArrow={false} extend>隱私權條款</ALink>"
+            我已閱讀並同意華碩 <b>ASUS EXPERTHUB</b> "<ALink link="https://asusexperthub.com/service/privacy" showArrow={false} extend>隱私權條款</ALink>"
         </Checkbox>
         <Checkbox>我願意收到華碩相關新聞、產品及服務更新之訊息或行銷廣告。(非必填)</Checkbox>
         <Checkbox>我願意收到華碩雲端的相關新聞、產品及服務更新之訊息或行銷廣告。(非必填)</Checkbox>
