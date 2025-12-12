@@ -71,7 +71,7 @@
     /* CSS 變數定義 - 驗證訊息文字（validationMessage） */
     --form-input-group-content-info-text-width: 100%; /* 驗證訊息寬度 */
     --form-input-group-content-info-text-display: flex; /* 驗證訊息顯示方式 */
-    --form-input-group-content-info-text-align-items: baseline; /* 驗證訊息垂直對齊 */
+    --form-input-group-content-info-text-align-items: center; /* 驗證訊息垂直對齊 */
     --form-input-group-content-info-text-justify-content: flex-start; /* 驗證訊息水平對齊 */
     --form-input-group-content-info-text-gap: 8px; /* 驗證訊息元素間距 */
     --form-input-group-content-info-text-color: var(--color-gray-600); /* 驗證訊息顏色 */
@@ -206,6 +206,14 @@
                 &.error-text {
                     --form-input-group-content-info-text-display: none;
                     --form-input-group-content-info-text-color: var(--color-red-300); /* 錯誤提示文字顏色 */
+
+                    &:not(:empty, .has-error-icon) {
+                        background-image: url('data:image/svg+xml,<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="7" cy="7" r="6.5" fill="%23B42D18" stroke="%23B42D18"/><rect x="7.75" y="8" width="1.5" height="5.5" rx="0.75" transform="rotate(-180 7.75 8)" fill="white"/><rect x="8" y="11" width="2" height="2" rx="1" transform="rotate(-180 8 11)" fill="white"/></svg>');
+                        background-repeat: no-repeat;
+                        background-position: 0.0625rem 0.0625rem;
+                        background-size: 0.875rem;
+                        padding-left: 1.5rem;
+                    }
 
                     .notification-icon {
                         --color: var(--color-red-300);
