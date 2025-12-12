@@ -4,7 +4,7 @@ import MySectionForm from '@components/common/section/form.astro';
 
 export interface Props {
     IDName?: string;
-    className?: className;
+    className?: any;
     attribute?: attribute;
     style?: { [key: string]: string };
     title?: string;
@@ -14,7 +14,7 @@ export interface Props {
 const { IDName, className, style, attribute = {}, title, action } = Astro.props as Props;
 ---
 
-<MySectionForm IDName={IDName} class:list={[className]} style={style} {...attribute} action={action}>
+<MySectionForm IDName={IDName} className={[className]} style={style} attribute={attribute} action={action}>
     {
         title && (
             <h2
