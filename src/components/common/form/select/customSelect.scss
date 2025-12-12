@@ -57,7 +57,7 @@
     /** 下拉選項容器 Focus outline 相關屬性 */
     --custom-select-items-outline-width: 0.125rem; /* 焦點外框寬度 */
     --custom-select-items-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
-    --custom-select-items-outline-offset: 0rem; /* 焦點外框偏移 *
+    --custom-select-items-outline-offset: -0.125rem; /* 焦點外框偏移 *
     
     /* === 選項容器 Transition Variables === */
     --custom-select-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
@@ -85,8 +85,7 @@
     --custom-select-item-outline-border-radius: 0.5rem; /* 焦點外框圓角 */
 
     /* === 單個選項 Transition Variables === */
-    --custom-select-item-transition-property: color, background-color, border-color, text-decoration-color, fill,
-        stroke; /* 連結過渡屬性 */
+    --custom-select-item-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; /* 連結過渡屬性 */
     --custom-select-item-transition-timing-function: ease-in-out; /* 連結過渡動畫 */
     --custom-select-item-transition-duration: 200ms; /* 連結過渡時間 */
 
@@ -232,7 +231,7 @@
             outline: none;
 
             &::after {
-                content: "";
+                content: '';
                 display: block;
                 height: calc(100% - 0.5rem);
                 position: absolute;
@@ -246,7 +245,7 @@
             }
 
             &.same-as-selected {
-                --custom-select-item-outline-color: var(--color-white, #FFFFFF); /* 焦點外框顏色 */
+                --custom-select-item-outline-color: var(--color-white, #ffffff); /* 焦點外框顏色 */
             }
         }
         /*
@@ -282,7 +281,7 @@
         --input-outline-width: 0rem; /* 焦點外框寬度 */
         --input-outline-color: transparent; /* 焦點外框顏色 */
         --input-outline-offset: 0rem; /* 焦點外框偏移 */
-        
+
         /* 將原生 select 隱藏但保持可訪問性 */
         position: absolute;
         top: 100%;
@@ -305,7 +304,7 @@
         }
 
         /** 焦點狀態 */
-        &:focus:focus-visible:not(:invalid) {
+        &:focus:focus-visible:not(:invalid):not(:disabled):not([data-read-only]) {
             & ~ .select-selected {
                 --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                 border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
@@ -317,13 +316,16 @@
         }
 
         /* 禁用狀態：影響相鄰的自定義選擇器樣式 */
-        &:disabled {
+        &:disabled,
+        &[data-read-only] {
             & ~ .select-selected {
                 color: var(--custom-select-disabled-color);
                 background-color: var(--custom-select-disabled-background-color);
                 border-color: var(--custom-select-disabled-border-color);
+                outline: none;
                 pointer-events: none;
                 user-select: none;
+                cursor: default; /* 一般游標 */
             }
         }
 
