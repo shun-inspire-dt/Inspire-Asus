@@ -1,3 +1,23 @@
+@mixin disabled {
+    background-color: var(--checkbox-disabled-background-color);
+    border-color: var(--checkbox-disabled-border-color);
+    pointer-events: none;
+    cursor: default;
+
+    &:checked {
+        --checkbox-disabled-background-color: var(--color-gray-300, #b3b3b3);
+    }
+    /* 禁用時標籤文字顏色變化 */
+    & + .form-check-label {
+        color: var(--checkbox-disabled-color);
+    }
+}
+@mixin labelDisabled {
+    color: var(--checkbox-disabled-color);
+    pointer-events: none;
+    cursor: default;
+}
+
 /**
  * 複選框組件樣式
  * 支援標準複選框、圓角複選框等變體
@@ -72,6 +92,16 @@
         --checkbox-flex-direction: row-reverse;
     }
 
+    &[data-disabled] {
+        .form-check-label {
+            @include labelDisabled;
+        }
+        .form-check-input,
+        .form-radio-input {
+            @include disabled;
+        }
+    }
+
     /* 複選框輸入元素樣式 (支援 checkbox 和 radio) */
     .form-check-input,
     .form-radio-input {
@@ -103,17 +133,7 @@
 
         /* 禁用狀態樣式 */
         &:disabled {
-            background-color: var(--checkbox-disabled-background-color);
-            border-color: var(--checkbox-disabled-border-color);
-            cursor: default;
-
-            &:checked {
-                --checkbox-disabled-background-color: var(--color-gray-300, #b3b3b3);
-            }
-            /* 禁用時標籤文字顏色變化 */
-            & + .form-check-label {
-                color: var(--checkbox-disabled-color);
-            }
+            @include disabled;
         }
 
         /** 錯誤狀態 */
@@ -144,8 +164,7 @@
         gap: var(--checkbox-label-gap);
 
         &[data-disabled] {
-            color: var(--checkbox-disabled-color);
-            cursor: default;
+            @include labelDisabled;
         }
         a {
             color: var(--color-blue-500, #006ce1);
