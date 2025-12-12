@@ -44,6 +44,7 @@ import './inputGroup.scss';
  * @property {boolean} [required=false] - 是否為必填欄位（顯示星號標記）
  * @property {string} [inputSize='xl'] - 輸入框尺寸
  * @property {boolean} [error=false] - 是否顯示錯誤狀態
+ * @property {boolean} [showSolidErrorIcon=false] - 是否以 solid-error-icon 的方式顯示錯誤圖示在 html 中
  */
 export interface Props {
     id?: string;
@@ -74,6 +75,7 @@ export interface Props {
     errorText?: string;
     subTitle?: string;
     error?: boolean;
+    showSolidErrorIcon?: boolean;
 }
 
 /**
@@ -110,7 +112,8 @@ const {
     infoText, // 小字說明文字
     subTitle, // 副標題文字
     errorText, // 錯誤提示文字
-    error // 是否已錯誤顯示並提示
+    error, // 是否已錯誤顯示並提示
+    showSolidErrorIcon // 是否以 inline-svg 的方式顯示錯誤圖示在 html 中
 } = Astro.props as Props;
 ---
 
@@ -183,12 +186,16 @@ const {
                 )
             }
         </slot>
-        <slot name="info-text">
+        <slot name="error-text">
             {
-                Boolean(error && errorText) && (
+                Boolean(error) && (
                     <span class="info-text error-text">
-                        <ErrorIcon />
-                        <span>{errorText}</span>
+                        {
+                            showSolidErrorIcon ? (
+                                <ErrorIcon />
+                                <span>{errorText}</span>
+                            ) : errorText
+                        }
                     </span>
                 )
             }
