@@ -70,7 +70,7 @@
     }
 
     /** 焦點狀態 */
-    &:focus:focus-visible:not(:invalid) {
+    &:focus:focus-visible:not(:invalid):not(:disabled):not([readonly]) {
         --input-border-width: 0.125rem; /* 焦點邊框寬度 */
         border-color: var(--input-focus-border-color); /* 焦點邊框顏色 */
 
@@ -80,11 +80,18 @@
     }
 
     /** 禁用狀態樣式 */
-    &:disabled {
+    &:disabled,
+    &[readonly] {
+        --input-outline-width: 0rem;
+        --input-outline-color: transparent;
+        --input-outline-offset: 0rem;
         color: var(--input-disabled-color); /* 禁用時的文字顏色 */
         background-color: var(--input-disabled-background-color); /* 禁用時的背景顏色 */
         border-color: var(--input-disabled-border-color); /* 禁用時的邊框顏色 */
-        cursor: not-allowed; /* 禁用游標 */
+        outline: none;
+        pointer-events: none;
+        user-select: none;
+        cursor: default; /* 一般游標 */
 
         &::placeholder {
             color: var(--input-disabled-color); /* 禁用時佔位符顏色 */
