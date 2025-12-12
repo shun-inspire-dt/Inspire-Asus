@@ -88,7 +88,11 @@ const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 {/** 複選框容器 - 支援標準和圓角樣式 */}
-<div class:list={['form-check', { 'rounded-check': rounded, 'indeterminate-check': indeterminate, 'form-check-right': alignment === 'right' }, className]} style={style}>
+<div
+    class:list={['form-check', { 'rounded-check': rounded, 'form-check-right': alignment === 'right' }, className]}
+    data-indeterminate={indeterminate}
+    style={style}
+>
     <div class="form-check-input-container">
         {/** 複選框輸入元素 */}
         <input
@@ -137,6 +141,36 @@ const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
                     checkbox.checked = true;
                 }
             });
+        });
+    });
+
+    /**
+     * 鍵盤操作支援
+     * 為所有 checkbox 和 radio 添加 Enter 鍵切換功能
+     */
+    const allInputs = document.querySelectorAll('input[type="checkbox"], input[type="radio"]') as NodeListOf<HTMLInputElement>;
+    [...allInputs].forEach((input) => {
+        input.addEventListener('keydown', (event: KeyboardEvent) => {
+            // 當按下 Enter 鍵時切換選中狀態
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                
+                // 檢查是否為唯讀狀態
+                if (input.hasAttribute('readonly') || input.onclick?.toString().includes('return false')) {
+                    return;
+                }
+                
+                // 檢查是否禁用
+                if (input.disabled) {
+                    return;
+                }
+                
+                // 切換選中狀態
+                input.checked = !input.checked;
+                
+                // 觸發 change 事件，確保其他相關邏輯正常執行
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+            }
         });
     });
 
