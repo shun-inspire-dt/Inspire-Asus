@@ -25,7 +25,8 @@
     --btn-focus-box-shadow: none; /* 聚焦狀態陰影 */
 
     /* Focus outline 相關屬性 */
-    --btn-focus-outline: 0.125rem solid var(--color-blue-500, #006ce1); /* 聚焦外框 */
+    --btn-focus-outline-width: 0.125rem; /* 聚焦外框寬度 */
+    --btn-focus-outline-color: var(--color-blue-500, #006ce1); /* 聚焦外框顏色 */
     --btn-focus-outline-offset: 0.125rem; /* 聚焦外框偏移 */
 
     /* 狀態顏色變數 */
@@ -93,13 +94,13 @@
     }
 
     /* 聚焦狀態樣式 - 鍵盤聚焦和手動聚焦 */
-    &:focus:focus-visible:not(.no-focus) {
+    &:focus:focus-visible:not(.no-focus, :disabled, .disabled, .read-only, [data-read-only]) {
         /* 手動添加的聚焦類別 */
         color: var(--btn-focus-color); /* 聚焦時文字顏色 */
         background-color: var(--btn-focus-bg); /* 聚焦時背景顏色 */
         border-color: var(--btn-focus-border-color); /* 聚焦時邊框顏色 */
         box-shadow: var(--btn-focus-box-shadow); /* 聚焦時陰影效果 */
-        outline: var(--btn-focus-outline); /* 聚焦時外框 */
+        outline: var(--btn-focus-outline-width) solid var(--btn-focus-outline-color); /* 聚焦時外框 */
         outline-offset: var(--btn-focus-outline-offset); /* 聚焦外框偏移 */
         /* 更新圖標顏色以匹配聚焦狀態 */
         .fa-Icons.customStyle {
@@ -138,6 +139,15 @@
             --fill: var(--btn-disabled-color); /* 圖標填充顏色 */
             --stroke: var(--btn-disabled-color); /* 圖標描邊顏色 */
         }
+    }
+
+    /** 只讀狀態樣式 */
+    &.read-only,
+    &[data-read-only] {
+        outline: none;
+        pointer-events: none;
+        user-select: none;
+        cursor: default; /* 一般游標 */
     }
 
     /* 按鈕尺寸變體 - 基於 Figma 設計規範 */
