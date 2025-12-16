@@ -15,11 +15,12 @@
 
     /* 項目尺寸變數 */
     --pagination-item-width: 2.25rem; /* 頁碼項目寬度 */
-    --pagination-item-height: 1.25rem; /* 頁碼項目高度 */
+    --pagination-item-height: 1.5rem; /* 頁碼項目高度 */
     --pagination-item-min-width: 2.25rem; /* 頁碼項目最小寬度 */
 
     /* 箭頭尺寸變數 */
-    --pagination-arrow-size: 16px; /* 箭頭圖示尺寸 */
+    --pagination-arrow-container-size: 1.5rem; /* 箭頭容器尺寸 */
+    --pagination-arrow-size: 1rem; /* 箭頭圖示尺寸 */
 
     /* 字體樣式變數 - Light 主題 */
     --pagination-font-family: var(--font-family-roboto); /* 字體家族 */
@@ -104,6 +105,16 @@
             font-weight: var(--pagination-font-weight-active); /* 500 (medium) */
             color: var(--color-gray-900); /* 活躍時文字顏色 - #181818 */
         }
+
+        &--disabled, &:disabled, &[data-disabled="true"] {
+            cursor: default;
+            opacity: 0.5;
+            pointer-events: none;
+
+            &[role='button']:focus:focus-visible {
+                outline: none;
+            }
+        }
     }
 
     /* 省略號樣式 */
@@ -128,24 +139,28 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: var(--pagination-arrow-size);
-        height: var(--pagination-arrow-size);
+        width: var(--pagination-arrow-container-size);
+        height: var(--pagination-arrow-container-size);
         cursor: pointer;
         transition: all 0.2s ease-in-out;
         text-decoration: none;
-
+        
         /* 禁用狀態 */
-        &--disabled {
+        &--disabled, &:disabled, &[data-disabled="true"] {
             cursor: default;
             opacity: 0.5;
             pointer-events: none;
+            
+            &[role='button']:focus:focus-visible {
+                outline: none;
+            }
         }
     }
-
+    
     /* 箭頭圖示樣式 */
     &__arrow-icon {
-        width: 100%;
-        height: 100%;
+        width: var(--pagination-arrow-size);
+        height: var(--pagination-arrow-size);
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
