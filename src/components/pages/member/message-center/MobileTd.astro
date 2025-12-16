@@ -13,13 +13,20 @@ export interface Props {
 const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
 ---
 
-<div id={IDName} class:list={[className, ":uno-message-center-card: space-y-0.5rem"]} style={style} {...attribute}>
-    <div class=":uno-message-center-card-head: flex items-baseline justify-between">
-        <strong class=":uno-message-center-card-head-title: font-roboto body-03-sh font-medium text-gray-900">{data[2].text}</strong>
-        <span class=":uno-message-center-card-head-text: font-roboto body-01-sh">{data[0].text}</span>
+<div
+    id={IDName}
+    class:list={[className, ':uno-message-center-card: space-y-0.5rem']}
+    style={style}
+    {...attribute}
+>
+    <div class=":uno-message-center-card-head: flex items-baseline justify-between group-data-[empty]:justify-center">
+        <strong class=":uno-message-center-card-head-title: font-roboto body-03-sh font-medium text-gray-900 group-data-[empty]:text-gray-700"
+            >{data?.[2]?.text}</strong
+        >
+        <span class=":uno-message-center-card-head-text: font-roboto body-01-sh group-data-[empty]:body-02-sh">{data?.[0]?.text}</span>
     </div>
-    <div class=":uno-message-center-card-body: flex flex-col gap-0.5rem">
-        <p class=":uno-message-center-card-body-text: font-roboto body-01-sh text-gray-900">{data[1].text}</p>
-        <p class=":uno-message-center-card-body-date: font-roboto body-01-sh text-gray-600">{data[3].text}</p>
+    <div class=":uno-message-center-card-body: flex flex-col gap-0.5rem group-data-[empty]:hidden">
+        <p class=":uno-message-center-card-body-text: font-roboto body-01-sh text-gray-900">{data?.[1]?.text}</p>
+        <p class=":uno-message-center-card-body-date: font-roboto body-01-sh text-gray-600">{data?.[3]?.text}</p>
     </div>
 </div>

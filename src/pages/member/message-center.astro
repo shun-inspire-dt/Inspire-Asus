@@ -1,6 +1,6 @@
 ---
 /** Data */
-import { data, field } from '@components/pages/member/message-center/data';
+import { data, emptyData, field } from '@components/pages/member/message-center/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -20,6 +20,7 @@ import '@scss/pages/member/message-center.scss';
     <Body activeTab="訊息中心">
         <Title title="訊息中心" showSort />
         <Table data={data} field={field} />
+        <Table data={emptyData} field={field} empty />
         <Sort type="bottom" />
     </Body>
 </Layouts>

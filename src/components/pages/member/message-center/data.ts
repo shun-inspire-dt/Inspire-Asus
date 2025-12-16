@@ -16,6 +16,12 @@ export const data: tableChidTRType[] = [
     items: x.flatMap((y) => ({ text: y, attribute: { style: { 'color': y === '未讀' ? 'var(--color-red-300, #B42D18)' : '' } } }))
 }));
 
+export const emptyData: tableChidTRType[] = [
+    ['目前沒有任何通知訊息'],
+].flatMap((x) => ({
+    items: x.flatMap((y) => ({ text: y, colspan: 4, attribute: { 'data-empty': true } }))
+}));
+
 const width = {
     狀態: '4.5rem',
     時間: '7.375rem',
