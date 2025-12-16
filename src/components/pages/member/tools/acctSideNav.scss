@@ -6,10 +6,10 @@
         @apply py-1.5rem rounded-2xl;
     }
     &[data-side='true'][data-width='true'] {
-        @apply padding-tablet;
+        @apply px-1.5rem;
     }
     &[data-indented='true'][data-width='true'] {
-        @apply px-6.25%;
+        @apply px-1rem sm:px-6.25%;
     }
 }
 

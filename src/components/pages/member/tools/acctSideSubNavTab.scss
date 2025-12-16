@@ -1,5 +1,5 @@
 .acct-side-sub-nav-tab {
-    @apply flex items-center justify-between min-h-40px pr-1rem pl-3rem bg-white body-01-sh text-gray-900 [&.active]:bg-gray-50 [&.active]:text-blue-500 hover:bg-gray-50 hover:text-blue-500 cursor-pointer;
+    @apply flex items-center justify-between min-h-40px pr-1rem pl-3rem mb-0.25rem first:mt-0.25rem last:mb-0 bg-white body-01-sh text-gray-900 [&.active]:bg-gray-50 [&.active]:text-blue-500 hover:bg-gray-50 hover:text-blue-500 cursor-pointer;
 
     @at-root [data-width="true"]:not([data-side="true"]) & {
         @apply pl-[calc(6.25%+2rem)] pr-6.25%;

@@ -14,7 +14,7 @@
     cursor: pointer;
     
     @at-root [data-width="true"]:not([data-side="true"]) & {
-        @apply px-6.25%;
+        @apply px-1rem sm:px-6.25%;
     }
     @at-root [data-side="true"] & {
         border-radius: 0.5rem;
