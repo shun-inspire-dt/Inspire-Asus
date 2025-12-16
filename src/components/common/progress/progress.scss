@@ -71,7 +71,7 @@
          * 日期
          */
         &__date {
-            @apply block text-12 lh-120;
+            @apply block text-12 lh-120 font-roboto;
         }
 
         /**
@@ -180,7 +180,7 @@
          * 日期
          */
         &__date {
-            @apply hidden text-12 lh-120;
+            @apply hidden text-12 lh-120 font-roboto;
 
             &.active {
                 @apply block;
