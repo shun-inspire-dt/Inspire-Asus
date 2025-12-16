@@ -1,6 +1,7 @@
 ---
 /** Common Component */
 import ChoiceButton, { type Props as ChoiceButtonProps } from '@components/common/form/checkboxs/choiceButton.astro';
+import NotificationIcon from '@components/common/icons/notification/notificationIcon.astro';
 /** Style */
 import './productConfig.scss';
 
@@ -11,9 +12,11 @@ export interface Props {
     style?: { [key: string]: string };
     title?: string;
     price?: string;
+    variant?: 'default' | 'black' | 'white' | 'red' | 'blue';
     priceDescription?: string;
     optionHint?: string;
     showColorSelector?: boolean;
+    showNotificationIcon?: boolean;
     showPriceTag?: boolean;
     showPriceDescription?: boolean;
     showOptionHint?: boolean;
@@ -28,17 +31,20 @@ const {
     attribute = {},
     title,
     price,
+    variant,
     priceDescription,
     optionHint,
-    showColorSelector = true,
+    showColorSelector,
+    showNotificationIcon,
     showPriceTag = true,
-    showPriceDescription = true,
-    showOptionHint = true,
+    showPriceDescription,
+    showOptionHint,
     disabled,
     value
 } = Astro.props as Props;
 
 const id = `FromProductConfig-${Math.floor(Math.random() * 1000)}`;
+const variantAttr = variant ? { 'data-variant': variant } : {};
 ---
 
 <ChoiceButton
@@ -50,7 +56,7 @@ const id = `FromProductConfig-${Math.floor(Math.random() * 1000)}`;
     value={value}
     attribute={{ 'data-option': `${title} ${price}` }}
 >
-    <span class:list={[className, { disabled }, `product-config group`]} style={style} role="button" {...attribute}>
+    <span class:list={[className, { disabled }, `product-config group`]} style={style} role="button" {...attribute} {...variantAttr}>
         <div class="product-config-header">
             <div class="product-config-title">
                 {
@@ -60,6 +66,11 @@ const id = `FromProductConfig-${Math.floor(Math.random() * 1000)}`;
                         </span>
                     )
                 }
+                {showNotificationIcon && (
+                    <div class="product-config-notification" tabindex="0">
+                        <NotificationIcon />
+                    </div>
+                )}
                 {title}
             </div>
             {

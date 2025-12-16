@@ -1,26 +1,52 @@
+@mixin color {
+    &[data-variant="black"]{
+        --color: #222426;
+    }
+    &[data-variant="white"]{
+        --color: #FFFFFF;
+    }
+    &[data-variant="red"]{
+        --color: #B42D18;
+    }
+    &[data-variant="blue"]{
+        --color: #0057B7;
+    }
+}
 .product-config {
-    @apply w-full flex flex-col gap-0.5rem p-1rem bg-white border border-gray-500 rounded-lg;
+    --color: #53565A;
+    @apply w-full flex flex-col gap-0.5rem p-1rem bg-white border border-gray-500 rounded-lg transition-colors duration-200 ease-in-out;
+    @apply hover:border-gray-900;
+    @include color;
 
     &-header {
         @apply w-full flex items-start justify-between;
     }
     &-title {
-        @apply flex items-center justify-between gap-8px heading-02-sh text-gray-900;
+        @apply flex items-center justify-between gap-0.5rem body-02-sh text-gray-900;
     }
     &-color-selector {
         @apply w-1rem h-1lh flex items-center;
     }
+    &-notification {
+        @apply w-1rem h-1rem flex items-center justify-center;
+        .notification-icon {
+            --icon-size: 0.875rem;
+            --color: #856D00;
+            padding: 0;
+        }
+    }
     &-color-selector-circle {
-        @apply inline size-1rem rounded-999 bg-#53565A;
+        @apply inline size-1rem rounded-999 border border-gray-100;
+        background-color: var(--color, #53565A);
     }
     &-price-tag {
-        @apply flex flex-col items-center gap-4px text-right select-none;
+        @apply flex flex-col items-end gap-4px select-none;
     }
     &-price {
-        @apply body-02-sh text-gray-900;
+        @apply body-02-sh text-gray-900 text-right;
     }
     &-price-description {
-        @apply label-02 text-orange-600;
+        @apply label-02 text-orange-600 text-right;
     }
     &-option-hint {
         @apply w-full label-01 text-gray-600 text-left;
