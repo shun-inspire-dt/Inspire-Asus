@@ -12,10 +12,14 @@
         @apply flex items-center justify-center;
         @apply px-1rem md:px-1.25rem xl:px-0;
         @apply absolute top-1/2 -translate-y-1/2 z-3;
-        
+
         button {
             &.swiper-button-disabled {
                 @apply opacity-0 pointer-events-none cursor-not-allowed;
+                
+                &[role='button']:focus:focus-visible {
+                    outline: none;
+                }
             }
         }
     }
@@ -50,5 +54,8 @@
     .pagination__arrow.swiper-button-disabled {
         pointer-events: none;
         cursor: not-allowed;
+    }
+    .pagination__arrow.swiper-button-disabled[role='button']:focus:focus-visible {
+        outline: none;
     }
 }
