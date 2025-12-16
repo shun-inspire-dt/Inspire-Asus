@@ -10,7 +10,7 @@ import Title from '@components/pages/member/tools/title.astro';
 import Content from '@components/pages/member/account-management/content.astro';
 import Form from '@components/pages/member/account-management/form.astro';
 /** Modal */
-import ComfirmUpdateEmail from '@components/modal/comfirm-update-email.astro';
+import ComfirmCode from '@components/modal/comfirm-code.astro';
 import UpdateEmailSendCode from '@components/modal/update-email-send-code.astro';
 import ResetEmail from '@components/modal/reset-email.astro';
 /** Style */
@@ -23,7 +23,7 @@ import '@scss/pages/member/account-management.scss';
         <Form />
     </Body>
 </Layouts>
-<ComfirmUpdateEmail />
+<ComfirmCode attribute={{ 'data-step': 'next', 'data-target': '#ResetEmailModal' }} />
 <UpdateEmailSendCode />
 <ResetEmail />
 
@@ -51,7 +51,7 @@ import '@scss/pages/member/account-management.scss';
         initElements() {
             // Modal 元素
             this.modals = {
-                confirm: document.querySelector('#ComfirmUpdateEmailModal'),
+                confirm: document.querySelector('#ComfirmCodeModal'),
                 update: document.querySelector('#UpdateEmailSendCodeModal'),
                 reset: document.querySelector('#ResetEmailModal'),
                 toast: document.querySelector('#toastModal')
@@ -59,7 +59,7 @@ import '@scss/pages/member/account-management.scss';
 
             // Form 元素
             this.forms = {
-                confirm: document.querySelector('#ComfirmUpdateEmailForm'),
+                confirm: document.querySelector('#ComfirmCodeForm'),
                 update: document.querySelector('#UpdateEmailSendCodeForm'),
                 reset: document.querySelector('#ResetEmailForm')
             };
@@ -72,13 +72,13 @@ import '@scss/pages/member/account-management.scss';
         bindEvents() {
             // 發送驗證碼表單提交
             this.forms.update?.addEventListener('submit', async (e) => await this.handleUpdateSubmit(e));
-            
+
             // 確認驗證碼表單提交
             this.forms.confirm?.addEventListener('submit', async (e) => await this.handleConfirmSubmit(e));
-            
+
             // 重設信箱表單提交
             this.forms.reset?.addEventListener('submit', async (e) => await this.handleResetSubmit(e));
-            
+
             // Modal 關閉事件
             this.modals.confirm?.addEventListener('hidden.bs.modal', () => this.handleConfirmHidden());
             this.modals.reset?.addEventListener('hidden.bs.modal', () => this.handleResetHidden());
@@ -102,8 +102,12 @@ import '@scss/pages/member/account-management.scss';
          */
         async handleConfirmSubmit(e) {
             e.preventDefault();
-            const { step, target = '' } = this.forms.confirm?.dataset || {};
-            
+            const form = e.target;
+            //
+            if (!form.checkValidity()) return;
+
+            const { step, target = '' } = form.dataset || {};
+
             if (step === 'next') {
                 this.handleNextStep(target);
             } else if (step === 'finish') {
