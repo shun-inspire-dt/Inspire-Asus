@@ -42,7 +42,7 @@ export const mySwiper = <E extends HTMLElement>(el: string | E, opts?: Partial<S
     }
 };
 
-export const mySwiperListen = <E extends HTMLElement>(el: string | E): Promise<Swiper | undefined> => {
+export const mySwiperListen = <E extends HTMLElement>(el: string | E, options?: Partial<SwiperOptions>): Promise<Swiper | undefined> => {
     return new Promise((resolve) => {
         const swiper = el && typeof el === 'string' ? document.querySelector(el) as HTMLElement : el as HTMLElement;
         let instance: Swiper | undefined;
@@ -50,7 +50,7 @@ export const mySwiperListen = <E extends HTMLElement>(el: string | E): Promise<S
             swiper.addEventListener('build.swiper', (e) => {
                 const event = e as CustomEvent<Partial<SwiperOptions>>;
                 const opts = event.detail;
-                instance = mySwiper(swiper, opts);
+                instance = mySwiper(swiper, {...options, ...opts});
             });
             // 使用 nextTick 確保監聽器已經註冊
             setTimeout(() => resolve(instance), 0);
