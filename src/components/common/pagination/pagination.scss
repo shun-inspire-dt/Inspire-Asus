@@ -15,7 +15,7 @@
 
     /* 項目尺寸變數 */
     --pagination-item-width: 2.25rem; /* 頁碼項目寬度 */
-    --pagination-item-height: 20px; /* 頁碼項目高度 */
+    --pagination-item-height: 1.25rem; /* 頁碼項目高度 */
     --pagination-item-min-width: 2.25rem; /* 頁碼項目最小寬度 */
 
     /* 箭頭尺寸變數 */
@@ -24,7 +24,7 @@
     /* 字體樣式變數 - Light 主題 */
     --pagination-font-family: var(--font-family-roboto); /* 字體家族 */
     --pagination-font-size: var(--fs-16); /* 字體大小 */
-    --pagination-line-height: var(--line-height-130); /* 行高 */
+    --pagination-line-height: 1; /* 行高 */
     --pagination-font-weight-normal: 400; /* 一般字重 */
     --pagination-font-weight-active: 500; /* 活躍字重 */
 
@@ -77,7 +77,7 @@
         }
 
         /* 聚焦效果 - 顏色變化和藍色框框 */
-        &:focus {
+        &:focus:focus-visible {
             outline: none; /* 移除預設 outline */
             
             &:not(.pagination__item--active) {
@@ -90,10 +90,10 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 24px;
-                height: 24px;
-                border: 2px solid var(--color-blue-400, #248dff); /* 藍色邊框 - #248dff */
-                border-radius: 4px;
+                width: 1.5rem;
+                height: 1.5rem;
+                border: 0.125rem solid var(--color-blue-400, #248dff); /* 藍色邊框 - #248dff */
+                border-radius: 0.25rem;
                 pointer-events: none;
                 z-index: 1;
             }
@@ -193,7 +193,7 @@
         }
 
         /* Dark 主題 focus 狀態 */
-        &:focus {
+        &:focus:focus-visible {
             color: var(--color-gray-400); /* Dark 主題聚焦時文字顏色 - #999999 */
         }
 
