@@ -21,7 +21,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
 ---
 
 <MySectionForm id={IDName} title="忘記密碼?" class:list={[className]} style={style} {...attribute} action='/reset-password'>
-    <p class=":uno-forget-password-info-text: mt--1rem text-gray-900 text-16 lh-150 text-center">
+    <p class=":uno-forget-password-info-text: mt--1rem font-roboto text-gray-900 text-16 lh-150 text-center">
         請輸入您當初註冊時所填寫的 E-mail 帳號或手機號碼。
     </p>
     <img width="120" height="120" src="/assets/images/pages/dropped-image.png" alt="忘記密碼" loading="lazy" />
