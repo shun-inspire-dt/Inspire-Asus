@@ -12,6 +12,7 @@ import type { Props as IconsProps } from '@components/common/icons/icons.astro';
 import type { tableChidType, tableChidTRType, childComponentProps, EmptyComponentProps } from './tables.type';
 /** Style */
 import './tables.scss';
+import './emptyTables.scss';
 
 /**
  * 表格組件屬性介面
@@ -44,7 +45,7 @@ export interface Props {
     scrollable?: boolean;
     rouned?: 'top' | 'bottom' | 'all' | false;
     sticky?: boolean;
-    mobileTable?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+    mobileTable?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | null | false;
     MobileComponent?: (_props: childComponentProps) => any;
     EmptyComponent?: (_props: EmptyComponentProps) => any;
     emptyHideHead?: boolean;

@@ -1,6 +1,3 @@
-/** Type */
-import type { Props as IconsProps } from '@components/common/icons/icons.astro';
-
 export type ChidType = string | number | boolean;
 
 export type tableChidType = {
@@ -28,5 +25,5 @@ export interface customComponentProps {
 
 export interface EmptyComponentProps {
     emptyText?: string;
-    emptyIcon?: IconsProps['icon'];
+    emptyIcon?: string;
 }
