@@ -50,7 +50,7 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
             <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">
                 方案清單
             </h2>
-            <span class=":uno-inquery-cart-amount: text-gray-900 font-tt-medium text-16 lh-120 text-right"
+            <span class=":uno-inquery-cart-amount: text-gray-900 font-roboto text-16 lh-120 text-right"
                 >合計詢問 <b class=":uno-inquery-cart-amount-number: font-medium">2</b> 個方案</span
             >
         </div>
@@ -98,6 +98,9 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
             <Input type="email" inputmode="email" />
         </InputGroup>
         <InputGroup label="備註" block>
+            <Fragment slot="label-right">
+                <small>&nbsp;(非必填)</small>
+            </Fragment>
             <Textarea style={{ 'min-height': '8.625rem' }} />
         </InputGroup>
         <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
