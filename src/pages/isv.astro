@@ -4,7 +4,7 @@ import Layouts from '@layouts/layouts.astro';
 /** Global Components */
 
 /** Common Components */
-
+import ComfirmCode from '@components/modal/comfirm-code.astro';
 /** Main Components */
 import Form from '@components/pages/isv/form.astro';
 /** Style */
@@ -14,6 +14,7 @@ import '@scss/pages/isv.scss';
 <Layouts IDName="Isv" minMarginHeader>
     <Form />
 </Layouts>
+<ComfirmCode />
 
 <script is:inline>
     const toast = document.querySelector('#toastModal');
