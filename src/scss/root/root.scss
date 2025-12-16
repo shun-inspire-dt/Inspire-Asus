@@ -1,5 +1,3 @@
-@use '../mixin/scrollbar.scss' as scrollbar;
-
 :root {
     /* ==================== Figma Variables - Collection ==================== */
 
@@ -317,7 +315,6 @@ body {
     font-family: var(--font-family-roboto);
     font-synthesis: none; // 禁用字體合成
     position: relative;
-    // @include scrollbar.scrollbar();
 }
 
 main {
@@ -329,6 +326,6 @@ main {
 
 :where(a, button, [role='button'], [role='link']) {
     &:not(.btn):focus:focus-visible {
-        outline: var(--color-blue-500, #006ce1) solid 2px;
+        outline: var(--color-blue-500, #006ce1) solid 0.125rem;
     }
 }
