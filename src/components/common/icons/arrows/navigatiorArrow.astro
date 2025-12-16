@@ -1,4 +1,6 @@
 ---
+/** Style */
+import './navigatiorArrow.scss';
 export interface Props {
     IDName?: string;
     className?: any;
@@ -10,30 +12,19 @@ export interface Props {
 const { IDName, className, style, attribute = {}, direction = 'left' } = Astro.props as Props;
 const componentId = IDName || `navigatior-arrow-${Math.random().toString(36).substr(2, 9)}`;
 const svgStyle = {
-    'up': 'rotate(-90deg)',
-    'down': 'rotate(90deg)',
-    'left': 'rotate(0deg)',
-    'right': 'rotate(180deg)',
-}
+    up: 'rotate(-90deg)',
+    down: 'rotate(90deg)',
+    left: 'rotate(0deg)',
+    right: 'rotate(180deg)'
+};
 ---
 
 <button
     id={componentId}
     type="button"
-    class:list={[
-        ':uno-navigatior-arrow: size-1.5rem md:size-1.75rem xl:size-3rem flex items-center justify-center bg-gray-700_78 xl:bg-gray-700_64 xl:border-0.125rem xl:border-transparent xl:hover:border-white rounded-full text-white transition-all duration-200 ease-in-out [&>svg]:size-0.875rem [&>svg]:md:size-1.125rem [&>svg]:xl:size-1.5rem',
-        className
-    ]}
+    class:list={['navigatior-arrow', className]}
     title="navigator"
     {...attribute}
-    style={{ ...style }}
+    style={{ transform: svgStyle[direction], ...style }}
 >
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: svgStyle[direction] }}>
-        <path
-            d="M8.64994 2.0498L3.7002 6.99955L8.64994 11.9493"
-            stroke="currentColor"
-            stroke-width="1.75"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-    </svg>
 </button>

@@ -1,0 +1,35 @@
+.navigatior-arrow {
+    @apply flex items-center justify-center relative;
+    @apply size-1.5rem md:size-1.75rem xl:size-3rem;
+    @apply bg-gray-700_78 xl:bg-gray-700_64 xl:hover:bg-gray-700_78 rounded-full;
+    @apply outline outline-0.125rem xl:outline-0.25rem outline-white xl:outline-transparent xl:hover:outline-white xl:focus:focus-visible:outline-white;
+    @apply text-white;
+    @apply transition-all duration-200 ease-in-out;
+
+    @screen xl {
+        &:focus:focus-visible {
+            &::before {
+                @apply content-empty;
+                @apply flex items-center justify-center;
+                @apply size-3.5rem min-w-3.5rem min-h-3.5rem;
+                @apply border-0.125rem border-blue-500;
+                @apply rounded-full;
+            }
+        }
+    }
+    &::after {
+        @apply content-empty;
+        @apply flex items-center justify-center;
+        @apply size-0.875rem md:size-1.125rem xl:size-1.875rem;
+        @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-2;
+        @apply bg-no-repeat bg-center bg-contain;
+
+        background-image: url('data:image/svg+xml,<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.04462 11.9979L3.9554 7.00001L8.04462 2.00208" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+        @screen md {
+            background-image: url('data:image/svg+xml,<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.25 15L5.75 9L10.25 3" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+        }
+        @screen xl {
+            background-image: url('data:image/svg+xml,<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 26L9 15L18 4" stroke="white" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+        }
+    }
+}
