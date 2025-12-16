@@ -13,18 +13,20 @@ export interface Props {
     style?: { [key: string]: string };
     data?: TablesProps['data'];
     field?: TablesProps['field'];
+    mobileTable?: TablesProps['mobileTable'];
+    empty?: boolean;
 }
 
-const { IDName = 'OrderAocc', className, style, attribute = {}, data = [], field = [] } = Astro.props as Props;
+const { IDName = 'OrderAocc', className, style, attribute = {}, data = [], field = [], mobileTable = 'md', empty = false } = Astro.props as Props;
 ---
 
 <Tables
     IDName={IDName}
     data={data}
     field={field}
-    className={[className, ':uno-order-aocc-tables:']}
-    mobileTable="md"
+    className={[':uno-order-aocc-tables: group', empty ? 'empty-tables' : '', className]}
+    mobileTable={mobileTable}
     MobileComponent={MobileTd}
     style={style}
-    {...attribute}
+    attribute={{ 'data-empty': empty ? true : undefined, ...attribute }}
 />

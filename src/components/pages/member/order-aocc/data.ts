@@ -1,7 +1,8 @@
 /** Type */
 import type { tableChidType, tableChidTRType } from '@components/common/tables/tables.type';
 /** Common Component */
-import TableLink from './tableLink.astro';
+// @ts-ignore
+import TableLink from '@components/pages/member/order-aocc/tableLink.astro';
 
 export const data: tableChidTRType[] = [
     ['O20250915001', '2025/09/15', 'iERP｜智慧採購叫貨系統', '1', '待處理', '查看明細'],
@@ -21,6 +22,12 @@ export const data: tableChidTRType[] = [
         component: y === '查看明細' ? TableLink : undefined,
         data: y === '查看明細' ? { id: x[0] } : undefined
     }))
+}));
+
+export const emptyData: tableChidTRType[] = [
+    ['目前沒有任何諮詢紀錄'],
+].flatMap((x) => ({
+    items: x.flatMap((y) => ({ text: y, colspan: 6, attribute: { 'data-empty': true } }))
 }));
 
 const width = {

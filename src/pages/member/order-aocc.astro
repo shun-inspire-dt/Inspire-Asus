@@ -1,6 +1,6 @@
 ---
 /** Data */
-import { data, field } from '@components/pages/member/order-aocc/data';
+import { data, emptyData, field } from '@components/pages/member/order-aocc/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -19,6 +19,7 @@ import '@scss/pages/member/order-aocc.scss';
     <Body activeTab="我的諮詢夾">
         <Title title="我的諮詢夾" showSort />
         <Table data={data} field={field} />
+        <Table data={emptyData} field={field} empty />
         <Sort type="bottom" />
     </Body>
 </Layouts>

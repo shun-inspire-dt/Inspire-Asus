@@ -14,29 +14,33 @@ export interface Props {
 }
 
 const { IDName, className, style, attribute = {}, data } = Astro.props as Props;
+const isEmpty = data?.[0]?.attribute?.['data-empty'];
+const emptyText = data?.[0]?.text;
 ---
 
 <div id={IDName} class:list={[className, ':uno-order-aocc-card: space-y-0.5rem text-gray-900']} style={style} {...attribute}>
-    <strong class=":uno-order-aocc-card-title: font-roboto body-03-sh font-medium">{data[2].text}</strong>
-    <ul class=":uno-order-aocc-card-list: space-y-0.5rem font-roboto body-01-sh">
+    <strong class=":uno-order-aocc-card-title: font-roboto body-03-sh font-medium group-data-[empty]:text-gray-700 group-data-[empty]:body-02-sh">
+        {isEmpty ? emptyText : data?.[2]?.text}
+    </strong>
+    <ul class=":uno-order-aocc-card-list: space-y-0.5rem font-roboto body-01-sh group-data-[empty]:hidden">
         <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
             <span class=":uno-order-aocc-list-title: font-medium">詢問單號</span>
-            <span>{data[0].text}</span>
+            <span>{data?.[0]?.text}</span>
         </li>
         <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
             <span class=":uno-order-aocc-list-title: font-medium">詢問日期</span>
-            <span>{data[1].text}</span>
+            <span>{data?.[1]?.text}</span>
         </li>
         <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
             <span class=":uno-order-aocc-list-title: font-medium">數量</span>
-            <span>{data[3].text}</span>
+            <span>{data?.[3]?.text}</span>
         </li>
         <li class=":uno-order-aocc-card-li: flex items-baseline justify-between">
             <span class=":uno-order-aocc-list-title: font-medium">狀態</span>
-            <span>{data[4].text}</span>
+            <span>{data?.[4]?.text}</span>
         </li>
         <li class=":uno-order-aocc-card-li-center: flex items-baseline justify-center">
-            <ALink link={`/member/order-aocc/${data[0].text}`} size="14" title="查看明細">查看明細</ALink>
+            <ALink link={`/member/order-aocc/${data?.[0]?.text}`} size="14" title="查看明細">查看明細</ALink>
         </li>
     </ul>
 </div>
