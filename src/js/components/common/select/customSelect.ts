@@ -62,7 +62,7 @@ export const closeAllSelect = (currentElement?: HTMLElement): void => {
 export const clearSelect = (container: HTMLElement): void => {
     const selectDisplay = container?.querySelector(`.${CSS_CLASSES.SELECT_SELECTED}`) as HTMLElement;
     const selectItems = container?.querySelector(`.${CSS_CLASSES.SELECT_ITEMS}`) as HTMLElement;
-    
+
     selectDisplay?.remove();
     selectItems?.remove();
 };
@@ -120,11 +120,12 @@ const handleOptionDisabled = (element: HTMLElement, isDisabled: boolean, isLinkS
  * 為選項添加鍵盤事件處理
  * @param element - 選項元素
  */
-const addOptionKeyboardEvents = (element: HTMLElement): void => {
+const addOptionKeyboardEvents = (element: HTMLElement, nativeSelect: HTMLSelectElement): void => {
     element.addEventListener('keydown', (e: KeyboardEvent) => {
         if (e.key === KEYBOARD_KEYS.ENTER || e.key === KEYBOARD_KEYS.SPACE) {
             e.preventDefault();
             (element as HTMLElement).click();
+            if (nativeSelect) nativeSelect.focus();
         }
     });
 };
@@ -157,7 +158,7 @@ const handleOptionClick = (optionElement: HTMLElement, nativeSelect: HTMLSelectE
 
             // 更新選項的選中狀態
             const allOptions = itemsParent.querySelectorAll('*') as NodeListOf<HTMLElement>;
-            allOptions.forEach(option => option.classList.remove(CSS_CLASSES.SAME_AS_SELECTED));
+            allOptions.forEach((option) => option.classList.remove(CSS_CLASSES.SAME_AS_SELECTED));
             optionElement.classList.add(CSS_CLASSES.SAME_AS_SELECTED);
             break;
         }
@@ -179,17 +180,17 @@ const handleOptionClick = (optionElement: HTMLElement, nativeSelect: HTMLSelectE
 const createSelectOption = (nativeSelect: HTMLSelectElement, optionIndex: number, isLinkSelect: boolean): HTMLElement => {
     const option = nativeSelect.options[optionIndex];
     const optionElement = createOptionElement(isLinkSelect, option.value);
-    
+
     optionElement.innerHTML = option.innerHTML;
     optionElement.setAttribute(ARIA_ATTRIBUTES.ROLE, 'option');
-    
+
     handleOptionDisabled(optionElement, option.disabled, isLinkSelect);
-    addOptionKeyboardEvents(optionElement);
-    
+    addOptionKeyboardEvents(optionElement, nativeSelect);
+
     optionElement.addEventListener('click', () => {
         handleOptionClick(optionElement, nativeSelect, isLinkSelect);
     });
-    
+
     return optionElement;
 };
 
@@ -225,16 +226,39 @@ const handleArrowNavigation = (selectItemsContainer: HTMLElement, key: string): 
     options[currentIndex].focus();
 };
 
+const syncPlaceholderState = (selectDisplay: HTMLElement, nativeSelect: HTMLSelectElement): void => {
+    if (nativeSelect.value) {
+        selectDisplay.classList.remove(CSS_CLASSES.SELECT_PLACEHOLDER);
+    } else {
+        selectDisplay.classList.add(CSS_CLASSES.SELECT_PLACEHOLDER);
+    }
+};
+
 /**
  * 為 select-items 容器添加鍵盤事件
  * @param selectItemsContainer - 選項容器
  * @param nativeSelect - 原生 select 元素
  * @param container - 主容器
  */
-const addSelectItemsKeyboardEvents = (selectItemsContainer: HTMLElement, nativeSelect: HTMLSelectElement, container: HTMLElement): void => {
+const addSelectItemsKeyboardEvents = (
+    selectItemsContainer: HTMLElement,
+    nativeSelect: HTMLSelectElement,
+    container: HTMLElement
+): void => {
     selectItemsContainer.addEventListener('keydown', (e: KeyboardEvent) => {
         const isOpen = !selectItemsContainer.classList.contains(CSS_CLASSES.SELECT_HIDE);
-        
+
+        if (isOpen && e.key === 'Tab' && document.activeElement === selectItemsContainer) {
+            const selectedOption = selectItemsContainer.querySelector(
+                `.${CSS_CLASSES.SAME_AS_SELECTED}:where(div, a):not([data-disabled])`
+            ) as HTMLElement | null;
+            const firstOption = selectItemsContainer.querySelector(':where(div, a):not([data-disabled])') as HTMLElement | null;
+
+            (selectedOption || firstOption)?.focus();
+            e.preventDefault();
+            return;
+        }
+
         if (isOpen && (e.key === KEYBOARD_KEYS.ARROW_DOWN || e.key === KEYBOARD_KEYS.ARROW_UP)) {
             e.preventDefault();
             handleArrowNavigation(selectItemsContainer, e.key);
@@ -258,12 +282,12 @@ const addSelectItemsKeyboardEvents = (selectItemsContainer: HTMLElement, nativeS
 const addNativeSelectKeyboardEvents = (nativeSelect: HTMLSelectElement, container: HTMLElement): void => {
     nativeSelect.addEventListener('keydown', (e: KeyboardEvent) => {
         const selectItems = container.querySelector(`.${CSS_CLASSES.SELECT_ITEMS}`) as HTMLElement;
-        
+
         if (e.key === KEYBOARD_KEYS.ENTER || e.key === KEYBOARD_KEYS.SPACE) {
             e.preventDefault();
             const selectDisplay = container.querySelector(`.${CSS_CLASSES.SELECT_SELECTED}`) as HTMLElement;
             const wasHidden = selectItems.classList.contains(CSS_CLASSES.SELECT_HIDE);
-            
+
             if (selectDisplay) {
                 selectDisplay.click();
                 selectItems.setAttribute(ARIA_ATTRIBUTES.ARIA_HIDDEN, wasHidden ? 'false' : 'true');
@@ -282,7 +306,7 @@ const addSelectDisplayClickEvent = (selectDisplay: HTMLElement, container: HTMLE
     selectDisplay.addEventListener('click', (e: Event) => {
         e.stopPropagation();
         closeAllSelect(selectDisplay);
-        
+
         const selectItems = container.querySelector(`.${CSS_CLASSES.SELECT_ITEMS}`) as HTMLElement;
         selectItems.classList.toggle(CSS_CLASSES.SELECT_HIDE);
         selectDisplay.classList.toggle(CSS_CLASSES.SELECT_ARROW_ACTIVE);
@@ -302,12 +326,7 @@ const addNativeSelectChangeEvent = (nativeSelect: HTMLSelectElement, container: 
         if (customSelectDisplay && selectedOption) {
             customSelectDisplay.innerHTML = selectedOption.innerHTML;
 
-            // 處理 placeholder 樣式
-            if (nativeSelect.value) {
-                customSelectDisplay.classList.remove(CSS_CLASSES.SELECT_PLACEHOLDER);
-            } else {
-                customSelectDisplay.classList.add(CSS_CLASSES.SELECT_PLACEHOLDER);
-            }
+            syncPlaceholderState(customSelectDisplay, nativeSelect);
 
             // 更新選項的選中狀態
             const allOptions = container.querySelectorAll(`.${CSS_CLASSES.SELECT_ITEMS} > *`);
@@ -352,7 +371,8 @@ const initializeCustomSelect = (container: HTMLElement): void => {
 
         // 更新顯示內容
         selectDisplay.innerHTML = nativeSelect.options[nativeSelect.selectedIndex].innerHTML;
-        
+        syncPlaceholderState(selectDisplay, nativeSelect);
+
         // 清空現有選項，重新生成
         selectItemsContainer.innerHTML = '';
     } else {
@@ -361,8 +381,9 @@ const initializeCustomSelect = (container: HTMLElement): void => {
 
         // 動態創建新結構
         selectDisplay = document.createElement('DIV');
-        selectDisplay.setAttribute('class', `${CSS_CLASSES.SELECT_SELECTED} ${CSS_CLASSES.SELECT_PLACEHOLDER}`);
+        selectDisplay.setAttribute('class', `${CSS_CLASSES.SELECT_SELECTED}`);
         selectDisplay.innerHTML = nativeSelect.options[nativeSelect.selectedIndex].innerHTML;
+        syncPlaceholderState(selectDisplay, nativeSelect);
         container.appendChild(selectDisplay);
 
         selectItemsContainer = document.createElement('DIV');
@@ -407,8 +428,8 @@ const initializeCustomSelect = (container: HTMLElement): void => {
  * @param containers - 選擇器容器陣列，如果未提供則自動尋找
  */
 export const setSelect = (containers?: HTMLElement[]): void => {
-    const targetContainers = containers || 
-        Array.from(document.getElementsByClassName(CSS_CLASSES.CUSTOM_SELECT) as HTMLCollectionOf<HTMLElement>);
+    const targetContainers =
+        containers || Array.from(document.getElementsByClassName(CSS_CLASSES.CUSTOM_SELECT) as HTMLCollectionOf<HTMLElement>);
 
     targetContainers.forEach(initializeCustomSelect);
 };
