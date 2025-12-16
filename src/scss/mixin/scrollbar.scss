@@ -1,36 +1,49 @@
-@mixin scrollbar {
+@mixin scrollbar(
+    $width: 0.25rem,
+    $thumb-color: #7a7a7a,
+    $thumb-hover-color: #7a7a7a,
+    $thumb-border-radius: 0.625rem,
+    $thumb-inset: 0,
+    $track-color: #fcfcfc,
+    $track-hover-color: #fcfcfc,
+    $track-background-image: url(),
+    $track-background-repeat: repeat-y,
+    $track-background-size: contain
+) {
     /* 軌道 */
     &::-webkit-scrollbar {
-        width: var(--scrollbar-width); /* 滾動條寬度 */
+        width: $width; /* 滾動條寬度 */
     }
 
     /* 滑塊 */
     &::-webkit-scrollbar-thumb {
-        background-color: var(--scrollbar-thumb-color); /* 滾動條滑塊顏色 */
-        border-radius: var(--scrollbar-thumb-border-radius); /* 滾動條滑塊圓角 */
+        background-color: $thumb-color; /* 滾動條滑塊顏色 */
+        border-radius: $thumb-border-radius; /* 滾動條滑塊圓角 */
+        border: $thumb-inset solid transparent;
+        background-clip: padding-box;
     }
 
     /* 當滑塊被懸停時 */
     &::-webkit-scrollbar-thumb:hover {
-        background-color: var(--scrollbar-thumb-color); /* 滾動條滑塊懸停時的顏色 */
+        background-color: $thumb-hover-color; /* 滾動條滑塊懸停時的顏色 */
     }
 
     /* 滾動條軌道區域 */
     &::-webkit-scrollbar-track {
-        background-color: var(--scrollbar-track-color); /* 滾動條軌道顏色 */
+        background-color: $track-color; /* 滾動條軌道顏色 */
     }
 
     /* 滾動條軌道區域被懸停時 */
     &::-webkit-scrollbar-track:hover {
-        background-color: var(--scrollbar-track-color); /* 滾動條軌道懸停時的顏色 */
-        background-image: var(--scrollbar-track-background-image);
-        background-repeat: repeat-y;
-        background-size: contain;
+        background-color: $track-hover-color; /* 滾動條軌道懸停時的顏色 */
+        background-image: $track-background-image;
+        background-repeat: $track-background-repeat;
+        background-size: $track-background-size;
     }
 
     /* 滾動條邊框 */
     &::-webkit-scrollbar-track-piece {
-        background-color: var(--scrollbar-track-color); /* 滾動條邊框顏色 */
+        background-color: $track-color; /* 滾動條邊框顏色 */
     }
 }
 
