@@ -34,9 +34,9 @@
     --custom-select-border-color: var(--color-gray-500, #818181); /* 邊框顏色 */
 
     /** Focus outline 相關屬性 */
-    --custom-select-outline-width: 0rem; /* 焦點外框寬度 */
-    --custom-select-outline-color: transparent; /* 焦點外框顏色 */
-    --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
+    --custom-select-outline-width: 0.125rem; /* 焦點外框寬度 */
+    --custom-select-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+    --custom-select-outline-offset: 0.125rem; /* 焦點外框偏移 */
 
     /* === 下拉箭頭圖標變數 === */
     --custom-select-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34302 6.11439L7.99987 11.7712L13.6567 6.11439" stroke="%23181818" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 箭頭圖標 */
@@ -48,6 +48,7 @@
     --custom-select-items-border-top-width: 0.0625rem; /* 選項容器頂部邊框寬度 */
     --custom-select-items-border-color: var(--color-gray-500, #818181); /* 選項容器邊框顏色 */
     --custom-select-items-border-radius: 0.5rem; /* 選項容器邊框圓角 */
+    --custom-select-items-background-color: var(--color-white, #ffffff); /* 選項背景顏色 */
     --custom-select-items-padding-y: 0.5rem; /* 選項容器垂直內邊距 */
     --custom-select-items-padding-x: 0rem; /* 選項容器水平內邊距 */
     --custom-select-items-box-shadow: 0rem 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
@@ -67,10 +68,10 @@
     /* === 單個選項樣式變數 === */
     --custom-select-item-padding-y: 0.3125rem; /* 選項垂直內邊距 */
     --custom-select-item-padding-x: 1rem; /* 選項水平內邊距 */
-    --custom-select-item-background-color: var(--color-white, #ffffff); /* 選項背景顏色 */
+    --custom-select-item-background-color: transparent; /* 選項背景顏色 */
     --custom-select-item-border-width: 0; /* 選項邊框寬度 */
     --custom-select-item-border-color: transparent; /* 選項邊框顏色 */
-    --custom-select-hover-item-background-color: var(--color-white, #ffffff); /* 懸停選項背景顏色 */
+    --custom-select-hover-item-background-color: transparent; /* 懸停選項背景顏色 */
     --custom-select-hover-item-color: var(--color-blue-500, #006ce1); /* 懸停選項文字顏色 */
     --custom-select-active-item-background-color: var(--color-blue-500, #006ce1); /* 選中選項背景顏色 */
     --custom-select-active-item-color: var(--color-white, #ffffff); /* 選中選項文字顏色 */
@@ -143,14 +144,18 @@
             }
         }
         /** 焦點狀態 */
-        &:focus,
-        &.select-arrow-active {
+        &:focus:focus-visible {
             --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
             border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
-
+            
             /* Focus outline 相關屬性 */
             outline: var(--custom-select-outline-width) solid var(--custom-select-outline-color); /* 焦點外框 */
             outline-offset: var(--custom-select-outline-offset); /* 焦點外框偏移 */
+            
+            &.select-selected-placeholder {
+                --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                border-color: var(--custom-select-border-color);
+            }
         }
     }
 
@@ -167,7 +172,7 @@
         /* 容器位置和尺寸 */
         top: var(--custom-select-item-top); /* 距離選擇器頂部的位置 */
         max-height: var(--custom-select-item-height); /* 最大高度，超出時顯示滾動條 */
-        background-color: var(--custom-select-item-background-color);
+        background-color: var(--custom-select-items-background-color);
         z-index: var(--custom-select-item-zindex); /* 確保顯示在其他元素之上 */
 
         /* 邊框設定：與選擇器連接，頂部無邊框，添加陰影 */
@@ -179,9 +184,6 @@
         transition-property: var(--custom-select-transition-property);
         transition-timing-function: var(--custom-select-transition-timing-function);
         transition-duration: var(--custom-select-transition-duration);
-
-        /* 自定義滾動條樣式 */
-        @include scrollbar.scrollbar;
 
         /** 焦點狀態 */
         &:focus-visible:focus {
@@ -312,6 +314,11 @@
                 /* Focus outline 相關屬性 */
                 outline: var(--custom-select-outline-width) solid var(--custom-select-outline-color); /* 焦點外框 */
                 outline-offset: var(--custom-select-outline-offset); /* 焦點外框偏移 */
+
+                &.select-selected-placeholder {
+                    --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                    border-color: var(--custom-select-border-color);
+                }
             }
         }
 
