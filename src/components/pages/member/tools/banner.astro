@@ -21,12 +21,12 @@ const { IDName, className, style, attribute = {}, name = 'Jon Snow' } = Astro.pr
 <button
     id={IDName}
     class:list={[
-        ':uno-acct-mobile-menu: w-full fixed xl:static top-[calc(var(--header-height)+0.0625rem)] left-0 right-0 z-1045 py-0.8125rem xl:py-1.5rem bg-white xl:bg-transparent border-b border-gray-200 xl:border-b-0 xl:pointer-events-none [&.active_.collapseArrow]:rotate-180',
+        ':uno-acct-mobile-menu: w-full fixed xl:static top-[calc(var(--header-height)+0.0625rem)] left-0 right-0 z-1045 py-0.8125rem xl:py-1.5rem bg-white xl:bg-transparent border-b border-gray-200 xl:border-b-0 xl:cursor-default select-text [&.active_.collapseArrow]:rotate-180',
         className
     ]}
     style={style}
-    data-bs-toggle="offcanvas"
-    data-bs-target="#memberNavOffcanvas"
+    data-toggle="offcanvas"
+    data-target="#memberNavOffcanvas"
     aria-controls="memberNavOffcanvas"
     {...attribute}
 >
@@ -51,9 +51,33 @@ const { IDName, className, style, attribute = {}, name = 'Jon Snow' } = Astro.pr
      * - 實現漢堡選單圖示的動畫效果
      */
 
+    /** Modules */
+    import { Offcanvas } from '@js/components/common/offcanvas/offcanvas';
+
+    const DESKTOP_BREAKPOINT = 1280;
+
     // 取得 Offcanvas 元素和觸發按鈕
     const offcanvas = document.getElementById('memberNavOffcanvas') as HTMLElement;
-    const button = document.querySelector('button[data-bs-target="#memberNavOffcanvas"]') as HTMLButtonElement;
+    const button = document.querySelector('button[data-target="#memberNavOffcanvas"]') as HTMLButtonElement;
+    const offcanvasInstance = new Offcanvas(offcanvas);
+
+    const getIsDesktop = () => window.innerWidth >= DESKTOP_BREAKPOINT;
+
+    // 由程式控制開啟/關閉（>=1280 不啟用）
+    button?.addEventListener('click', (event) => {
+        if (getIsDesktop()) {
+            event.preventDefault();
+            return;
+        }
+
+        event.preventDefault();
+
+        if (offcanvas?.classList.contains('show')) {
+            offcanvasInstance.hide();
+        } else {
+            offcanvasInstance.show();
+        }
+    });
 
     // 監聽 Offcanvas 顯示事件
     offcanvas.addEventListener('show.bs.offcanvas', () => {
