@@ -1,9 +1,10 @@
 <script>
     import { mySwiperListen } from '@js/components/common/swiper/swiper';
+    import { A11y, Keyboard } from 'swiper/modules';
 
     const swipers = document.querySelectorAll('.section-relative-swiper') as NodeListOf<HTMLElement>;
     swipers.forEach((swiper) => {
-        mySwiperListen(swiper);
+        mySwiperListen(swiper, { modules: [A11y, Keyboard] });
     });
 </script>
 <script is:inline>
@@ -19,7 +20,7 @@
             if (type === 1) {
                 return `#${id} .pagination__arrow.pagination__arrow--${direction}`;
             } else {
-                return `#${id}Container .section-relative-navigatior-arrow--${direction}`;
+                return `#${id}Container .section-relative-navigatior-arrow--${direction} button`;
             }
         }
         return '';
@@ -292,6 +293,12 @@
                             }
                         },
                         navigation,
+                        a11y: {
+                            scrollOnFocus: true // ⭐重點
+                        },
+                        keyboard: {
+                            enabled: true
+                        },
                         on: {
                             breakpoint(swiperInstance, breakpoint) {
                                 // 直接從 Swiper 實例取得當前的 slidesPerGroup
