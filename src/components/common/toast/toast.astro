@@ -3,7 +3,7 @@
 /** Modal */
 import Modal from '@components/common/modal/modal.astro';
 /** Button */
-import ALink from '@components/common/link/link.astro';
+import ALink from '@components/common/button/button.astro';
 /** Style */
 import './toast.scss';
 ---
@@ -21,6 +21,7 @@ import './toast.scss';
         <div class="toast-footer" style="display: none;">
             <ALink
                 className="toast-button"
+                Tag="a"
                 link="#"
                 button
                 attribute={{ 'data-toast-button-primary': '' }}
@@ -29,6 +30,7 @@ import './toast.scss';
             />
             <ALink
                 className="toast-button"
+                Tag="a"
                 link="#"
                 button
                 attribute={{ 'data-toast-button-secondary': '' }}
