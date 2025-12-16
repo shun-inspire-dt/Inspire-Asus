@@ -49,7 +49,7 @@ const { IDName, className, style, attribute = {}, title = 'Title', count = 1, ty
         >
             {
                 Array.from({ length: count }).map((_, index) => (
-                    <div class="swiper-slide" data-index={index + 1}>
+                    <div class="swiper-slide" data-index={index + 1} tabindex="-1">
                         <slot />
                     </div>
                 ))
