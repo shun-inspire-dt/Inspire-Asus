@@ -12,20 +12,6 @@
 }
 
 .custom-select {
-    .select-selected {
-        /** 焦點狀態 */
-        &:focus,
-        &.select-arrow-active {
-            --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
-            /** Focus outline 相關屬性 */
-            --custom-select-outline-width: 0rem; /* 焦點外框寬度 */
-            --custom-select-outline-color: transparent; /* 焦點外框顏色 */
-            --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
-
-            border-color: var(--custom-select-border-color); /* 焦點邊框顏色 */
-        }
-    }
-
     /* 
      * 隱藏的原生 select 元素
      * 保留用於表單提交和無障礙功能，但在視覺上完全隱藏
@@ -38,6 +24,39 @@
                 --custom-select-placeholder-color: var(--color-blue-500, #006ce1);
                 --custom-select-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34302 6.11439L7.99987 11.7712L13.6567 6.11439" stroke="%23006ce1" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>');
                 --custom-select-background-size: 1rem;
+
+                /** 焦點狀態 */
+                &:focus:focus-visible {
+                    /* === 選擇器本體樣式變數 === */
+                    --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                    /** Focus outline 相關屬性 */
+                    --custom-select-outline-width: 0.125rem; /* 焦點外框寬度 */
+                    --custom-select-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+                    --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
+                    border-color: var(--custom-select-border-color); /* 焦點邊框顏色 */
+
+                    &.select-selected-placeholder {
+                        --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                        border-color: var(--custom-select-border-color);
+                    }
+                }
+            }
+            /** 焦點狀態 */
+            &:focus:focus-visible:not(:invalid):not(:disabled):not([data-read-only]) {
+                & ~ .select-selected {
+                    /* === 選擇器本體樣式變數 === */
+                    --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                    /** Focus outline 相關屬性 */
+                    --custom-select-outline-width: 0.125rem; /* 焦點外框寬度 */
+                    --custom-select-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
+                    --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
+                    border-color: var(--custom-select-border-color); /* 焦點邊框顏色 */
+
+                    &.select-selected-placeholder {
+                        --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                        border-color: var(--custom-select-border-color);
+                    }
+                }
             }
         }
     }

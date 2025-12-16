@@ -30,7 +30,7 @@ const {
     style,
     attribute = {},
     type = 'bottom',
-    start = 1,
+    start = 10,
     end = 10,
     total = 20,
     active = 1,
@@ -40,7 +40,7 @@ const {
     showSelect = true
 } = Astro.props as Props;
 const page = total / end;
-const pages = Array.from({ length: end }, (_, i) => ({ text: i + 1, value: i + 1 }));
+const pages = Array.from([10, 20, 30, 50], (x) => ({ text: x, value: x }));
 ---
 
 <div id={IDName} class:list={[className, 'member-sort', type]} style={style} {...attribute}>
@@ -61,7 +61,6 @@ const pages = Array.from({ length: end }, (_, i) => ({ text: i + 1, value: i + 1
                     value={start}
                     attribute={{ 'aria-label': '筆數' }}
                     className="member-page-select"
-                    style={{ width: '2.5rem' }}
                     prebuiltStructure
                 />
                 <span>筆</span>
