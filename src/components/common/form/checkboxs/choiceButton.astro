@@ -18,7 +18,9 @@ export interface Props {
     readonly?: 'readonly';
     checked?: boolean;
     attribute?: attribute;
+    inputAttribute?: attribute;
     aria?: aria;
+    inputAria?: aria;
 }
 
 const {
@@ -35,11 +37,19 @@ const {
     disabled,
     readonly,
     attribute = {},
-    aria = {}
+    inputAttribute = {},
+    aria = {},
+    inputAria = {}
 } = Astro.props as Props;
 ---
 
-<div id={id ? `${id}FromChoiceButton` : undefined} class:list={['form-choice-button', className]} data-name={name}>
+<div
+    id={id ? `${id}FromChoiceButton` : undefined}
+    class:list={['form-choice-button', className]}
+    data-name={name}
+    {...attribute}
+    {...aria}
+>
     <input
         id={id}
         class:list={['btn-choice', inputClassName]}
@@ -52,8 +62,8 @@ const {
         required={required}
         autocomplete="off"
         aria-label={title}
-        {...attribute}
-        {...aria}
+        {...inputAttribute}
+        {...inputAria}
     />
     <label class:list={['btn-choice-label', labelClassName]} for={id}>
         <slot />
