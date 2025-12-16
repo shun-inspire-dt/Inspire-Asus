@@ -1,8 +1,9 @@
 .section-relative-swiper-container {
-    @apply w-full relative;
+    @apply w-full relative my--0.25rem;
 
     .swiper {
         @apply container-fluid;
+        padding: 0.25rem !important;
     }
 
     /*  */
@@ -11,21 +12,23 @@
         @apply flex items-center justify-center;
         @apply px-1rem md:px-1.25rem xl:px-0;
         @apply absolute top-1/2 -translate-y-1/2 z-3;
-
-        &.swiper-button-disabled {
-            @apply opacity-0 pointer-events-none cursor-not-allowed;
+        
+        button {
+            &.swiper-button-disabled {
+                @apply opacity-0 pointer-events-none cursor-not-allowed;
+            }
         }
     }
     .section-relative-navigatior-arrow--prev {
-        @apply left-0 xl:left-[calc(6.25%-5.5rem)];
+        @apply left-0 xl:left-[calc(6.25%-5.5rem+0.25rem)];
         @media screen and (min-width: 1440.1px) {
-            left: calc(((100% - 1260px) / 2) - 5.5rem);
+            left: calc(((100% - 1260px) / 2) - 5.5rem + 0.25rem);
         }
     }
     .section-relative-navigatior-arrow--next {
-        @apply right-0 xl:right-[calc(6.25%-5.5rem)];
+        @apply right-0 xl:right-[calc(6.25%-5.5rem+0.25rem)];
         @media screen and (min-width: 1440.1px) {
-            right: calc(((100% - 1260px) / 2) - 5.5rem);
+            right: calc(((100% - 1260px) / 2) - 5.5rem + 0.25rem);
         }
     }
 }
