@@ -28,12 +28,12 @@
                 /** 焦點狀態 */
                 &:focus:focus-visible {
                     /* === 選擇器本體樣式變數 === */
-                    --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                    --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                     /** Focus outline 相關屬性 */
                     --custom-select-outline-width: 0.125rem; /* 焦點外框寬度 */
                     --custom-select-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
-                    --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
-                    border-color: var(--custom-select-border-color); /* 焦點邊框顏色 */
+                    --custom-select-outline-offset: 2px; /* 焦點外框偏移 */
+                    border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
 
                     &.select-selected-placeholder {
                         --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
@@ -45,12 +45,12 @@
             &:focus:focus-visible:not(:invalid):not(:disabled):not([data-read-only]) {
                 & ~ .select-selected {
                     /* === 選擇器本體樣式變數 === */
-                    --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
+                    --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                     /** Focus outline 相關屬性 */
                     --custom-select-outline-width: 0.125rem; /* 焦點外框寬度 */
                     --custom-select-outline-color: var(--color-blue-500, #006ce1); /* 焦點外框顏色 */
-                    --custom-select-outline-offset: 0rem; /* 焦點外框偏移 */
-                    border-color: var(--custom-select-border-color); /* 焦點邊框顏色 */
+                    --custom-select-outline-offset: 2px; /* 焦點外框偏移 */
+                    border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
 
                     &.select-selected-placeholder {
                         --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
