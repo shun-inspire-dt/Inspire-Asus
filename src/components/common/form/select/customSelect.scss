@@ -91,7 +91,7 @@
     --custom-select-item-transition-duration: 200ms; /* 連結過渡時間 */
 
     /* 設定為相對定位，作為下拉選項的定位參考 */
-    @apply relative;
+    @apply w-full relative;
 
     /*
      * 選擇器顯示區域 (select-selected)
