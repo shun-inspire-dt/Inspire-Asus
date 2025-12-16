@@ -44,6 +44,22 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
         <InputGroup label="電子信箱" errorText="請輸入您的電子郵件" error block>
             <Input type="email" inputmode="email" />
         </InputGroup>
+        <InputGroup label="您是如何得知 ExpertHub 網站？" block>
+            <Select
+                data={[
+                    { text: 'ASUS 業務邀請', value: 'ASUS 業務邀請' },
+                    { text: '合作夥伴推薦', value: '合作夥伴推薦' },
+                    { text: '社群媒體', value: '社群媒體' },
+                    { text: '線上搜尋（Google 等）', value: '線上搜尋（Google 等）' },
+                    { text: '網路廣告', value: '網路廣告' },
+                    { text: '媒體報導', value: '媒體報導' },
+                    { text: '參與華碩相關活動／研討會', value: '參與華碩相關活動／研討會' },
+                    { text: 'LINE 官方帳號', value: 'LINE 官方帳號' },
+                    { text: '其他來源', value: '其他來源' }
+                ]}
+                value="ASUS 業務邀請"
+            />
+        </InputGroup>
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
