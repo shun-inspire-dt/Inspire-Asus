@@ -23,15 +23,13 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
         {data?.map((item) => <Filter title={item.title} show={item.show} more={item.more} data={item.children} />)}
     </div>
     <Button
-        variant="blue"
-        className=":uno-category-back-button: !sticky top-72px mt-2.5rem z-10"
-        size="lg"
+        className=":uno-category-back-button: w-full h-3rem flex items-center justify-center bg-white rounded-lg sticky top-72px mt-2.5rem z-10 text-16 lh-120 text-gray-900 font-400 text-center transition-colors duration-200 ease-in-out [&:hover_span]:text-blue-500 [&:hover_span]:underline [&:hover_span]:underline-offset-3 [&:focus-within_span]:text-blue-600 [&.border]:border [&.border]:border-gray-200"
         title="返回篩選"
-        block
-        attribute={{ 'data-toggle': 'back', 'data-target': '[data-filter]' }}
+        button={false}
+        attribute={{ 'data-toggle': 'back', 'data-target': '#SolutionList' }}
         style={{ visibility: 'hidden' }}
     >
-        返回篩選
+        <span>返回篩選</span>
     </Button>
 </div>
 
@@ -69,13 +67,17 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
 
             // 按鈕點擊事件：平滑滾動回到 data-filter
             backButton.addEventListener('click', () => {
-                const container = backButton.parentElement?.querySelector('[data-filter]') as HTMLElement;
+                const { target = '', offset = '0' } = backButton.dataset || {};
+                const container = document.querySelector(target) as HTMLElement;
                 // 檢查 container 是否存在
                 if (!container) return;
+                const header = document.querySelector('header') as HTMLElement;
+                const headerHeight = header ? header.getBoundingClientRect().height : 0;
                 const rect = container.getBoundingClientRect();
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const elementPosition = rect.top + scrollTop;
-                const offsetPosition = elementPosition - 48 - 20; // 減去 header 高度
+                const offsetNum = parseInt(offset, 10) || 0;
+                const offsetPosition = elementPosition - headerHeight - offsetNum; // 減去 header 高度和自定義偏移
 
                 window.scrollTo({
                     top: offsetPosition,
