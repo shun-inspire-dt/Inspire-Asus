@@ -4,6 +4,17 @@
     .swiper {
         @apply container-fluid;
         padding: 0.25rem !important;
+
+        .swiper-wrapper {
+            @apply items-stretch;
+        }
+        .swiper-slide {
+            height: auto;
+
+            & > * {
+                height: 100%;
+            }
+        }
     }
 
     /*  */
