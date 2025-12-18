@@ -101,7 +101,7 @@
             padding-right: var(--headerNav-gap);
 
             /* 懸停時添加底部線條 */
-            &:hover > .headerNavLink::after {
+            &:is(:hover, [data-mega-menu-open]) > .headerNavLink::after {
                 background-color: var(--headerNav-active-bottom-line-color);
             }
             /* 第一個導航項目添加左邊框 */
@@ -111,8 +111,9 @@
             &:last-child {
                 padding-right: 0;
             }
-            /** */
-            &[data-mega-menu-trigger]:is(:hover, :focus-within) {
+            /** Mega Menu Trigger - 大型選單觸發器：懸停時顯示半透明遮罩 */
+            &[data-mega-menu-trigger]:hover,
+            &[data-mega-menu-trigger][data-mega-menu-open] {
                 &::after {
                     content: '';
                     position: fixed;

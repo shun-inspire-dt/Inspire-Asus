@@ -89,11 +89,19 @@
  */
 [data-mega-menu-trigger] {
     /* === Hover Activation - 懸停啟動 === */
-    &:is(:hover, :focus-within) [data-mega-menu] {
+    &:hover [data-mega-menu] {
         /* 懸停時顯示選單：完全不透明、可見、回到原位 */
         @apply opacity-100 visible translate-y-0;
 
         /* 懸停時的過渡動畫（移除延遲） */
+        &[data-mega-menu-transition] {
+            transition: visibility 0s, /* 立即顯示 */ transform 0.2s ease-in-out, /* 變形過渡 */ opacity 0.2s ease-in-out; /* 透明度過渡 */
+        }
+    }
+
+    &[data-mega-menu-open] [data-mega-menu] {
+        @apply opacity-100 visible translate-y-0;
+
         &[data-mega-menu-transition] {
             transition: visibility 0s, /* 立即顯示 */ transform 0.2s ease-in-out, /* 變形過渡 */ opacity 0.2s ease-in-out; /* 透明度過渡 */
         }

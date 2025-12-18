@@ -98,3 +98,120 @@ const { IDName = 'headerNav', className, style, attribute = {}, data = [], type 
         }
     </nav>
 </div>
+
+<script>
+    const headerNavRoot = document.getElementById("headerNav") as HTMLElement;
+
+    if (headerNavRoot) {
+        let openItem: HTMLElement | null = null;
+        let openItemOpenedByKeyboard = false;
+        let openItemMouseEntered = false;
+
+        const closeAll = () => {
+            headerNavRoot
+                .querySelectorAll('[data-mega-menu-trigger][data-mega-menu-open]')
+                .forEach((el) => el.removeAttribute('data-mega-menu-open'));
+
+            openItem = null;
+            openItemOpenedByKeyboard = false;
+            openItemMouseEntered = false;
+        };
+
+        const setOpen = (item: HTMLElement, byKeyboard: boolean) => {
+            closeAll();
+            item.setAttribute('data-mega-menu-open', '');
+            openItem = item;
+            openItemOpenedByKeyboard = Boolean(byKeyboard);
+            openItemMouseEntered = false;
+        };
+
+        const getItemFromTarget = (target: EventTarget | null): HTMLElement | null => {
+            if (!(target instanceof Element)) return null;
+            return target.closest('.headerNavItem[data-mega-menu-trigger]') as HTMLElement | null;
+        };
+
+        headerNavRoot.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (!(event instanceof KeyboardEvent)) return;
+
+            const item = getItemFromTarget(event.target);
+            if (!item) return;
+
+            const link = item.querySelector(':scope > .headerNavLink');
+            if (!link) return;
+
+            if (event.key === 'Escape') {
+                item.removeAttribute('data-mega-menu-open');
+                if (openItem === item) closeAll();
+                return;
+            }
+
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            if (!link.matches(':focus-visible')) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const isOpen = item.hasAttribute('data-mega-menu-open');
+            if (isOpen) {
+                closeAll();
+                return;
+            }
+
+            setOpen(item, true);
+        });
+
+        headerNavRoot.addEventListener('focusin', (event: FocusEvent) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+            if (!openItem) return;
+            if (openItem.contains(target)) return;
+            closeAll();
+        });
+
+        headerNavRoot.addEventListener('mouseover', (event: MouseEvent) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+
+            const item = target.closest('.headerNavItem[data-mega-menu-trigger]') as HTMLElement | null;
+            if (!item) return;
+
+            if (openItem && item !== openItem) {
+                closeAll();
+                return;
+            }
+
+            if (openItem && item === openItem && openItemOpenedByKeyboard) {
+                openItemMouseEntered = true;
+            }
+        });
+
+        headerNavRoot.addEventListener('mouseout', (event: MouseEvent) => {
+            const target = event.target;
+            if (!(target instanceof Element)) return;
+
+            const item = target.closest('.headerNavItem[data-mega-menu-trigger]') as HTMLElement | null;
+            if (!item) return;
+            if (!openItem || item !== openItem) return;
+            if (!openItemOpenedByKeyboard || !openItemMouseEntered) return;
+
+            const related = event.relatedTarget;
+            if (related instanceof Node && item.contains(related)) return;
+
+            closeAll();
+        });
+
+        document.addEventListener('pointerdown', (event: PointerEvent) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+            if (headerNavRoot.contains(target)) return;
+            closeAll();
+        });
+
+        document.addEventListener('focusin', (event: FocusEvent) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+            if (headerNavRoot.contains(target)) return;
+            closeAll();
+        });
+    }
+</script>
