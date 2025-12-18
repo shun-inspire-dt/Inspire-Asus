@@ -32,7 +32,13 @@ const image = bannerImage('index-banner');
                     <path d="M12 8L6 11.4641L6 4.5359L12 8Z" fill="var(--color-gray-900, #818181)"></path>
                 </svg>
             </button>
-            <button type="button" class="swiper-button-pause" style="display: none;" title="Pause" aria-label="Pause the carousel">
+            <button
+                type="button"
+                class="swiper-button-pause"
+                style="display: none;"
+                title="Pause"
+                aria-label="Pause the carousel"
+            >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="9" y="4.66602" width="1.66667" height="6.66667" rx="0.833333" fill="var(--color-gray-900, #818181)"
                     ></rect>
@@ -79,14 +85,14 @@ const image = bannerImage('index-banner');
     import { mySwiper } from '@js/components/common/swiper/swiper';
     import { Autoplay, A11y, Keyboard } from 'swiper/modules';
 
-     let ignorePauseOnMouseEnterUntilLeave = false;
+    let ignorePauseOnMouseEnterUntilLeave = false;
 
     mySwiper('#IndexBannerSwiper', {
         modules: [Autoplay, A11y, Keyboard],
         speed: 1000,
         autoplay: {
             delay: 3000,
-            pauseOnMouseEnter: true,
+            pauseOnMouseEnter: true
         },
         a11y: {
             enabled: true,
@@ -207,24 +213,39 @@ const image = bannerImage('index-banner');
                 }
 
                 if (playButton && pauseButton) {
-                    playButton.addEventListener('click', () => {
-                        ignorePauseOnMouseEnterUntilLeave = true;
-                        if (swiper.autoplay.paused) {
-                            swiper.autoplay.resume();
-                        } else {
-                            swiper.autoplay.start();
-                        }
-                        setTimeout(() => {
-                            if (ignorePauseOnMouseEnterUntilLeave && swiper.autoplay.paused) {
-                                swiper.autoplay.resume();
-                            }
-                        }, 0);
-                    });
+                    ['click', 'keydown'].forEach((eventType) => {
+                        playButton.addEventListener(eventType, (event: Event) => {
 
-                    pauseButton.addEventListener('click', () => {
-                        if (swiper.autoplay.running && !swiper.autoplay.paused) {
-                            swiper.autoplay.pause();
-                        }
+                            if (eventType === 'keydown' && !(event instanceof KeyboardEvent)) return;
+                            if (eventType === 'keydown' && (event as KeyboardEvent).key !== 'Enter' && (event as KeyboardEvent).key !== ' ') return;
+
+                            event.stopPropagation();
+                            event.preventDefault();
+                            
+                            ignorePauseOnMouseEnterUntilLeave = true;
+                            if (swiper.autoplay.paused) {
+                                swiper.autoplay.resume();
+                            } else {
+                                swiper.autoplay.start();
+                            }
+                            setTimeout(() => {
+                                if (ignorePauseOnMouseEnterUntilLeave && swiper.autoplay.paused) {
+                                    swiper.autoplay.resume();
+                                }
+                            }, 0);
+                        });
+
+                        pauseButton.addEventListener(eventType, (event: Event) => {
+                            if (eventType === 'keydown' && !(event instanceof KeyboardEvent)) return;
+                            if (eventType === 'keydown' && (event as KeyboardEvent).key !== 'Enter' && (event as KeyboardEvent).key !== ' ') return;
+                            
+                            event.stopPropagation();
+                            event.preventDefault();
+
+                            if (swiper.autoplay.running && !swiper.autoplay.paused) {
+                                swiper.autoplay.pause();
+                            }
+                        });
                     });
                 }
             }
