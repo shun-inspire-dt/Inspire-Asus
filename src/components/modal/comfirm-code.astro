@@ -37,6 +37,7 @@ const { IDName = 'ComfirmCode', className, style, attribute = {} } = Astro.props
         action: '',
         id: `${IDName}Form`,
         'data-report-validity': 'false',
+        'data-needs-loading': 'true',
         novalidate: true
     }}
     contentClass="needs-validation"
@@ -48,8 +49,17 @@ const { IDName = 'ComfirmCode', className, style, attribute = {} } = Astro.props
         <strong id="verifyEmail"></strong>
         ，請輸入驗證碼以完成登入。
     </p>
-    <InputGroup label="請輸入驗證碼" infoText="驗證碼有效期限為 5 分鐘" error errorText="驗證碼錯誤或已過期" block>
-        <Input id="loginVerifyCode" name="loginVerifyCode" required placeholder="請輸入6位數驗證碼" />
+    <InputGroup label="請輸入驗證碼" infoText="驗證碼有效期限為 5 分鐘" error errorText="" block>
+        <Input
+            id="loginVerifyCode"
+            name="loginVerifyCode"
+            required
+            placeholder="請輸入6位數驗證碼"
+            attribute={{
+                'data-valid': 'async',
+                'data-target': 'verifyCode'
+            }}
+        />
     </InputGroup>
     <div style="margin: 0 auto;">
         <span style="color: var(--color-gray-600);">沒收到驗證碼？</span>
