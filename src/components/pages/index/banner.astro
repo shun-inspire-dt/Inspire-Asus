@@ -96,10 +96,14 @@ const image = bannerImage('index-banner');
         },
         a11y: {
             enabled: true,
-            scrollOnFocus: true // ⭐重點
+            scrollOnFocus: true, // ⭐重點
+            nextSlideMessage: '',
+            prevSlideMessage: '',
+            firstSlideMessage: '',
+            lastSlideMessage: ''
         },
         keyboard: {
-            enabled: true
+            enabled: false
         },
         pagination: {
             el: '.swiper-pagination',
@@ -195,6 +199,7 @@ const image = bannerImage('index-banner');
                 const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
 
                 swiper.el?.addEventListener('mouseleave', () => {
+                    console.log('Index Banner Swiper Mouse Leave');
                     ignorePauseOnMouseEnterUntilLeave = false;
                 });
 
@@ -215,35 +220,52 @@ const image = bannerImage('index-banner');
                 if (playButton && pauseButton) {
                     ['click', 'keydown'].forEach((eventType) => {
                         playButton.addEventListener(eventType, (event: Event) => {
-
                             if (eventType === 'keydown' && !(event instanceof KeyboardEvent)) return;
-                            if (eventType === 'keydown' && (event as KeyboardEvent).key !== 'Enter' && (event as KeyboardEvent).key !== ' ') return;
+                            if (
+                                eventType === 'keydown' &&
+                                (event as KeyboardEvent).key !== 'Enter' &&
+                                (event as KeyboardEvent).key !== ' '
+                            )
+                                return;
 
                             event.stopPropagation();
                             event.preventDefault();
-                            
+
                             ignorePauseOnMouseEnterUntilLeave = true;
                             if (swiper.autoplay.paused) {
                                 swiper.autoplay.resume();
                             } else {
                                 swiper.autoplay.start();
                             }
-                            setTimeout(() => {
-                                if (ignorePauseOnMouseEnterUntilLeave && swiper.autoplay.paused) {
-                                    swiper.autoplay.resume();
-                                }
-                            }, 0);
+
+                            if (eventType === 'keydown') {
+                                setTimeout(() => {
+                                    pauseButton.focus();
+                                }, 200);
+                            }
                         });
 
                         pauseButton.addEventListener(eventType, (event: Event) => {
                             if (eventType === 'keydown' && !(event instanceof KeyboardEvent)) return;
-                            if (eventType === 'keydown' && (event as KeyboardEvent).key !== 'Enter' && (event as KeyboardEvent).key !== ' ') return;
-                            
+                            if (
+                                eventType === 'keydown' &&
+                                (event as KeyboardEvent).key !== 'Enter' &&
+                                (event as KeyboardEvent).key !== ' '
+                            )
+                                return;
+
                             event.stopPropagation();
                             event.preventDefault();
 
+                            ignorePauseOnMouseEnterUntilLeave = false;
                             if (swiper.autoplay.running && !swiper.autoplay.paused) {
                                 swiper.autoplay.pause();
+                            }
+
+                            if (eventType === 'keydown') {
+                                setTimeout(() => {
+                                    playButton.focus();
+                                }, 200);
                             }
                         });
                     });
