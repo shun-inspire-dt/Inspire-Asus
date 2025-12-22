@@ -37,3 +37,4 @@ docs/
 *.log
 PlopJS/
 * copy.*
+*.copy.astro
