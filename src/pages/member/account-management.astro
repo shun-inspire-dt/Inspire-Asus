@@ -34,6 +34,12 @@ import '@scss/pages/member/account-management.scss';
      * @author ASUS Team
      * @version 1.0.0
      */
+    class API {
+        headers = new Headers({
+            'Content-Type': 'application/json',
+            token: '123'
+        });
+    }
     class EmailUpdateManager {
         /**
          * 建構函式
