@@ -7,6 +7,7 @@ import { useScrollSpy } from '@js/helpers/hook/useScrollSpy';
 import { useWebpDetect } from '@js/helpers/hook/useWebpDetect';
 import { useClassWatcher } from '@js/helpers/hook/useClassWatcher';
 import { useCheckboxGroup } from '@js/helpers/hook/useCheckboxGroup';
+import { useFormValidator, FormValidator } from '@js/helpers/hook/useFormValidator';
 
 export {
     useNumber,
@@ -18,5 +19,7 @@ export {
     useAddressByCustomSelect,
     useToggleBlocks,
     useClassWatcher,
-    useCheckboxGroup
+    useCheckboxGroup,
+    useFormValidator,
+    FormValidator
 };
