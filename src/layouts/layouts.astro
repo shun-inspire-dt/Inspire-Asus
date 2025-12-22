@@ -148,7 +148,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<html lang="zh-TW">
+<html dir="auto" lang="zh-TW">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -222,7 +222,6 @@ const {
             <slot />
         </main>
         {isMemberFooter ? <MemberFooter /> : <Footer pages={footerPages} showBorderTop={footerShowBorderTop} />}
-        <Script />
         <Toast />
         <slot name="script" />
     </body>

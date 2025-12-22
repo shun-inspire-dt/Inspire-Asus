@@ -319,9 +319,13 @@ body {
 
 main {
     position: relative;
+    max-width: 160rem;
     &.margin-top {
         margin-top: var(--header-height);
     }
+}
+[dir] main {
+    margin: auto;
 }
 
 :where(a, button, [role='button'], [role='link']) {
