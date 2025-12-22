@@ -1,0 +1,81 @@
+<script is:inline>
+    // 全局 Toast 實例
+    const toastEl = document.getElementById('toastModal');
+    const header = () =>
+        new Headers({
+            'Content-Type': 'application/json',
+            token: '123'
+        });
+    // 初始化所有需要驗證的表單
+    const checkPWD = async (password) => {
+        const raw = JSON.stringify({
+            password
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header(),
+            body: raw
+        };
+
+        return await fetch('https://shun-fast-api.zeabur.app/api/form/check-password', requestOptions)
+            .then((response) => response.json())
+            .then((result) => result)
+            .catch((error) => {
+                console.error('Password check error:', error.message);
+                return { success: false, message: '驗證失敗' };
+            });
+    };
+
+    const form = document.getElementById('UpdatePasswordForm');
+    const validation = new FormValidator(form, {
+        asyncValidators: {
+            checkPWD: async (input) => {
+                const result = await checkPWD(input.value);
+                return result.success ? true : { feedback: '舊密碼輸入錯誤' };
+            }
+        },
+        async onValidSubmit({ controls }) {
+            try {
+                const { 'confirm-password': RpasswordEl, password: passwordEl } = controls || {};
+
+                const raw = JSON.stringify({
+                    password: RpasswordEl.value
+                });
+
+                const requestOptions = {
+                    method: 'POST',
+                    headers: header(),
+                    body: raw
+                };
+
+                await fetch('https://shun-fast-api.zeabur.app/api/form/strict-update-password', requestOptions)
+                    .then((response) => response.json())
+                    .then((result) => {
+                        if (result.success) {
+                            toastEl.dispatchEvent(
+                                new CustomEvent('fire', {
+                                    detail: { title: '成功', text: result.message }
+                                })
+                            );
+                        } else {
+                            RpasswordEl.value = '';
+                            passwordEl.value = '';
+                            validation.triggerValidation(passwordEl, true, result.message || '舊密碼輸入錯誤');
+                            validation.triggerValidation(RpasswordEl, true, '新密碼與確認密碼不一致');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Password check error:', error.message);
+                        toastEl.dispatchEvent(
+                            new CustomEvent('fire', {
+                                detail: { title: '錯誤', text: '密碼驗證過程中發生錯誤' }
+                            })
+                        );
+                    });
+            } catch (error) {
+                console.error('Toast dispatch error:', error);
+            }
+        }
+    });
+</script>

@@ -24,35 +24,36 @@ const { IDName = 'UpdatePasswordForm', className, style, attribute = {} } = Astr
     class:list={[className, ':uno-update-password-form: flex flex-col gap-2rem md:gap-1.25rem xl:gap-1.5rem needs-validation']}
     style={style}
     {...attribute}
-    action="/member/order-aocc"
+    action=""
     novalidate
+    data-needs-loading="true"
 >
     <div class=":uno-section-half-form-grid-item: xl:w-1/2 flex flex-col gap-1.5rem">
-        <InputGroup
-            label="舊密碼"
-            infoText="請輸入您的舊密碼"
-            errorText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
-            block
-            error
-        >
-            <PasswordInput inputId="old-password" required />
+        <InputGroup label="舊密碼" infoText="請輸入您的舊密碼" errorText="" block error>
+            <PasswordInput
+                inputId="old-password"
+                required
+                inputAttribute={{
+                    'data-valid': 'async',
+                    'data-target': 'checkPWD'
+                }}
+            />
         </InputGroup>
-        <InputGroup
-            label="新密碼"
-            infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
-            errorText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
-            block
-            error
-        >
-            <PasswordInput inputId="password" required />
+        <InputGroup label="新密碼" infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。" errorText="" block error>
+            <PasswordInput
+                inputId="password"
+                inputAttribute={{ pattern: `(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9])[!-~]{8,25}` }}
+                required
+            />
         </InputGroup>
-        <InputGroup label="再次輸入您的新密碼" infoText="請您再次輸入您的新密碼" errorText="與新密碼不符合" block error>
+        <InputGroup label="再次輸入您的新密碼" infoText="請您再次輸入您的新密碼" errorText="" block error>
             <PasswordInput
                 inputId="confirm-password"
                 required
                 inputAttribute={{
                     'data-valid': 'confirm',
-                    'data-target': '#password'
+                    'data-target': '#password',
+                    'data-valid-feedback': '與新密碼不符合'
                 }}
             />
         </InputGroup>
@@ -72,14 +73,3 @@ const { IDName = 'UpdatePasswordForm', className, style, attribute = {} } = Astr
         </div>
     </div>
 </form>
-
-<script>
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     const form = document.getElementById('UpdatePasswordForm') as HTMLFormElement;
-    //     form.addEventListener('submit', (event) => {
-    //         event.preventDefault();
-    //         if (!form.checkValidity()) return;
-    //         console.log("submit !!");
-    //     });
-    // });
-</script>

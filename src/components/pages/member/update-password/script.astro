@@ -1,0 +1,87 @@
+<script>
+    /** Type */
+    import type { options as ToastOptions } from '@js/components/common/toast/toast';
+    /** Modules */
+    import { FormValidator } from '@js/helpers/hook';
+
+    // 全局 Toast 實例
+    const toastEl = document.getElementById('toastModal') as HTMLDivElement;
+    const header = () =>
+        new Headers({
+            'Content-Type': 'application/json',
+            token: '123'
+        });
+    // 初始化所有需要驗證的表單
+    const checkPWD = async (password: string): Promise<{ success: boolean; message: string }> => {
+        const raw = JSON.stringify({
+            password
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header(),
+            body: raw
+        } as RequestInit;
+
+        return await fetch('https://shun-fast-api.zeabur.app/api/form/check-password', requestOptions)
+            .then((response) => response.json())
+            .then((result) => result)
+            .catch((error: Error) => {
+                console.error('Password check error:', error.message);
+                return { success: false, message: '驗證失敗' };
+            });
+    };
+
+    const form = document.getElementById('UpdatePasswordForm') as HTMLFormElement;
+    const validation = new FormValidator(form, {
+        asyncValidators: {
+            checkPWD: async (input) => {
+                const result = await checkPWD(input.value);
+                return result.success ? true : { feedback: '舊密碼輸入錯誤' };
+            }
+        },
+        async onValidSubmit({ controls }: { controls: Record<string, Element> }) {
+            try {
+                const { 'confirm-password': RpasswordEl, password: passwordEl } =
+                    (controls as Record<string, HTMLInputElement>) || {};
+
+                const raw = JSON.stringify({
+                    password: RpasswordEl.value
+                });
+
+                const requestOptions = {
+                    method: 'POST',
+                    headers: header(),
+                    body: raw
+                } as RequestInit;
+
+                await fetch('https://shun-fast-api.zeabur.app/api/form/strict-update-password', requestOptions)
+                    .then((response) => response.json())
+                    .then((result: { success: boolean; message?: string }) => {
+                        if (result.success) {
+                            toastEl.dispatchEvent(
+                                new CustomEvent('fire', {
+                                    detail: { title: '成功', text: result.message } as ToastOptions
+                                })
+                            );
+                        } else {
+                            RpasswordEl.value = '';
+                            passwordEl.value = '';
+                            validation.triggerValidation(passwordEl, true, result.message || '舊密碼輸入錯誤');
+                            validation.triggerValidation(RpasswordEl, true, '新密碼與確認密碼不一致');
+                        }
+                    })
+                    .catch((error: Error) => {
+                        console.error('Password check error:', error.message);
+                        toastEl.dispatchEvent(
+                            new CustomEvent('fire', {
+                                detail: { title: '錯誤', text: '密碼驗證過程中發生錯誤' } as ToastOptions
+                            })
+                        );
+                    });
+            } catch (error) {
+                console.error('Toast dispatch error:', error);
+            }
+        }
+    });
+</script>
