@@ -1,0 +1,235 @@
+<script>
+    /** Type */
+    import type { options as ToastOptions } from '@js/components/common/toast/toast';
+    /** Modules */
+    import { FormValidator } from '@js/helpers/hook';
+
+    /** 驗證碼功能 */
+    let resendCountdownTimer: NodeJS.Timeout | string | number | undefined;
+    let resendCountdownSeconds = 0;
+    const header = () =>
+        new Headers({
+            'Content-Type': 'application/json',
+            token: '123'
+        });
+    // 全局 Toast 實例
+    const toastEl = document.getElementById('toastModal') as HTMLDivElement;
+    const CodeModalEl = document.querySelector('#ComfirmCodeModal') as HTMLElement;
+    const form = document.getElementById('LoginForm') as HTMLFormElement;
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const codeForm = document.getElementById('ComfirmCodeForm') as HTMLFormElement;
+    const verifyEmailEl = document.getElementById('verifyEmail') as HTMLSpanElement;
+    const resendCodeBtn = document.getElementById('resendCodeBtn') as HTMLLinkElement;
+    const resendCountdown = document.getElementById('resendCountdown') as HTMLSpanElement;
+    const codeInput = codeForm?.querySelector('#loginVerifyCode') as HTMLInputElement;
+    const infoTextEl = codeForm?.querySelector('#loginVerifyCode + .info-text') as HTMLSpanElement;
+    // 隱藏部分 email
+    const maskEmail = (email: string) => {
+        if (!email) return '';
+        const parts = email.split('@');
+        if (parts.length !== 2) return email;
+
+        const name = parts[0];
+        const domain = parts[1];
+
+        if (name.length <= 2) {
+            return name.charAt(0) + '***@' + domain;
+        }
+
+        const visiblePart = name.substring(0, 2);
+        return visiblePart + '***@' + domain;
+    };
+    // 開始重發倒數
+    const startResendCountdown = () => {
+        resendCountdownSeconds = 60;
+        toggleCountdownDisplay(true);
+        updateCountdownDisplay();
+
+        if (resendCountdownTimer) {
+            clearInterval(resendCountdownTimer);
+            resendCountdownTimer = undefined;
+        }
+
+        resendCountdownTimer = setInterval(() => {
+            resendCountdownSeconds--;
+            if (resendCountdownSeconds <= 0) {
+                clearInterval(resendCountdownTimer);
+                toggleCountdownDisplay(false);
+            } else {
+                updateCountdownDisplay();
+            }
+        }, 1000);
+    };
+    // 更新倒數顯示
+    const toggleCountdownDisplay = (show: boolean) => {
+        if (show) {
+            resendCodeBtn.style.display = 'none';
+            resendCountdown.style.display = 'inline';
+        } else {
+            resendCodeBtn.style.display = 'inline';
+            resendCountdown.style.display = 'none';
+        }
+    };
+    const updateCountdownDisplay = () => {
+        document.getElementById('resendCountdown')!.textContent = `(${resendCountdownSeconds} 秒後可重新發送)`;
+    };
+    const updateInfoText = (text?: string) => {
+        if (infoTextEl) {
+            if (text) {
+                infoTextEl.setAttribute('data-original-message', infoTextEl.textContent);
+                infoTextEl.textContent = text;
+            } else {
+                const originalMessage = infoTextEl.getAttribute('data-original-message') || '';
+                if (originalMessage) infoTextEl.textContent = originalMessage;
+            }
+        }
+    };
+    // 模態框關閉時的清理工作
+    const modalHiddenClear = () => {
+        clearInterval(resendCountdownTimer);
+        resendCountdownSeconds = 0;
+        toggleCountdownDisplay(false);
+        updateCountdownDisplay();
+        if (codeForm) codeForm.reset();
+        verifyEmailEl!.textContent = '';
+        updateInfoText();
+    };
+    const sendCodeApi = async (email: string) => {
+        const raw = JSON.stringify({ email });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header(),
+            body: raw
+        };
+
+        return await fetch('https://shun-fast-api.zeabur.app/api/form/sendCode', requestOptions)
+            .then((response) => response.json())
+            .then((result) => result)
+            .catch((error) => {
+                console.error('Send code error:', error);
+                return { success: false, message: '碼驗證發送失敗' };
+            });
+    };
+    const checkCodeApi = async (code: string) => {
+        const raw = JSON.stringify({ code });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: header(),
+            body: raw
+        };
+
+        return await fetch('https://shun-fast-api.zeabur.app/api/form/checkCode', requestOptions)
+            .then((response) => response.json())
+            .then((result) => result)
+            .catch((error) => {
+                console.error('Check code error:', error);
+                return { success: false, message: '驗證碼驗證失敗' };
+            });
+    };
+    const sendCode = async (email: string, validator?: FormValidator) => {
+        if (!resendCodeBtn || resendCodeBtn.classList.contains('disabled') || resendCodeBtn.disabled) return;
+        try {
+            resendCodeBtn.classList.add('disabled');
+            resendCodeBtn.disabled = true;
+            await sendCodeApi(email);
+
+            // 重新開始倒數
+            startResendCountdown();
+        } catch (error) {
+            console.error('Resend code error:', error);
+            if (validator) {
+                const errorMessage = error instanceof Error ? error.message : '驗證碼發送失敗，請重試';
+                validator.triggerValidation(codeInput as HTMLInputElement, true, errorMessage);
+            }
+        } finally {
+            if (resendCodeBtn.classList && resendCodeBtn.classList.contains('disabled')) {
+                resendCodeBtn.classList.remove('disabled');
+            }
+            resendCodeBtn.disabled = false;
+        }
+    };
+    const sendCodeClick = (email: string, validator: FormValidator) => {
+        resendCodeBtn.addEventListener('click', async function () {
+            try {
+                await sendCode(email, validator);
+                // 顯示成功訊息
+                updateInfoText('驗證碼已重新發送');
+            } catch (error) {
+                console.error('Send code click error:', error);
+                updateInfoText();
+            }
+        });
+    };
+    // Handle login success - show code verification modal
+    const loginSuccess = (controls: Record<string, Element>) => {
+        const emailEl = controls['email'] as HTMLInputElement;
+        // 被隱藏的 Email String，用於顯示在彈窗中
+        const maskedEmail = maskEmail(emailEl.value);
+        try {
+            sendCode(emailEl.value);
+
+            // 隱藏部分 email
+            verifyEmailEl!.textContent = maskedEmail;
+
+            // 清空驗證碼輸入框
+            if (codeForm) codeForm.reset();
+
+            // 開始重發倒數
+            startResendCountdown();
+        } catch (error) {
+            toastEl.dispatchEvent(
+                new CustomEvent('fire', {
+                    detail: { title: '錯誤', text: '驗證碼發送失敗，請重試' } as ToastOptions
+                })
+            );
+            console.error('Send code error:', error);
+        } finally {
+            // 顯示確認碼彈窗
+            if (CodeModalEl) {
+                CodeModalEl.dispatchEvent(new CustomEvent('show', { detail: { maskedEmail } }));
+                CodeModalEl.addEventListener('hidden.bs.modal', modalHiddenClear, { once: true });
+            }
+        }
+    };
+
+    // 初始化表單驗證
+    const init = () => {
+        new FormValidator(form, {
+            onValidSubmit: async (payload) => {
+                try {
+                    // TODO: Call login API here
+                    loginSuccess(payload.controls);
+                } catch (error) {
+                    console.error('Login submit error:', error);
+                }
+            }
+        });
+
+        const codeValidator = new FormValidator(codeForm, {
+            asyncValidators: {
+                verifyCode: async (input: HTMLInputElement | HTMLSelectElement) => {
+                    const result = await checkCodeApi(input.value);
+                    return result.success ? true : { feedback: result.message || '驗證碼錯誤' };
+                }
+            },
+            onValidSubmit: () => {
+                toastEl.dispatchEvent(
+                    new CustomEvent('fire', {
+                        detail: { title: '成功', text: '驗證碼已驗證成功，正在跳轉...' } as ToastOptions
+                    })
+                );
+            }
+        });
+
+        sendCodeClick(emailInput.value, codeValidator);
+    };
+
+    // 等待 DOM 加載完成後初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+</script>

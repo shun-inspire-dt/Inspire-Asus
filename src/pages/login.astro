@@ -7,11 +7,15 @@ import Layouts from '@layouts/layouts.astro';
 import ComfirmCode from '@components/modal/comfirm-code.astro';
 /** Main Components */
 import Form from '@components/pages/login/form.astro';
+import Script from '@components/pages/login/script-inline.astro';
 /** Style */
 import '@scss/pages/login.scss';
+import ScriptNext from '@components/common/script/script-next.copy.astro';
 ---
 
 <Layouts IDName="Login" minMarginHeader isMemberFooter>
     <Form />
 </Layouts>
 <ComfirmCode />
+<ScriptNext />
+<Script />
