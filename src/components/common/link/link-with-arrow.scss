@@ -108,7 +108,7 @@
     /* 禁用狀態 */
     &.disabled,
     &:disabled {
-        cursor: not-allowed;
+        cursor: default;
         pointer-events: none;
 
         .link-text {

@@ -15,6 +15,9 @@
                 height: 100%;
             }
         }
+        .swiper-notification {
+            display: none;
+        }
     }
 
     /*  */
@@ -26,7 +29,7 @@
 
         button {
             &.swiper-button-disabled {
-                @apply opacity-0 pointer-events-none cursor-not-allowed;
+                @apply opacity-0 pointer-events-none cursor-default;
                 
                 &[role='button']:focus:focus-visible {
                     outline: none;
@@ -64,7 +67,7 @@
     }
     .pagination__arrow.swiper-button-disabled {
         pointer-events: none;
-        cursor: not-allowed;
+        cursor: default;
     }
     .pagination__arrow.swiper-button-disabled[role='button']:focus:focus-visible {
         outline: none;

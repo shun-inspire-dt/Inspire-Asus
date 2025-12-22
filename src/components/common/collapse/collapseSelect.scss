@@ -94,7 +94,7 @@
 
     /* 禁用狀態 */
     &--disabled {
-        cursor: not-allowed;
+        cursor: default;
         opacity: 0.5;
     }
 }
@@ -112,7 +112,7 @@
     z-index: 2;
 
     &:disabled {
-        cursor: not-allowed;
+        cursor: default;
     }
 }
 
