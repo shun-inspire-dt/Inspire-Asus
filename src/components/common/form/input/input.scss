@@ -70,7 +70,7 @@
     }
 
     /** 焦點狀態 */
-    &:focus:focus-visible:not(:invalid):not(:disabled):not([readonly]) {
+    &:focus:focus-visible:not(:disabled):not([readonly]) {
         --input-border-width: 0.125rem; /* 焦點邊框寬度 */
         border-color: var(--input-focus-border-color); /* 焦點邊框顏色 */
 

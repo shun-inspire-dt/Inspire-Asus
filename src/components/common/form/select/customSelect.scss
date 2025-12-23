@@ -306,7 +306,7 @@
         }
 
         /** 焦點狀態 */
-        &:focus:focus-visible:not(:invalid):not(:disabled):not([data-read-only]) {
+        &:focus:focus-visible:not(:disabled):not([data-read-only]) {
             & ~ .select-selected {
                 --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
                 border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */

@@ -42,7 +42,7 @@
                 }
             }
             /** 焦點狀態 */
-            &:focus:focus-visible:not(:invalid):not(:disabled):not([data-read-only]) {
+            &:focus:focus-visible:not(:disabled):not([data-read-only]) {
                 & ~ .select-selected {
                     /* === 選擇器本體樣式變數 === */
                     --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */

@@ -84,7 +84,7 @@
     height: auto;
 
     /** 焦點狀態 */
-    &:focus:focus-visible:not(:invalid) {
+    &:focus:focus-visible {
         --input-border-width: 0rem; /* 焦點邊框寬度 */
     }
     /* 展開狀態 - 通過 JavaScript 動態切換 */
@@ -118,7 +118,7 @@
         }
 
         /** 焦點狀態 */
-        &:focus:focus-visible:not(:invalid):not(:disabled):not([data-read-only]) {
+        &:focus:focus-visible:not(:disabled):not([data-read-only]) {
             & ~ .select-selected {
                 --custom-select-border-width: 0rem; /* 焦點邊框寬度 */
             }
