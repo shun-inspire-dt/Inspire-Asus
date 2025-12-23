@@ -325,7 +325,8 @@ main {
     }
 }
 [dir] main {
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 :where(a, button, [role='button'], [role='link']) {
