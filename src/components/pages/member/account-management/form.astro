@@ -11,9 +11,10 @@ export interface Props {
     className?: className;
     attribute?: attribute;
     style?: { [key: string]: string };
+    email?: string;
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName, className, style, attribute = {}, email } = Astro.props as Props;
 ---
 
 <div
@@ -29,9 +30,10 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
         <li class=":uno-account-management-acct-content: flex md:flex-row items-center gap-1.25rem flex-none md:flex-1">
             <span class=":uno-account-management-acct-email: flex flex-col md:flex-row gap-0.5rem md:flex-1 body-02">
                 <span
+                    id="account-management-email"
                     class=":uno-account-management-acct-email-text: min-h-2rem flex flex-col md:flex-row md:items-center md:flex-1 gap-0.9375rem"
                 >
-                    marketing@inspire-dt.com
+                    {email}
                 </span>
                 <span class=":uno-account-management-acct-email-btn: flex">
                     <Button
@@ -39,7 +41,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
                         variant="blue-outline"
                         size="sm"
                         title="變更信箱"
-                        attribute={{ 'data-bs-toggle': 'modal', 'data-bs-target': '#UpdateEmailSendCodeModal' }}
+                        attribute={{ 'data-bs-toggle': 'modal', 'data-bs-target': '#UpdateEmailSendCodeModal', 'data-email': email }}
                     >
                         變更信箱
                     </Button>

@@ -22,9 +22,10 @@ export interface Props {
     amount?: number;
     img?: string;
     readonly?: boolean;
+    required?: boolean;
 }
 
-const { id, className, style, attribute = {}, title, label, brief, amount = 1, img, readonly = false } = Astro.props as Props;
+const { id, className, style, attribute = {}, title, label, brief, amount = 1, img, readonly = false, required = false } = Astro.props as Props;
 ---
 
 <div id={id} class:list={[className, 'inquery-card', { 'readonly': readonly }]} style={style} {...attribute}>
@@ -49,7 +50,8 @@ const { id, className, style, attribute = {}, title, label, brief, amount = 1, i
                         data={Array.from({ length: 100 }, (_, i) => ({ value: i + 1, text: i + 1 }))}
                         placeholder='請選擇'
                         title={`數量 ${amount}`}
-                        attribute={{ 'data-id': id }}
+                        selectAttribute={{ 'data-id': id }}
+                        required={required}
                     />
                     <ALink title="移除" className="inquery-card-remove" attribute={{ 'data-id': id }}>
                         移除

@@ -18,7 +18,7 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'basicInfoForm', className, style, attribute = {} } = Astro.props as Props;
 ---
 
 <form
@@ -29,21 +29,26 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
     ]}
     style={style}
     {...attribute}
+    data-needs-loading="true"
+    data-report-validity="false"
     novalidate
+    action=""
 >
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">基本資料</strong>
-        <InputGroup label="姓名" errorText="請輸入您的姓名" error block>
-            <Input />
+        <InputGroup inputID="name" label="姓名" errorText="請輸入您的姓名" error block>
+            <Input id="name" name="name" />
         </InputGroup>
-        <InputGroup label="手機號碼" errorText="請輸入您的手機號碼" error block>
-            <Input type="tel" inputmode="tel" maxLength={10} />
+        <InputGroup inputID="phone" label="手機號碼" errorText="請輸入您的手機號碼" error block>
+            <Input id="phone" name="phone" type="tel" inputmode="tel" maxLength={10} />
         </InputGroup>
-        <InputGroup label="電子信箱" errorText="請輸入您的電子郵件" error block>
-            <Input type="email" inputmode="email" />
+        <InputGroup inputID="email" label="電子信箱" errorText="請輸入您的電子郵件" error block>
+            <Input id="email" type="email" name="email" inputmode="email" autocomplete="email" />
         </InputGroup>
-        <InputGroup label="您是如何得知 ExpertHub 網站？" block>
+        <InputGroup inputID="howToKnow" label="您是如何得知 ExpertHub 網站？" block>
             <Select
+                id="howToKnow"
+                name="howToKnow"
                 data={[
                     { text: 'ASUS 業務邀請', value: 'ASUS 業務邀請' },
                     { text: '合作夥伴推薦', value: '合作夥伴推薦' },
@@ -61,14 +66,16 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
-        <InputGroup label="公司名稱" errorText="請輸入公司的名稱" error block>
-            <Input />
+        <InputGroup inputID="companyName" label="公司名稱" errorText="請輸入公司的名稱" error block>
+            <Input id="companyName" name="companyName" />
         </InputGroup>
-        <InputGroup label="公司統編" errorText="請輸入公司的統編" error block>
-            <Input type="text" inputmode="numeric" minLength={8} maxLength={8} />
+        <InputGroup inputID="companyTaxId" label="公司統編" errorText="請輸入公司的統編" error block>
+            <Input id="companyTaxId" name="companyTaxId" type="text" inputmode="numeric" minLength={8} maxLength={8} />
         </InputGroup>
-        <InputGroup label="公司部門" block>
+        <InputGroup inputID="companyDepartment" label="公司部門" block>
             <Select
+                id="companyDepartment"
+                name="companyDepartment"
                 data={[
                     { text: 'IT部門', value: 'IT部門' },
                     { text: '財務部門', value: '財務部門' }
@@ -76,11 +83,13 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
                 value="IT部門"
             />
         </InputGroup>
-        <InputGroup label="公司職稱" errorText="請輸入在公司的職稱" error block>
-            <Input />
+        <InputGroup inputID="companyPosition" label="公司職稱" errorText="請輸入在公司的職稱" error block>
+            <Input id="companyPosition" name="companyPosition" />
         </InputGroup>
-        <InputGroup label="產業類別" block>
+        <InputGroup inputID="companyIndustry" label="產業類別" block>
             <Select
+                id="companyIndustry"
+                name="companyIndustry"
                 data={[
                     { text: '雲端與基礎設施', value: '雲端與基礎設施' },
                     { text: '企業應用', value: '企業應用' },

@@ -7,7 +7,7 @@
 
     /**
      * API 請求封裝
-     * @description 統一處理此頁面「更新密碼」流程所需的 API 呼叫與 headers 設定
+     * @description 統一處理此頁面「重設密碼」流程所需的 API 呼叫與 headers 設定
      */
     class API {
         headers = new Headers({
@@ -16,7 +16,7 @@
         });
 
         /**
-         * 更新密碼
+         * 更新密碼（重設密碼）
          * @param {string} password - 新密碼
          * @returns {Promise<Response | {success: boolean, message?: string}>} API 回應（依後端格式回傳）
          */
@@ -36,33 +36,10 @@
                     throw new Error(error.message || error.detail || '密碼重設過程中發生錯誤');
                 });
         };
-
-        /**
-         * 驗證舊密碼
-         * @param {string} password - 舊密碼
-         * @returns {Promise<Response | {success: boolean, message?: string}>} API 回應（依後端格式回傳）
-         */
-        checkPassword = async (password) => {
-            const raw = JSON.stringify({ password });
-
-            const requestOptions = {
-                method: 'POST',
-                headers: this.headers,
-                body: raw
-            };
-
-            return await Fetch(baseURL + '/api/form/check-password', requestOptions)
-                .then((response) => response.json())
-                .then((result) => result)
-                .catch((error) => {
-                    console.error('Password check error:', error.message);
-                    return { success: false, message: error.message || error.detail || '驗證失敗' };
-                });
-        };
     }
 
     /**
-     * 更新密碼流程管理
+     * 重設密碼流程管理
      * @description 負責表單驗證、呼叫 API、並以 Toast 呈現結果
      */
     class ResetPassword extends API {
@@ -92,24 +69,11 @@
          */
         validator = () =>
             new FormValidator(this.form, {
-                asyncValidators: {
-                    /**
-                     * 舊密碼非同步驗證
-                     * @description 非同步驗證，而不在 submit 步驟，表單送出只做 next step
-                     * @description 優勢：回傳的錯誤訊息會直接顯示在 input 底下，不需要多餘步驟
-                     * @description 但該部分也可挪到 onValidSubmit 後驗證
-                     * @param {HTMLInputElement} input - 舊密碼欄位
-                     * @returns {Promise<true | {feedback: string}>} 驗證結果
-                     */
-                    checkPWD: async (input) => {
-                        const result = await this.checkPassword(input.value);
-                        return result.success ? true : { feedback: result.message || result.detail || '舊密碼輸入錯誤' };
-                    }
-                },
                 /**
                  * 表單通過驗證後的送出處理
                  * @param {{controls: Record<string, HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>}} payload - 表單資料
                  * @param {{triggerValidation?: Function}} helpers - FormValidator 提供的 helper（例如 triggerValidation）
+                 * @returns {Promise<void>}
                  */
                 onValidSubmit: async ({ controls }, { triggerValidation } = {}) => {
                     try {
@@ -133,6 +97,10 @@
                                     }
                                 })
                             );
+                        /**
+                         * 密碼與舊密碼相同
+                         * 範例 API 會回傳特殊 code: 'PASSWORD_SAME_AS_OLD'
+                         */
                         } else if (result.error_code === 'PASSWORD_SAME_AS_OLD') {
                             RpasswordEl.value = '';
                             passwordEl.value = '';

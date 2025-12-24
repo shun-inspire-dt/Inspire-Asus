@@ -28,7 +28,7 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'Register', className, style, attribute = {} } = Astro.props as Props;
 ---
 
 <MySectionForm
@@ -36,7 +36,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
     title="會員註冊"
     className={['needs-validation', className]}
     style={style}
-    attribute={{ novalidate: '', 'data-report-validity': 'false', ...attribute }}
+    attribute={{ novalidate: '', 'data-needs-loading': 'true', 'data-report-validity': 'false', ...attribute }}
 >
     <div
         class=":uno-thrid-party-registers: w-full flex flex-col md:flex-row md:items-center md:justify-center flex-wrap gap-0.75rem [&>button]:[--btn-min-width:100%] md:[&>button]:[--btn-min-width:11.875rem]"
@@ -45,13 +45,14 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
         <LoginButton type="microsoft" />
     </div>
     <Divider>或選擇其他方式註冊</Divider>
-    <InputGroup label="帳號" infoText="請輸入電子郵件" error block>
+    <InputGroup inputID="account" label="帳號" infoText="請輸入電子郵件" error block>
         <Input id="account" type="email" inputmode="email" required />
     </InputGroup>
     <InputGroup
+        inputID="password"
         label="密碼"
         infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
-        errorText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
+        errorText=""
         error
         block
     >
@@ -61,7 +62,7 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
             required
         />
     </InputGroup>
-    <InputGroup label="確認密碼" infoText="請您再次輸入您的密碼" error block>
+    <InputGroup inputID="confirm-password" label="確認密碼" infoText="請您再次輸入您的密碼" error errorText="" block>
         <PasswordInput
             inputId="confirm-password"
             inputAttribute={{

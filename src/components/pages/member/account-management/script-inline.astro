@@ -1,13 +1,19 @@
 <script is:inline define:vars={{ baseURL: import.meta.env.API_BASE_URL }}>
+    /**
+     * 帳號管理 - 信箱變更流程管理類別
+     * @description 管理信箱變更的多步驟流程，包含驗證碼發送、確認和重設
+     * @author ASUS Team
+     * @version 1.0.0
+     */
     const authClient = new AuthClient({ baseURL, cookies });
     const Fetch = authClient.fetchWithAuth.bind(authClient);
-    /** --------------- 實作 ---------------------- */
+    /** ---------- 實作 ---------- */
     // 全局 Toast 實例
     const toastEl = document.getElementById('toastModal');
 
     /**
      * API 請求封裝
-     * @description 統一處理登入與驗證碼流程所需的 API 呼叫與 headers 設定
+     * @description 統一處理此頁面「帳號管理／信箱變更」流程所需的 API 呼叫與 headers 設定
      */
     class API {
         headers = new Headers({
@@ -16,33 +22,28 @@
         });
 
         /**
-         * 登入
-         * @param {string} email - 使用者 Email
-         * @param {string} password - 使用者密碼
-         * @returns {Promise<LoginResponse | {success: boolean, message: string}>} API 回應
+         * 取得帳號
+         * @returns {Promise<string>} 目前帳號字串（失敗則回傳空字串）
          */
-        loginApi = async (email, password) => {
-            const raw = JSON.stringify({ email, password });
-
+        getAccountApi = async () => {
             const requestOptions = {
-                method: 'POST',
-                headers: this.headers,
-                body: raw
+                method: 'GET',
+                headers: this.headers
             };
 
-            return await Fetch(baseURL + '/api/auth/login', requestOptions)
+            return await Fetch(baseURL + '/api/form/account', requestOptions)
                 .then((response) => response.json())
-                .then((result) => result)
+                .then((result) => (result.success ? result.account : ''))
                 .catch((error) => {
-                    console.error('Login error:', error);
-                    return { success: false, message: '登入失敗' };
+                    console.error('Send code error:', error);
+                    return '';
                 });
         };
 
         /**
          * 更新帳號
-         * @param {string} account - 使用者帳號（email/phone 依後端規格）
-         * @returns {Promise<Response | {success: boolean, message: string}>} API 回應
+         * @param {string} account - 新帳號（Email）
+         * @returns {Promise<Response | {success: boolean, message?: string}>} API 回應
          */
         updateAccountApi = async (account) => {
             const raw = JSON.stringify({ account });
@@ -65,7 +66,7 @@
         /**
          * 發送驗證碼
          * @param {string} email - 目標 Email
-         * @returns {Promise<Response | {success: boolean, message: string}>} API 回應
+         * @returns {Promise<Response | {success: boolean, message?: string}>} API 回應
          */
         sendCodeApi = async (email) => {
             const raw = JSON.stringify({ email });
@@ -88,7 +89,7 @@
         /**
          * 驗證驗證碼
          * @param {string} code - 使用者輸入的驗證碼
-         * @returns {Promise<Response | {success: boolean, message: string}>} API 回應
+         * @returns {Promise<Response | {success: boolean, message?: string}>} API 回應
          */
         checkCodeApi = async (code) => {
             const raw = JSON.stringify({ code });
@@ -111,7 +112,7 @@
 
     /**
      * 驗證碼 Modal 流程管理
-     * @description 管理驗證碼發送/重送倒數/驗證與 Modal 顯示資訊
+     * @description 管理驗證碼發送/重送倒數/驗證與顯示資訊
      */
     class ComfirmCodeManager extends API {
         /** DOM 元素 */
@@ -189,7 +190,6 @@
                      */
                     verifyCode: async (input) => {
                         const result = await this.checkCodeApi(input.value);
-                        if (result.success) this.codeForm.setAttribute('action', result.redirect || '/member/basic-info');
                         return result.success ? true : { feedback: result.message || result.detail || '驗證碼錯誤' };
                     }
                 },
@@ -349,108 +349,221 @@
     }
 
     /**
-     * 登入流程管理
-     * @description 負責登入表單提交、保存 token，並串接驗證碼 Modal 流程
+     * 信箱變更流程管理
+     * @description 管理「發送驗證碼」→「輸入驗證碼確認」→「輸入新信箱」→「再次驗證確認」的流程
      */
-    class LoginManager extends ComfirmCodeManager {
-        form = document.getElementById('LoginForm');
-        emailInput = document.getElementById('email');
-        passwordInput = document.getElementById('password');
+    class EmailUpdateManager extends ComfirmCodeManager {
+        span = document.getElementById('account-management-email');
+        updateModalBtn = document.querySelector('button[data-bs-toggle="modal"][data-bs-target="#UpdateEmailSendCodeModal"]');
+        email = this.updateModalBtn?.getAttribute('data-email') || '';
+        // Modal 元素
+        modals = {
+            confirm: this.codeModalEl,
+            update: document.querySelector('#UpdateEmailSendCodeModal'),
+            reset: document.querySelector('#ResetEmailModal'),
+            toast: document.querySelector('#toastModal')
+        };
 
+        // Form 元素
+        forms = {
+            confirm: this.codeForm,
+            update: document.querySelector('#UpdateEmailSendCodeForm'),
+            reset: document.querySelector('#ResetEmailForm')
+        };
         /**
-         * 初始化
-         * @description 建立實例後綁定事件（登入表單/驗證碼表單/Modal 關閉）
+         * 建構函式
+         * @description 初始化所有 Modal 和 Form 元素，並綁定事件監聽器
          */
         constructor() {
             super();
             this.bindEvents();
         }
 
+
         /**
-         * 建立登入表單驗證器
+         * 建立重設信箱表單驗證器
+         * @description 使用 async 驗證呼叫更新信箱 API，成功後進入下一步驗證碼流程
          * @returns {FormValidator}
          */
         validator = () =>
-            new FormValidator(this.form, {
-                onValidSubmit: async (payload) => {
-                    const emailEl = payload.controls['email'];
-                    const passwordEl = payload.controls['password'];
-                    try {
-                        const { success, session } = await this.loginApi(emailEl.value, passwordEl.value);
-                        if (success) {
-                            /**
-                             * 1. 登入成功後保存 token
-                             * 2. 更新驗證碼表單的 callback
-                             * 3. 初始化驗證碼表單
-                             * 4. 顯示驗證碼 Modal
-                             */
-                            this.saveAfterLogin(session);
-                            this.codeFormCallbackFn = () => this.handleFinishStep();
-                            this.initComfirmCode(emailEl.value);
-                            this.showModal(this.codeModalEl);
-                        }
-                    } catch (error) {
-                        console.error('Login submit error:', error);
+            new FormValidator(this.forms.reset, {
+                asyncValidators: {
+                    /**
+                     * 更新信箱非同步驗證
+                     * @description 非同步驗證，驗證信箱格式/是否可用，表單送出只做 next step
+                     * @description 優勢：回傳的錯誤訊息會直接顯示在 input 底下，不需要多餘步驟
+                     * @description 但該部分也可挪到 onValidSubmit 後驗證
+                     * @param {HTMLInputElement} input - email 欄位
+                     * @returns {Promise<true | {feedback: string}>} 驗證結果
+                     */
+                    updateEmail: async (input) => {
+                        const result = await this.updateAccountApi(input.value);
+                        return result.success ? true : { feedback: result.message || result.detail || '信箱更新失敗，請重試' };
                     }
+                },
+                /**
+                 * 重設信箱表單通過驗證後的送出處理
+                 * @param {{controls: Record<string, HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>}} payload - 表單資料
+                 */
+                onValidSubmit: ({ controls }) => {
+                    // 取得 email Element
+                    const emailEl = controls['email'];
+                    // 檢查 email Element 是否存在
+                    if (!emailEl) return;
+                    // 取得 email 值，並設定到 this.email
+                    this.email = emailEl.value;
+                    // 執行重設信箱
+                    this.handleResetSubmit();
                 }
             });
-
         /**
          * 綁定所有事件監聽器
          * @description 為各個 Form 和 Modal 綁定相應的事件處理器
          */
         async bindEvents() {
+            // 發送驗證碼表單提交
+            this.forms.update?.addEventListener('submit', async (e) => await this.handleUpdateSubmit(e));
+
             // Modal 關閉事件
-            this.codeModalEl.addEventListener('hidden.bs.modal', this.modalHiddenClear, { once: true });
+            this.modals.update?.addEventListener('show.bs.modal', (e) => this.handleUpdateShow(e));
+            this.modals.confirm?.addEventListener('hidden.bs.modal', () => this.handleConfirmHidden());
+            this.modals.reset?.addEventListener('hidden.bs.modal', () => this.handleResetHidden());
+
             // 驗證器
             this.codeValidator && this.codeValidator();
             this.validator && this.validator();
+
+            // 更新信箱資訊
+            await this.updateEmailInfo();
         }
 
+        /**
+         * 處理發送驗證碼表單提交
+         * @param {Event} e - 表單提交事件
+         * @description 隱藏發送驗證碼 Modal，顯示確認驗證碼 Modal
+         */
+        async handleUpdateSubmit(e) {
+            e.preventDefault();
+            // 隱藏發送驗證碼 Modal
+            this.hideModal('update');
+            // 初始化驗證碼 pop up 與 設定驗證碼下一步動作 與 顯示確認驗證碼 Modal
+            this.initComfirmCode(this.email);
+            this.codeFormCallbackFn = () => this.handleNextStep(this.modals.reset);
+            this.showModal('confirm');
+        }
 
         /**
-         * 保存登入後資訊
-         * @param {Session} data - 登入回傳的 session
+         * 處理重設信箱表單提交
+         * @description 隱藏重設 Email Modal，設定完成步驟並顯示確認 Modal
          */
-        saveAfterLogin = (data) => {
-            const { access_token, refresh_token, expires_at } = data;
-            authClient.setAuthCookies({ access_token, refresh_token, expires_at });
-        };
+        async handleResetSubmit() {
+            // 隱藏重設 Email Modal
+            this.hideModal('reset');
+            // 初始化驗證碼 pop up 與 設定驗證碼下一步動作 與 顯示確認驗證碼 Modal
+            this.initComfirmCode(this.email);
+            this.codeFormCallbackFn = () => this.handleFinishStep();
+            this.showModal('confirm');
+        }
+
+        /**
+         * 處理下一步驟
+         * @param {HTMLElement | string} target - 目標 Modal 元素或 selector
+         * @description 隱藏確認 Modal，顯示目標 Modal
+         */
+        handleNextStep(target) {
+            const targetModal = target instanceof HTMLElement ? target : document.querySelector(target);
+            if (targetModal) {
+                this.hideModal('confirm');
+                targetModal.dispatchEvent(new Event('show'));
+            }
+        }
 
         /**
          * 處理完成步驟
-         * @description 顯示成功 Toast 訊息並跳轉到目標頁面
+         * @description 顯示成功 Toast 訊息
          */
         handleFinishStep() {
-            toastEl.dispatchEvent(
+            this.updateEmailInfo(this.email);
+            this.modals.toast?.dispatchEvent(
                 new CustomEvent('fire', {
                     detail: {
-                        title: '成功',
-                        text: '驗證成功，正在跳轉...'
+                        icon: 'success',
+                        title: '信箱已成功變更',
+                        text: '您的聯絡信箱已成功變更',
+                        link: {
+                            primaryText: '關閉',
+                            primaryVariant: 'blue',
+                            cancel: () => {
+                                this.modals.toast?.dispatchEvent(new CustomEvent('hide'));
+                            }
+                        }
                     }
                 })
             );
-            setTimeout(() => {
-                const action = this.codeForm.getAttribute('action');
-                window.location.href = action;
-            }, 500);
+        }
+
+        /**
+         * 處理更新信箱 Modal 顯示
+         * @param {Event} e - Modal 顯示事件
+         * @description 更新 email 屬性，並顯示發送驗證碼 Modal
+         */
+        handleUpdateShow(e) {
+            const relatedTarget = e.relatedTarget;
+            const email = relatedTarget?.getAttribute('data-email');
+            if (email) this.email = email;
+        }
+
+        /**
+         * 處理確認 Modal 關閉事件
+         * @description 重設確認表單
+         */
+        handleConfirmHidden() {
+            this.codeModalHiddenClear();
+        }
+
+        /**
+         * 處理重設 Modal 關閉事件
+         * @description 重設重設表單
+         */
+        handleResetHidden() {
+            this.forms.reset?.reset();
         }
 
         /**
          * 顯示指定的 Modal
-         * @param {HTMLElement} modal - Modal DOM 元素
-         * @param {any} detail - 事件細節
+         * @param {string} modalName - Modal 名稱
          * @description 觸發指定 Modal 的顯示事件
          */
-        showModal(modal, detail) {
-            if (modal) modal.dispatchEvent(new CustomEvent('show', { detail }));
+        showModal(modalName) {
+            this.modals[modalName]?.dispatchEvent(new Event('show'));
+        }
+
+        /**
+         * 隱藏指定的 Modal
+         * @param {string} modalName - Modal 名稱
+         * @description 觸發指定 Modal 的隱藏事件
+         */
+        hideModal(modalName) {
+            this.modals[modalName]?.dispatchEvent(new Event('hide'));
+        }
+
+        /**
+         * 更新信箱資訊
+         * @param {string} email - 指定要顯示的 email（不傳則會向後端取回）
+         * @description 更新 span 元素的文本內容
+         */
+        async updateEmailInfo(email) {
+            let emailValue = email;
+            if (!email) emailValue = await this.getAccountApi();
+            if (this.updateModalBtn) this.updateModalBtn.setAttribute('data-email', emailValue);
+            if (this.span) this.span.textContent = emailValue;
         }
     }
 
-    // 等待 DOM 加載完成後初始化
+    // 等待 DOM 加載完成後初始化信箱變更管理器
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', new LoginManager());
+        document.addEventListener('DOMContentLoaded', new EmailUpdateManager());
     } else {
-        new LoginManager();
+        new EmailUpdateManager();
     }
 </script>

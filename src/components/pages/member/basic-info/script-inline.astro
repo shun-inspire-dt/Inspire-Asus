@@ -1,0 +1,44 @@
+<script is:inline define:vars={{ baseURL: import.meta.env.API_BASE_URL }}>
+    /**
+     * 全局 Toast 實例
+     * @type {HTMLElement | null}
+     */
+    const toastEl = document.getElementById('toastModal');
+
+    /**
+     * 基本資料表單
+     * @type {HTMLFormElement | null}
+     */
+    const form = document.getElementById('basicInfoForm');
+
+    /**
+     * 初始化表單驗證
+     * @description
+     * 1. 表單通過驗證後觸發 onValidSubmit
+     * 2. 顯示成功 Toast
+     * 3. Toast 關閉時提交表單（form.submit）
+     */
+    new FormValidator(form, {
+        /**
+         * 表單通過驗證後的送出處理
+         * @returns {Promise<void>}
+         */
+        onValidSubmit: async () => {
+            toastEl.dispatchEvent(
+                new CustomEvent('fire', {
+                    detail: {
+                        icon: 'success',
+                        title: '個人基本資料更新成功',
+                        /**
+                         * Toast 關閉回呼
+                         * @description 關閉 Toast 後，提交表單到後端
+                         */
+                        close: () => {
+                            form.submit();
+                        }
+                    }
+                })
+            );
+        }
+    });
+</script>

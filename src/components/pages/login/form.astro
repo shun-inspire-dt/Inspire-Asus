@@ -38,15 +38,15 @@ const { IDName = 'Login', className, style, attribute = {} } = Astro.props as Pr
 <MySectionForm
     IDName={IDName}
     title="會員登入"
-    class:list={['needs-validation', className]}
+    className={['needs-validation', className]}
     style={style}
     attribute={{ novalidate: '', 'data-report-validity': 'false', ...attribute }}
 >
-    <InputGroup label="帳號" infoText="請輸入電子郵件" error errorText="" block>
-        <Input id="email" type="email" inputmode="email" required name="email" />
+    <InputGroup inputID='email' label="帳號" infoText="請輸入電子郵件" error errorText="" block>
+        <Input id="email" type="email" inputmode="email" required name="email" autocomplete="email" />
     </InputGroup>
-    <InputGroup label="密碼" error errorText="" block style={{ '--form-input-group-content-gap': '0.75rem' }}>
-        <PasswordInput id="password" name="password" required />
+    <InputGroup inputID='password' label="密碼" error errorText="" block style={{ '--form-input-group-content-gap': '0.75rem' }}>
+        <PasswordInput inputId="password" name="password" required />
         <div class=":uno-auth-check: w-full flex items-center justify-between gap-1.875rem">
             <Checkbox>記住我</Checkbox>
             <ALink link={'/forget-password'} title={'忘記密碼？'}>忘記密碼？</ALink>

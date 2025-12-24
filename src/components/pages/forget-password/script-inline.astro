@@ -1,0 +1,140 @@
+<script is:inline define:vars={{ baseURL: import.meta.env.API_BASE_URL }}>
+    const authClient = new AuthClient({ baseURL, cookies });
+    const Fetch = authClient.fetchWithAuth.bind(authClient);
+    /** ---------- 實作 ---------- */
+    // 全局 Toast 實例
+    const toastEl = document.getElementById('toastModal');
+
+    /**
+     * API 請求封裝
+     * @description 統一處理此頁面「忘記密碼」流程所需的 API 呼叫與 headers 設定
+     */
+    class API {
+        headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authClient.cookies.get('access_token')}`
+        });
+
+        /**
+         * 發送重設密碼信件
+         * @param {string} email - 使用者輸入的 Email
+         * @returns {Promise<any>} API 回應（依後端格式回傳）
+         */
+        resetPasswordEmailApi = async (email) => {
+            const raw = JSON.stringify({ email });
+
+            const requestOptions = {
+                method: 'POST',
+                headers: this.headers,
+                body: raw
+            };
+
+            return await Fetch(baseURL + '/api/form/reset-password-email', requestOptions)
+                .then((response) => response.json())
+                .then((result) => result)
+                .catch((error) => {
+                    console.error('Send code error:', error);
+                    return { success: false, message: error.message || error.detail || '信箱發送失敗' };
+                });
+        };
+    }
+
+    /**
+     * 忘記密碼流程管理
+     * @description 負責表單驗證、呼叫 API、並以 Toast 呈現結果
+     */
+    class ResetPasswordEmail extends API {
+        form = document.querySelector('#ForgetPasswordForm');
+
+        /**
+         * 初始化
+         * @description 建立實例後立即綁定事件
+         */
+        constructor() {
+            super();
+            this.bindEvents();
+        }
+
+        /**
+         * 建立表單驗證器
+         * @description 使用 FormValidator 綁定 submit 驗證與 onValidSubmit 行為
+         * @returns {FormValidator}
+         */
+        validator = () =>
+            new FormValidator(this.form, {
+                asyncValidators: {
+                    /**
+                     * Email 非同步驗證
+                     * @description 非同步驗證，驗證 Email 而不在 submit 步驟，表單送出只做 pop up
+                     * @description 優勢：回傳的錯誤訊息會直接顯示在 input 底下，不需要多餘步驟
+                     * @description 但該部分也可挪到 onValidSubmit 後驗證
+                     * @param {HTMLInputElement} input - email 欄位
+                     * @returns {Promise<true | {feedback: string}>} 驗證結果
+                     */
+                    email: async (input) => {
+                        const result = await this.resetPasswordEmailApi(input.value);
+                        return result.success ? true : { feedback: result.message || result.detail || '信箱發送失敗，請重試' };
+                    }
+                },
+                /**
+                 * 表單通過驗證後的送出處理
+                 * @param {{controls: Record<string, HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>}} payload - 表單資料
+                 */
+                onValidSubmit: ({ controls }) => {
+                    const email = controls['email'].value;
+                    toastEl.dispatchEvent(
+                        new CustomEvent('fire', {
+                            detail: {
+                                icon: 'success',
+                                title: '重設密碼信件已發送',
+                                text: `我們已經發送一封到 ${this.maskEmail(email)} 內含密碼重設連結的電子郵件給您。請按照電子郵件中的說明重置密碼。如果您沒有收到電子郵件，請檢查您的垃圾郵件箱。`,
+                                link: {
+                                    primaryText: '返回首頁，重新登入',
+                                    primaryLink: '/',
+                                    primaryVariant: 'blue'
+                                }
+                            }
+                        })
+                    );
+                }
+            });
+
+        /**
+         * 綁定所有事件監聽器
+         * @description 為各個 Form 和 Modal 綁定相應的事件處理器
+         * @returns {Promise<void>}
+         */
+        async bindEvents() {
+            /** 驗證器 */
+            this.validator && this.validator();
+        }
+
+        /**
+         * 隱藏部分 Email
+         * @param {string} email - 原始 Email
+         * @returns {string} 遮罩後 Email
+         */
+        maskEmail = (email) => {
+            if (!email) return '';
+            const parts = email.split('@');
+            if (parts.length !== 2) return email;
+
+            const name = parts[0];
+            const domain = parts[1];
+
+            if (name.length <= 2) {
+                return name.charAt(0) + '***@' + domain;
+            }
+
+            const visiblePart = name.substring(0, 2);
+            return visiblePart + '***@' + domain;
+        };
+    }
+
+    // 等待 DOM 加載完成後初始化信箱變更管理器
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', new ResetPasswordEmail());
+    } else {
+        new ResetPasswordEmail();
+    }
+</script>

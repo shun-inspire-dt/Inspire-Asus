@@ -35,9 +35,9 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
     display="grid"
     title="諮詢清單"
     block
-    class:list={[className]}
+    className={['needs-validation', className]}
+    attribute={{ novalidate: '', 'data-needs-loading': 'true', 'data-report-validity': 'false', ...attribute }}
     style={style}
-    {...attribute}
 >
     <div
         class=":uno-inquery-cart: w-full mb-2rem mx-auto py-2.5rem md:py-3rem px-1.5rem md:px-2.5rem bg-white rounded-xl"
@@ -50,12 +50,14 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
             <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">
                 方案清單
             </h2>
-            <span class=":uno-inquery-cart-amount: text-gray-900 font-roboto text-16 lh-120 text-right"
-                >合計詢問 <b class=":uno-inquery-cart-amount-number: font-medium">2</b> 個方案</span
-            >
+            <span class=":uno-inquery-cart-amount: text-gray-900 font-roboto text-16 lh-120 text-right">
+                合計詢問
+                <b class=":uno-inquery-cart-amount-number: font-medium">2</b>
+                個方案
+            </span>
         </div>
         <div class="w-full flex flex-col items-center gap-1.5rem">
-            {data.map((x) => <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} />)}
+            {data.map((x) => <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} required />)}
         </div>
     </div>
     <div
@@ -65,43 +67,46 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
         <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">聯絡資訊</h2>
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
-        <InputGroup label="公司名稱" block>
-            <Input />
+        <InputGroup inputID="companyName" label="公司名稱" error block>
+            <Input id="companyName" name="companyName" required />
         </InputGroup>
-        <InputGroup label="統編" block>
-            <Input type="text" inputmode="numeric" minLength={8} maxLength={8} />
+        <InputGroup inputID="taxId" label="統編" error block>
+            <Input id="taxId" name="taxId" type="text" inputmode="numeric" minLength={8} maxLength={8} required />
         </InputGroup>
-        <InputGroup label="部門" block>
+        <InputGroup inputID="department" label="部門" error block>
             <Select
+                id="department"
+                name="department"
                 data={[
                     { text: 'IT部門', value: 'IT部門' },
                     { text: '財務部門', value: '財務部門' }
                 ]}
                 value="IT部門"
+                required
             />
         </InputGroup>
-        <InputGroup label="職稱" block>
-            <Input />
+        <InputGroup inputID="position" label="職稱" error block>
+            <Input id="position" name="position" required />
         </InputGroup>
-        <InputGroup label="公司電話" block>
-            <Input type="tel" inputmode="tel" />
+        <InputGroup inputID="tel" label="公司電話" error block>
+            <Input id="tel" name="tel" type="tel" inputmode="tel" required />
         </InputGroup>
     </div>
     <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
-        <InputGroup label="聯絡姓名" block>
-            <Input />
+        <InputGroup inputID="name" label="聯絡姓名" error block>
+            <Input id="name" name="name" required />
         </InputGroup>
-        <InputGroup label="聯絡手機" block>
-            <Input type="tel" inputmode="tel" />
+        <InputGroup inputID="cellphone" label="聯絡手機" error block>
+            <Input id="cellphone" name="cellphone" type="tel" inputmode="tel" required />
         </InputGroup>
-        <InputGroup label="聯絡信箱" block>
-            <Input type="email" inputmode="email" />
+        <InputGroup inputID="email" label="聯絡信箱" error block>
+            <Input id="email" name="email" type="email" inputmode="email" required />
         </InputGroup>
-        <InputGroup label="備註" block>
+        <InputGroup inputID="comment" label="備註" block>
             <Fragment slot="label-right">
                 <small>&nbsp;(非必填)</small>
             </Fragment>
-            <Textarea style={{ 'min-height': '8.625rem' }} />
+            <Textarea id="comment" name="comment" style={{ 'min-height': '8.625rem' }} />
         </InputGroup>
         <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
             <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" title="送出" variant="blue" block>

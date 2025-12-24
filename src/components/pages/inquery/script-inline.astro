@@ -1,0 +1,168 @@
+<script is:inline define:vars={{ baseURL: import.meta.env.API_BASE_URL }}>
+    const authClient = new AuthClient({ baseURL, cookies });
+    const Fetch = authClient.fetchWithAuth.bind(authClient);
+    /** ---------- 實作 ---------- */
+    // 全局 Toast 實例
+    const toastEl = document.getElementById('toastModal');
+
+    /**
+     * API 請求封裝
+     * @description 統一處理此頁面所需的 API 呼叫與 headers 設定
+     */
+    class API {
+        headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authClient.cookies.get('access_token')}`
+        });
+
+        /**
+         * 範例 API（目前用於 demo）
+         * @param {Record<string, any>} data - 表單送出時整理出的資料
+         * @returns {Promise<{success: boolean, message?: string}>} API 回應
+         */
+        exampleAPI = async (data) => {
+            console.log('data', data);
+            const requestOptions = {
+                method: 'GET',
+                headers: this.headers
+            };
+
+            return await Fetch(baseURL + '/api/form/example-success', requestOptions)
+                .then((response) => response.json())
+                .then((result) => result)
+                .catch((error) => {
+                    console.error('Error:', error);
+                    return { success: false, message: error.message || '失敗' };
+                });
+        };
+    }
+
+    /**
+     * 諮詢表單流程
+     * @description 綁定表單驗證、組裝表單資料並呼叫 API，最後用 Toast 顯示結果
+     */
+    class Form extends API {
+        form = document.querySelector('#InqueryForm');
+
+        /**
+         * 初始化
+         * @description 建立實例後立即綁定事件
+         */
+        constructor() {
+            super();
+            this.bindEvents();
+        }
+
+        /**
+         * 建立表單驗證器
+         * @description 使用 FormValidator 綁定 submit 驗證與 onValidSubmit 行為
+         * @returns {FormValidator}
+         */
+        validator = () =>
+            new FormValidator(this.form, {
+                onValidSubmit: async ({ controls }) => {
+                    /**
+                     *  Form Data 資料會如下：
+                     *  const formDataExample = {
+                        isAll: '1',
+                        data: {
+                            name: 'asd',
+                            tel: '0912345678',
+                            department: 'IT部門',
+                            position: '12312312',
+                            cellphone: '0912345678',
+                            email: '12@gmail.com',
+                            comment: 'asdasdasd',
+                            companyName: '123',
+                            taxId: '12312313',
+                            products: [
+                                { id: 1, qty: 2 },
+                                { id: 2, qty: 1 },
+                                { id: 3, qty: 3 }
+                            ]
+                        }
+                    }; */
+                    /**
+                     * 組裝送出資料
+                     * @param {Record<string, HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>} controls - 表單控制項集合
+                     * @returns {{isAll: string, data: Record<string, string | {id: number, qty: number}[]>}} 送出 payload
+                     */
+                    const formData = (controls) => {
+                        const formData = {
+                            isAll: '1',
+                            data: {}
+                        };
+                        const products = [];
+                        Object.entries(controls || {}).forEach(([key, el]) => {
+                            if (!key || !el) return;
+
+                            if (key.includes('inquery-amount-')) {
+                                const id = Number(el.dataset.id);
+                                const qty = Number(el.value);
+                                if (isFinite(id) && isFinite(qty)) {
+                                    products.push({ id, qty });
+                                }
+                                return;
+                            }
+                            formData['data'][key] = el.value;
+                        });
+                        formData['data']['products'] = products;
+                        return formData;
+                    };
+                    try {
+                        const response = await this.exampleAPI(formData(controls));
+                        if (response.success) {
+                            toastEl.dispatchEvent(
+                                new CustomEvent('fire', {
+                                    detail: {
+                                        icon: 'success',
+                                        title: '表單已送出',
+                                        text: '謝謝詢問，我們會透過Email或電話與您聯繫',
+                                        link: {
+                                            primaryText: '回首頁',
+                                            primaryLink: '/',
+                                            primaryVariant: 'blue'
+                                        },
+                                        hidePrevented: true
+                                    }
+                                })
+                            );
+                        } else {
+                            toastEl.dispatchEvent(
+                                new CustomEvent('fire', {
+                                    detail: {
+                                        icon: 'error',
+                                        title: response.message || '失敗'
+                                    }
+                                })
+                            );
+                        }
+                    } catch (error) {
+                        console.error('Error From Submit:', error);
+                        toastEl.dispatchEvent(
+                            new CustomEvent('fire', {
+                                detail: {
+                                    icon: 'error',
+                                    title: error.message || '失敗'
+                                }
+                            })
+                        );
+                    }
+                }
+            });
+        /**
+         * 綁定所有事件監聽器
+         * @description 為各個 Form 和 Modal 綁定相應的事件處理器
+         */
+        bindEvents = () => {
+            this.validator && this.validator();
+        };
+    }
+
+    // 等待 DOM 加載完成後初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => new Form());
+    } else {
+        new Form();
+    }
+</script>

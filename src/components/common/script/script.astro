@@ -90,22 +90,28 @@ import './script.scss';
             validInputs: 'input[data-valid][required]:not([type="checkbox"], [type="radio"]), select[data-valid][required]'
         };
 
-        constructor(form, options = {}) {
-            console.log('Form Validator Initialized !!');
-            this.form = form || document.querySelector(FormValidator.SELECTORS.form);
-            if (!this.form) throw new Error('FormValidator: Form Element Not Found');
+        _validationRunId = 0;
+        // _isProgrammaticSubmit = false;
+        _isSubmitting = false;
 
-            this._validationRunId = 0;
-            this._isProgrammaticSubmit = false;
-            this._isSubmitting = false;
+        constructor(form, options = {}) {
+            console.log('Form Validator Initialized !!', form.id || form.name);
+            const resolvedForm = form || document.querySelector(FormValidator.SELECTORS.form);
+            if (!resolvedForm) throw new Error('FormValidator: Form Element Not Found');
+            this.form = resolvedForm;
+
             const { locale = this.getCurrentLocale(), reportValidity = 'false' } = this.form.dataset || {};
+
             this.locale = locale || this.getCurrentLocale();
-            this.messages = I18N_MESSAGES[this.locale] || I18N_MESSAGES['zh-TW'];
+            const resolved = I18N_MESSAGES[this.locale] || I18N_MESSAGES['zh-TW'];
+            this.messages = resolved;
+
             this.options = {
-                reportValidity: reportValidity !== 'false', // 預設啟用原生驗證提示
+                reportValidity: reportValidity !== 'false',
                 asyncValidators: options.asyncValidators,
                 ...options
             };
+
             this.cacheOriginFeedbackText();
             this.setupEventListeners();
         }
@@ -114,15 +120,8 @@ import './script.scss';
          * 取得當前語系
          */
         getCurrentLocale() {
-            // 優先順序：form data-locale > html data-locale > html lang > navigator.language > 預設值
             const htmlElement = document.documentElement;
-            return (
-                this.form?.dataset?.locale ||
-                htmlElement.dataset.locale ||
-                htmlElement.lang ||
-                navigator.language ||
-                'zh-TW'
-            );
+            return this.form?.dataset?.locale || htmlElement.dataset.locale || htmlElement.lang || navigator.language || 'zh-TW';
         }
 
         /**
@@ -131,8 +130,117 @@ import './script.scss';
          */
         isLiveValidateEnabled() {
             const value = this.form.dataset.liveValidate;
-            // 只要有 data-live-validate，或值為 'true' 都視為啟用
             return value === '' || value === 'true';
+        }
+
+        /**
+         * 是否啟用「invalid 自動捲動」
+         * form 需具有 data-invalid-scrolling 才會執行
+         */
+        isInvalidScrollingEnabled() {
+            return this.form.hasAttribute('data-invalid-scrolling');
+        }
+
+        /**
+         * 解析 data-scroll-offset
+         * - 數字：像素
+         * - selector：元素高度（offsetHeight）
+         * - array：可混合數字/selector（支援 JSON array 或逗號分隔）
+         */
+        parseScrollOffsets() {
+            const raw = (this.form.dataset.scrollOffset || '').trim();
+            if (!raw) return [];
+
+            const normalizeItem = (item) => {
+                if (item == null) return null;
+                if (typeof item === 'number' && Number.isFinite(item)) return item;
+                const str = String(item).trim();
+                if (!str) return null;
+                const num = Number(str);
+                if (!Number.isNaN(num) && Number.isFinite(num)) return num;
+                return str;
+            };
+
+            if (raw.startsWith('[')) {
+                try {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed)) {
+                        return parsed.map(normalizeItem).filter((v) => v != null);
+                    }
+                } catch {
+                    // ignore
+                }
+            }
+
+            if (raw.includes(',')) {
+                return raw
+                    .split(',')
+                    .map((v) => normalizeItem(v))
+                    .filter((v) => v != null);
+            }
+
+            const single = normalizeItem(raw);
+            return single == null ? [] : [single];
+        }
+
+        /**
+         * 取得 header offset
+         * 僅在 header 為 fixed 或 sticky 且 top 為 0 時列入
+         */
+        getHeaderOffset() {
+            const header = document.querySelector('header');
+            if (!(header instanceof HTMLElement)) return 0;
+
+            const style = window.getComputedStyle(header);
+            const position = style.position;
+            const top = parseFloat(style.top || '');
+
+            const isFixed = position === 'fixed';
+            const isStickyTop = position === 'sticky' && Number.isFinite(top) && top === 0;
+
+            if (!isFixed && !isStickyTop) return 0;
+            return header.getBoundingClientRect().height || header.offsetHeight || 0;
+        }
+
+        /**
+         * 計算 form 的 data-scroll-offset 總和
+         */
+        getFormScrollOffset() {
+            const offsets = this.parseScrollOffsets();
+            if (!offsets.length) return 0;
+
+            return offsets.reduce((sum, item) => {
+                if (typeof item === 'number') return sum + item;
+                const el = document.querySelector(item);
+                if (el instanceof HTMLElement) return sum + (el.getBoundingClientRect().height || el.offsetHeight || 0);
+                return sum;
+            }, 0);
+        }
+
+        /**
+         * 捲動到第一個 invalid 的 input / select
+         */
+        scrollToFirstInvalidField() {
+            if (!this.isInvalidScrollingEnabled()) return;
+
+            const invalidEl = this.form.querySelector('input:invalid, select:invalid');
+            if (!(invalidEl instanceof HTMLElement)) return;
+
+            const target =
+                invalidEl.closest('.form-input-group, .form-check, .password-input-wrapper') || invalidEl;
+            if (!(target instanceof HTMLElement)) return;
+
+            const headerOffset = this.getHeaderOffset();
+            const formOffset = this.getFormScrollOffset();
+            const totalOffset = headerOffset + formOffset;
+
+            const rect = target.getBoundingClientRect();
+            const top = rect.top + window.pageYOffset - totalOffset;
+
+            window.scrollTo({
+                top: Math.max(0, top),
+                behavior: 'smooth'
+            });
         }
 
         /**
@@ -168,17 +276,11 @@ import './script.scss';
          */
         async runAllValidations() {
             const runId = ++this._validationRunId;
-            /** 重置錯誤訊息 */
             this.resetErrorMessages();
-            /** 執行原生驗證 */
             this.handleNativeValidation();
-            /** 執行 select 驗證 */
             this.handleSelectValidation();
-            /** 執行 checkbox/radio 驗證 */
             this.handleCheckboxValidation();
-            /** 執行客製化驗證 */
             await this.handleCustomValidation(runId);
-            /** 更新 wrapper 狀態 */
             this.handleWrapperValidation();
         }
 
@@ -186,15 +288,20 @@ import './script.scss';
          * 取得錯誤訊息元素
          */
         getErrorElement(input, isSpecialInput = false) {
-            if (isSpecialInput) {
-                const parent = input.closest(FormValidator.SELECTORS.specialWrapper);
+            const parent = input.closest(FormValidator.SELECTORS.specialWrapper);
+            if (isSpecialInput || parent) {
                 return (() => {
-                    let errorTextEl = parent?.closest(FormValidator.SELECTORS.formInputGroup)?.querySelector(FormValidator.SELECTORS.errorText);
+                    const errorTextEl = parent
+                        ?.closest(FormValidator.SELECTORS.formInputGroup)
+                        ?.querySelector(FormValidator.SELECTORS.errorText);
                     if (errorTextEl) return errorTextEl || null;
                     else {
                         const nextSibling = parent?.nextElementSibling;
                         if (nextSibling?.matches(FormValidator.SELECTORS.formCheckFeedbackErrorText)) return nextSibling;
-                        else return parent?.parentElement?.querySelector(FormValidator.SELECTORS.formCheckFeedbackErrorText) || null;
+                        else
+                            return (
+                                parent?.parentElement?.querySelector(FormValidator.SELECTORS.formCheckFeedbackErrorText) || null
+                            );
                     }
                 })();
             }
@@ -219,14 +326,14 @@ import './script.scss';
          */
         updateErrorMessage(errorTextEl, feedback) {
             if (!errorTextEl) return;
-
-            // 如果頁面本來就有錯誤文案，永遠不覆蓋
             if (!this.isEmptyTextContent(errorTextEl)) return;
-
-            // 沒有 feedback 直接略過
             if (!feedback) return;
-
             errorTextEl.textContent = feedback;
+        }
+
+        setErrorMessage(input, feedback, isSpecialInput = false) {
+            const errorTextEl = this.getErrorElement(input, isSpecialInput);
+            this.updateErrorMessage(errorTextEl, feedback);
         }
 
         /**
@@ -252,7 +359,7 @@ import './script.scss';
             const needsLoading = this.form.dataset.needsLoading === 'true';
             const submitter = event.submitter;
             const submitButton = submitter instanceof HTMLButtonElement ? submitter : null;
-            const loadingText = submitButton?.getAttribute('data-loading-text');
+            const loadingText = submitButton?.getAttribute('data-loading-text') ?? null;
             const originTextAttrName = 'data-loading-origin-text';
 
             if (needsLoading) {
@@ -290,14 +397,25 @@ import './script.scss';
             }
         }
 
+        getFormData(event) {
+            const submitter = event.submitter || null;
+            const inputs = {};
+            Array.from(this.form.elements)
+                .filter((el) => el instanceof HTMLInputElement || el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement)
+                .forEach((el) => {
+                    inputs[el.id || el.name] = el;
+                });
+            return {
+                form: this.form,
+                controls: inputs,
+                submitter
+            };
+        }
+
         emitValidatedEvent(event) {
-            const submitter = event?.submitter || null;
             this.form.dispatchEvent(
                 new CustomEvent('form:validated', {
-                    detail: {
-                        form: this.form,
-                        submitter
-                    }
+                    detail: this.getFormData(event)
                 })
             );
         }
@@ -309,29 +427,35 @@ import './script.scss';
             this.setValidationState(input, isInvalid, feedback, element);
 
             if (isInvalid) {
-                const errorTextEl = this.getErrorElement(input, !!element);
-                this.updateErrorMessage(errorTextEl, feedback);
+                this.setErrorMessage(input, feedback, !!element);
             }
         }
 
         /**
-         * 為原生驗證屬性添加事件監聽器
+         * 手動觸發驗證（不依賴表單提交）
+         * 用於在表單未提交時手動觸發驗證顯示
+         * @param input - 要驗證的表單元素
+         * @param isInvalid - 是否為無效狀態
+         * @param feedback - 驗證反饋訊息
+         * @param element - 可選的附加元素（如自定義錯誤訊息容器）
          */
-        addNativeValidationListener(selector, feedbackGenerator) {
-            const inputs = this.form.querySelectorAll(selector);
-            inputs.forEach((input) => {
-                if (input.value) {
-                    input.addEventListener(
-                        'invalid',
-                        () => {
-                            const feedback = feedbackGenerator(input);
-                            const errorTextEl = this.getErrorElement(input);
-                            this.updateErrorMessage(errorTextEl, feedback);
-                        },
-                        { once: true }
-                    );
-                }
-            });
+        triggerValidation(input, isInvalid, feedback, element = null) {
+            if (!this.form.classList.contains('was-validated')) {
+                this.form.classList.add('was-validated');
+            }
+            this.handleValidation(input, isInvalid, feedback, element);
+            this.handleWrapperValidation();
+        }
+
+        /**
+         * 提供表單 helper 給 onValidSubmit 使用
+         */
+        getFormHelpers() {
+            return {
+                triggerValidation: this.triggerValidation.bind(this),
+                form: this.form,
+                validator: this
+            };
         }
 
         /**
@@ -342,58 +466,49 @@ import './script.scss';
             const rules = this.getValidationRules();
 
             nativeInputs.forEach((input) => {
+                if (!(input instanceof HTMLInputElement)) return;
                 const value = input.value;
 
-                // 定義驗證順序（優先順序從高到低）
                 const validationOrder = [
                     {
                         condition: () => !value,
-                        rule: rules.required,
                         getDefaultMessage: () => rules.required.getDefaultMessage()
                     },
                     {
                         condition: () => value && input.type === 'email' && !/^\S+@\S+\.\S+$/.test(value),
-                        rule: rules.email,
                         getDefaultMessage: () => rules.email.getDefaultMessage(input)
                     },
                     {
-                        condition: () => value && input.minLength > 0 && value.length < parseInt(input.minLength),
-                        rule: rules.minLength,
+                        condition: () => value && input.minLength > 0 && value.length < parseInt(String(input.minLength)),
                         getDefaultMessage: () => rules.minLength.getDefaultMessage(input)
                     },
                     {
-                        condition: () => value && input.maxLength > 0 && value.length > parseInt(input.maxLength),
-                        rule: rules.maxLength,
+                        condition: () => value && input.maxLength > 0 && value.length > parseInt(String(input.maxLength)),
                         getDefaultMessage: () => rules.maxLength.getDefaultMessage(input)
                     },
                     {
-                        condition: () => value && input.min && parseFloat(value) < parseFloat(input.min),
-                        rule: rules.min,
+                        condition: () => value && input.min && parseFloat(value) < parseFloat(String(input.min)),
                         getDefaultMessage: () => rules.min.getDefaultMessage(input)
                     },
                     {
-                        condition: () => value && input.max && parseFloat(value) > parseFloat(input.max),
-                        rule: rules.max,
+                        condition: () => value && input.max && parseFloat(value) > parseFloat(String(input.max)),
                         getDefaultMessage: () => rules.max.getDefaultMessage(input)
                     },
                     {
                         condition: () => value && input.pattern && !new RegExp(input.pattern).test(value),
-                        rule: rules.pattern,
                         getDefaultMessage: () => rules.pattern.getDefaultMessage()
                     }
                 ];
 
-                // 按順序檢查驗證規則，只處理第一個失敗的規則
                 for (let i = 0; i < validationOrder.length; i++) {
                     const validation = validationOrder[i];
                     if (validation.condition()) {
                         const feedback = validation.getDefaultMessage();
                         this.handleValidation(input, true, feedback, null);
-                        return; // 找到第一個失敗的驗證就停止
+                        return;
                     }
                 }
 
-                // 如果所有驗證都通過，清除錯誤狀態
                 this.handleValidation(input, false, '');
             });
         }
@@ -405,6 +520,7 @@ import './script.scss';
             const selects = this.form.querySelectorAll(FormValidator.SELECTORS.nativeSelects);
 
             selects.forEach((select) => {
+                if (!(select instanceof HTMLSelectElement)) return;
                 const value = select.value;
                 const isInvalid = !value;
                 const { validFeedback: feedback = '' } = select.dataset;
@@ -428,6 +544,7 @@ import './script.scss';
             const originLoadingAttr = input.getAttribute('data-loading');
 
             if (typeof asyncFn !== 'function') {
+                // eslint-disable-next-line no-console
                 console.warn('FormValidator: 找不到 async validation function', { input, targetKey });
                 return;
             }
@@ -456,7 +573,6 @@ import './script.scss';
 
                 this.handleValidation(input, !isValid, customFeedback || asyncFeedback);
             } finally {
-                // 只在「仍是同一輪 async」時才還原，避免舊請求覆蓋新狀態
                 if (input.getAttribute('data-async-run-id') !== String(runId)) return;
                 input.removeAttribute('data-async-run-id');
 
@@ -468,34 +584,15 @@ import './script.scss';
         }
 
         /**
-         * 統一處理表單內所有 async 驗證
-         */
-        async handleAsyncValidations(runId) {
-            const asyncInputs = this.form.querySelectorAll(FormValidator.SELECTORS.validInputs);
-
-            for (const input of asyncInputs) {
-                const { valid = '', validFeedback = '' } = input.dataset;
-                const valids = valid.split(',');
-                if (!valids.includes('async')) continue;
-
-                // 若同步驗證已失敗（required/其他 sync rules），就不執行 async
-                if (!input.checkValidity() && !input.validity.valueMissing) continue;
-
-                const feedbacks = validFeedback.split(',');
-                await this.handleAsyncValidation(input, valids, feedbacks, runId);
-            }
-        }
-
-        /**
          * 處理包裝容器的驗證狀態
          * 針對 .form-check 和 .password-input-wrapper 底下的 input
          */
         handleWrapperValidation() {
             const wrapperInputs = this.form.querySelectorAll(FormValidator.SELECTORS.wrapperInputs);
             wrapperInputs.forEach((input) => {
+                if (!(input instanceof HTMLInputElement)) return;
                 const isInvalid = !input.checkValidity();
 
-                // 找到最近的包裝容器
                 const wrapper = input.closest('.form-check, .password-input-wrapper');
                 if (wrapper) {
                     wrapper.classList.toggle('is-invalid', isInvalid);
@@ -509,12 +606,14 @@ import './script.scss';
         handleCheckboxValidation() {
             const checkboxInputs = this.form.querySelectorAll(FormValidator.SELECTORS.checkboxRequired);
             checkboxInputs.forEach((input) => {
+                if (!(input instanceof HTMLInputElement)) return;
                 const { validFeedback: feedback = '' } = input.dataset;
                 const isInvalid = !input.checkValidity();
 
                 if (isInvalid) {
                     const errorTextEl = this.getErrorElement(input, true);
-                    this.updateErrorMessage(errorTextEl, errorTextEl.textContent || feedback || this.messages.required);
+                    const mergedFeedback = (errorTextEl?.textContent || '').trim() || feedback || this.messages.required;
+                    this.setErrorMessage(input, mergedFeedback, true);
                 }
             });
         }
@@ -529,7 +628,8 @@ import './script.scss';
                     getDefaultMessage: () => this.messages.required
                 },
                 pattern: {
-                    validate: (value, input) => value && input.pattern && !new RegExp(input.pattern).test(value),
+                    validate: (value, input) =>
+                        value && !!input.pattern && !new RegExp(input.pattern).test(value),
                     getDefaultMessage: () => this.messages.pattern
                 },
                 tel: {
@@ -546,32 +646,36 @@ import './script.scss';
                         typeof this.messages.email === 'function' ? this.messages.email(input.value) : this.messages.email
                 },
                 minLength: {
-                    validate: (value, input) => value && value.length < parseInt(input.minLength),
+                    validate: (value, input) =>
+                        value && value.length < parseInt(String(input.minLength)),
                     getDefaultMessage: (input) =>
                         typeof this.messages.minLength === 'function'
                             ? this.messages.minLength(input.minLength, input.value.length)
                             : this.messages.minLength
                 },
                 maxLength: {
-                    validate: (value, input) => value && value.length > parseInt(input.maxLength),
+                    validate: (value, input) =>
+                        value && value.length > parseInt(String(input.maxLength)),
                     getDefaultMessage: (input) =>
                         typeof this.messages.maxLength === 'function'
                             ? this.messages.maxLength(input.maxLength, input.value.length)
                             : this.messages.maxLength
                 },
                 min: {
-                    validate: (value, input) => value && parseFloat(value) < parseFloat(input.min),
+                    validate: (value, input) =>
+                        value && parseFloat(value) < parseFloat(String(input.min)),
                     getDefaultMessage: (input) =>
                         typeof this.messages.min === 'function' ? this.messages.min(input.min) : this.messages.min
                 },
                 max: {
-                    validate: (value, input) => value && parseFloat(value) > parseFloat(input.max),
+                    validate: (value, input) =>
+                        value && parseFloat(value) > parseFloat(String(input.max)),
                     getDefaultMessage: (input) =>
                         typeof this.messages.max === 'function' ? this.messages.max(input.max) : this.messages.max
                 },
                 regex: {
                     validate: (value, input) => {
-                        const regex = new RegExp(input.dataset.validRegex);
+                        const regex = new RegExp(input.dataset.validRegex || '');
                         return value && !regex.test(value);
                     },
                     getDefaultMessage: () => this.messages.regex
@@ -596,36 +700,32 @@ import './script.scss';
             const validInputs = this.form.querySelectorAll(FormValidator.SELECTORS.validInputs);
             const rules = this.getValidationRules();
 
-            for (const input of validInputs) {
+            for (const inputEl of validInputs) {
+                const input = inputEl;
                 const { valid = '', validFeedback = '' } = input.dataset;
                 const valids = valid.split(',');
                 const feedbacks = validFeedback.split(',');
                 const value = input.value;
 
-                // 處理 required 驗證（優先處理）
                 if (valids.includes('required') || input.required) {
                     const validIndex = valids.indexOf('required');
                     const rule = rules.required;
                     const isInvalid = rule.validate(value);
                     const feedback = feedbacks[validIndex] || rule.getDefaultMessage();
-                    
+
                     this.handleValidation(input, isInvalid, feedback);
-                    if (isInvalid) continue; // 如果 required 驗證失敗，不繼續其他驗證
+                    if (isInvalid) continue;
                 }
 
-                // 如果沒有值，跳過其他驗證
                 if (!value && !valids.includes('confirm')) continue;
 
-                // 處理其他驗證規則
                 for (const validType of valids) {
-                    if (validType === 'required') continue; // 已處理過
+                    if (validType === 'required') continue;
 
                     if (validType === 'async') {
-                        // 若同步驗證已失敗（除了 valueMissing 允許），就不執行 async
+                        if (!(input instanceof HTMLInputElement) && !(input instanceof HTMLSelectElement)) continue;
                         if (!input.checkValidity() && !input.validity.valueMissing) continue;
                         await this.handleAsyncValidation(input, valids, feedbacks, runId);
-
-                        // async 失敗時（setCustomValidity 已寫入），停止後續驗證
                         if (!input.checkValidity()) break;
                         continue;
                     }
@@ -637,7 +737,6 @@ import './script.scss';
                     const isInvalid = rule.validate(value, input);
                     const feedback = feedbacks[validIndex] || rule.getDefaultMessage(input);
 
-                    // 特殊處理 confirm 驗證的元素選擇
                     if (validType === 'confirm') {
                         const parent = input.closest('.password-input-wrapper');
                         this.handleValidation(input, isInvalid, feedback, parent);
@@ -646,7 +745,6 @@ import './script.scss';
                     }
 
                     if (isInvalid) {
-                        // 一旦有驗證失敗，停止後續驗證
                         break;
                     }
                 }
@@ -658,10 +756,12 @@ import './script.scss';
          */
         setupEventListeners() {
             this.form.addEventListener('submit', async (event) => {
-                if (this._isProgrammaticSubmit) {
-                    this._isProgrammaticSubmit = false;
-                    return;
-                }
+                const submitEvent = event;
+
+                // if (this._isProgrammaticSubmit) {
+                //     this._isProgrammaticSubmit = false;
+                //     return;
+                // }
 
                 if (this._isSubmitting) {
                     event.preventDefault();
@@ -670,60 +770,285 @@ import './script.scss';
                 }
 
                 this._isSubmitting = true;
-                const loadingContext = this.beginSubmitLoading(event);
-                
+                const loadingContext = this.beginSubmitLoading(submitEvent);
+
                 event.preventDefault();
                 event.stopPropagation();
-                
+
                 try {
                     await this.runAllValidations();
-                    
-                    // 檢查表單是否有效
+
                     if (!this.form.checkValidity()) {
                         this.form.classList.add('was-validated');
 
-                        // 可選的原生驗證提示
                         if (this.options.reportValidity) {
                             this.form.reportValidity();
                         }
+
+                        // 等待 DOM 更新（例如 is-invalid class、error text）後再捲動
+                        setTimeout(() => {
+                            this.scrollToFirstInvalidField();
+                        }, 0);
+                        
                         return;
                     }
 
-                    this._isProgrammaticSubmit = true;
-                    
-                    
-                    // 方案B：callback
                     const { onValidSubmit } = this.options;
                     if (typeof onValidSubmit === 'function') {
-                        onValidSubmit({ form: this.form, submitter: event.submitter || null });
+                        const formData = this.getFormData(submitEvent);
+                        const helpers = this.getFormHelpers();
+                        await onValidSubmit(formData, helpers);
                         return;
                     }
-                    
-                    // 方案A：CustomEvent
-                    this.emitValidatedEvent(event);
+
+                    this.emitValidatedEvent(submitEvent);
+
+                    if (this.form.hasAttribute('action')) {
+                        this.form.submit();
+                        return;
+                    }
+
+                    // this._isProgrammaticSubmit = true;
                 } finally {
                     this._isSubmitting = false;
                     this.endSubmitLoading(loadingContext);
                 }
             });
 
-            // 即時驗證：當表單仍無效時，input/select 的變更會立即觸發驗證
+            this.form.addEventListener('reset', () => {
+                setTimeout(() => {
+                    this.form.classList.remove('was-validated');
+
+                    const invalidEls = this.form.querySelectorAll('.is-invalid');
+                    invalidEls.forEach((el) => el.classList.remove('is-invalid'));
+
+                    const inputs = Array.from(this.form.elements).filter(
+                        (el) => el instanceof HTMLInputElement || el instanceof HTMLSelectElement || el instanceof HTMLTextAreaElement
+                    );
+                    inputs.forEach((el) => {
+                        if (typeof el.setCustomValidity === 'function') {
+                            el.setCustomValidity('');
+                        }
+                    });
+
+                    this.resetErrorMessages();
+                    // this.handleWrapperValidation();
+                }, 0);
+            });
+
             if (this.isLiveValidateEnabled()) {
                 const handleLiveValidate = async (event) => {
                     const target = event.target;
                     if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) return;
-
-                    // 只有在表單仍然無效時才觸發，避免過度干擾
                     if (this.form.checkValidity()) return;
 
                     await this.runAllValidations();
                 };
 
-                // input：文字輸入即時
-                this.form.addEventListener('input', handleLiveValidate);
-                // change：select/checkbox/radio
+                // this.form.addEventListener('input', handleLiveValidate);
                 this.form.addEventListener('change', handleLiveValidate);
             }
+        }
+    }
+
+    const useFormValidator = (options = {}) => {
+        const forms = document.querySelectorAll(FormValidator.SELECTORS.form);
+        return Array.from(forms).map((form) => new FormValidator(form, options));
+    };
+
+    /** ------------------------------- */
+
+    /** Cookies */
+    class Cookies {
+        create(key, value, options = {}) {
+            return this.set(key, value, options);
+        }
+
+        read(key) {
+            return this.get(key);
+        }
+
+        update(key, value, options = {}) {
+            return this.set(key, value, options);
+        }
+
+        delete(key, options = {}) {
+            return this.remove(key, options);
+        }
+
+        set(key, value, options = {}) {
+            if (!key) return;
+
+            const { days, path = '/', domain, secure = false, sameSite = 'Lax' } = options;
+
+            let cookie = `${encodeURIComponent(key)}=${encodeURIComponent(String(value ?? ''))}`;
+
+            if (typeof days === 'number') {
+                const expires = new Date(Date.now() + days * 864e5).toUTCString();
+                cookie += `; Expires=${expires}`;
+            }
+
+            if (path) cookie += `; Path=${path}`;
+            if (domain) cookie += `; Domain=${domain}`;
+            if (sameSite) cookie += `; SameSite=${sameSite}`;
+            if (secure) cookie += '; Secure';
+
+            document.cookie = cookie;
+        }
+
+        get(key) {
+            if (!key) return null;
+
+            const encodedKey = encodeURIComponent(key);
+            const cookiesList = document.cookie ? document.cookie.split('; ') : [];
+            for (const item of cookiesList) {
+                const index = item.indexOf('=');
+                const k = index >= 0 ? item.slice(0, index) : item;
+                if (k === encodedKey) {
+                    const v = index >= 0 ? item.slice(index + 1) : '';
+                    return decodeURIComponent(v);
+                }
+            }
+            return null;
+        }
+
+        remove(key, options = {}) {
+            const { path = '/', domain } = options;
+            let cookie = `${encodeURIComponent(key)}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+            if (path) cookie += `; Path=${path}`;
+            if (domain) cookie += `; Domain=${domain}`;
+            document.cookie = cookie;
+        }
+    }
+
+    const cookies = new Cookies();
+
+    /** ------------------------------- */
+
+    /** Auth Client */
+    class AuthClient {
+        constructor({ baseURL, cookies, defaultThresholdMs = 60_000 } = {}) {
+            this.baseURL = baseURL;
+            this.cookies = cookies;
+            this.defaultThresholdMs = defaultThresholdMs;
+            this.refreshPromise = null;
+        }
+
+        getExpiresAtMs(expiresAt) {
+            if (expiresAt == null) return null;
+            const n = Number(expiresAt);
+            if (!Number.isFinite(n) || n <= 0) return null;
+            return n < 1e12 ? n * 1000 : n;
+        }
+
+        isExpiringSoon(expiresAtMs, thresholdMs) {
+            if (!expiresAtMs) return true;
+            return expiresAtMs - Date.now() <= thresholdMs;
+        }
+
+        setAuthCookies({ access_token, refresh_token, expires_at }) {
+            const secure = typeof location !== 'undefined' && location.protocol === 'https:';
+            const sameSite = 'Lax';
+            const expiresAtMs = this.getExpiresAtMs(expires_at);
+            const days = expiresAtMs ? Math.max(0, Math.ceil((expiresAtMs - Date.now()) / 864e5)) : undefined;
+
+            if (access_token != null) this.cookies.set('access_token', access_token, { days, secure, sameSite });
+            if (refresh_token != null) this.cookies.set('refresh_token', refresh_token, { days, secure, sameSite });
+            if (expires_at != null) this.cookies.set('expires_at', expires_at, { days, secure, sameSite });
+        }
+
+        async refreshAccessToken() {
+            if (this.refreshPromise) return await this.refreshPromise;
+
+            const refresh_token = this.cookies.get('refresh_token');
+            if (!refresh_token) return null;
+
+            this.refreshPromise = (async () => {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: new Headers({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ refresh_token })
+                };
+
+                const res = await fetch(this.baseURL + '/api/auth/refresh', requestOptions);
+                if (!res.ok) return null;
+
+                const data = await res.json().catch(() => null);
+                if (!data || data.success === false) return null;
+
+                const payload = data?.session ?? data?.data ?? data;
+                if (!payload) return null;
+
+                const access_token = payload.access_token;
+                const new_refresh_token = payload.refresh_token ?? refresh_token;
+                const expires_at = payload.expires_at;
+
+                if (!access_token) return null;
+
+                this.setAuthCookies({ access_token, refresh_token: new_refresh_token, expires_at });
+                return access_token;
+            })();
+
+            try {
+                return await this.refreshPromise;
+            } finally {
+                this.refreshPromise = null;
+            }
+        }
+
+        async fetchWithAuth(input, init = {}, _retried = false) {
+            const thresholdMs = typeof init.authThresholdMs === 'number' ? init.authThresholdMs : this.defaultThresholdMs;
+
+            const access_token = this.cookies.get('access_token');
+            const expires_at = this.cookies.get('expires_at');
+            const expiresAtMs = this.getExpiresAtMs(expires_at);
+
+            if (!access_token || this.isExpiringSoon(expiresAtMs, thresholdMs)) {
+                await this.refreshAccessToken();
+            }
+
+            const tokenForRequest = this.cookies.get('access_token');
+            const headers = new Headers(init.headers || undefined);
+            if (tokenForRequest) headers.set('Authorization', `Bearer ${tokenForRequest}`);
+
+            const { authThresholdMs, ...restInit } = init;
+            const res = await fetch(input, { ...restInit, headers });
+
+            if (res.status === 401 && !_retried) {
+                const refreshed = await this.refreshAccessToken();
+                if (refreshed) {
+                    const retryHeaders = new Headers(init.headers || undefined);
+                    retryHeaders.set('Authorization', `Bearer ${refreshed}`);
+                    return await this.fetchWithAuth(input, { ...init, headers: retryHeaders }, true);
+                }
+            }
+
+            if (!res.ok) {
+                let data = null;
+                try {
+                    data = await res.clone().json();
+                } catch {
+                    try {
+                        data = await res.clone().text();
+                    } catch {
+                        data = null;
+                    }
+                }
+
+                const message =
+                    (data && typeof data === 'object' && 'message' in data && data.message) ||
+                    (data && typeof data === 'object' && 'detail' in data && data.detail) ||
+                    (data && typeof data === 'object' && 'error_description' in data && data.error_description) ||
+                    (typeof data === 'string' && data) ||
+                    `HTTP ${res.status}`;
+                const err = new Error(message);
+                err.status = res.status;
+                err.data = data;
+                err.url = typeof input === 'string' ? input : input?.url;
+                throw err;
+            }
+
+            return res;
         }
     }
 </script>

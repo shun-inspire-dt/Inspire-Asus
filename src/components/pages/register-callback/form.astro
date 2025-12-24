@@ -8,20 +8,15 @@ import InputGroup from '@components/common/form/group/inputGroup.astro';
 import Input from '@components/common/form/input/input.astro';
 /** Input */
 import PasswordInput from '@components/common/form/input/passwordInput.astro';
-/** Textarea */
-import Textarea from '@components/common/form/textarea.astro';
 /** Button */
 import Button from '@components/common/button/button.astro';
 /** CheckboxGroup */
 import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
 /** Checkbox */
 import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+import CheckboxErrorText from '@components/common/form/checkboxs/errorText.astro';
 /** Link */
 import ALink from '@components/common/link/link.astro';
-/** Link */
-import A from '@components/common/link/a.astro';
-/** SocialIcon */
-import SocialIcon from '@components/common/icons/social/SocialIcon.astro';
 /** Style */
 import './form.scss';
 
@@ -32,32 +27,74 @@ export interface Props {
     style?: { [key: string]: string };
 }
 
-const { IDName, className, style, attribute = {} } = Astro.props as Props;
+const { IDName = 'Register', className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<MySectionForm id={IDName} title="會員註冊" class:list={[className]} style={style} {...attribute}>
+<MySectionForm
+    IDName={IDName}
+    title="會員註冊"
+    className={['needs-validation', className]}
+    style={style}
+    attribute={{ novalidate: '', 'data-needs-loading': 'true', 'data-report-validity': 'false', ...attribute }}
+>
     <div
         class=":uno-thrid-party-registers-2: w-full flex flex-col md:flex-row md:items-center md:justify-center flex-wrap gap-0.75rem [&>button]:[--btn-min-width:100%]"
     >
-        <LoginButton type="google" status="registed" />
+        <LoginButton type="google" status="registed" attribute={{ 'data-read-only': 'true' }} />
     </div>
-    <InputGroup label="帳號" block>
-        <Input type="email" value="service@gmail.com" inputmode="email" readonly />
+    <InputGroup inputID="account" label="帳號" block>
+        <Input
+            id="account"
+            type="email"
+            name="email"
+            value="ogcing78@gmail.com"
+            autocomplete="email"
+            inputmode="email"
+            readonly
+        />
     </InputGroup>
-    <InputGroup label="密碼" infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。" block>
-        <PasswordInput />
+    <InputGroup
+        inputID="password"
+        label="密碼"
+        infoText="密碼需包括8至25位大小寫字母、數字及符號，且不能包含空格。"
+        errorText=""
+        error
+        block
+    >
+        <PasswordInput
+            inputId="password"
+            inputAttribute={{ pattern: `(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-Za-z0-9])[!-~]{8,25}` }}
+            required
+        />
     </InputGroup>
-    <InputGroup label="確認密碼" infoText="請再次輸入密碼" block>
-        <PasswordInput />
+    <InputGroup inputID="confirm-password" label="確認密碼" infoText="請您再次輸入您的密碼" error errorText="" block>
+        <PasswordInput
+            inputId="confirm-password"
+            inputAttribute={{
+                'data-valid': 'confirm',
+                'data-target': '#password'
+            }}
+            required
+        />
     </InputGroup>
     <CheckboxGroup>
         <Fragment slot="title">我同意以下所有條款和隱私權政策</Fragment>
-        <Checkbox>
-            我已閱讀並同意華碩 <b>ASUS EXPERTHUB</b> "<ALink link="https://asusexperthub.com/service/terms" showArrow={false} extend>使用者條款</ALink>"
+        <Checkbox required>
+            我已閱讀並同意華碩 <b>ASUS EXPERTHUB</b> "<ALink
+                link="https://asusexperthub.com/service/terms"
+                showArrow={false}
+                extend>使用者條款</ALink
+            >"
         </Checkbox>
-        <Checkbox>
-            我已閱讀並同意華碩 <b>ASUS EXPERTHUB</b> "<ALink link="https://asusexperthub.com/service/privacy" showArrow={false} extend>隱私權條款</ALink>"
+        <CheckboxErrorText error />
+        <Checkbox required>
+            我已閱讀並同意華碩 <b>ASUS EXPERTHUB</b> "<ALink
+                link="https://asusexperthub.com/service/privacy"
+                showArrow={false}
+                extend>隱私權條款</ALink
+            >"
         </Checkbox>
+        <CheckboxErrorText error />
         <Checkbox>我願意收到華碩相關新聞、產品及服務更新之訊息或行銷廣告。(非必填)</Checkbox>
         <Checkbox>我願意收到華碩雲端的相關新聞、產品及服務更新之訊息或行銷廣告。(非必填)</Checkbox>
     </CheckboxGroup>

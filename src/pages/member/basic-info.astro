@@ -7,9 +7,12 @@ import Layouts from '@layouts/layouts.astro';
 import Body from '@components/pages/member/tools/body.astro';
 import Title from '@components/pages/member/tools/title.astro';
 import ComfirmCode from '@components/modal/comfirm-code.astro';
+import ScriptNext from '@components/common/script/script-next.copy.astro';
+import CookiesScript from '@components/common/script/cookies.copy.astro';
+import FetchWithAuthScript from '@components/common/script/fetchWithAuth.copy.astro';
 /** Main Components */
-import Content from '@components/pages/member/basic-info/content.astro';
 import Form from '@components/pages/member/basic-info/form.astro';
+import ScriptInline from '@components/pages/member/basic-info/script-inline.astro';
 /** Style */
 import '@scss/pages/member/basic-info.scss';
 ---
@@ -21,3 +24,7 @@ import '@scss/pages/member/basic-info.scss';
     </Body>
 </Layouts>
 <ComfirmCode />
+<ScriptNext />
+<CookiesScript />
+<FetchWithAuthScript />
+<ScriptInline />

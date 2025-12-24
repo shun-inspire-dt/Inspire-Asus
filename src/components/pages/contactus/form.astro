@@ -13,6 +13,7 @@ import Button from '@components/common/button/button.astro';
 import CheckboxGroup from '@components/common/section/checkboxGroup.astro';
 /** Checkbox */
 import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+import CheckboxErrorText from '@components/common/form/checkboxs/errorText.astro';
 /** Link */
 import ALink from '@components/common/link/link.astro';
 /** Style */
@@ -28,40 +29,56 @@ export interface Props {
 const { IDName = 'Contactus', className, style, attribute = {} } = Astro.props as Props;
 ---
 
-<MySectionForm IDName={IDName} type={2} title="聯絡我們" class:list={[className]} style={style} {...attribute}>
-    <InputGroup label="聯絡人姓名" block>
-        <Input />
+<MySectionForm
+    IDName={IDName}
+    type={2}
+    title="聯絡我們"
+    style={style}
+    className={['needs-validation', className]}
+    attribute={{
+        novalidate: '',
+        'data-needs-loading': 'true',
+        'data-report-validity': 'false',
+        'data-invalid-scrolling': 'true',
+        'data-scroll-offset': '20',
+        ...attribute
+    }}
+>
+    <InputGroup inputID="name" label="聯絡人姓名" error block>
+        <Input id="name" name="name" required />
     </InputGroup>
-    <InputGroup label="公司名稱" block>
-        <Input />
+    <InputGroup inputID="companyName" label="公司名稱" error block>
+        <Input id="companyName" name="companyName" required />
     </InputGroup>
-    <InputGroup label="職稱" block>
-        <Input />
+    <InputGroup inputID="position" label="職稱" error block>
+        <Input id="position" name="position" required />
     </InputGroup>
-    <InputGroup label="公司電子郵件" block>
-        <Input type="email" inputmode="email" />
+    <InputGroup inputID="email" label="公司電子郵件" error block>
+        <Input id="email" name="email" type="email" inputmode="email" autocomplete="email" required />
     </InputGroup>
-    <InputGroup label="公司電話" block>
-        <Input type="tel" inputmode="tel" />
+    <InputGroup inputID="tel" label="公司電話" error block>
+        <Input id="tel" name="tel" type="tel" inputmode="tel" required />
     </InputGroup>
-    <InputGroup label="我們可以如何協助您？" block>
-        <Textarea />
+    <InputGroup inputID="comment" label="我們可以如何協助您？" block>
+        <Textarea id="comment" name="comment" />
     </InputGroup>
     <CheckboxGroup showTop={false}>
-        <Checkbox>
+        <Checkbox required>
             我同意華碩及華碩授權經銷商，透過上述表單所提供的電話/電子郵件與我聯繫，限用於商業用途和報價，並同意 "<ALink
-                link=""
+                link="https://asusexperthub.com/service/terms"
                 showArrow={false}
-                extend>隱私權條款</ALink
+                extend>使用者條款</ALink
             >"
         </Checkbox>
-        <Checkbox>
+        <CheckboxErrorText error />
+        <Checkbox required>
             我同意提供上述資訊給華碩，用以接收華碩新聞、活動、最新產品和服務信息等相關資訊，並同意 "<ALink
-                link=""
+                link="https://asusexperthub.com/service/privacy"
                 showArrow={false}
                 extend>隱私權條款</ALink
             >"
         </Checkbox>
+        <CheckboxErrorText error />
     </CheckboxGroup>
     <Button type={'submit'} title="送出" variant="blue" block>送出</Button>
 </MySectionForm>

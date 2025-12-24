@@ -5,8 +5,12 @@ import Layouts from '@layouts/layouts.astro';
 
 /** Common Components */
 import ComfirmCode from '@components/modal/comfirm-code.astro';
+import ScriptNext from '@components/common/script/script-next.copy.astro';
+import CookiesScript from '@components/common/script/cookies.copy.astro';
+import FetchWithAuthScript from '@components/common/script/fetchWithAuth.copy.astro';
 /** Main Components */
 import Form from '@components/pages/register/form.astro';
+import ScriptInline from '@components/pages/register/script-inline.astro';
 /** Style */
 import '@scss/pages/register.scss';
 ---
@@ -15,3 +19,7 @@ import '@scss/pages/register.scss';
     <Form />
 </Layouts>
 <ComfirmCode />
+<ScriptNext />
+<CookiesScript />
+<FetchWithAuthScript />
+<ScriptInline />

@@ -6,9 +6,12 @@ import Layouts from '@layouts/layouts.astro';
 /** Common Components */
 import Body from '@components/pages/member/tools/body.astro';
 import Title from '@components/pages/member/tools/title.astro';
+import ScriptNext from '@components/common/script/script-next.copy.astro';
+import CookiesScript from '@components/common/script/cookies.copy.astro';
+import FetchWithAuthScript from '@components/common/script/fetchWithAuth.copy.astro';
 /** Main Components */
-import Content from '@components/pages/member/account-management/content.astro';
 import Form from '@components/pages/member/account-management/form.astro';
+import ScriptInline from '@components/pages/member/account-management/script-inline.astro';
 /** Modal */
 import ComfirmCode from '@components/modal/comfirm-code.astro';
 import UpdateEmailSendCode from '@components/modal/update-email-send-code.astro';
@@ -20,192 +23,13 @@ import '@scss/pages/member/account-management.scss';
 <Layouts IDName="MemberAccount-management" minMarginHeader isMemberFooter>
     <Body activeTab="帳號管理" activeCollapse="帳戶設定">
         <Title title="帳號管理" showSort />
-        <Form />
+        <Form email="" />
     </Body>
 </Layouts>
 <ComfirmCode attribute={{ 'data-step': 'next', 'data-target': '#ResetEmailModal' }} />
 <UpdateEmailSendCode />
 <ResetEmail />
-
-<script is:inline>
-    /**
-     * 帳號管理 - 信箱變更流程管理類別
-     * @description 管理信箱變更的多步驟流程，包含驗證碼發送、確認和重設
-     * @author ASUS Team
-     * @version 1.0.0
-     */
-    class API {
-        headers = new Headers({
-            'Content-Type': 'application/json',
-            token: '123'
-        });
-    }
-    class EmailUpdateManager {
-        /**
-         * 建構函式
-         * @description 初始化所有 Modal 和 Form 元素，並綁定事件監聽器
-         */
-        constructor() {
-            this.initElements();
-            this.bindEvents();
-        }
-
-        /**
-         * 初始化 DOM 元素
-         * @description 取得所有相關的 Modal 和 Form 元素
-         */
-        initElements() {
-            // Modal 元素
-            this.modals = {
-                confirm: document.querySelector('#ComfirmCodeModal'),
-                update: document.querySelector('#UpdateEmailSendCodeModal'),
-                reset: document.querySelector('#ResetEmailModal'),
-                toast: document.querySelector('#toastModal')
-            };
-
-            // Form 元素
-            this.forms = {
-                confirm: document.querySelector('#ComfirmCodeForm'),
-                update: document.querySelector('#UpdateEmailSendCodeForm'),
-                reset: document.querySelector('#ResetEmailForm')
-            };
-        }
-
-        /**
-         * 綁定所有事件監聽器
-         * @description 為各個 Form 和 Modal 綁定相應的事件處理器
-         */
-        bindEvents() {
-            // 發送驗證碼表單提交
-            this.forms.update?.addEventListener('submit', async (e) => await this.handleUpdateSubmit(e));
-
-            // 確認驗證碼表單提交
-            this.forms.confirm?.addEventListener('submit', async (e) => await this.handleConfirmSubmit(e));
-
-            // 重設信箱表單提交
-            this.forms.reset?.addEventListener('submit', async (e) => await this.handleResetSubmit(e));
-
-            // Modal 關閉事件
-            this.modals.confirm?.addEventListener('hidden.bs.modal', () => this.handleConfirmHidden());
-            this.modals.reset?.addEventListener('hidden.bs.modal', () => this.handleResetHidden());
-        }
-
-        /**
-         * 處理發送驗證碼表單提交
-         * @param {Event} e - 表單提交事件
-         * @description 隱藏發送驗證碼 Modal，顯示確認驗證碼 Modal
-         */
-        async handleUpdateSubmit(e) {
-            e.preventDefault();
-            this.hideModal('update');
-            this.showModal('confirm');
-        }
-
-        /**
-         * 處理確認驗證碼表單提交
-         * @param {Event} e - 表單提交事件
-         * @description 根據步驟決定下一個動作（顯示重設 Modal 或完成流程）
-         */
-        async handleConfirmSubmit(e) {
-            e.preventDefault();
-            const form = e.target;
-            //
-            if (!form.checkValidity()) return;
-
-            const { step, target = '' } = form.dataset || {};
-
-            if (step === 'next') {
-                this.handleNextStep(target);
-            } else if (step === 'finish') {
-                this.handleFinishStep();
-            }
-        }
-
-        /**
-         * 處理重設信箱表單提交
-         * @param {Event} e - 表單提交事件
-         * @description 隱藏重設 Modal，設定完成步驟並顯示確認 Modal
-         */
-        async handleResetSubmit(e) {
-            e.preventDefault();
-            this.hideModal('reset');
-            this.forms.confirm?.setAttribute('data-step', 'finish');
-            this.showModal('confirm');
-        }
-
-        /**
-         * 處理下一步驟
-         * @param {string} target - 目標 Modal 選擇器
-         * @description 隱藏確認 Modal，顯示目標 Modal
-         */
-        handleNextStep(target) {
-            const targetModal = document.querySelector(target);
-            if (targetModal) {
-                this.hideModal('confirm');
-                targetModal.dispatchEvent(new Event('show'));
-            }
-        }
-
-        /**
-         * 處理完成步驟
-         * @description 顯示成功 Toast 訊息
-         */
-        handleFinishStep() {
-            this.modals.toast?.dispatchEvent(
-                new CustomEvent('fire', {
-                    detail: {
-                        icon: 'success',
-                        title: '信箱已成功變更',
-                        text: '您的聯絡信箱已成功變更',
-                        link: {
-                            primaryText: '關閉',
-                            primaryVariant: 'blue',
-                            cancel: () => {
-                                this.modals.toast?.dispatchEvent(new CustomEvent('hide'));
-                            }
-                        }
-                    }
-                })
-            );
-        }
-
-        /**
-         * 處理確認 Modal 關閉事件
-         * @description 重設確認表單
-         */
-        handleConfirmHidden() {
-            this.forms.confirm?.reset();
-        }
-
-        /**
-         * 處理重設 Modal 關閉事件
-         * @description 重設重設表單
-         */
-        handleResetHidden() {
-            this.forms.reset?.reset();
-        }
-
-        /**
-         * 顯示指定的 Modal
-         * @param {string} modalName - Modal 名稱
-         * @description 觸發指定 Modal 的顯示事件
-         */
-        showModal(modalName) {
-            this.modals[modalName]?.dispatchEvent(new Event('show'));
-        }
-
-        /**
-         * 隱藏指定的 Modal
-         * @param {string} modalName - Modal 名稱
-         * @description 觸發指定 Modal 的隱藏事件
-         */
-        hideModal(modalName) {
-            this.modals[modalName]?.dispatchEvent(new Event('hide'));
-        }
-    }
-
-    // 初始化信箱變更管理器
-    document.addEventListener('DOMContentLoaded', () => {
-        new EmailUpdateManager();
-    });
-</script>
+<ScriptNext />
+<CookiesScript />
+<FetchWithAuthScript />
+<ScriptInline />

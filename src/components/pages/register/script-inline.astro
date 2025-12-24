@@ -1,0 +1,168 @@
+<script is:inline define:vars={{ baseURL: import.meta.env.API_BASE_URL }}>
+    const authClient = new AuthClient({ baseURL, cookies });
+    const Fetch = authClient.fetchWithAuth.bind(authClient);
+    /** ---------- 實作 ---------- */
+    // 全局 Toast 實例
+    const toastEl = document.getElementById('toastModal');
+
+    /**
+     * API 請求封裝
+     * @description 統一處理此頁面「會員註冊」流程所需的 API 呼叫與 headers 設定
+     */
+    class API {
+        headers = new Headers({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authClient.cookies.get('access_token')}`
+        });
+
+        /**
+         * 註冊
+         * @param {string} email - 使用者 Email
+         * @param {string} password - 使用者密碼
+         * @returns {Promise<Response | {success: boolean, message?: string}>} API 回應（依後端格式回傳）
+         */
+        registerApi = async (email, password) => {
+            const raw = JSON.stringify({ email, password });
+
+            const requestOptions = {
+                method: 'POST',
+                headers: this.headers,
+                body: raw
+            };
+
+            return await Fetch(baseURL + '/api/auth/register', requestOptions)
+                .then((response) => response.json())
+                .then((result) => result)
+                .catch((error) => {
+                    console.error('Register error:', error);
+                    return { success: false, message: error.message || '註冊失敗' };
+                });
+        };
+    }
+
+    /**
+     * 註冊流程管理
+     * @description 負責表單驗證、呼叫 API、並以 Toast 呈現結果
+     */
+    class Register extends API {
+        form = document.querySelector('#RegisterForm');
+
+        /**
+         * 初始化
+         * @description 建立實例後立即綁定事件
+         */
+        constructor() {
+            super();
+            this.bindEvents();
+        }
+
+        /**
+         * 建立表單驗證器
+         * @description 使用 FormValidator 綁定 submit 驗證與 onValidSubmit 行為
+         * @returns {FormValidator}
+         */
+        validator = () =>
+            new FormValidator(this.form, {
+                /**
+                 * 表單通過驗證後的送出處理
+                 * @param {{controls: Record<string, HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>}} payload - 表單資料
+                 * @returns {Promise<void>}
+                 */
+                onValidSubmit: async ({ controls }) => {
+                    const email = controls['account'].value;
+                    const password = controls['confirm-password'].value;
+
+                    try {
+                        const response = await this.registerApi(email, password);
+                        if (response.success) {
+                            /** 
+                             * 信箱已被註冊，請使用其他信箱 
+                             * 範例 API 會回傳特殊 code: 'CONFIRMATION_SENT'
+                             * */
+                            if (response.code === 'CONFIRMATION_SENT') {
+                                toastEl.dispatchEvent(
+                                    new CustomEvent('fire', {
+                                        detail: {
+                                            icon: 'error',
+                                            title: '該信箱已被註冊過，請使用其他信箱'
+                                        }
+                                    })
+                                );
+                            } else {
+                                toastEl.dispatchEvent(
+                                    new CustomEvent('fire', {
+                                        detail: {
+                                            icon: 'success',
+                                            title: '註冊成功',
+                                            link: {
+                                                primaryText: '重新登入',
+                                                primaryLink: '/login',
+                                                primaryVariant: 'blue'
+                                            }
+                                        }
+                                    })
+                                );
+                            }
+                        } else {
+                            toastEl.dispatchEvent(
+                                new CustomEvent('fire', {
+                                    detail: {
+                                        icon: 'error',
+                                        title: response.message || '註冊失敗'
+                                    }
+                                })
+                            );
+                        }
+                    } catch (error) {
+                        console.error('Register error From Submit:', error);
+                        toastEl.dispatchEvent(
+                            new CustomEvent('fire', {
+                                detail: {
+                                    icon: 'error',
+                                    title: error.message || '註冊失敗'
+                                }
+                            })
+                        );
+                    }
+                }
+            });
+
+        /**
+         * 綁定所有事件監聽器
+         * @description 為各個 Form 和 Modal 綁定相應的事件處理器
+         * @returns {Promise<void>}
+         */
+        async bindEvents() {
+            /** 驗證器 */
+            this.validator && this.validator();
+        }
+
+        /**
+         * 隱藏部分 Email
+         * @param {string} email - 原始 Email
+         * @returns {string} 遮罩後 Email
+         */
+        maskEmail = (email) => {
+            if (!email) return '';
+            const parts = email.split('@');
+            if (parts.length !== 2) return email;
+
+            const name = parts[0];
+            const domain = parts[1];
+
+            if (name.length <= 2) {
+                return name.charAt(0) + '***@' + domain;
+            }
+
+            const visiblePart = name.substring(0, 2);
+            return visiblePart + '***@' + domain;
+        };
+    }
+
+    // 等待 DOM 加載完成後初始化信箱變更管理器
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', new Register());
+    } else {
+        new Register();
+    }
+</script>
