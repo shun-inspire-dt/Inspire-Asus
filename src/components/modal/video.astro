@@ -18,18 +18,20 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
 
 <Modal id={IDName} sizes="xl" Modalclass={className} center hideFooter attribute={attribute}>
     <div id="youtube-player-container" data-default-video-id={defaultVideoId}>
-        {defaultVideoId && (
-            <iframe
-                id="youtube-player"
-                width="560"
-                height="315"
-                src={`https://www.youtube.com/embed/${defaultVideoId}?enablejsapi=1`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-            </iframe>
-        )}
+        {
+            defaultVideoId && (
+                <iframe
+                    id="youtube-player"
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${defaultVideoId}?enablejsapi=1`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                ></iframe>
+            )
+        }
     </div>
 </Modal>
 
@@ -48,7 +50,7 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
             this.isAPIReady = false;
             this.defaultVideoId = null;
             this.modal = document.getElementById('VideoModal');
-            
+
             this.init();
         }
 
@@ -87,10 +89,10 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
                 this.currentVideoId = this.defaultVideoId;
                 this.player = new YT.Player('youtube-player', {
                     events: {
-                        'onReady': (event) => {
+                        onReady: (event) => {
                             // 預設不自動播放
                         },
-                        'onError': (event) => {
+                        onError: (event) => {
                             console.error('YouTube Player Error:', event.data);
                         }
                     }
@@ -102,32 +104,31 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
          * 設置 Modal 事件監聽器
          */
         setupModalEvents() {
-            
             this.modal.addEventListener('show.bs.modal', (e) => {
                 this.triggerButton = e.relatedTarget;
-                
+
                 // 取得 video-id
                 const videoId = this.triggerButton?.dataset?.videoId || this.triggerButton?.getAttribute('data-video-id');
-                
+
                 if (videoId) {
                     this.loadVideo(videoId);
                 } else if (this.defaultVideoId && this.player) {
                     // 如果沒有指定影片 ID，但有預設影片，就播放預設影片
                     this.playVideo();
                 }
-                
+
                 if (this.triggerButton && !this.triggerButton.classList.contains('active')) {
                     this.triggerButton.classList.add('active');
                 }
             });
-            
+
             this.modal.addEventListener('hidden.bs.modal', (e) => {
                 if (this.triggerButton && this.triggerButton.classList.contains('active')) {
                     this.triggerButton.classList.remove('active');
                 }
-                
+
                 this.triggerButton = null;
-                
+
                 // 如果當前播放的不是預設影片，就銷毀播放器並回到預設影片
                 if (this.currentVideoId !== this.defaultVideoId) {
                     this.destroyPlayer();
@@ -147,9 +148,9 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
          */
         loadVideo(videoId) {
             if (!videoId || this.currentVideoId === videoId) return;
-            
+
             this.currentVideoId = videoId;
-            
+
             // 如果 API 還沒準備好，等待一下再試
             if (!this.isAPIReady) {
                 setTimeout(() => this.loadVideo(videoId), 100);
@@ -178,15 +179,15 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
                 width: '560',
                 videoId: videoId,
                 playerVars: {
-                    'enablejsapi': 1,
-                    'origin': window.location.origin
+                    enablejsapi: 1,
+                    origin: window.location.origin
                 },
                 events: {
-                    'onReady': (event) => {
+                    onReady: (event) => {
                         // 播放器準備完成，可以自動播放
                         event.target.playVideo();
                     },
-                    'onError': (event) => {
+                    onError: (event) => {
                         console.error('YouTube Player Error:', event.data);
                     }
                 }
@@ -201,13 +202,13 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
                 this.player.destroy();
                 this.player = null;
             }
-            
+
             // 清空容器
             const container = document.getElementById('youtube-player-container');
             if (container) {
                 container.innerHTML = '';
             }
-            
+
             this.currentVideoId = null;
         }
 
@@ -231,7 +232,13 @@ const { IDName = 'Video', className, style, attribute = {}, defaultVideoId } = A
     }
 
     // 初始化 YouTube 播放器管理器
-    document.addEventListener('DOMContentLoaded', () => {
-        window.youtubeManager = new YouTubePlayerManager();
-    });
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.youtubeManager = new YouTubePlayerManager();
+        });
+    } else {
+        (() => {
+            window.youtubeManager = new YouTubePlayerManager();
+        })();
+    }
 </script>
