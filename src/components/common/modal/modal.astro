@@ -31,6 +31,8 @@ import './modal.scss';
  * @property {boolean} center - 是否垂直置中 @default true
  * @property {boolean} scrollable - 是否可滾動 @default false
  * @property {string} title - Modal 標題
+ * @property {boolean | 'static'} backdrop - Modal 背景 @default false
+ * @property {boolean} keyboard - 是否可按 ESC 鍵關閉 @default true
  * @property {attribute} attribute - 額外的 HTML 屬性
  * @property {string} Modalclass - Modal 容器的 CSS 類別
  * @property {string} bodyClass - Modal 主體的 CSS 類別
@@ -61,6 +63,8 @@ export interface Props {
     center?: boolean;
     scrollable?: boolean;
     title?: string;
+    backdrop?: boolean | 'static';
+    keyboard?: boolean;
     attribute?: attribute;
 
     Modalclass?: string;
@@ -101,6 +105,8 @@ const {
     scrollable = false,
     title = '',
     attribute = {},
+    backdrop,
+    keyboard,
 
     Modalclass = '',
     bodyClass = '',
@@ -147,6 +153,8 @@ const modalSize = modalSizes?.[sizes];
     class:list={['modal fade', Modalclass]}
     id={`${id}Modal`}
     tabindex="-1"
+    data-bs-backdrop={backdrop}
+    data-bs-keyboard={keyboard}
     aria-labelledby={`${id}ModalLabel`}
     aria-hidden="false"
     data-bs-focus="false"
@@ -235,6 +243,8 @@ const modalSize = modalSizes?.[sizes];
      */
     const modals = document.querySelectorAll('.modal') as NodeListOf<HTMLElement>;
     [...modals].forEach((modal) => {
-        new Modal(modal).addMethod();
+        const backdrop = modal.getAttribute('data-bs-backdrop') === 'static' ? 'static' : true;
+        const keyboard = modal.getAttribute('data-bs-keyboard') === 'false' ? false : true;
+        new Modal(modal, { backdrop, keyboard }).addMethod();
     });
 </script>
