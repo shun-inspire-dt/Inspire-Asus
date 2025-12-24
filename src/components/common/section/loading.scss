@@ -1,3 +1,6 @@
+.section-loading {
+    @apply flex items-center justify-center py-2rem;
+}
 /* HTML: <div class="loader"></div> */
 .loader {
     width: 50px;
