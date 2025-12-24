@@ -1,7 +1,10 @@
 #ComfirmCodeModal {
     --modal-header-padding-bottom: 1.5rem;
-    --modal-body-padding-x: 0rem;
     --modal-body-align-items: flex-start;
+    
+    @screen md {
+        --modal-body-padding-x: 0rem;
+    }
     .modal-title span {
         --modal-title-font-size: var(--fs-30);
         --modal-title-font-family: var(--font-family-tt-norms-pro-medium);
@@ -15,5 +18,8 @@
     }
     .modal-body {
         @apply w-full max-w-30rem mx-a font-roboto;
+    }
+    .modal-footer {
+        @apply w-full max-w-30rem mx-a;
     }
 }

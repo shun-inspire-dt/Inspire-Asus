@@ -35,7 +35,7 @@
     /** Toast Title Icon */
     --toast-icon-size: 3rem;
     --toast-icon-gap: 0rem;
-    --toast-icon-error-background-image: ;
+    --toast-icon-error-background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M56 30C56 35.1423 54.4751 40.1691 51.6182 44.4448C48.7613 48.7205 44.7007 52.053 39.9498 54.0209C35.1989 55.9887 29.9712 56.5036 24.9277 55.5004C19.8842 54.4972 15.2514 52.0209 11.6152 48.3848C7.97907 44.7486 5.50281 40.1158 4.49959 35.0723C3.49638 30.0288 4.01127 24.8011 5.97914 20.0502C7.94702 15.2993 11.2795 11.2387 15.5552 8.38179C19.8309 5.52487 24.8577 4 30 4C33.4144 4 36.7953 4.67251 39.9498 5.97913C43.1042 7.28575 45.9705 9.2009 48.3848 11.6152C50.7991 14.0295 52.7142 16.8958 54.0209 20.0502C55.3275 23.2047 56 26.5856 56 30Z" fill="%23B42D18"/><path d="M41 19L19 41M19 19L41 41" stroke="white" stroke-width="3.2" stroke-linecap="round"/></svg>');
     --toast-icon-success-background-image: url('data:image/svg+xml,<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 24C44 27.9556 42.827 31.8224 40.6294 35.1114C38.4318 38.4004 35.3082 40.9638 31.6537 42.4776C27.9992 43.9913 23.9778 44.3874 20.0982 43.6157C16.2186 42.844 12.6549 40.9392 9.85787 38.1421C7.06082 35.3451 5.15601 31.7814 4.3843 27.9018C3.6126 24.0222 4.00867 20.0009 5.52242 16.3463C7.03617 12.6918 9.59962 9.56823 12.8886 7.37061C16.1776 5.17298 20.0444 4 24 4C26.6264 4 29.2272 4.51731 31.6537 5.52241C34.0802 6.5275 36.285 8.00069 38.1421 9.85786C39.9993 11.715 41.4725 13.9198 42.4776 16.3463C43.4827 18.7728 44 21.3736 44 24Z" fill="%231A821C"/><path d="M15 24.8571L21.6087 32L34 17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
     
     /** Toast Link Button */
@@ -43,7 +43,7 @@
     --toast-button-icon-size: 3rem;
     --toast-button-icon-color: var(--color-green-600, #1a821c);
     --toast-button-loader-size: 0.375rem;
-    --toast-button-max-width: 100%; /* 底部按鈕最大寬度 */
+    --toast-button-max-width: 9.75rem; /* 底部按鈕最大寬度 */
     --toast-button-width: 9.75rem; /* 底部按鈕寬度 */
     
     /** === Breakpoint === */
