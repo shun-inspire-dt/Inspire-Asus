@@ -1,7 +1,7 @@
 ---
 /** Data */
 import { data as FilterData } from '@components/pages/solutions/filter';
-import { data } from '@components/pages/solutions/data';
+import { data as ArticleData } from '@components/pages/solutions/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -14,6 +14,7 @@ import Video from '@components/modal/video.astro';
 import ArticlesList from '@components/common/article/articlesList.astro';
 import Card from '@components/pages/solutions/card.astro';
 import Script from '@components/pages/news/script.astro';
+import ScriptInline from '@components/pages/news/scipt-inline.astro';
 /** Style */
 import '@scss/pages/solution.scss';
 ---
@@ -32,7 +33,7 @@ import '@scss/pages/solution.scss';
         mode="white"
     >
         {
-            data.map((x, index) => (
+            ArticleData.map((x, index) => (
                 <Card
                     title={x.title}
                     breif={x.breif}
@@ -48,5 +49,6 @@ import '@scss/pages/solution.scss';
     </ArticlesList>
 </Layouts>
 <Follower />
-<Script />
 <Video />
+<ScriptInline data={ArticleData} />
+<Script />

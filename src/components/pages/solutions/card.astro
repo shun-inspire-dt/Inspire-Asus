@@ -7,6 +7,8 @@ import ALink from '@components/common/link/link.astro';
 import A from '@components/common/link/a.astro';
 /** PlayBack */
 import PlayBack from '@components/common/playBack/playBack.astro';
+/** Style */
+import './card.scss';
 
 export interface Props {
     IDName?: string;
@@ -80,21 +82,11 @@ const cardStyle = {
 };
 ---
 
-<A
-    id={IDName}
-    link={link}
-    title={title}
-    className={[
-        className,
-        ':uno-solutions-card: max-w-[var(--card-width,100%)] flex flex-col border border-gray-500 rounded-xl overflow-hidden group focus:focus-visible:outline-blue-500 focus:focus-visible:outline-0.125rem focus:focus-visible:outline-offset-2'
-    ]}
-    style={cardStyle}
-    {...attribute}
->
-    <div class=":uno-solutions-card-image-container: flex-none relative aspect-190/107 overflow-hidden">
+<A id={IDName} link={link} title={title} className={[className, 'solutions-card group']} style={cardStyle} {...attribute}>
+    <div class="solutions-card-image-container">
         <Picture
             img={img}
-            className=":uno-solutions-card-image: size-full absolute inset-0 object-center object-cover group-hover:scale-110 transition-transform duration-300 origin-center"
+            className="solutions-card-image"
             alt={title}
             loading="lazy"
             decoding="async"
@@ -103,10 +95,7 @@ const cardStyle = {
         />
         {
             showPlayBack && (
-                <div
-                    class=":uno-solutions-card-play-back: absolute top-0 left-0 size-full bg-transparent flex items-center justify-center z-2"
-                    data-play-back-overlay
-                >
+                <div class="solutions-card-play-back" data-play-back-overlay>
                     <PlayBack
                         size="48"
                         attribute={{
@@ -122,30 +111,16 @@ const cardStyle = {
             )
         }
     </div>
-    <div class=":uno-solutions-card-content: flex flex-col grow p-1.5rem bg-white rounded-b-xl">
-        <div class=":uno-solutions-card-head:">
-            {
-                title && (
-                    <strong class=":uno-solutions-card-title: text-gray-900 font-tt-medium text-subtitle leading-125 font-medium hover:underline-0.0625rem hover:underline hover:underline-offset-3">
-                        {title}
-                    </strong>
-                )
-            }
-            {
-                breif && (
-                    <span class=":uno-solutions-card-breif: mt-0.75rem text-gray-900 font-roboto text-base leading-140 font-normal line-clamp-3">
-                        {breif}
-                    </span>
-                )
-            }
+    <div class="solutions-card-content">
+        <div class="solutions-card-head">
+            {title && <strong class="solutions-card-title">{title}</strong>}
+            {breif && <span class="solutions-card-breif">{breif}</span>}
         </div>
-        <div class=":uno-solutions-card-footer: flex flex-col mt-auto">
-            <div
-                class=":uno-solutions-card-logo: w-5.25rem h-2.625rem aspect-2/1 mt-0.75rem [&_img]:size-full [&_img]:object-center-left [&_img]:object-contain"
-            >
+        <div class="solutions-card-footer">
+            <div class="solutions-card-logo">
                 <Picture img={logoImage} alt={title} type={logoImageType} loading="lazy" decoding="async" noWebp />
             </div>
-            <div class=":uno-solutions-card-link: mt-1rem">
+            <div class="solutions-card-link">
                 <ALink link={link} className="" title={linkText} size="16" showArrow={showLinkArrow} Tag="span" />
             </div>
         </div>

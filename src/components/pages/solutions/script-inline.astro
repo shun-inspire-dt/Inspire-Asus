@@ -1,0 +1,325 @@
+---
+/** Type */
+import type { dataType } from '@components/pages/solutions/data';
+
+/** Props */
+interface Props {
+    data: dataType;
+}
+
+const { data } = Astro.props;
+---
+
+<script is:inline define:vars={{ data }}>
+    /**
+     * Solutions 卡片模板參數
+     * @typedef {Object} SolutionsCardParams
+     * @property {string=} title - 標題
+     * @property {string=} breif - 簡介
+     * @property {string} link - 卡片連結
+     * @property {string[]=} images - 圖片由小圖放到大圖（含副檔名），與 image 可擇一個
+     * @property {string=} image - 只想放單一圖片（含副檔名），與 images 可擇一個
+     * @property {string=} logo - Logo 圖片路徑（含副檔名）
+     * @property {string=} videoId - YouTube 影片 ID
+     * @property {boolean=} autoplay - 是否允許自動播放
+     */
+
+    /**
+     * 模擬 API 層
+     * @description
+     * 透過 setTimeout 模擬非同步載入資料，回傳 define:vars 注入的 `data`。
+     */
+    class API {
+        /**
+         * 取得更多 Solutions 資料
+         * @returns {Promise<SolutionItem[]>} Solutions 資料陣列
+         * @description 寫你正式的 API 來源，回傳陣列是 SolutionItem[]，包含以下 Key/value
+         * @param {string=} title - 標題
+         * @param {string=} breif - 簡介
+         * @param {string} link - 卡片連結
+         * @param {string[]=} images - 圖片由小圖放到大圖（含副檔名），與 image 可擇一個
+         * @param {string=} image - 只想放單一圖片（含副檔名），與 images 可擇一個
+         * @param {string=} logo - Logo 圖片路徑（含副檔名）
+         * @param {string=} videoId - YouTube 影片 ID
+         * @param {boolean=} autoplay - 是否允許自動播放
+         */
+        addNewsApi = () => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(data);
+                }, 2000);
+            });
+        };
+    }
+
+    /**
+     * Solutions 列表互動控制器
+     * @description
+     * - 點擊「顯示更多」按鈕後載入資料並插入卡片
+     * - 同步 URL query string 的 page（代表目前已顯示卡片數量）
+     * - 透過事件委派攔截 `[data-play-back-overlay]` 的點擊事件，避免點到播放區塊時觸發外層 `<a>` 導頁
+     */
+    class Article extends API {
+        /**
+         * 「顯示更多」按鈕
+         * @type {HTMLButtonElement | null}
+         */
+        triggerBtn = document.querySelector('button[data-toggle="show-more"]');
+
+        /**
+         * 卡片列表容器
+         * @type {HTMLElement | null}
+         */
+        listGrid =
+            document.querySelector(this.triggerBtn?.getAttribute('data-target')) || document.querySelector('#article-list-grid');
+
+        /**
+         * 列表容器的外層（用於插入 loading template 與控制顯示）
+         * @type {HTMLElement}
+         */
+        listGridContainer = this.listGrid.parentNode;
+
+        /**
+         * 是否已綁定播放遮罩層（overlay）事件
+         * @type {boolean}
+         */
+        _isPlayBackOverlayBound = false;
+
+        /**
+         * 暫停 icon SVG 模板
+         * @type {string}
+         */
+        pauseIconTemp = `
+        <svg class="play-back-pause-icon play-pause-back-icon-48" width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.6" y="0.6" width="1.2" height="18" rx="0.6" fill="var(--color-white, #fff)" stroke="var(--color-white, #fff)" stroke-width="1.2"></rect>
+            <rect x="12.6" y="0.6" width="1.2" height="18" rx="0.6" fill="var(--color-white, #fff)" stroke="var(--color-white, #fff)" stroke-width="1.2"></rect>
+        </svg>`;
+
+        /**
+         * 播放 icon SVG 模板
+         * @type {string}
+         */
+        playIconTemp = `
+        <svg class="play-back-icon play-back-icon-48" width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.2804 8.00913C15.9522 8.39302 15.9522 9.36172 15.2804 9.74561L1.49594 17.6224C0.829283 18.0034 -0.000195347 17.522 -0.000195313 16.7542L-0.000194625 1.00052C-0.000194591 0.232701 0.829288 -0.248665 1.49594 0.132283L15.2804 8.00913Z" fill="var(--color-white, #fff)"></path>
+        </svg>`;
+
+        /**
+         * 箭頭 icon SVG 模板
+         * @type {string}
+         */
+        arrowIconTemp = `
+        <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.195668 0.18892C0.320668 0.0691288 0.466501 0.00662879 0.633168 0.00142045C0.805043 -0.00899621 0.958688 0.0378788 1.09411 0.142045L1.14098 0.18892L4.91442 3.96236C4.97692 4.02486 5.02379 4.09777 5.05504 4.18111C5.0915 4.25923 5.10973 4.34257 5.10973 4.43111C5.10973 4.51965 5.0915 4.60559 5.05504 4.68892C5.02379 4.77225 4.97692 4.84517 4.91442 4.90767L1.14098 8.6733C1.01077 8.8035 0.851918 8.86861 0.664418 8.86861C0.482126 8.86861 0.325876 8.8035 0.195668 8.6733C0.0654593 8.54309 0.000355114 8.38684 0.000355114 8.20455C0.000355114 8.02225 0.0654593 7.866 0.195668 7.7358L3.50036 4.43111L0.195668 1.13423L0.156605 1.07955C0.0472301 0.949337 -0.00485322 0.8009 0.000355114 0.634233C0.0107718 0.462358 0.0758759 0.31392 0.195668 0.18892Z" fill="currentColor"></path>
+        </svg>`;
+
+        /**
+         * Loading template HTML
+         * @type {string | undefined}
+         */
+        loadingTemp = document.querySelector('template[id="article-loading-template"]')?.innerHTML?.trim();
+
+        /**
+         * 初始化並綁定事件
+         */
+        constructor() {
+            super();
+            this.bindEvent();
+            this.bindPlayBackOverlayGuards();
+            this.syncPageQuery();
+        }
+
+        /**
+         * 綁定播放遮罩層點擊攔截（事件委派）
+         * @description
+         * 針對 `[data-play-back-overlay]` 的點擊：
+         * - stopPropagation / stopImmediatePropagation：避免冒泡到外層 `<a>`
+         * - preventDefault：避免觸發 `<a>` 的導頁預設行為
+         * @returns {void}
+         */
+        bindPlayBackOverlayGuards = () => {
+            if (this._isPlayBackOverlayBound) return;
+            if (!this.listGridContainer) return;
+
+            this._isPlayBackOverlayBound = true;
+            this.listGridContainer.addEventListener(
+                'click',
+                (e) => {
+                    const target = e.target;
+                    if (!(target instanceof Element)) return;
+
+                    const overlay = target.closest('[data-play-back-overlay]');
+                    if (!overlay) return;
+
+                    e.stopPropagation();
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                },
+                true
+            );
+        };
+
+        /**
+         * 同步 URL query string 的 page
+         * @description
+         * page 參數代表目前已渲染在頁面上的卡片數量。
+         * @returns {void}
+         */
+        syncPageQuery = () => {
+            const count = this.listGrid?.querySelectorAll?.('.solutions-card')?.length ?? 0;
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', String(count));
+            window.history.replaceState(window.history.state, '', url.toString());
+        };
+
+        /**
+         * Card Template
+         * @param {string[]} images 圖片由小放到大
+         * @param {string} image 如果只想都同一張照片
+         * */
+        /**
+         * 產生 Solutions 卡片 HTML 字串
+         * @param {SolutionsCardParams} params - 卡片渲染所需參數
+         * @param {string=} title - 標題
+         * @param {string=} breif - 簡介
+         * @param {string} link - 卡片連結
+         * @param {string[]=} images - 圖片由小圖放到大圖（含副檔名），與 image 可擇一個
+         * @param {string=} image - 只想放單一圖片（含副檔名），與 images 可擇一個
+         * @param {string=} logo - Logo 圖片路徑（含副檔名）
+         * @param {string=} videoId - YouTube 影片 ID
+         * @param {boolean=} autoplay - 是否允許自動播放
+         * @returns {string} card HTML
+         */
+        cardTemp = ({ link, title, breif, images, image, logo, videoId = '', autoplay }) => {
+            const image_sm = images?.[0] || image;
+            const image_md = images?.[1] || images?.[0] || image;
+            const image_lg = images?.[2] || images?.[1] || images?.[0] || image;
+            return `
+            <a class="solutions-card group" href="${link}" title="${title}" style="--card-width:100%">
+                <div class="solutions-card-image-container">
+                    <picture>
+                        <source srcset="${image_sm} 1x, ${image_md} 1.5x, ${image_lg} 2x" media="(min-width:1280px)" type="image/png">
+                        <source srcset="${image_sm} 1x, ${image_md} 1.5x, ${image_lg} 2x" media="(min-width:731px)" type="image/png">
+                        <source srcset="${image_sm} 1x, ${image_md} 1.5x, ${image_lg} 2x" media="(min-width:0px)" type="image/png">
+                        <img class="solutions-card-image" src="${image_sm}" alt="${title}" title="${title}" loading="lazy" decoding="async">
+                    </picture>
+                    ${
+                        videoId
+                            ?   `<div class="solutions-card-play-back" data-play-back-overlay>
+                                    <button 
+                                        type="button"
+                                        title="${title}"
+                                        tabindex="-1"
+                                        data-toggle="video"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#VideoModal"
+                                        data-auto="${Boolean(autoplay)}"
+                                        data-video-id="${videoId}"
+                                        class="play-back play-back-48"
+                                        style="--icon-width:1.2rem;--icon-height:1.05rem"
+                                        aria-label="play-back"
+                                    >
+                                        ${this.pauseIconTemp}
+                                        ${this.playIconTemp}
+                                    </button>
+                                </div>`
+                            : ''
+                    }
+                </div>
+                <div class="solutions-card-content">
+                    <div class=":uno-solutions-card-head:">
+                        <strong class="solutions-card-title">${title}</strong>
+                        <span class="solutions-card-breif">${breif}</span>
+                    </div>
+                    <div class="solutions-card-footer">
+                        <div class="solutions-card-logo">
+                            <picture>
+                                <img src="${logo}" alt="${title}" title="${title}" loading="lazy" decoding="async">
+                            </picture>
+                        </div>
+                        <div class="solutions-card-link">
+                            <span href="${link}" aria-label="了解更多" class="link-with-arrow size_16 font_roboto svg-arrow">
+                                <span class="link-text weight_regular"> 了解更多 </span>
+                                <span class="link-arrow svg-arrow">
+                                    ${this.arrowIconTemp}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>`;
+        };
+
+        /**
+         * 綁定「顯示更多」按鈕事件
+         * @returns {void}
+         */
+        bindEvent = () => {
+            this.triggerBtn.addEventListener('click', async () => {
+                this.beginLoading();
+                const data = await this.addNewsApi();
+                this.add(data);
+            });
+        };
+
+        /**
+         * 新增卡片到列表
+         * @param {SolutionItem[]} data - 欲插入的資料
+         * @param {boolean} update - 是否清空後重建
+         * @returns {Promise<void>}
+         */
+        add = async (data = [], update = false) => {
+            if (update) this.listGrid.innerHTML = '';
+            data.forEach((item) => {
+                const data = {
+                    title: item.title,
+                    label: item.label,
+                    date: item.date,
+                    breif: item.breif,
+                    image: item.img + '.png',
+                    logo: item.logoImage + '.' + item.logoImageType,
+                    link: item.link,
+                    videoId: item.videoId,
+                    autoplay: item.autoplay
+                };
+                this.listGrid.insertAdjacentHTML('beforeend', this.cardTemp(data));
+            });
+            this.syncPageQuery();
+            this.endLoading();
+        };
+
+        /**
+         * 進入 loading 狀態
+         * @description
+         * - 禁用按鈕
+         * - 隱藏按鈕父層
+         * - 在容器插入 loading template
+         * @returns {void}
+         */
+        beginLoading = () => {
+            this.triggerBtn.disabled = true;
+            this.triggerBtn.parentNode.style.display = 'none';
+            this.listGridContainer.insertAdjacentHTML('beforeend', this.loadingTemp);
+        };
+
+        /**
+         * 結束 loading 狀態
+         * @param {boolean=} isLast - 是否為最後一頁（為 true 時不再顯示按鈕）
+         * @returns {void}
+         */
+        endLoading = (isLast) => {
+            if (!isLast) {
+                this.triggerBtn.disabled = false;
+                this.triggerBtn.parentNode.style.display = 'flex';
+            }
+            this.listGridContainer.removeChild(this.listGridContainer.lastElementChild);
+        };
+    }
+
+    // 等待 DOM 加載完成後初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => new Article());
+    } else {
+        new Article();
+    }
+</script>

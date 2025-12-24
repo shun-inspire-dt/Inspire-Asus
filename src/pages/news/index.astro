@@ -1,6 +1,7 @@
 ---
 /** Data */
-import { data } from '@components/pages/news/filter';
+import { data as FilterData } from '@components/pages/news/filter';
+import { data as ArticleData } from '@components/pages/news/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -13,6 +14,7 @@ import Articles from '@components/pages/news/articles.astro';
 import ArticlesList from '@components/common/article/articlesList.astro';
 import Card from '@components/pages/news/card.astro';
 import Script from '@components/pages/news/script.astro';
+import ScriptInline from '@components/pages/news/scipt-inline.astro';
 /** Style */
 import '@scss/pages/news.scss';
 ---
@@ -28,10 +30,11 @@ import '@scss/pages/news.scss';
             { text: '推薦文章', value: '0' },
             { text: '最新消息', value: '1' }
         ]}
-        category={data}
+        category={FilterData}
     >
         {Array.from({ length: 10 }).map((_, index) => <Card link={`/news/${index}`} showLogo={false} />)}
     </ArticlesList>
 </Layouts>
 <Follower />
+<ScriptInline data={ArticleData} />
 <Script />

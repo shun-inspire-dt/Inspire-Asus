@@ -116,6 +116,10 @@
             }
         };
 
+        const isIgnoredParam = (name) => {
+            return ['page', 'current_page', 'page_limit', 'sort'].includes(name);
+        };
+
         // Checkbox 管理器
         const CheckboxManager = {
             /**
@@ -161,6 +165,7 @@
                 const params = URLManager.getParams();
 
                 Object.keys(params).forEach((name) => {
+                    if (isIgnoredParam(name)) return;
                     const values = Array.isArray(params[name]) ? params[name] : [params[name]];
 
                     values.forEach((value) => {
@@ -213,6 +218,7 @@
                 const params = URLManager.getParams();
 
                 Object.keys(params).forEach((name) => {
+                    if (isIgnoredParam(name)) return;
                     const value = Array.isArray(params[name]) ? params[name][0] : params[name];
                     const selects = document.querySelectorAll(`select[data-sort][name="${name}"]`);
 
@@ -250,6 +256,7 @@
 
                 // 遍歷所有參數，排除 sort 相關的參數
                 Object.keys(params).forEach((name) => {
+                    if (isIgnoredParam(name)) return;
                     // 檢查是否為 sort 參數（通過檢查是否有對應的 select[data-sort] 元素）
                     const isSort = document.querySelector(`select[data-sort][name="${name}"]`);
 
@@ -310,6 +317,7 @@
 
                 // 清除所有參數
                 url.searchParams.forEach((value, key) => {
+                    if (isIgnoredParam(key)) return;
                     const isSort = document.querySelector(`select[data-sort][name="${key}"]`);
                     if (isSort) return;
                     url.searchParams.delete(key);
@@ -388,6 +396,7 @@
 
                     // 遍歷所有參數，排除 sort 相關的參數
                     Object.keys(params).forEach((name) => {
+                        if (isIgnoredParam(name)) return;
                         // 檢查是否為 sort 參數
                         const isSort = document.querySelector(`select[data-sort][name="${name}"]`);
 

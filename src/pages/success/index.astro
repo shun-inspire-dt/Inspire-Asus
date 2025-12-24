@@ -1,6 +1,7 @@
 ---
 /** Data */
-import { data } from '@components/pages/success/filter';
+import { data as FilterData } from '@components/pages/success/filter';
+import { data as ArticleData } from '@components/pages/success/data';
 /** Layouts */
 import Layouts from '@layouts/layouts.astro';
 /** Global Components */
@@ -13,6 +14,7 @@ import Articles from '@components/pages/success/articles.astro';
 import ArticlesList from '@components/common/article/articlesList.astro';
 import Card from '@components/pages/news/card.astro';
 import Script from '@components/pages/news/script.astro';
+import ScriptInline from '@components/pages/news/scipt-inline.astro';
 /** Style */
 import '@scss/pages/success.scss';
 ---
@@ -28,10 +30,11 @@ import '@scss/pages/success.scss';
             { text: '新上市', value: '0' },
             { text: '新案例', value: '1' }
         ]}
-        category={data}
+        category={FilterData}
     >
         {Array.from({ length: 10 }).map((_, index) => <Card link={`/success/${index}`} showBreif={false} />)}
     </ArticlesList>
 </Layouts>
 <Follower />
+<ScriptInline data={ArticleData} />
 <Script />
