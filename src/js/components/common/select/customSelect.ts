@@ -21,6 +21,10 @@ const DATA_ATTRIBUTES = {
     DISABLED: 'data-disabled'
 } as const;
 
+const CUSTOM_EVENTS = {
+    UPDATE: 'custom-select:update'
+} as const;
+
 const KEYBOARD_KEYS = {
     ENTER: 'Enter',
     SPACE: ' ',
@@ -234,6 +238,25 @@ const syncPlaceholderState = (selectDisplay: HTMLElement, nativeSelect: HTMLSele
     }
 };
 
+const syncCustomSelectUIByNativeSelect = (nativeSelect: HTMLSelectElement, container: HTMLElement): void => {
+    const selectedOption = nativeSelect.options[nativeSelect.selectedIndex];
+    const customSelectDisplay = container.querySelector(`.${CSS_CLASSES.SELECT_SELECTED}`) as HTMLElement;
+
+    if (!customSelectDisplay || !selectedOption) return;
+
+    customSelectDisplay.innerHTML = selectedOption.innerHTML;
+    syncPlaceholderState(customSelectDisplay, nativeSelect);
+
+    const allOptions = container.querySelectorAll(`.${CSS_CLASSES.SELECT_ITEMS} > *`);
+    allOptions.forEach((option, index) => {
+        option.classList.remove(CSS_CLASSES.SAME_AS_SELECTED);
+        // index + 1 因為自定義選項從第二個開始（跳過 placeholder）
+        if (index + 1 === nativeSelect.selectedIndex) {
+            option.classList.add(CSS_CLASSES.SAME_AS_SELECTED);
+        }
+    });
+};
+
 /**
  * 為 select-items 容器添加鍵盤事件
  * @param selectItemsContainer - 選項容器
@@ -320,24 +343,13 @@ const addSelectDisplayClickEvent = (selectDisplay: HTMLElement, container: HTMLE
  */
 const addNativeSelectChangeEvent = (nativeSelect: HTMLSelectElement, container: HTMLElement): void => {
     nativeSelect.addEventListener('change', () => {
-        const selectedOption = nativeSelect.options[nativeSelect.selectedIndex];
-        const customSelectDisplay = container.querySelector(`.${CSS_CLASSES.SELECT_SELECTED}`) as HTMLElement;
+        syncCustomSelectUIByNativeSelect(nativeSelect, container);
+    });
+};
 
-        if (customSelectDisplay && selectedOption) {
-            customSelectDisplay.innerHTML = selectedOption.innerHTML;
-
-            syncPlaceholderState(customSelectDisplay, nativeSelect);
-
-            // 更新選項的選中狀態
-            const allOptions = container.querySelectorAll(`.${CSS_CLASSES.SELECT_ITEMS} > *`);
-            allOptions.forEach((option, index) => {
-                option.classList.remove(CSS_CLASSES.SAME_AS_SELECTED);
-                // index + 1 因為自定義選項從第二個開始（跳過 placeholder）
-                if (index + 1 === nativeSelect.selectedIndex) {
-                    option.classList.add(CSS_CLASSES.SAME_AS_SELECTED);
-                }
-            });
-        }
+const addNativeSelectCustomUpdateEvent = (nativeSelect: HTMLSelectElement, container: HTMLElement): void => {
+    nativeSelect.addEventListener(CUSTOM_EVENTS.UPDATE, () => {
+        syncCustomSelectUIByNativeSelect(nativeSelect, container);
     });
 };
 
@@ -421,6 +433,7 @@ const initializeCustomSelect = (container: HTMLElement): void => {
     addNativeSelectKeyboardEvents(nativeSelect, container);
     addSelectItemsKeyboardEvents(selectItemsContainer, nativeSelect, container);
     addNativeSelectChangeEvent(nativeSelect, container);
+    addNativeSelectCustomUpdateEvent(nativeSelect, container);
 };
 
 /**

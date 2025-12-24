@@ -11,6 +11,9 @@ const { data } = Astro.props;
 ---
 
 <script is:inline define:vars={{ data }}>
+    window.NewsData = data;
+</script>
+<script is:inline>
     /**
      * News 卡片模板參數
      * @typedef {Object} NewsCardParams
@@ -41,10 +44,10 @@ const { data } = Astro.props;
          * @param {string} image - 只想放單一圖片（含副檔名），與 images 可擇一個
          * @param {string} logo - Logo 圖片路徑（含副檔名）
          */
-        addNewsApi = () => {
+        addNewsApi = (searchParams = '') => {
             return new Promise((resolve) => {
                 setTimeout(() => {
-                    resolve(data);
+                    resolve(window.NewsData);
                 }, 2000);
             });
         };
@@ -74,7 +77,7 @@ const { data } = Astro.props;
          * 列表容器的外層（用於插入 loading template 與控制顯示）
          * @type {HTMLElement}
          */
-        listGridContainer = this.listGrid.parentNode;
+        listGridContainer = this.listGrid?.parentNode;
 
         /**
          * 日曆 icon SVG 模板
@@ -108,9 +111,15 @@ const { data } = Astro.props;
          */
         constructor() {
             super();
+        }
+
+        /**
+         * 初始化
+         */
+        init = () => {
             this.bindEvent();
             this.syncPageQuery();
-        }
+        };
 
         /**
          * 同步 URL query string 的 page
@@ -198,11 +207,24 @@ const { data } = Astro.props;
          * @returns {void}
          */
         bindEvent = () => {
-            this.triggerBtn.addEventListener('click', async () => {
+            this.triggerBtn.addEventListener('click', () => this.handleClick());
+        };
+
+        /**
+         * 按鈕點擊事件
+         * @param {string} searchParams - 搜尋參數
+         * @param {boolean} update - 是否清空後重建
+         * @returns {Promise<void>}
+         */
+        handleClick = async (searchParams = '', update = false) => {
+            try {
+                if (update && this.listGrid) this.listGrid.innerHTML = '';
                 this.beginLoading();
-                const data = await this.addNewsApi();
+                const data = await this.addNewsApi(searchParams);
                 this.add(data);
-            });
+            } catch (error) {
+                this.endLoading();
+            }
         };
 
         /**
@@ -211,8 +233,7 @@ const { data } = Astro.props;
          * @param {boolean} update - 是否清空後重建
          * @returns {Promise<void>}
          */
-        add = async (data = [], update = false) => {
-            if (update) this.listGrid.innerHTML = '';
+        add = async (data = []) => {
             data.forEach((item) => {
                 const data = {
                     title: item.title,
@@ -221,9 +242,11 @@ const { data } = Astro.props;
                     breif: item.breif,
                     image: item.img + '.png',
                     link: item.link,
-                    logo: item.logoImage + '.' + item.logoImageType
+                    logo: item.logoImage ? item.logoImage + '.' + item.logoImageType : undefined
                 };
-                this.listGrid.insertAdjacentHTML('beforeend', this.cardTemp(data));
+                if (this.listGrid) {
+                    this.listGrid.insertAdjacentHTML('beforeend', this.cardTemp(data));
+                }
             });
             this.syncPageQuery();
             this.endLoading();
@@ -238,9 +261,16 @@ const { data } = Astro.props;
          * @returns {void}
          */
         beginLoading = () => {
-            this.triggerBtn.disabled = true;
-            this.triggerBtn.parentNode.style.display = 'none';
-            this.listGridContainer.insertAdjacentHTML('beforeend', this.loadingTemp);
+            console.log('Begin Loading');
+            if (this.triggerBtn) {
+                this.triggerBtn.disabled = true;
+                this.triggerBtn.parentNode.style.display = 'none';
+            }
+            if (this.listGridContainer) {
+                const hasLoading = this.listGridContainer.querySelector('.section-loading');
+                if (hasLoading) return;
+                this.listGridContainer.insertAdjacentHTML('beforeend', this.loadingTemp);
+            }
         };
 
         /**
@@ -249,18 +279,22 @@ const { data } = Astro.props;
          * @returns {void}
          */
         endLoading = (isLast) => {
-            if (!isLast) {
-                this.triggerBtn.disabled = false;
-                this.triggerBtn.parentNode.style.display = 'flex';
+            if (this.triggerBtn) {
+                if (!isLast) {
+                    this.triggerBtn.disabled = false;
+                    this.triggerBtn.parentNode.style.display = 'flex';
+                }
             }
-            this.listGridContainer.removeChild(this.listGridContainer.lastElementChild);
+            if (this.listGridContainer) {
+                this.listGridContainer.removeChild(this.listGridContainer.lastElementChild);
+            }
         };
     }
 
-// 等待 DOM 加載完成後初始化
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new Article());
-} else {
-    new Article();
-}
+    // 等待 DOM 加載完成後初始化
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => new Article().init());
+    } else {
+        new Article().init();
+    }
 </script>
