@@ -113,6 +113,12 @@
         border: var(--checkbox-border-width) solid var(--checkbox-border-color);
         border-radius: var(--checkbox-border-radius);
 
+        /** 表單載入中時的狀態樣式 */
+        @at-root .needs-validation[novalidate][data-needs-loading='true'][data-loading='true'] & {
+            pointer-events: none;
+            cursor: default;
+        }
+
         /* 選中狀態樣式 */
         &:checked {
             background-color: var(--checkbox-checked-background-color);

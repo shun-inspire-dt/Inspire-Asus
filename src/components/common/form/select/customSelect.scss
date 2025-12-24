@@ -147,11 +147,11 @@
         &:focus:focus-visible {
             --custom-select-border-width: 0.125rem; /* 焦點邊框寬度 */
             border-color: var(--custom-select-focus-border-color); /* 焦點邊框顏色 */
-            
+
             /* Focus outline 相關屬性 */
             outline: var(--custom-select-outline-width) solid var(--custom-select-outline-color); /* 焦點外框 */
             outline-offset: var(--custom-select-outline-offset); /* 焦點外框偏移 */
-            
+
             &.select-selected-placeholder {
                 --custom-select-border-width: 0.0625rem; /* 焦點邊框寬度 */
                 border-color: var(--custom-select-border-color);
@@ -302,6 +302,14 @@
         @at-root .was-validated &:invalid {
             & ~ .select-selected {
                 border-color: var(--input-error-border-color); /* 錯誤邊框顏色 */
+            }
+        }
+
+        /** 表單載入中時的狀態樣式 */
+        @at-root .needs-validation[novalidate][data-needs-loading='true'][data-loading='true'] & {
+            & ~ .select-selected {
+                pointer-events: none;
+                cursor: default;
             }
         }
 

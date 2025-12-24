@@ -1,4 +1,13 @@
 .btn-choice {
     @apply absolute pointer-events-none disabled:pointer-events-none;
     clip: rect(0, 0, 0, 0);
+
+    /** 表單載入中時的狀態樣式 */
+    @at-root .needs-validation[novalidate][data-needs-loading='true'][data-loading='true'] & {
+        &,
+        & + label {
+            pointer-events: none;
+            cursor: default;
+        }
+    }
 }
