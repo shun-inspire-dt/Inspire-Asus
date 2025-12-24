@@ -1,0 +1,24 @@
+.play-back {
+    @apply flex items-center justify-center relative bg-#070707/50 rounded-999 aspect-square;
+    @apply [&>.play-back-pause-icon]:hidden [&.active>.play-back-icon]:hidden [&.active>.play-back-pause-icon]:block;
+
+    &.play-back-48 {
+        @apply size-3rem border border-white;
+    }
+    &.play-back-32 {
+        @apply size-2rem border-none;
+    }
+
+    .play-back-icon-48 {
+        @apply absolute top-0.9rem left-1.125rem;
+    }
+    .play-pause-back-icon-48 {
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    }
+    .play-back-icon-32 {
+        @apply absolute top-0.5625rem left-0.75rem;
+    }
+    .play-pause-back-icon-32 {
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    }
+}

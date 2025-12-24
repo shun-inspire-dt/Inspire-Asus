@@ -1,4 +1,6 @@
 ---
+/** Style */
+import './playBack.scss';
 export interface Props {
     IDName?: string;
     className?: any;
@@ -10,12 +12,7 @@ export interface Props {
 
 const { IDName, className, style, attribute = {}, Tag = 'button', size = '48' } = Astro.props as Props;
 
-const cardClass = [
-    ':uno-play-back: flex items-center justify-center relative bg-#070707/50 rounded-999 aspect-square [&>.play-back-pause-icon]:hidden [&.active>.play-back-icon]:hidden [&.active>.play-back-pause-icon]:block',
-    { ':uno-play-back-48: size-3rem border border-white': size === '48' },
-    { ':uno-play-back-32: size-2rem border-none': size === '32' },
-    className
-];
+const cardClass = ['play-back', { 'play-back-48': size === '48' }, { 'play-back-32': size === '32' }, className];
 const cardStyle = (size: '48' | '32') => {
     const data = {
         '48': {
@@ -48,10 +45,7 @@ const cardStyle = (size: '48' | '32') => {
         size === '48' && (
             <>
                 <svg
-                    class:list={[
-                        'play-back-icon',
-                        { ':uno-play-back-icon-48: absolute top-0.9rem left-1.125rem': size === '48' }
-                    ]}
+                    class:list={['play-back-icon', { 'play-back-icon-48': size === '48' }]}
                     width="16"
                     height="18"
                     viewBox="0 0 16 18"
@@ -64,13 +58,7 @@ const cardStyle = (size: '48' | '32') => {
                     />
                 </svg>
                 <svg
-                    class:list={[
-                        'play-back-pause-icon',
-                        {
-                            ':uno-play-pause-back-icon-48: absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2':
-                                size === '48'
-                        }
-                    ]}
+                    class:list={['play-back-pause-icon', { 'play-pause-back-icon-48': size === '48' }]}
                     width="15"
                     height="20"
                     viewBox="0 0 15 20"
@@ -106,10 +94,7 @@ const cardStyle = (size: '48' | '32') => {
         size === '32' && (
             <>
                 <svg
-                    class:list={[
-                        'play-back-icon',
-                        { ':uno-play-back-icon-32: absolute top-0.5625rem left-0.75rem': size === '32' }
-                    ]}
+                    class:list={['play-back-icon', { 'play-back-icon-32': size === '32' }]}
                     width="12"
                     height="13"
                     viewBox="0 0 12 13"
@@ -122,13 +107,7 @@ const cardStyle = (size: '48' | '32') => {
                     />
                 </svg>
                 <svg
-                    class:list={[
-                        'play-back-pause-icon',
-                        {
-                            ':uno-play-pause-back-icon-32: absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2':
-                                size === '32'
-                        }
-                    ]}
+                    class:list={['play-back-pause-icon', { 'play-pause-back-icon-32': size === '32' }]}
                     width="10"
                     height="13"
                     viewBox="0 0 10 13"
