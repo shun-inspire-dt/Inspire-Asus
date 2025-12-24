@@ -16,9 +16,13 @@ const { IDName, className, style, attribute = {} } = Astro.props as Props;
     <button
         type="button"
         title="Show More"
-        class:list={[':uno-show-more-button: h-2rem flex items-center justify-center gap-0.5rem text-blue-500 body-02-sh [&.active>svg]:rotate-180']}
-        >
+        class:list={[
+            ':uno-show-more-button: h-2rem flex items-center justify-center gap-0.5rem text-blue-500 body-02-sh [&.active>.pagination-arrow]:rotate-180'
+        ]}
+        data-toggle="show-more"
+        data-target="#article-list-grid"
+    >
         Show More
-        <PaginationArrow size="12" direction='down' color="blue-500" />
+        <PaginationArrow size="12" direction="down" color="blue-500" />
     </button>
 </div>
