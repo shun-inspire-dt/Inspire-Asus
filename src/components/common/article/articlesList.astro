@@ -75,11 +75,13 @@ const {
                     data={category}
                 />
                 <div class=":uno-article-list-grid-container: space-y-2rem">
-                    <div class=":uno-article-list-grid: grid grid-cols-1 lg:grid-cols-2 gap-1.25rem">
+                    <div id="article-list-grid" class=":uno-article-list-grid: grid grid-cols-1 lg:grid-cols-2 gap-1.25rem">
                         <slot />
                     </div>
                     <ShowMore />
-                    <Loading />
+                    <template id="article-loading-template">
+                        <Loading style={{ 'grid-column': 'span 2 / span 2' }} />
+                    </template>
                 </div>
             </div>
         </div>
