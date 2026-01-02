@@ -86,6 +86,17 @@ const image = bannerImage('index-banner');
     import { Autoplay, A11y, Keyboard } from 'swiper/modules';
 
     let ignorePauseOnMouseEnterUntilLeave = false;
+    const toggleButton = (play: boolean) => {
+        const playButton = document.querySelector('.swiper-button-play') as HTMLElement | null;
+        const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement | null;
+        if (play) {
+            if(playButton && playButton.style.display !== 'block') playButton.style.display = 'block';
+            if(pauseButton && pauseButton.style.display !== 'none') pauseButton.style.display = 'none';
+        } else {
+            if(playButton && playButton.style.display !== 'none') playButton.style.display = 'none';
+            if(pauseButton && pauseButton.style.display !== 'block') pauseButton.style.display = 'block';
+        }
+    };
 
     mySwiper('#IndexBannerSwiper', {
         modules: [Autoplay, A11y, Keyboard],
@@ -146,19 +157,11 @@ const image = bannerImage('index-banner');
             },
             autoplayStart() {
                 // 當 autoplay 開始時，顯示暫停按鈕，隱藏播放按鈕
-                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
-                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
-
-                if (playButton) playButton.style.display = 'none';
-                if (pauseButton) pauseButton.style.display = 'block';
+                toggleButton(false);
             },
             autoplayStop(swiper) {
                 // 當 autoplay 停止時，顯示播放按鈕，隱藏暫停按鈕
-                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
-                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
-
-                if (playButton) playButton.style.display = 'block';
-                if (pauseButton) pauseButton.style.display = 'none';
+                toggleButton(true);
 
                 // 重置當前活躍按鈕的進度
                 const activeBullet = swiper.pagination.el?.querySelector('.swiper-pagination-bullet-active') as HTMLElement;
@@ -177,21 +180,13 @@ const image = bannerImage('index-banner');
                     if (ignorePauseOnMouseEnterUntilLeave) return;
                     if (swiper.animating) return;
                     if (swiper.autoplay.paused) {
-                        const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
-                        const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
-
-                        if (playButton) playButton.style.display = 'block';
-                        if (pauseButton) pauseButton.style.display = 'none';
+                        toggleButton(true);
                     }
                 }, 100);
             },
             autoplayResume() {
                 // 當 autoplay 恢復時（如滑鼠離開），顯示暫停按鈕，隱藏播放按鈕
-                const playButton = document.querySelector('.swiper-button-play') as HTMLElement;
-                const pauseButton = document.querySelector('.swiper-button-pause') as HTMLElement;
-
-                if (playButton) playButton.style.display = 'none';
-                if (pauseButton) pauseButton.style.display = 'block';
+                toggleButton(false);
             },
             init(swiper) {
                 // 當 Swiper 初始化完成後，綁定播放/暫停按鈕事件
@@ -223,7 +218,7 @@ const image = bannerImage('index-banner');
                         e.preventDefault();
                         ignorePauseOnMouseEnterUntilLeave = true;
                         if (swiper.autoplay.paused) swiper.autoplay.resume();
-                        // target.click();
+                        target.click();
                     });
                 }
 
@@ -248,6 +243,8 @@ const image = bannerImage('index-banner');
                                 swiper.autoplay.start();
                             }
 
+                            toggleButton(false);
+
                             if (eventType === 'keydown') {
                                 setTimeout(() => {
                                     pauseButton.focus();
@@ -270,6 +267,7 @@ const image = bannerImage('index-banner');
                             ignorePauseOnMouseEnterUntilLeave = false;
                             if (swiper.autoplay.running && !swiper.autoplay.paused) {
                                 swiper.autoplay.pause();
+                                toggleButton(true);
                             }
 
                             if (eventType === 'keydown') {
