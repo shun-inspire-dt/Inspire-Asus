@@ -1,0 +1,28 @@
+.solutions-feature {
+    @apply sect-p-sm 
+    @apply bg-[image:var(--bg-image)] bg-cover bg-center bg-no-repeat;
+    @apply md:sect-p-md;
+    @apply xl:sect-p-lg;
+
+    &-container {
+        @apply container-fluid;
+    }
+    &-card-grid {
+        @apply grid grid-cols-1 xl:grid-cols-3 gap-5;
+    }
+    &-card {
+        @apply flex flex-col gap-4 p-10 bg-white rounded-xl;
+    }
+    &-card-title {
+        @apply font-tt-medium text-24 lh-120 font-medium;
+    }
+    &-card-text {
+        @apply font-tt-normal text-18 lh-140 font-normal;
+
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: var(--line-clamp, 6);
+        line-clamp: var(--line-clamp, 6);
+    }
+}
