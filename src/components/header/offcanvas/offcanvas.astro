@@ -54,7 +54,7 @@ const { IDName = 'header', className, style, attribute = {}, data = [] } = Astro
 
 {/** Offcanvas Container - 側邊選單容器 */}
 {/* 側邊選單主體：從右側滑出 */}
-<MyOffcanvas IDName={IDName} postion="end" hideHeader className={className} attribute={attribute} style={style}>
+<MyOffcanvas IDName={IDName} postion="end" hideHeader scrollable className={className} attribute={attribute} style={style}>
     {
         data.map((x) => (
             <Fragment>
