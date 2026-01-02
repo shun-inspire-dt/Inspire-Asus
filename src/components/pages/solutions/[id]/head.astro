@@ -1,6 +1,8 @@
 ---
 /** Common Component */
 import Badge from '@components/common/badges/badge.astro';
+/** Link */
+import ALink from '@components/common/link/link.astro';
 /** Style */
 import './head.scss';
 
@@ -27,7 +29,15 @@ const {
 
 <div id={IDName} class:list={[className, ':uno-solutions-header: flex flex-col gap-1.5rem md:pb-1.5rem']} style={style} {...attribute}>
     <div class=":uno-solutions-head: flex flex-col-reverse md:flex-col gap-0.75rem text-gray-900">
-        <strong class=":uno-solutions-sub-title: body-03-strong">{subtitle}</strong>
+        <strong class=":uno-solutions-sub-title: body-03-strong">副標1: {subtitle}</strong>
+        <div class=":uno: flex gap-0.2em">
+            <strong class=":uno-solutions-sub-title: body-03-strong">副標2:</strong>
+            <strong class=":uno-solutions-sub-title-link: body-03-strong hover:text-blue-500 hover:underline underline-offset-[var(--underline-offset)] transition-colors duration-200 ease-in-out cursor-pointer">{subtitle}</strong>
+        </div>
+        <div class=":uno: flex gap-0.2em">
+            <strong class=":uno-solutions-sub-title: body-03-strong">副標3:</strong>
+            <ALink link={'/'} size="18" title={subtitle} showArrow>{subtitle}</ALink>
+        </div>
         <h1 class=":uno-solutions-title: text-gray-900 font-tt-medium text-30 md:text-36 xl:text-44 lh-120 font-medium">{title}</h1>
     </div>
     <div class=":uno-solutions-tags: w-full flex flex-wrap gap-0.5rem">
