@@ -16,7 +16,7 @@ const { IDName = 'Follower', className, style, attribute = {} } = Astro.props as
     id={IDName}
     class:list={[
         className,
-        ':uno-follower: w-3.75rem md:w-4.75rem xl:w-5.75rem h-full pr-1rem md:pb-3.1875rem md:pr-2rem absolute top-0 right-0 z-1038 pointer-events-none'
+        ':uno-follower: w-3.75rem md:w-4.75rem xl:w-5.75rem h-full md:pb-3.1875rem absolute top-0 right-0 z-1038 pointer-events-none'
     ]}
     style={style}
     {...attribute}
@@ -24,7 +24,7 @@ const { IDName = 'Follower', className, style, attribute = {} } = Astro.props as
     <button
         type="button"
         title="Go Top"
-        class=":uno-follower-button: size-2.75rem md:size-3.75rem flex items-center justify-center pb-0.25rem sticky top-[calc(100%-2.75rem-1rem)] md:top-[calc(100%-3.75rem-1rem)] right-0 bg-black-40 rounded-full pointer-events-auto [&>svg:last-child]:md:hidden [&>svg:first-child]:lt-md:hidden"
+        class=":uno-follower-button: size-2.75rem md:size-3.75rem flex items-center justify-center pb-0.25rem sticky top-[calc(100%-2.75rem-1rem)] md:top-[calc(100%-3.75rem-4.3125rem)] right-0 bg-black-40 rounded-full pointer-events-auto [&>svg:last-child]:md:hidden [&>svg:first-child]:lt-md:hidden"
     >
         <svg width="25" height="15" viewBox="0 0 25 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
