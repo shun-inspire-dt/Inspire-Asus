@@ -205,15 +205,25 @@ const image = bannerImage('index-banner');
 
                 const paginationEl = swiper.pagination?.el as HTMLElement | undefined;
                 if (paginationEl) {
+                    paginationEl.addEventListener('pointerdown', (e) => {
+                        const target = e.target as HTMLElement | null;
+                        if (!target?.classList.contains('swiper-pagination-bullet')) return;
+                        ignorePauseOnMouseEnterUntilLeave = true;
+                        if (swiper.autoplay.paused) swiper.autoplay.resume();
+                    });
+
                     paginationEl.addEventListener('keydown', (e) => {
                         const target = e.target as HTMLElement | null;
                         if (!target?.classList.contains('swiper-pagination-bullet')) return;
 
                         const key = (e as KeyboardEvent).key;
                         if (key !== 'Enter' && key !== ' ') return;
+                        console.log('Pagination El Key Down');
 
                         e.preventDefault();
-                        target.click();
+                        ignorePauseOnMouseEnterUntilLeave = true;
+                        if (swiper.autoplay.paused) swiper.autoplay.resume();
+                        // target.click();
                     });
                 }
 
