@@ -315,6 +315,9 @@ const { data } = Astro.props;
                 this.triggerBtn.parentNode.style.display = 'none';
             }
             if (this.listGridContainer) {
+                const hasLoading = this.listGridContainer.querySelector('.section-loading');
+                if (hasLoading) return;
+                if (!this.loadingTemp) return;
                 this.listGridContainer.insertAdjacentHTML('beforeend', this.loadingTemp);
             }
         };
@@ -332,7 +335,9 @@ const { data } = Astro.props;
                 }
             }
             if (this.listGridContainer) {
-                this.listGridContainer.removeChild(this.listGridContainer.lastElementChild);
+                const loadingEl = this.listGridContainer.querySelector('.section-loading');
+                if (!loadingEl) return;
+                loadingEl.remove();
             }
         };
     }
