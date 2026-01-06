@@ -12,23 +12,23 @@
         @apply w-full flex flex-col grow p-1.5rem bg-white rounded-b-xl;
     }
     &-date {
-        @apply mb-0.75rem;
+        @apply mb-0.75rem flex-none;
     }
     &-head {
-        @apply flex flex-col;
+        @apply flex flex-col grow;
     }
     &-title {
         @apply text-gray-900 font-tt-medium text-subtitle leading-125 font-medium;
         @apply hover:underline-0.0625rem hover:underline hover:underline-offset-3;
     }
     &-label {
-        @apply mt-0.75rem text-gray-700 font-roboto text-base leading-120 font-normal;
+        @apply pt-0.75rem text-gray-700 font-roboto text-base leading-120 font-normal;
     }
     &-breif {
-        @apply mt-0.75rem text-gray-900 font-roboto text-base leading-140 font-normal line-clamp-3;
+        @apply mt-a pt-0.75rem text-gray-900 font-roboto text-base leading-140 font-normal line-clamp-3;
     }
     &-footer {
-        @apply flex flex-col mt-auto;
+        @apply flex flex-col flex-none mt-auto;
     }
     &-logo {
         @apply w-5.25rem h-2.625rem aspect-2/1 mt-0.75rem;

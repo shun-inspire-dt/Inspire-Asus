@@ -22,6 +22,7 @@ export interface Props {
     logoImage?: string;
     img?: string;
     link?: string;
+    linkText?: string;
     imgBreakpoints?: PictureProps['breakpoints'];
     width?: string | number;
     showDate?: boolean;
@@ -42,6 +43,7 @@ const {
     logoImage = '/assets/logos/Business-Vertical-Light',
     img = '/assets/images/pages/Article-card-image',
     link = '',
+    linkText = '了解更多',
     width = '100%',
     showDate = true,
     showLabel = true,
@@ -113,7 +115,7 @@ const cardStyle = {
                     </div>
                 )
             }
-            <ALink link={link} className="news-card-link" title={'了解更多'} size="16" showArrow Tag="span" />
+            <ALink link={link} className="news-card-link" title={linkText} size="16" showArrow Tag="span" />
         </div>
     </div>
 </A>

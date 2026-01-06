@@ -11,8 +11,8 @@ export type dataType = {
 }[];
 export const data: dataType = [
     {
-        title: 'iShops - 開店平台！',
-        breif: '一站式開店平台，全面強化您的商業運營，增加企業營收，讓企業變得更好。',
+        title: 'iShops - 開店平台！開店平台！開店平台！開店平台！開店平台！',
+        breif: '一站式開店平台，全面強化您的商業運營，增加企業營收，讓企業變得更好，一站式開店平台，全面強化您的商業運營，增加企業營收，讓企業變得更好，一站式開店平台，全面強化您的商業運營，增加企業營收，讓企業變得更好。',
         logoImage: '/assets/images/pages/brands/Logo-01',
         logoImageType: 'png',
         img: '/assets/images/pages/solutions-bg-1',

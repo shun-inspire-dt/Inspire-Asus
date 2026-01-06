@@ -16,16 +16,17 @@
         @apply flex flex-col grow p-1.5rem bg-white rounded-b-xl;
     }
     &-head {
+        @apply flex flex-col grow;
     }
     &-title {
         @apply text-gray-900 font-tt-medium text-subtitle leading-125 font-medium;
         @apply hover:underline-0.0625rem hover:underline hover:underline-offset-3;
     }
     &-breif {
-        @apply mt-0.75rem text-gray-900 font-roboto text-base leading-140 font-normal line-clamp-3;
+        @apply mt-auto pt-0.75rem text-gray-900 font-roboto text-base leading-140 font-normal line-clamp-3;
     }
     &-footer {
-        @apply flex flex-col mt-auto;
+        @apply flex flex-col flex-none mt-auto;
     }
     &-logo {
         @apply w-5.25rem h-2.625rem aspect-2/1 mt-0.75rem;

@@ -31,9 +31,22 @@ import '@scss/pages/ivy.scss';
         category={FilterData}
         mode="white"
     >
-        {Array.from({ length: 10 }).map((_, index) => <Card link={`/ivy/${index}`} showLogo={false} showLabel={false} />)}
+        {
+            ArticleData.map((x) => (
+                <Card
+                    title={x.title}
+                    date={x.date}
+                    breif={x.breif}
+                    img={x.img}
+                    link={x.link}
+                    linkText={x.linkText}
+                    showLogo={false}
+                    showLabel={false}
+                />
+            ))
+        }
     </ArticlesList>
 </Layouts>
-<Follower />    
+<Follower />
 <ScriptInline data={ArticleData} />
 <Script />

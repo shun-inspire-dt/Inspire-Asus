@@ -67,7 +67,7 @@ export const data: dataType = [
         linkText: '了解更多'
     },
     {
-        title: 'SmartInventory - 智慧庫存管理',
+        title: 'SmartInventory - 智慧庫存管理智慧庫存管理智慧庫存管理智慧庫存管理智慧庫存管理',
         date: '2025-12-24',
         breif: '運用 AI 技術預測需求，優化庫存配置，降低成本並提高供應鏈效率。智能分析歷史銷售數據、季節性趨勢、市場變化等因素，自動調整採購建議和安全庫存水位，減少缺貨風險和過剩庫存，並提供供應商管理和成本分析功能。',
         img: '/assets/images/pages/Article-card-image',
