@@ -27,7 +27,7 @@ const { IDName, className, style, attribute = {}, data = [] } = Astro.props as P
         data.map((item) => (
             <A
                 link={item.link}
-                className=":uno-section-nav-link: h-full flex items-center justify-center text-center lt-md:flex-1 border-b-0.125rem border-transparent transition-colors duration-200 ease-in-out hover:border-blue-500 [&.active]:border-blue-500"
+                className=":uno-section-nav-link: h-full flex items-center justify-center text-center lt-md:flex-1 border-b-0.25rem border-transparent transition-colors duration-200 ease-in-out hover:border-blue-500 [&.active]:border-blue-500"
                 title={item.title}
                 extend
                 attribute={{
