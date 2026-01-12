@@ -1,0 +1,1 @@
+import"./hoisted.BJWBxIN3.js";const t=document.querySelector("footer")?.offsetHeight||0,o=document.querySelector("header")?.offsetHeight||0,e=document.getElementById("section-form-container");e&&(e.style.setProperty("--footer-height",`${t}px`),e.style.setProperty("--header-height",`${o}px`));
