@@ -158,6 +158,17 @@ const { IDName = 'headerNav', className, style, attribute = {}, data = [], type 
             }
 
             setOpen(item, true);
+
+            // Focus 到 mega-menu 內的第一個連結
+            requestAnimationFrame(() => {
+                const megaMenu = item.querySelector('.mega-menu, [data-mega-menu]');
+                if (megaMenu) {
+                    const firstLink = megaMenu.querySelector('a[href]') as HTMLElement;
+                    if (firstLink) {
+                        firstLink.focus();
+                    }
+                }
+            });
         });
 
         headerNavRoot.addEventListener('focusin', (event: FocusEvent) => {
