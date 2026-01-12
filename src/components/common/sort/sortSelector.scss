@@ -1,5 +1,5 @@
 .control-select {
-    &.status_sort {
+    &.status_sort, &.status_sort.size_sm {
         --input-color: var(--color-blue-500, #006ce1);
         --input-placeholder-color: var(--color-blue-500, #006ce1);
         --select-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.34302 6.11439L7.99987 11.7712L13.6567 6.11439" stroke="%23006ce1" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>');
@@ -17,7 +17,7 @@
      * 保留用於表單提交和無障礙功能，但在視覺上完全隱藏
      */
     select {
-        &.status_sort {
+        &.status_sort, &.status_sort.size_sm {
             & ~ .select-selected {
                 --custom-select-font-size: var(--fs-16, 1rem); /* 字體大小 */
                 --custom-select-color: var(--color-blue-500, #006ce1);
