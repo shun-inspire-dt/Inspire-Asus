@@ -1,1 +1,0 @@
-import{u as t}from"../_astro/nav.astro_astro_type_script_index_0_lang.DtcseUwY.js";import"./hoisted.BJWBxIN3.js";window.addEventListener("DOMContentLoaded",()=>{const{spy:e}=t({includeHeaderHeight:!0});e()});
