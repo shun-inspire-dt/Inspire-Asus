@@ -34,7 +34,7 @@ const { IDName = 'basicInfoForm', className, style, attribute = {} } = Astro.pro
     novalidate
     action=""
 >
-    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
+    <div class=":uno-section-form-grid-item: w-full flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">基本資料</strong>
         <InputGroup inputID="name" label="姓名" errorText="請輸入您的姓名" error block>
             <Input id="name" name="name" />
@@ -64,7 +64,7 @@ const { IDName = 'basicInfoForm', className, style, attribute = {} } = Astro.pro
             />
         </InputGroup>
     </div>
-    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
+    <div class=":uno-section-form-grid-item: w-full flex flex-col gap-1.5rem">
         <strong class=":uno-section-form-grid-title: font-tt-medium font-medium text-gray-900 text-20 lh-20">公司資料</strong>
         <InputGroup inputID="companyName" label="公司名稱" errorText="請輸入公司的名稱" error block>
             <Input id="companyName" name="companyName" />
