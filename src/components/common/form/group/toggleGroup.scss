@@ -1,5 +1,7 @@
 [data-toggle-item] {
-    @apply hidden;
+    &:not(.active) {
+        @apply hidden;
+    }
     &.active {
         @apply flex;
     }
