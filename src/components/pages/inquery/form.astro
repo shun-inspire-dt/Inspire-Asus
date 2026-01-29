@@ -13,6 +13,12 @@ import Select from '@components/common/form/select/customSelect.astro';
 import Textarea from '@components/common/form/textarea.astro';
 /** Button */
 import Button from '@components/common/button/button.astro';
+/** Checkbox */
+import Checkbox from '@components/common/form/checkboxs/checkbox.astro';
+/** Radio */
+import Radio from '@components/common/form/checkboxs/radio.astro';
+/** ToggleGroup */
+import ToggleGroup from '@components/common/form/group/toggleGroup.astro';
 /** Main Component */
 import Card from './card.astro';
 /** Style */
@@ -24,15 +30,16 @@ export interface Props {
     attribute?: attribute;
     style?: { [key: string]: string };
     data: dataType;
+    display?: 'flex' | 'grid';
 }
 
-const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astro.props as Props;
+const { IDName = 'Inquery', className, style, attribute = {}, data = [], display = 'grid' } = Astro.props as Props;
 ---
 
 <MySectionForm
     IDName={IDName}
     type={2}
-    display="grid"
+    display={display}
     title="諮詢清單"
     block
     className={['needs-validation', className]}
@@ -57,7 +64,11 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
             </span>
         </div>
         <div class="w-full flex flex-col items-center gap-1.5rem">
-            {data.map((x) => <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} required />)}
+            {
+                data.map((x) => (
+                    <Card id={x.id} title={x.title} label={x.label} brief={x.brief} amount={x.amount} img={x.img} required />
+                ))
+            }
         </div>
     </div>
     <div
@@ -66,47 +77,168 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
     >
         <h2 class=":uno-inquery-title: flex-none text-gray-900 font-tt-medium text-30 lh-120 font-medium text-left">聯絡資訊</h2>
     </div>
-    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
+    <div class=":uno-section-form-grid-item: w-full flex flex-col gap-1.5rem">
         <InputGroup inputID="companyName" label="公司名稱" error block>
             <Input id="companyName" name="companyName" required />
         </InputGroup>
-        <InputGroup inputID="taxId" label="統編" error block>
+        <InputGroup inputID="taxId" label="公司統編" error block>
             <Input id="taxId" name="taxId" type="text" inputmode="numeric" minLength={8} maxLength={8} required />
         </InputGroup>
-        <InputGroup inputID="department" label="部門" error block>
+        <InputGroup inputID="companyAddress" label="公司地址" error block>
+            <Input id="companyAddress" name="companyAddress" required />
+        </InputGroup>
+        <InputGroup inputID="companyIndustry" label="產業類別" block>
             <Select
-                id="department"
-                name="department"
+                id="companyIndustry"
+                name="companyIndustry"
                 data={[
-                    { text: 'IT部門', value: 'IT部門' },
-                    { text: '財務部門', value: '財務部門' }
+                    { text: '雲端與基礎設施', value: '雲端與基礎設施' },
+                    { text: '企業應用', value: '企業應用' },
+                    { text: '資料中心', value: '資料中心' },
+                    { text: '儲存', value: '儲存' },
+                    { text: '安全', value: '安全' },
+                    { text: '儲存', value: '儲存' }
                 ]}
                 value="IT部門"
-                required
             />
         </InputGroup>
-        <InputGroup inputID="position" label="職稱" error block>
-            <Input id="position" name="position" required />
+        <InputGroup inputID="companySize" label="員工規模" error alwaysInlineContent inlineContentWrap block>
+            <Radio id="companySize-1" name="companySize" value="1-10" required>1-10</Radio>
+            <Radio id="companySize-2" name="companySize" value="10-49" required>10-49</Radio>
+            <Radio id="companySize-3" name="companySize" value="50-199" required>50-199</Radio>
+            <Radio id="companySize-4" name="companySize" value="200-500" required>200-500</Radio>
+            <Radio id="companySize-5" name="companySize" value="500+" required>500+</Radio>
         </InputGroup>
-        <InputGroup inputID="tel" label="公司電話" error block>
-            <Input id="tel" name="tel" type="tel" inputmode="tel" required />
-        </InputGroup>
-    </div>
-    <div class=":uno-section-form-grid-item: flex flex-col gap-1.5rem">
-        <InputGroup inputID="name" label="聯絡姓名" error block>
+        <InputGroup inputID="name" label="姓名" error block>
             <Input id="name" name="name" required />
         </InputGroup>
-        <InputGroup inputID="cellphone" label="聯絡手機" error block>
-            <Input id="cellphone" name="cellphone" type="tel" inputmode="tel" required />
+        <InputGroup id="positionInputGroup" inputID="position" label="職稱" error alwaysInlineContent inlineContentWrap block attribute={{ 'data-toggle-container': '' }}>
+            <Radio id="position-1" name="position" value="老闆" required>老闆</Radio>
+            <Radio id="position-2" name="position" value="高階主管" required>高階主管</Radio>
+            <Radio id="position-3" name="position" value="IT" required>IT</Radio>
+            <Radio id="position-4" name="position" value="數位" required>數位</Radio>
+            <Radio id="position-5" name="position" value="營運" required>營運</Radio>
+            <Radio id="position-6" name="position" value="業務" required>業務</Radio>
+            <Radio id="position-7" name="position" value="行銷" required>行銷</Radio>
+            <Radio id="position-8" name="position" value="其他" required attribute={{ 'data-toggle': '[data-toggle-item="position-8-infomation"]' }}>其他</Radio>
+            <p data-toggle-item="position-8-infomation" style="width: 100%; margin-top: 10px; margin-bottom: 10px;">
+                備注：以下兩種選一種。單一 「class="control-input」 或是 一整組 「class="form-input-group」
+            </p>
+            <!-- 第一種 -->
+            <Input
+                id="position-8-infomation"
+                name="information"
+                placeholder="請說明"
+                attribute={{ 'data-valid': 'required', 'data-toggle-item': 'position-8-infomation' }}
+            />
+            <!-- 第二種 -->
+            <InputGroup inputID="position-8-infomation-2" label="請說明" alwaysInline block attribute={{ 'data-toggle-item': 'position-8-infomation' }}>
+                <Input
+                    id="position-8-infomation-2"
+                    name="information"
+                    placeholder="請說明"
+                    attribute={{ 'data-valid': 'required' }}
+                />
+            </InputGroup>
         </InputGroup>
         <InputGroup inputID="email" label="聯絡信箱" error block>
             <Input id="email" name="email" type="email" inputmode="email" required />
         </InputGroup>
-        <InputGroup inputID="comment" label="備註" block>
+        <InputGroup inputID="cellphone" label="聯絡電話" error block>
+            <Input id="cellphone" name="cellphone" type="tel" inputmode="tel" required />
+        </InputGroup>
+    </div>
+    <div class=":uno-section-form-grid-item: w-full flex flex-col gap-1.5rem">
+        <InputGroup inputID="improve" label="您這次最想改善或導入的是?" alwaysInlineContent inlineContentWrap error block>
+            <Checkbox id="improve-1" name="improve" value="產(營運/製造/供應鏈/設備)">產 (營運/製造/供應鏈/設備)</Checkbox>
+            <Checkbox id="improve-2" name="improve" value="銷(銷售/行銷/客戶/通路)">銷 (銷售/行銷/客戶/通路)</Checkbox>
+            <Checkbox id="improve-3" name="improve" value="人(人資/組織/協作/培訓)">人 (人資/組織/協作/培訓)</Checkbox>
+            <Checkbox id="improve-4" name="improve" value="發(IT/系統整合/雲端/資安/AI)">發 (IT/系統整合/雲端/資安/AI)</Checkbox>
+            <Checkbox id="improve-5" name="improve" value="財(財務/會計/成本/內控)">財 (財務/會計/成本/內控)</Checkbox>
+            <Checkbox id="improve-6" name="improve" value="資(資料/BI/AI分析/決策)">資 (資料/BI/AI分析/決策)</Checkbox>
+            <Checkbox id="improve-7" name="improve" value="永續(ESG/碳管理/能源/治理)">永續 (ESG/碳管理/能源/治理)</Checkbox>
+        </InputGroup>
+        <InputGroup
+            inputID="problem"
+            label="請簡述目前遇到的問題或想改善的情境"
+            infoText="提示: 訂單流程分散、資料無法整合、想導入AI分析、缺乏即時營運報表..."
+            error
+            block
+        >
             <Fragment slot="label-right">
-                <small>&nbsp;(非必填)</small>
+                <small>&nbsp;(必填，至少20字)</small>
             </Fragment>
-            <Textarea id="comment" name="comment" style={{ 'min-height': '8.625rem' }} />
+            <Textarea
+                id="problem"
+                name="problem"
+                minLength={20}
+                placeholder="必填，至少20字"
+                style={{ 'min-height': '120px' }}
+                required
+            />
+        </InputGroup>
+        <InputGroup inputID="progress" label="專案進度到哪?" error alwaysInlineContent inlineContentWrap block>
+            <Radio id="progress-1" name="progress" value="已經確定要導入，正在找方案">已經確定要導入，正在找方案</Radio>
+            <Radio id="progress-2" name="progress" value="正在評估可行性與預算">正在評估可行性與預算</Radio>
+            <Radio id="progress-3" name="progress" value="先了解方向，未來再說">先了解方向，未來再說</Radio>
+        </InputGroup>
+        <InputGroup inputID="launchTime" label="預計何時啟動?" error alwaysInlineContent inlineContentWrap block>
+            <Radio id="launchTime-1" name="launchTime" value="3 個月內">3 個月內</Radio>
+            <Radio id="launchTime-2" name="launchTime" value="3-6 個月">3-6 個月</Radio>
+            <Radio id="launchTime-3" name="launchTime" value="6-12 個月">6-12 個月</Radio>
+            <Radio id="launchTime-4" name="launchTime" value="尚未確定">尚未確定</Radio>
+        </InputGroup>
+        <InputGroup inputID="budget" label="預算區間" error alwaysInlineContent inlineContentWrap block>
+            <Radio id="budget-1" name="budget" value="尚未規劃">尚未規劃</Radio>
+            <Radio id="budget-2" name="budget" value="50 萬以下">50 萬以下</Radio>
+            <Radio id="budget-3" name="budget" value="50-200萬">50-200萬</Radio>
+            <Radio id="budget-4" name="budget" value="200 萬以上">200 萬以上</Radio>
+        </InputGroup>
+        <InputGroup
+            id="fromInputGroup"
+            inputID="from"
+            label="請問您是透過何種管道得知 ExpertHub 平台?"
+            alwaysInlineContent
+            inlineContentWrap
+            error
+            block
+            attribute={{ 'data-toggle-container': '' }}
+        >
+            <Checkbox id="from-1" name="from" value="華碩ASUS(或業務夥伴推薦)">華碩ASUS(或業務夥伴推薦)</Checkbox>
+            <Checkbox id="from-2" name="from" value="華碩實體/線上行銷活銷活動(研討會)"
+                >華碩實體/線上行銷活銷活動(研討會)</Checkbox
+            >
+            <Checkbox id="from-3" name="from" value="搜尋引擎(Google等)">搜尋引擎(Google等)</Checkbox>
+            <Checkbox id="from-4" name="from" value="社群媒體">社群媒體</Checkbox>
+            <Checkbox id="from-5" name="from" value="公協會/產業單位(如:電腦公會)">公協會/產業單位(如:電腦公會)</Checkbox>
+            <Checkbox id="from-6" name="from" value="同業推薦">同業推薦</Checkbox>
+            <Checkbox
+                id="from-7"
+                name="from"
+                value="其他 (請說明)"
+                attribute={{ 'data-toggle': '[data-toggle-item="from-7-infomation"]' }}
+            >
+                其他 (請說明)
+            </Checkbox>
+            <p data-toggle-item="from-7-infomation" style="width: 100%; margin-top: 10px; margin-bottom: 10px;">
+                備注：以下兩種選一種。單一 「class="control-input」 或是 一整組 「class="form-input-group」
+            </p>
+            <!-- 第一種 -->
+            <Input
+                id="from-7-infomation"
+                name="information"
+                placeholder="請說明透過何種管道得知 ExpertHub 平台"
+                attribute={{ 'data-valid': 'required', 'data-toggle-item': 'from-7-infomation' }}
+            />
+            <!-- 第二種 -->
+            <InputGroup inputID="where" label="請說明" alwaysInline block attribute={{ 'data-toggle-item': 'from-7-infomation' }}>
+                <Input
+                    id="from-7-infomation-2"
+                    name="information"
+                    placeholder="請說明透過何種管道得知 ExpertHub 平台"
+                    attribute={{ 'data-valid': 'required' }}
+                />
+            </InputGroup>
         </InputGroup>
         <div class=":uno-form-button-container: flex items-center justify-end mt-0.5rem">
             <Button type={'submit'} className=":uno-form-button: xl:max-w-9.75rem" title="送出" variant="blue" block>
@@ -115,3 +247,50 @@ const { IDName = 'Inquery', className, style, attribute = {}, data = [] } = Astr
         </div>
     </div>
 </MySectionForm>
+
+<script>
+    /** Type */
+    import { ToggleGroup as ToggleGroupController } from '@js/components/common/input/toggleGroup';
+    /** Style */
+    import '@components/common/form/group/toggleGroup.scss';
+
+    const init = ({ containerID, checkboxID, inputID }: { containerID: string; checkboxID: string; inputID: string }) => {
+        const container = document.querySelector(`#${containerID}[data-toggle-container]`) as HTMLElement | null;
+        if (!container) return;
+
+        const controller = new ToggleGroupController(`#${containerID}`, { wrapInForm: '#InqueryForm' });
+        controller.check();
+
+        const checkbox = container.querySelector(`#${checkboxID}`) as HTMLInputElement | null;
+        const input = document.querySelector(`#${inputID}`) as HTMLInputElement | null;
+
+        checkbox?.dispatchEvent(new Event('change', { bubbles: true }));
+
+        checkbox?.addEventListener('change', () => {
+            if (checkbox.checked) return;
+            if (!input) return;
+
+            input.value = '';
+            input.setCustomValidity('');
+            input.classList.remove('is-invalid');
+            input.removeAttribute('required');
+
+            const group = input.closest('.form-input-group');
+            const errorEl = group?.querySelector('.error-text') as HTMLElement | null;
+            if (errorEl) {
+                const origin = errorEl.getAttribute('data-valid-origin-feedback');
+                errorEl.textContent = origin || '';
+            }
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            init({ containerID: 'fromInputGroup', checkboxID: 'from-7', inputID: 'from-7-infomation' })
+            init({ containerID: 'positionInputGroup', checkboxID: 'position-8', inputID: 'position-8-infomation' })
+        });
+    } else {
+        init({ containerID: 'fromInputGroup', checkboxID: 'from-7', inputID: 'from-7-infomation' });
+        init({ containerID: 'positionInputGroup', checkboxID: 'position-8', inputID: 'position-8-infomation' });
+    }
+</script>

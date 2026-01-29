@@ -1,0 +1,27 @@
+---
+/** Data */
+import { data } from '@components/pages/inquery/data';
+/** Layouts */
+import Layouts from '@layouts/layouts.astro';
+/** Global Components */
+
+/** Common Components */
+import ComfirmCode from '@components/modal/comfirm-code.astro';
+import ScriptNext from '@components/common/script/script-next.copy.astro';
+import CookiesScript from '@components/common/script/cookies.copy.astro';
+import FetchWithAuthScript from '@components/common/script/fetchWithAuth.copy.astro';
+/** Main Components */
+import Form from '@components/pages/inquery/form.astro';
+import ScriptInline from '@components/pages/inquery/script-inline.astro';
+/** Style */
+import '@scss/pages/inquery.scss';
+---
+
+<Layouts IDName="Inquery" minMarginHeader>
+    <Form data={data} display="flex" />
+</Layouts>
+<ComfirmCode />
+<ScriptNext />
+<CookiesScript />
+<FetchWithAuthScript />
+<ScriptInline />
