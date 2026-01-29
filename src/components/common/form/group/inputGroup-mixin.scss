@@ -7,7 +7,7 @@
 @mixin inline {
     /* 水平排列基礎設定 */
     --form-input-group-flex-direction: row; /* 設定為 row */
-    --form-input-group-label-width: 114px; /* 標籤固定寬度 */
+    --form-input-group-label-width: 4em; /* 標籤固定寬度 */
     --form-input-group-content-width: 100%; /* 內容區域寬度 */
 
     /* 內容區域上邊距調整 */

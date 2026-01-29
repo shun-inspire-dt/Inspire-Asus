@@ -229,9 +229,9 @@
 }
 
 /** 驗證訊息文字樣式（Validation Message） */
-.was-validated .form-input-group input:invalid ~ .info-text.error-text {
+.was-validated .form-input-group :is(input, textarea):invalid ~ .info-text.error-text {
     --form-input-group-content-info-text-display: flex;
 }
-.was-validated .form-input-group input:invalid[data-show-error-info-only='true'] ~ .info-text:not(.error-text) {
+.was-validated .form-input-group :is(input, textarea):invalid[data-show-error-info-only='true'] ~ .info-text:not(.error-text) {
     --form-input-group-content-info-text-display: none;
 }
