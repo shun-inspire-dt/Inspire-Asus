@@ -31,21 +31,23 @@ const {
 ---
 
 <div class="form-check form-radio">
-    <input
-        id={id}
-        class="form-radio-input"
-        type="radio"
-        value={value}
-        name={name}
-        checked={checked}
-        disabled={disabled}
-        readonly={readonly}
-        required={required}
-        autocomplete="off"
-        aria-label={title}
-        {...attribute}
-        {...aria}
-    />
+    <div class="form-check-input-container">
+        <input
+            id={id}
+            class="form-radio-input"
+            type="radio"
+            value={value}
+            name={name}
+            checked={checked}
+            disabled={disabled}
+            readonly={readonly}
+            required={required}
+            autocomplete="off"
+            aria-label={title}
+            {...attribute}
+            {...aria}
+        />
+    </div>
     <label class="form-check-label" for={id}>
         <slot>{label}</slot>
     </label>

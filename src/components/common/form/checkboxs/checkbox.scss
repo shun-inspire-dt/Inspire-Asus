@@ -40,6 +40,9 @@
     --checkbox-error-background-color: var(--color-red-300, #b42d18); /* 錯誤狀態背景色 */
     --checkbox-checked-background-color: var(--color-blue-500, #006ce1); /* 選中狀態背景色 */
     --checkbox-checked-background-image: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.875 8.16071L6.74457 11.375L12.125 4.625" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'); /* 選中狀態背景圖片 (勾選標記) */
+    --checkbox-checked-background-size: var(--checkbox-size); /* 選中狀態背景圖片尺寸 */
+    --checkbox-checked-background-position: center; /* 選中狀態背景圖片位置 */
+    --checkbox-checked-background-repeat: no-repeat; /* 選中狀態背景圖片重複 */
 
     /* 邊框變數 */
     --checkbox-border-width: 1px; /* 邊框寬度 */
@@ -124,6 +127,9 @@
             background-color: var(--checkbox-checked-background-color);
             border-color: var(--checkbox-checked-border-color);
             background-image: var(--checkbox-checked-background-image);
+            background-size: var(--checkbox-checked-background-size);
+            background-position: var(--checkbox-checked-background-position);
+            background-repeat: var(--checkbox-checked-background-repeat);
 
             /* 選中時標籤文字顏色變化 */
             & + .form-check-label {

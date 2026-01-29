@@ -55,6 +55,7 @@ export interface Props {
     rounded?: boolean;
     setRequired?: string;
     attribute?: attribute;
+    containerAttribute?: attribute;
     aria?: aria;
     style?: { [key: string]: string };
     indeterminate?: boolean;
@@ -78,6 +79,7 @@ const {
     rounded,
     setRequired,
     attribute = {},
+    containerAttribute = {},
     aria = {},
     style,
     indeterminate,
@@ -94,7 +96,7 @@ const inputId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
     data-disabled={disabled}
     style={style}
 >
-    <div class="form-check-input-container">
+    <div class="form-check-input-container" {...containerAttribute}>
         {/** 複選框輸入元素 */}
         <input
             id={inputId}
