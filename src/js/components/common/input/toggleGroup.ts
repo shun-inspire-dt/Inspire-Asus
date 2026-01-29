@@ -3,14 +3,31 @@ type options = {
 };
 export class ToggleGroup {
     private container: HTMLElement;
-    private items: NodeListOf<HTMLElement>;
+    private items: HTMLElement[];
     private options: options;
 
     constructor(selectors: string, options?: options) {
         this.container = document.querySelector(`${selectors}[data-toggle-container]`) as HTMLElement;
-        this.items = (this.container?.querySelectorAll('[data-toggle-item]') as NodeListOf<HTMLElement>) || [];
+        this.items = this.getItems();
         this.options = options as options;
         this.initialize();
+    }
+
+    private getItems() {
+        const items = new Set<HTMLElement>();
+
+        const innerItems = (this.container?.querySelectorAll('[data-toggle-item]') as NodeListOf<HTMLElement>) || [];
+        [...innerItems].forEach((el) => el && items.add(el));
+
+        const toggles = (this.container?.querySelectorAll('input[data-toggle]') as NodeListOf<HTMLInputElement>) || [];
+        [...toggles].forEach((toggle) => {
+            const selector = toggle?.dataset?.toggle;
+            if (!selector) return;
+            const targets = document.querySelectorAll(selector) as NodeListOf<HTMLElement>;
+            [...targets].forEach((el) => el && items.add(el));
+        });
+
+        return [...items];
     }
 
     private initialize() {
@@ -43,7 +60,8 @@ export class ToggleGroup {
 
     private toggleInputAttribute(x: Element, boolean: boolean) {
         if (this.options?.wrapInForm) {
-            [...x.querySelectorAll('input')].forEach((y: Element) => {
+            const list = x instanceof HTMLInputElement || x instanceof HTMLTextAreaElement ? [x] : [...x.querySelectorAll('input')];
+            list.forEach((y: Element) => {
                 if (y && y.hasAttribute('data-valid') && y.getAttribute('data-valid') === 'required') {
                     if (boolean) y.setAttribute('required', '');
                     if (!boolean) y.removeAttribute('required');
@@ -66,6 +84,23 @@ export class ToggleGroup {
     }
 
     public check() {
+        const radios = this.container?.querySelectorAll('input[type="radio"]') || [];
+        [...radios].forEach((x: Element) => {
+            x?.addEventListener('change', (evt: Event) => {
+                const radio = evt.target as HTMLInputElement;
+                if (!radio.checked) return;
+
+                this.allHide();
+
+                const targetText = radio?.dataset?.toggle;
+                if (!targetText) return;
+                const target = document.querySelectorAll(targetText) as NodeListOf<HTMLElement>;
+                [...target].forEach((el) => {
+                    this.show(el);
+                });
+            });
+        });
+
         const inputs = this.container?.querySelectorAll('input[data-toggle]') || [];
         [...inputs].forEach((x: Element) => {
             x?.addEventListener('change', (evt: Event) => {
@@ -73,7 +108,7 @@ export class ToggleGroup {
                 const targetText = checkbox?.dataset?.toggle as string;
                 const target = document.querySelectorAll(targetText) as NodeListOf<HTMLElement>;
                 const check = checkbox.checked;
-
+                
                 this.allHide();
 
                 if (!!check) {

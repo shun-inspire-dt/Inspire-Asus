@@ -1,8 +1,6 @@
-[data-toggle-container] {
-    [data-toggle-item] {
-        @apply hidden;
-        &.active {
-            @apply block;
-        }
+[data-toggle-item] {
+    @apply hidden;
+    &.active {
+        @apply flex;
     }
 }
