@@ -1,3 +1,4 @@
+/** 導覽子項目的連結定義（二級選單項目） */
 export type NavsDataChild = {
     id?: string;
     className?: any;
@@ -11,6 +12,7 @@ export type NavsDataChild = {
         links: { link?: string; linkText: string }[][];
     }[];
 }[];
+/** 頂層導覽項目定義（一級選單） */
 export type NavsData = {
     id?: string;
     title?: string;
@@ -21,6 +23,7 @@ export type NavsData = {
     children?: NavsDataChild;
 }[];
 
+/** 全站主導覽資料，供 Header Nav 元件消費 */
 export const NavsData: NavsData = [
     {
         title: '解決方案',

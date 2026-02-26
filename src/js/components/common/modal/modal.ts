@@ -1,4 +1,16 @@
 import { Modal as BsModal } from 'bootstrap';
+
+/**
+ * Bootstrap Modal 封裝類別
+ *
+ * 封裝 Bootstrap 內建的 `Modal` 並擴展自定義事件（`close`、`clickOutside`、`switch` 等）。
+ * 支援同時只能有一個 Modal 顯示，開啟新 Modal 前會自動隙藏目前顯示中的 Modal。
+ *
+ * @example
+ * const modal = new Modal(document.getElementById('myModal'));
+ * modal.show();
+ * modal.on('hidden', () => console.log('closed'));
+ */
 export class Modal {
     public modal: HTMLElement;
     public myModal: BsModal | null = null;
@@ -20,20 +32,29 @@ export class Modal {
         'switch'
     ] as const;
 
+    /**
+     * @param modal - Modal 的根 HTML 元素
+     * @param options - Bootstrap Modal 設定選項（可選）
+     */
     constructor(modal: HTMLElement, options: Partial<BsModal.Options> = {}) {
         this.modal = modal;
         if (options) this.options = Object.assign(this.options, options);
         if (modal) this.myModal = new BsModal(this.modal, this.options);
     }
 
+    /** 切換 Modal 顯示/隱藏狀態 */
     public toggle() {
         if (this.modal) this.myModal?.toggle(this.modal);
     }
 
+    /** 隐藏 Modal */
     public hide() {
         if (this.modal) this.myModal?.hide();
     }
 
+    /**
+     * 顯示 Modal，若目前已有其他 Modal 開啟，會先將其隐藏再開啟此 Modal
+     */
     public show() {
         if (this.modal) {
             const shownModal = document.querySelector('.modal.show') as HTMLElement;
@@ -44,6 +65,10 @@ export class Modal {
         }
     }
 
+    /**
+     * 切換到另一個 Modal（隐藏自身、顯示目標 Modal）
+     * @param related - 要開啟的目標 Modal 元素
+     */
     public switch(related: HTMLElement) {
         if (this.modal && related) {
             const selfModal = this.myModal;
@@ -58,6 +83,12 @@ export class Modal {
         }
     }
 
+    /**
+     * 纁定 Modal 事件監聽器
+     * @param Event - 事件名稱（支援 Bootstrap 原生事件及自定義擴展事件）
+     * @param callback - 事件觸發時的回調函數
+     * @param options - `addEventListener` 選項（可選）
+     */
     public on(
         Event: (typeof this.myEvents)[number],
         callback: (e: Event | CustomEvent) => void,

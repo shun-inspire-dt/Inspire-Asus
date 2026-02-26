@@ -1,5 +1,15 @@
 import { Offcanvas as BsOffcanvas } from 'bootstrap';
 
+/**
+ * Bootstrap Offcanvas 封裝類別
+ *
+ * 封裝 Bootstrap 內建的 `Offcanvas` 並擴展自定義事件（`close`、`clickOutside`、`showOn`、`hideOff` 等）。
+ *
+ * @example
+ * const oc = new Offcanvas(document.getElementById('myOffcanvas'));
+ * oc.show();
+ * oc.on('hidden', () => console.log('offcanvas closed'));
+ */
 export class Offcanvas {
     public offcanvas: HTMLElement;
     public myOffcanvas: BsOffcanvas | null = null;
@@ -10,24 +20,35 @@ export class Offcanvas {
     };
     public myEvents = ['hide', 'hidden', 'hidePrevented', 'show', 'shown', 'close', 'clickOutside', 'showOn', 'hideOff'] as const;
 
+    /**
+     * @param offcanvas - Offcanvas 的根 HTML 元素
+     * @param options - Bootstrap Offcanvas 設定選項（可選）
+     */
     constructor(offcanvas: HTMLElement, options: Partial<BsOffcanvas.Options> = {}) {
         this.offcanvas = offcanvas;
         if (options) this.options = Object.assign(this.options, options);
         if (offcanvas) this.myOffcanvas = new BsOffcanvas(this.offcanvas, this.options);
     }
 
+    /** 切換 Offcanvas 顯示/隱藏狀態 */
     public toggle() {
         if (this.offcanvas) this.myOffcanvas?.toggle(this.offcanvas);
     }
 
+    /** 隱藏 Offcanvas */
     public hide() {
         if (this.offcanvas) this.myOffcanvas?.hide();
     }
 
+    /** 顯示 Offcanvas */
     public show() {
         if (this.offcanvas) this.myOffcanvas?.show();
     }
 
+    /**
+     * 切換到另一個 Offcanvas（隱藏自身、顯示目標 Offcanvas，並在 500ms 後 dispose 自身實例）
+     * @param related - 要開啟的目標 Offcanvas 元素
+     */
     public switch(related: HTMLElement) {
         if (this.offcanvas && related) {
             const selfModal = this.myOffcanvas;
@@ -42,6 +63,12 @@ export class Offcanvas {
         }
     }
 
+    /**
+     * 纁定 Offcanvas 事件監聽器
+     * @param Event - 事件名稱（支援 Bootstrap 原生事件及自定義擴展事件）
+     * @param callback - 事件觸發時的回調函數
+     * @param options - `addEventListener` 選項（可選）
+     */
     public on(
         Event: (typeof this.myEvents)[number],
         callback: (e: Event | CustomEvent) => void,
@@ -126,6 +153,10 @@ export class Offcanvas {
         this.offcanvas?.dispatchEvent(new CustomEvent('hide'));
     }
 
+    /**
+     * 注冊預建自定義事件處理：`showOn` 自動開啟、`hideOff` 自動關閉
+     * 常在 Astro 元件 `onload` 頭尾呼叫一次以啟用自定義事件派送
+     */
     public addMethod() {
         this.customDispatchEvent('showOn', () => this.show());
         this.customDispatchEvent('hideOff', () => this.hide());

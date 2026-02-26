@@ -1,11 +1,32 @@
+/**
+ * ToggleGroup 設定選項
+ */
 type options = {
+    /** 指定包裹表單的容器，用於表單 `reset` 時自動收起所有區塊 */
     wrapInForm: string | HTMLElement;
 };
+
+/**
+ * 區塊切換控制類別
+ *
+ * 基於 `data-toggle-container`、`data-toggle-item`、`data-toggle` 屬性組織 UI 區塊的顯示/隱藏。
+ * 支援 radio/checkbox 觸發、URL query 同步、表單重置自動收起。
+ *
+ * @example
+ * // HTML: <div data-toggle-container="#myGroup"> ... </div>
+ * const group = new ToggleGroup('#myGroup');
+ * group.click(); // 纁定點擊事件
+ * group.check(); // 纁定复選框事件
+ */
 export class ToggleGroup {
     private container: HTMLElement;
     private items: HTMLElement[];
     private options: options;
 
+    /**
+     * @param selectors - CSS 選擇器，選取含 `[data-toggle-container]` 屬性的容器元素
+     * @param options - 設定選項（可選）
+     */
     constructor(selectors: string, options?: options) {
         this.container = document.querySelector(`${selectors}[data-toggle-container]`) as HTMLElement;
         this.items = this.getItems();
@@ -44,6 +65,7 @@ export class ToggleGroup {
         this.toggleInputAttribute(target, false);
     }
 
+    /** 顯示所有音區塊（加上 `active` 類別） */
     public allShow() {
         [...this.items].forEach((x: Element) => {
             x?.classList.add('active');
@@ -51,6 +73,7 @@ export class ToggleGroup {
         });
     }
 
+    /** 隱藏所有區塊（移除 `active` 類別） */
     public allHide() {
         [...this.items].forEach((x: Element) => {
             x?.classList.remove('active');
@@ -83,6 +106,11 @@ export class ToggleGroup {
         }
     }
 
+    /**
+     * 纁定 radio / checkbox 的 `change` 事件
+     * - radio 觸發時：隱藏全部 → 顯示對應區塊
+     * - checkbox 觸發時：選取則顯示、取消則隱藏
+     */
     public check() {
         const radios = this.container?.querySelectorAll('input[type="radio"]') || [];
         [...radios].forEach((x: Element) => {
@@ -179,6 +207,11 @@ export class ToggleGroup {
         }
     }
 
+    /**
+     * 纁定 `[data-toggle]` 元素的點擊事件以切換區塊
+     *
+     * @param updateUrlQuery - 是否將当前切換的 tab 名稱同步至 URL `?tab=` query，預設 `false`
+     */
     public click(updateUrlQuery: boolean = false) {
         const triggers = this.container?.querySelectorAll('[data-toggle]') || [];
         

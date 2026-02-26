@@ -7,6 +7,19 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+/**
+ * 立即建立 Swiper 實例
+ *
+ * 自動從元素最近的 `.swiper-container` 中偵測 pagination 與 navigation DOM，
+ * 完成後回傳 Swiper 實例。
+ *
+ * @param el - Swiper 根元素（DOM 元素或 CSS 選擇器字串）
+ * @param opts - Swiper 設定選項（可選），會覆蓋自動偵測的 navigation/pagination
+ * @returns Swiper 實例（元素不存在時回傳 `undefined`）
+ *
+ * @example
+ * const swiper = mySwiper('.my-swiper', { loop: true });
+ */
 export const mySwiper = <E extends HTMLElement>(el: string | E, opts?: Partial<SwiperOptions>) => {
     if (el) {
         let navigation: NavigationOptions = {};
@@ -42,6 +55,20 @@ export const mySwiper = <E extends HTMLElement>(el: string | E, opts?: Partial<S
     }
 };
 
+/**
+ * 監聽自定義 `build.swiper` 事件來延遲建立 Swiper 實例
+ *
+ * 適用於元件需要在运行時接收動態設定（例如 slides 數量、breakpoints）的情況。
+ * 內部使用 `setTimeout(···, 0)` 確保監聽器註冊後再回傳 Promise。
+ *
+ * @param el - Swiper 根元素（DOM 元素或 CSS 選擇器字串）
+ * @param options - 預設 Swiper 設定選項（會被 `build.swiper` 事件的 `detail` 覆蓋）
+ * @returns Promise， resolve 時備含 Swiper 實例（元素不存在時為 `undefined`）
+ *
+ * @example
+ * // 在 Astro `<script>` 中使用
+ * mySwiperListen(swiperEl, { modules: [A11y, Keyboard] });
+ */
 export const mySwiperListen = <E extends HTMLElement>(el: string | E, options?: Partial<SwiperOptions>): Promise<Swiper | undefined> => {
     return new Promise((resolve) => {
         const swiper = el && typeof el === 'string' ? document.querySelector(el) as HTMLElement : el as HTMLElement;
