@@ -1,0 +1,123 @@
+<script is:inline>
+    /**
+     * Cookie 設定選項
+     * @typedef {Object} CookieSetOptions
+     * @property {number} [days] - Cookie 有效天數（以現在時間往後推算）；未提供則不寫入 Expires
+     * @property {string} [path='/'] - Cookie Path
+     * @property {string} [domain] - Cookie Domain
+     * @property {boolean} [secure=false] - 是否加上 Secure
+     * @property {string} [sameSite='Lax'] - SameSite 策略（例如 Lax/Strict/None）
+     */
+
+    /**
+     * Cookies 操作封裝
+     * @description 提供 create/read/update/delete 的語意化方法，並以 document.cookie 實作 set/get/remove
+     */
+    class Cookies {
+        /**
+         * 建立 Cookie（create = set）
+         * @param {string} key - Cookie key
+         * @param {string | number | boolean | null | undefined} value - Cookie value（會被轉成字串）
+         * @param {CookieSetOptions} [options={}] - Cookie 設定
+         * @returns {void}
+         */
+        create(key, value, options = {}) {
+            return this.set(key, value, options);
+        }
+
+        /**
+         * 讀取 Cookie（read = get）
+         * @param {string} key - Cookie key
+         * @returns {string | null} Cookie value（找不到則回傳 null）
+         */
+        read(key) {
+            return this.get(key);
+        }
+
+        /**
+         * 更新 Cookie（update = set）
+         * @param {string} key - Cookie key
+         * @param {string | number | boolean | null | undefined} value - Cookie value（會被轉成字串）
+         * @param {CookieSetOptions} [options={}] - Cookie 設定
+         * @returns {void}
+         */
+        update(key, value, options = {}) {
+            return this.set(key, value, options);
+        }
+
+        /**
+         * 刪除 Cookie（delete = remove）
+         * @param {string} key - Cookie key
+         * @param {{path?: string, domain?: string}} [options={}] - Cookie 刪除選項（需與 set 時一致才可正確刪除）
+         * @returns {void}
+         */
+        delete(key, options = {}) {
+            return this.remove(key, options);
+        }
+
+        /**
+         * 設定 Cookie
+         * @param {string} key - Cookie key
+         * @param {string | number | boolean | null | undefined} value - Cookie value（會被轉成字串）
+         * @param {CookieSetOptions} [options={}] - Cookie 設定
+         * @returns {void}
+         */
+        set(key, value, options = {}) {
+            if (!key) return;
+
+            const { days, path = '/', domain, secure = false, sameSite = 'Lax' } = options;
+
+            let cookie = `${encodeURIComponent(key)}=${encodeURIComponent(String(value ?? ''))}`;
+
+            if (typeof days === 'number') {
+                const expires = new Date(Date.now() + days * 864e5).toUTCString();
+                cookie += `; Expires=${expires}`;
+            }
+
+            if (path) cookie += `; Path=${path}`;
+            if (domain) cookie += `; Domain=${domain}`;
+            if (sameSite) cookie += `; SameSite=${sameSite}`;
+            if (secure) cookie += '; Secure';
+
+            document.cookie = cookie;
+        }
+
+        /**
+         * 取得 Cookie
+         * @param {string} key - Cookie key
+         * @returns {string | null} Cookie value（找不到則回傳 null）
+         */
+        get(key) {
+            if (!key) return null;
+
+            const encodedKey = encodeURIComponent(key);
+            const cookiesList = document.cookie ? document.cookie.split('; ') : [];
+            for (const item of cookiesList) {
+                const index = item.indexOf('=');
+                const k = index >= 0 ? item.slice(0, index) : item;
+                if (k === encodedKey) {
+                    const v = index >= 0 ? item.slice(index + 1) : '';
+                    return decodeURIComponent(v);
+                }
+            }
+            return null;
+        }
+
+        /**
+         * 移除 Cookie
+         * @description 透過設定過期時間為 1970 來刪除
+         * @param {string} key - Cookie key
+         * @param {{path?: string, domain?: string}} [options={}] - Cookie 刪除選項（需與 set 時一致才可正確刪除）
+         * @returns {void}
+         */
+        remove(key, options = {}) {
+            const { path = '/', domain } = options;
+            let cookie = `${encodeURIComponent(key)}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+            if (path) cookie += `; Path=${path}`;
+            if (domain) cookie += `; Domain=${domain}`;
+            document.cookie = cookie;
+        }
+    }
+
+    const cookies = new Cookies();
+</script>

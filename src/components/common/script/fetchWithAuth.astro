@@ -1,0 +1,203 @@
+<script is:inline>
+    /**
+     * AuthClient 建構選項
+     * @typedef {Object} AuthClientOptions
+     * @property {string} [baseURL] - API Base URL（例如 import.meta.env.API_BASE_URL）
+     * @property {Cookies} [cookies] - Cookies 實例（用於讀寫 access_token/refresh_token/expires_at）
+     * @property {number} [defaultThresholdMs=60000] - token 即將到期的判斷門檻（毫秒）
+     */
+
+    /**
+     * Auth Cookie payload
+     * @typedef {Object} AuthCookiePayload
+     * @property {string | null | undefined} access_token - Access token
+     * @property {string | null | undefined} refresh_token - Refresh token
+     * @property {number | string | null | undefined} expires_at - token 到期時間（可為 seconds 或 milliseconds）
+     */
+
+    /**
+     * fetchWithAuth 額外支援的 init 參數
+     * @typedef {RequestInit & {authThresholdMs?: number}} FetchWithAuthInit
+     */
+
+    /**
+     * fetchWithAuth 拋出的錯誤物件（在 Error 上附加額外資訊）
+     * @typedef {Error & {status?: number, data?: any, url?: string}} AuthClientRequestError
+     */
+
+    /**
+     * Auth Client
+     * @description
+     * 提供「自動附加 Authorization header」的 fetch 封裝，並在 token 即將過期或遇到 401 時嘗試 refresh 後重送一次。
+     */
+    class AuthClient {
+        /**
+         * @param {AuthClientOptions} [options={}]
+         */
+        constructor({ baseURL, cookies, defaultThresholdMs = 60_000 } = {}) {
+            this.baseURL = baseURL;
+            this.cookies = cookies;
+            this.defaultThresholdMs = defaultThresholdMs;
+            this.refreshPromise = null;
+        }
+
+        /**
+         * 將 expiresAt（秒/毫秒/字串）轉為毫秒
+         * @param {number | string | null | undefined} expiresAt - 可能為 seconds 或 milliseconds
+         * @returns {number | null} expiresAtMs（毫秒）；無法解析則回傳 null
+         */
+        getExpiresAtMs(expiresAt) {
+            if (expiresAt == null) return null;
+            const n = Number(expiresAt);
+            if (!Number.isFinite(n) || n <= 0) return null;
+            return n < 1e12 ? n * 1000 : n;
+        }
+
+        /**
+         * 判斷 token 是否即將到期
+         * @param {number | null} expiresAtMs - 到期時間（毫秒）
+         * @param {number} thresholdMs - 門檻（毫秒）
+         * @returns {boolean} 是否即將到期
+         */
+        isExpiringSoon(expiresAtMs, thresholdMs) {
+            if (!expiresAtMs) return true;
+            return expiresAtMs - Date.now() <= thresholdMs;
+        }
+
+        /**
+         * 寫入 access_token/refresh_token/expires_at cookies
+         * @description
+         * - 依 expires_at 計算 days
+         * - secure 會依當前協議是否為 https 決定
+         * - sameSite 固定使用 Lax
+         * @param {AuthCookiePayload} payload - 要寫入 cookies 的資料
+         * @returns {void}
+         */
+        setAuthCookies({ access_token, refresh_token, expires_at }) {
+            const secure = typeof location !== 'undefined' && location.protocol === 'https:';
+            const sameSite = 'Lax';
+            const expiresAtMs = this.getExpiresAtMs(expires_at);
+            const days = expiresAtMs ? Math.max(0, Math.ceil((expiresAtMs - Date.now()) / 864e5)) : undefined;
+
+            if (access_token != null) this.cookies.set('access_token', access_token, { days, secure, sameSite });
+            if (refresh_token != null) this.cookies.set('refresh_token', refresh_token, { days, secure, sameSite });
+            if (expires_at != null) this.cookies.set('expires_at', expires_at, { days, secure, sameSite });
+        }
+
+        /**
+         * 刷新 access token
+         * @description
+         * - 若 refreshPromise 已存在，代表目前有 refresh 進行中，直接等待同一個 Promise，避免重複 refresh
+         * - 若 refresh_token 不存在或 refresh 失敗，回傳 null
+         * - refresh 成功會寫入 cookies（access_token/refresh_token/expires_at）
+         * @returns {Promise<string | null>} 新的 access_token（失敗則回傳 null）
+         */
+        async refreshAccessToken() {
+            if (this.refreshPromise) return await this.refreshPromise;
+
+            const refresh_token = this.cookies.get('refresh_token');
+            if (!refresh_token) return null;
+
+            this.refreshPromise = (async () => {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: new Headers({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ refresh_token })
+                };
+
+                const res = await fetch(this.baseURL + '/api/auth/refresh', requestOptions);
+                if (!res.ok) return null;
+
+                const data = await res.json().catch(() => null);
+                if (!data || data.success === false) return null;
+
+                const payload = data?.session ?? data?.data ?? data;
+                if (!payload) return null;
+
+                const access_token = payload.access_token;
+                const new_refresh_token = payload.refresh_token ?? refresh_token;
+                const expires_at = payload.expires_at;
+
+                if (!access_token) return null;
+
+                this.setAuthCookies({ access_token, refresh_token: new_refresh_token, expires_at });
+                return access_token;
+            })();
+
+            try {
+                return await this.refreshPromise;
+            } finally {
+                this.refreshPromise = null;
+            }
+        }
+
+        /**
+         * 帶授權的 fetch
+         * @description
+         * 1. 檢查 access_token 是否存在或是否即將到期（expires_at - now <= threshold）
+         * 2. 必要時先 refreshAccessToken
+         * 3. 將 Authorization: Bearer <token> 寫入 headers 並發送請求
+         * 4. 若回傳 401 且尚未重試，嘗試 refresh 後再重送一次
+         * 5. 若最終 response 非 2xx，會解析 body（json/text）並丟出 Error（附加 status/data/url）
+         * @param {RequestInfo | URL} input - fetch 的 input
+         * @param {FetchWithAuthInit} [init={}] - fetch 的 init（額外支援 authThresholdMs）
+         * @param {boolean} [_retried=false] - 內部用：避免 401 無限重試
+         * @returns {Promise<Response>} fetch response（僅在 res.ok 時回傳）
+         * @throws {AuthClientRequestError} 當 response 非 2xx 時拋出（包含 status/data/url）
+         */
+        async fetchWithAuth(input, init = {}, _retried = false) {
+            const thresholdMs = typeof init.authThresholdMs === 'number' ? init.authThresholdMs : this.defaultThresholdMs;
+
+            const access_token = this.cookies.get('access_token');
+            const expires_at = this.cookies.get('expires_at');
+            const expiresAtMs = this.getExpiresAtMs(expires_at);
+
+            if (!access_token || this.isExpiringSoon(expiresAtMs, thresholdMs)) {
+                await this.refreshAccessToken();
+            }
+
+            const tokenForRequest = this.cookies.get('access_token');
+            const headers = new Headers(init.headers || undefined);
+            if (tokenForRequest) headers.set('Authorization', `Bearer ${tokenForRequest}`);
+
+            const { authThresholdMs, ...restInit } = init;
+            const res = await fetch(input, { ...restInit, headers });
+
+            if (res.status === 401 && !_retried) {
+                const refreshed = await this.refreshAccessToken();
+                if (refreshed) {
+                    const retryHeaders = new Headers(init.headers || undefined);
+                    retryHeaders.set('Authorization', `Bearer ${refreshed}`);
+                    return await this.fetchWithAuth(input, { ...init, headers: retryHeaders }, true);
+                }
+            }
+
+            if (!res.ok) {
+                let data = null;
+                try {
+                    data = await res.clone().json();
+                } catch {
+                    try {
+                        data = await res.clone().text();
+                    } catch {
+                        data = null;
+                    }
+                }
+
+                const message =
+                    (data && typeof data === 'object' && 'message' in data && data.message) ||
+                    (data && typeof data === 'object' && 'detail' in data && data.detail) ||
+                    (data && typeof data === 'object' && 'error_description' in data && data.error_description) ||
+                    (typeof data === 'string' && data) ||
+                    `HTTP ${res.status}`;
+                const err = new Error(message);
+                err.status = res.status;
+                err.data = data;
+                err.url = typeof input === 'string' ? input : input?.url;
+                throw err;
+            }
+
+            return res;
+        }
+    }
+</script>
